@@ -1,5 +1,7 @@
 # 本地运行
 
+算法开发、渲染图配置和探针 GI 扩展请参阅 [Falcor 使用与 GI 算法开发指南](C:/Users/Admin/Desktop/实时GI/Falcor/DEVELOPMENT-GUIDE.zh-CN.md)。
+
 本工程的示例入口是 Mogwai。首次构建使用 Visual Studio 2022、MSVC 14.38.33130 和 Windows SDK 10.0.22621.0，配置为 Release。
 
 ## 打开场景

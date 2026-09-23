@@ -533,7 +533,7 @@ namespace Mogwai
             if (std::filesystem::is_directory(*folder, error)) path = *folder;
         }
         if (path.empty() && mpScene) path = mpScene->getPath().parent_path();
-        if (openFileDialog(Scene::getFileExtensionFilters(), path))
+        if (openFileDialog({FileDialogFilter("pyscene", "Falcor Python Scene (*.pyscene)")}, path))
         {
             loadScene(path);
             mAppData.addRecentScene(path);

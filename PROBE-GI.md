@@ -8,7 +8,7 @@
 
 ### 在程序内切场景和手动 Bake
 
-1. 使用 **File → Load Scene**，或 **Ctrl+Shift+O**，选择新的 `.pyscene` 等支持的场景文件。已有场景在 `F:\media\test_scenes\` 和 `F:\media\Arcade\` 下。
+1. 使用 **File → Load Scene**，或 **Ctrl+Shift+O**，选择新的 `.pyscene` 场景文件。选择窗口只显示该后缀的文件，文件夹仍可进入。已有场景在 `F:\media\test_scenes\` 和 `F:\media\Arcade\` 下。Falcor 仍支持通过导入器加载 OBJ、FBX、glTF 等格式，可通过命令行或拖放加载。
 2. 在渲染图控制面板展开 **Probes** Pass，调整下面的参数。若看不到图控制面板，可按 F6 切换显示。
 3. 点击 **Bake**。烘焙期间显示每探针已完成样本数；可点 **Cancel bake** 取消，或点 **Restart bake** 从头开始。
 4. 完成后自动保存并显示探针照明。需要使用以前的结果时，设置相同参数后点 **Load matching cache**；加载不匹配会在面板提示，程序不会退出。

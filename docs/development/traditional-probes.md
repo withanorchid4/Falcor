@@ -142,3 +142,9 @@ Windows / RTX 5080 / Vulkan / Release，Cornell 640×480，384 探针，每探�
 先记录本节，再实现、构建 Windows Mogwai，检查三个默认场景路径及启动参数。平台对话框的可视验证如未实际执行，需在交付时如实说明；不为这一低风险入口修改增加复杂测试框架。
 
 验证记录：Windows Release Mogwai 构建通过；两个 PowerShell 启动器语法检查通过，Cornell、Room、Arcade 的三个场景文件均存在。已用更新后的启动器重新启动 Cornell 手动预览。computer-use 能识别 Mogwai 窗口，但截图捕获到了其他窗口，且未取得文件选择对话框状态，因此默认目录尚未完成实际 UI 验证。Linux 分支未在本机编译。
+
+## 10. 场景选择仅显示 pyscene（实现前约定）
+
+按用户要求，将 Mogwai 的 Load Scene / Ctrl+Shift+O 文件过滤器限定为 `.pyscene`，文件夹仍显示以便导航，保留上一节的默认目录。只修改此入口传入的过滤器，不修改导入器支持格式、拖放或命令行加载能力，也不修改通用文件对话框或 GI。先记录本节再实施，以 Windows Release Mogwai 构建及代码差异检查验证。
+
+验证记录：Windows Release Mogwai 构建通过，代码差异检查通过。此入口只传入 pyscene 过滤器，Windows 自动生成的 Supported Formats 合并项也仅包含 `*.pyscene`。未进行对话框的实际 UI 验证。

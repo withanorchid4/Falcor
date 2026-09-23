@@ -220,7 +220,8 @@ struct FALCOR_API FileDialogFilter
 using FileDialogFilterVec = std::vector<FileDialogFilter>;
 
 /**
- * Creates a 'open file' dialog box.
+ * Creates a 'open file' dialog box. If path names an existing directory on input,
+ * the dialog opens in that directory.
  * @param[in] filters The file extensions filters
  * @param[in] path On successful return, the path of the file selected by the user.
  * @return true if a file was selected, otherwise false (if the user clicked 'Cancel').

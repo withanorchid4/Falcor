@@ -513,7 +513,8 @@ private:
 };
 
 template<typename DialogType>
-static bool fileDialogCommon(const FileDialogFilterVec& filters, std::filesystem::path& path, DWORD options, const CLSID clsid)
+static bool fileDialogCommon(const FileDialogFilterVec& filters, std::filesystem::path& path, DWORD options, const CLSID clsid,
+                            const std::filesystem::path& initialDirectory = {})
 {
     FilterSpec fs(filters, typeid(DialogType) == typeid(IFileOpenDialog));
 
@@ -523,6 +524,16 @@ static bool fileDialogCommon(const FileDialogFilterVec& filters, std::filesystem
     pDialog->SetOptions(options | FOS_FORCEFILESYSTEM);
     pDialog->SetFileTypes((uint32_t)fs.size(), fs.data());
     pDialog->SetDefaultExtension(fs.data()->pszSpec);
+
+    if (!initialDirectory.empty())
+    {
+        IShellItem* pFolder = nullptr;
+        if (SUCCEEDED(SHCreateItemFromParsingName(initialDirectory.c_str(), nullptr, IID_PPV_ARGS(&pFolder))))
+        {
+            pDialog->SetFolder(pFolder);
+            pFolder->Release();
+        }
+    }
 
     if (pDialog->Show(nullptr) == S_OK)
     {
@@ -550,7 +561,9 @@ bool saveFileDialog(const FileDialogFilterVec& filters, std::filesystem::path& p
 
 bool openFileDialog(const FileDialogFilterVec& filters, std::filesystem::path& path)
 {
-    return fileDialogCommon<IFileOpenDialog>(filters, path, FOS_FILEMUSTEXIST, CLSID_FileOpenDialog);
+    std::error_code error;
+    const auto initialDirectory = std::filesystem::is_directory(path, error) ? std::filesystem::absolute(path) : std::filesystem::path();
+    return fileDialogCommon<IFileOpenDialog>(filters, path, FOS_FILEMUSTEXIST, CLSID_FileOpenDialog, initialDirectory);
 };
 
 bool chooseFolderDialog(std::filesystem::path& path)

@@ -40,6 +40,7 @@ $scenes = @{
     Arcade = 'F:\media\Arcade\Arcade.pyscene'
 }
 $env:FALCOR_MEDIA_FOLDERS = 'F:\media'
+$env:FALCOR_SCENE_FOLDER = 'F:\media'
 $env:PROBE_GI_MODE = $Mode
 $env:PROBE_GI_SAMPLES = [string]$Samples
 $env:PROBE_GI_REVISION = $Revision

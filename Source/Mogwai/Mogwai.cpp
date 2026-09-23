@@ -527,6 +527,12 @@ namespace Mogwai
     void Renderer::loadSceneDialog()
     {
         std::filesystem::path path;
+        std::error_code error;
+        if (auto folder = getEnvironmentVariable("FALCOR_SCENE_FOLDER"))
+        {
+            if (std::filesystem::is_directory(*folder, error)) path = *folder;
+        }
+        if (path.empty() && mpScene) path = mpScene->getPath().parent_path();
         if (openFileDialog(Scene::getFileExtensionFilters(), path))
         {
             loadScene(path);

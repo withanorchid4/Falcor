@@ -289,6 +289,10 @@ bool fileDialogCommon(const FileDialogFilterVec& filters, std::filesystem::path&
             NULL                          // end of buttons
         );
 
+        std::error_code error;
+        if (std::filesystem::is_directory(path, error))
+            gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(pDialog), std::filesystem::absolute(path).c_str());
+
         result = gtk_dialog_run(GTK_DIALOG(pDialog));
         if (result == GTK_RESPONSE_ACCEPT)
         {

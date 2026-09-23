@@ -15,6 +15,14 @@
 
 换场景会清掉旧场景的探针、重置进度并自动适配新范围；样本数和网格密度等参数保留。新场景仍然等待你点击 Bake。可以在同一个窗口里反复切换，无需重启。
 
+通过本地启动器运行时，场景选择窗口默认打开 `F:\media`（即项目的 `media` 目录）。常用文件：
+
+- Cornell：`F:\media\test_scenes\cornell_box.pyscene`
+- 灰白室内：`F:\media\test_scenes\grey_and_white_room\grey_and_white_room.pyscene`
+- Arcade：`F:\media\Arcade\Arcade.pyscene`
+
+需要换成自己的默认目录时，修改启动脚本中的 `$env:FALCOR_SCENE_FOLDER`。这只影响场景选择窗口，不会改变场景资产搜索路径。
+
 | 面板参数 | 含义 | 修改后的行为 |
 | --- | --- | --- |
 | Grid counts XYZ | 每个轴的探针数量，2..32 | 旧结果失效，等待 Bake |

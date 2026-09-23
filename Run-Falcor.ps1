@@ -41,6 +41,7 @@ $scenes = @{
     Arcade = 'F:\media\Arcade\Arcade.pyscene'
 }
 $env:FALCOR_MEDIA_FOLDERS = 'F:\media'
+$env:FALCOR_SCENE_FOLDER = 'F:\media'
 $launchArguments = @(
     '--device-type', $Device,
     '--script', 'F:\scripts\PathTracer.py',

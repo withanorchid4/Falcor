@@ -132,3 +132,13 @@ Windows / RTX 5080 / Vulkan / Release，Cornell 640×480，384 探针，每探�
 - 最后增加未烘焙预览的简单法线明暗并重新构建，实际启动确认无自动 Bake、无错误，预览可区分同色几何。该预览不影响 Ready 时的光照。
 
 交互测试会备份并恢复其触及的自动命名缓存，不覆盖用户已有结果。日志与图像位于 `build/probe-interactive-validation/`、`build/probe-interactive*.log`；自动化验证覆盖的是与 GUI 共用的控制接口，不声称完成了鼠标点击的 UI 自动化测试。
+
+## 9. 场景选择的默认目录（实现前约定）
+
+用户希望能直接找到已有场景。两个本地启动器设置 `FALCOR_SCENE_FOLDER=F:\media`；Mogwai 的 Load Scene / Ctrl+Shift+O 每次优先打开该目录，未设置或目录不存在时退回当前场景所在目录。其他打开/保存对话框维持原有行为。
+
+现有 openFileDialog 只把 path 当输出，不能控制起始位置。本次小幅扩展：path 若在调用时指向现存目录，就把它作为打开文件对话框的初始目录；签名不变，成功后仍输出所选文件路径。Windows 使用 IFileDialog::SetFolder，Linux 的打开文件分支使用 GTK 当前目录接口。保存和选择文件夹对话框不改变行为。不修改 GI 算法、探针状态或场景加载流程。
+
+先记录本节，再实现、构建 Windows Mogwai，检查三个默认场景路径及启动参数。平台对话框的可视验证如未实际执行，需在交付时如实说明；不为这一低风险入口修改增加复杂测试框架。
+
+验证记录：Windows Release Mogwai 构建通过；两个 PowerShell 启动器语法检查通过，Cornell、Room、Arcade 的三个场景文件均存在。已用更新后的启动器重新启动 Cornell 手动预览。computer-use 能识别 Mogwai 窗口，但截图捕获到了其他窗口，且未取得文件选择对话框状态，因此默认目录尚未完成实际 UI 验证。Linux 分支未在本机编译。

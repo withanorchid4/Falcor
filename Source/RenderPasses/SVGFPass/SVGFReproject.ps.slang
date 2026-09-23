@@ -29,11 +29,11 @@ import Utils.Math.MathHelpers;
 import Utils.Color.ColorHelpers;
 import SVGFCommon;
 
-// Workaround for isnan() not working in slang.
-bool isNaN(float f)
+// Bit test also rejects infinities on backends with aggressive float optimizations.
+bool isNonFinite(float f)
 {
     uint u = asuint(f) & ~0x80000000u; // clear out the sign bit
-    return (u > 0x7F800000);           // greater than Inf is NaN
+    return (u >= 0x7F800000);
 }
 
 cbuffer PerImageCB
@@ -51,6 +51,7 @@ cbuffer PerImageCB
 
     float gAlpha;
     float gMomentsAlpha;
+    bool gDemodulate;
 };
 
 float3 demodulate(float3 c, float3 albedo)
@@ -63,7 +64,7 @@ bool isReprjValid(int2 coord, float Z, float Zprev, float fwidthZ, float3 normal
     const int2 imageDim = getTextureDims(gColor, 0);
 
     // check whether reprojected pixel is inside of the screen
-    if (any(coord < int2(1, 1)) || any(coord > imageDim - int2(1, 1)))
+    if (any(coord < int2(0, 0)) || any(coord >= imageDim))
         return false;
 
     // check if deviation of depths is acceptable
@@ -103,10 +104,12 @@ bool loadPrevData(float2 posH, out float4 prevIllum, out float2 prevMoments, out
     for (int sampleIdx = 0; sampleIdx < 4; sampleIdx++)
     {
         int2 loc = int2(posPrev) + offset[sampleIdx];
+        v[sampleIdx] = false;
+        if (any(loc < int2(0)) || any(loc >= int2(imageDim))) continue;
         float2 depthPrev = gPrevLinearZAndNormal[loc].xy;
         float3 normalPrev = oct_to_ndir_snorm(gPrevLinearZAndNormal[loc].zw);
 
-        v[sampleIdx] = isReprjValid(iposPrev, depth.x, depthPrev.x, depth.y, normal, normalPrev, normalFwidth);
+        v[sampleIdx] = isReprjValid(loc, depth.x, depthPrev.x, depth.y, normal, normalPrev, normalFwidth);
 
         valid = valid || v[sampleIdx];
     }
@@ -149,10 +152,11 @@ bool loadPrevData(float2 posH, out float4 prevIllum, out float2 prevMoments, out
             for (int xx = -radius; xx <= radius; xx++)
             {
                 const int2 p = iposPrev + int2(xx, yy);
+                if (any(p < int2(0)) || any(p >= int2(imageDim))) continue;
                 const float2 depthFilter = gPrevLinearZAndNormal[p].xy;
                 const float3 normalFilter = oct_to_ndir_snorm(gPrevLinearZAndNormal[p].zw);
 
-                if (isReprjValid(iposPrev, depth.x, depthFilter.x, depth.y, normal, normalFilter, normalFwidth))
+                if (isReprjValid(p, depth.x, depthFilter.x, depth.y, normal, normalFilter, normalFwidth))
                 {
                     prevIllum += gPrevIllum[p];
                     prevMoments += gPrevMoments[p].xy;
@@ -171,7 +175,7 @@ bool loadPrevData(float2 posH, out float4 prevIllum, out float2 prevMoments, out
     if (valid)
     {
         // crude, fixme
-        historyLength = gPrevHistoryLength[iposPrev].x;
+        historyLength = gPrevHistoryLength[clamp(iposPrev, int2(0), int2(imageDim) - 1)].x;
     }
     else
     {
@@ -180,6 +184,14 @@ bool loadPrevData(float2 posH, out float4 prevIllum, out float2 prevMoments, out
         historyLength = 0;
     }
 
+    if (any((asuint(prevIllum) & 0x7fffffffu) >= 0x7f800000u) ||
+        any((asuint(prevMoments) & 0x7fffffffu) >= 0x7f800000u) || isNonFinite(historyLength))
+    {
+        prevIllum = float4(0);
+        prevMoments = float2(0);
+        historyLength = 0;
+        valid = false;
+    }
     return valid;
 }
 
@@ -202,9 +214,11 @@ PS_OUT main(FullScreenPassVsOut vsOut)
     const float4 posH = vsOut.posH;
     const int2 ipos = posH.xy;
 
-    float3 illumination = demodulate(gColor[ipos].rgb - gEmission[ipos].rgb, gAlbedo[ipos].rgb);
+    float3 illumination = gColor[ipos].rgb - gEmission[ipos].rgb;
+    if (gDemodulate) illumination = demodulate(illumination, gAlbedo[ipos].rgb);
     // Workaround path tracer bugs. TODO: remove this when we can.
-    if (isNaN(illumination.x) || isNaN(illumination.y) || isNaN(illumination.z))
+    if (isNonFinite(illumination.x) || isNonFinite(illumination.y) || isNonFinite(illumination.z) ||
+        isNonFinite(luminance(illumination) * luminance(illumination)))
     {
         illumination = float3(0, 0, 0);
     }

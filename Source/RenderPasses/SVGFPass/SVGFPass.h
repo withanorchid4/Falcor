@@ -46,12 +46,19 @@ public:
     virtual void execute(RenderContext* pRenderContext, const RenderData& renderData) override;
     virtual void compile(RenderContext* pRenderContext, const CompileData& compileData) override;
     virtual void renderUI(Gui::Widgets& widget) override;
+    virtual void setScene(RenderContext* pRenderContext, const ref<Scene>& pScene) override;
+    virtual void onSceneUpdates(RenderContext* pRenderContext, IScene::UpdateFlags updates) override;
+    virtual void onHotReload(HotReloadFlags reloaded) override { resetHistory(); }
+
+    void resetHistory() { mBuffersNeedClear = true; mHistoryFrames = 0; }
+    uint32_t getHistoryFrames() const { return mHistoryFrames; }
 
 private:
     void allocateFbos(uint2 dim, RenderContext* pRenderContext);
     void clearBuffers(RenderContext* pRenderContext, const RenderData& renderData);
 
-    void computeLinearZAndNormal(RenderContext* pRenderContext, ref<Texture> pLinearZTexture, ref<Texture> pWorldNormalTexture);
+    void computeLinearZAndNormal(RenderContext* pRenderContext, ref<Texture> pLinearZTexture, ref<Texture> pWorldNormalTexture,
+                                ref<Texture> pWorldPositionTexture);
     void computeReprojection(
         RenderContext* pRenderContext,
         ref<Texture> pAlbedoTexture,
@@ -65,9 +72,12 @@ private:
     void computeAtrousDecomposition(RenderContext* pRenderContext, ref<Texture> pAlbedoTexture);
 
     bool mBuffersNeedClear = false;
+    uint32_t mHistoryFrames = 0;
+    ref<Scene> mpScene;
 
     // SVGF parameters
     bool mFilterEnabled = true;
+    bool mDemodulate = true;
     int32_t mFilterIterations = 4;
     int32_t mFeedbackTap = 1;
     float mVarainceEpsilon = 1e-4f;

@@ -11,7 +11,7 @@ import struct
 import sys
 
 
-def read_exr(path):
+def read_exr(path, require_finite=True):
     # Use the same bundled image library as Falcor; supports its PIZ EXR output.
     import ctypes as ct
     import os
@@ -47,7 +47,8 @@ def read_exr(path):
                 for k in range(3):
                     rgb[k].extend(values[k::channels])
             result = [v for channel in rgb for v in channel]
-            assert all(math.isfinite(v) for v in result), f'Non-finite pixels: {path}'
+            if require_finite:
+                assert all(math.isfinite(v) for v in result), f'Non-finite pixels: {path}'
             return w, h, result
         finally:
             lib.FreeImage_Unload(bitmap)

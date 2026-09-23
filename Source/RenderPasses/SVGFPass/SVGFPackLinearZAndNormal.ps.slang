@@ -32,13 +32,25 @@ cbuffer PerImageCB
 {
     Texture2D gLinearZ;
     Texture2D gNormal;
+    Texture2D gWorldPosition;
 };
 
-float4 main(FullScreenPassVsOut vsOut) : SV_TARGET0
+struct PS_OUT
+{
+    float4 depthNormal : SV_TARGET0;
+    float2 posNormalFwidth : SV_TARGET1;
+};
+
+PS_OUT main(FullScreenPassVsOut vsOut)
 {
     float4 fragCoord = vsOut.posH;
     const int2 ipos = int2(fragCoord.xy);
 
-    const float2 nPacked = ndir_to_oct_snorm(gNormal[ipos].xyz);
-    return float4(gLinearZ[ipos].xy, nPacked.x, nPacked.y);
+    const float3 normal = gNormal[ipos].xyz;
+    const bool validSurface = dot(normal, normal) > 0.f;
+    const float2 nPacked = ndir_to_oct_snorm(validSurface ? normal : float3(0, 0, 1));
+    PS_OUT result;
+    result.depthNormal = float4(validSurface ? gLinearZ[ipos].xy : float2(-1, 0), nPacked.x, nPacked.y);
+    result.posNormalFwidth = float2(length(fwidth(gWorldPosition[ipos].xyz)), length(fwidth(normal)));
+    return result;
 }

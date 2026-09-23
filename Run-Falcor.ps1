@@ -2,7 +2,9 @@ param(
     [ValidateSet('Room', 'Cornell', 'Arcade')]
     [string]$Scene = 'Room',
     [ValidateSet('vulkan', 'd3d12')]
-    [string]$Device = 'vulkan'
+    [string]$Device = 'vulkan',
+    [ValidateSet('PathTracer', 'SVGF')]
+    [string]$Renderer = 'PathTracer'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -42,9 +44,10 @@ $scenes = @{
 }
 $env:FALCOR_MEDIA_FOLDERS = 'F:\media'
 $env:FALCOR_SCENE_FOLDER = 'F:\media'
+$graphScript = if ($Renderer -eq 'SVGF') { 'PathTracerSVGFPreview.py' } else { 'PathTracer.py' }
 $launchArguments = @(
     '--device-type', $Device,
-    '--script', 'F:\scripts\PathTracer.py',
+    '--script', ('F:\scripts\' + $graphScript),
     '--scene', $scenes[$Scene],
     '--width', '1280', '--height', '720',
     '--logfile', ('F:\build\windows-vs2022\preview-' + $Scene + '.log')

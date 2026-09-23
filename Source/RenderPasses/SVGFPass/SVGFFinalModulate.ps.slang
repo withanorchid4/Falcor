@@ -32,11 +32,17 @@ cbuffer PerImageCB
     Texture2D gAlbedo;
     Texture2D gEmission;
     Texture2D gIllumination;
+    Texture2D gColor;
+    Texture2D gLinearZAndNormal;
+    bool gDemodulate;
 };
 
 float4 main(FullScreenPassVsOut vsOut) : SV_TARGET0
 {
     const int2 ipos = int2(vsOut.posH.xy);
 
-    return gAlbedo[ipos] * gIllumination[ipos] + gEmission[ipos];
+    if (gLinearZAndNormal[ipos].x < 0.f) return gColor[ipos];
+    // Match the denominator used by demodulate(), including zero-albedo glass.
+    const float3 factor = gDemodulate ? max(gAlbedo[ipos].rgb, float3(0.001)) : float3(1);
+    return float4(factor * gIllumination[ipos].rgb + gEmission[ipos].rgb, 1.f);
 }

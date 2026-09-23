@@ -1,5 +1,17 @@
 # 传统光照探针：使用与结果
 
+## 当前默认防漏光预设
+
+预览脚本使用 **Texel-local，128×128，每 texel 32 条距离射线，Normal/View bias = 0.05/0.05**，开启背面 Probe 抑制，保持双线性距离矩采样和 `1e-6` 基础方差。已在保存的 Room 问题视角、第二视角和隔墙测试中减少墙角亮边，并检查开放地面仍正常受光。
+
+已有图可以点击 **Probes → Distance map bake settings → Leak-resistant preset (128)**，然后 **Load matching cache**；没有匹配缓存才需要 Bake。Room 的新缓存已预先烘焙。旧图和旧问题快照仍恢复其保存的参数，不会自动套用新预设。
+
+这是一组经过实验验证的质量设置，不是精确可见性算法：方向局部采样避免远方向距离混入，view bias 减少交界处的误判。运行时仍每 Probe 一次切比雪夫、四次距离矩读取；384 个 Probe 的距离 atlas 约 **103 MiB**，一次距离烘焙约 **2.01 亿条射线**。View bias 会引入视角依赖，过大可能越过薄几何，因此仍需针对新场景验证。
+
+自动 texel-local 缓存名现在带 `-r128-s32.shprobe` 等参数后缀，保留旧缓存。新路径不存在时会尝试旧文件并严格校验参数；新 Bake 写入带参数的路径。显式 `cacheFile` 仍使用指定路径。
+
+实验、图像和限制见 [漏光修复记录](docs/development/probe-light-leak-fix.md)。
+
 ## 墙面硬边修复与对照开关
 
 预览脚本现在默认开启 **Probes → Distance visibility → Reject back-facing probes**。它在原朝向权重上增加平滑半球抑制：表面背面的 Probe 不再保留最低权重，接近切平面的方向平滑淡出。已在保存的问题快照和另一个房间视角验证，消除了该墙面上由明亮墙后 Probe 引起的块状硬边；不增加射线或距离图读取，不需要重新 Bake。
@@ -31,7 +43,7 @@
 
 ## 距离矩防漏光（新增）
 
-本轮预览脚本默认启用 **Probes → Distance map bake settings → Distance bake mode → Angular weighted (DDGI-style)**。先用 **Distance rays per probe = 2048、Angular sharpness = 50**，然后重新 **Bake**。角度加权只发生在烘焙阶段；运行时仍每 Probe 一次切比雪夫。需要对比旧方式时切回 **Texel-local**，恢复原分辨率/每texel样本数后 Load matching cache。
+此前恢复的 **Angular weighted (DDGI-style)** 模式仍可在 **Probes → Distance map bake settings → Distance bake mode** 中选择，实验参数为 **Distance rays per probe = 2048、Angular sharpness = 50**。角度加权只发生在烘焙阶段；运行时仍每 Probe 一次切比雪夫。当前预览默认已改为文首的 Texel-local 高质量预设；切换烘焙方式后需加载对应缓存或重新 Bake。
 
 角度滤波用 `max(dot(texelDirection, rayDirection),0)^sharpness` 分别加权平均距离和距离平方。指数越大范围越窄；可能减轻不连续感，也可能把近远表面的距离混合而增加漏光，不保证单独消除墙面伪影。本版没有额外高斯模糊或DDGI动态历史混合。
 
@@ -43,7 +55,7 @@
 
 `Q = P + minProbeSpacing * (normalBias * N + viewBias * normalize(cameraPosition - P))`
 
-两个系数独立调节，组合向量不再归一化。默认仍为 `0.05 / 0`。点击 **Normal/view formula preset** 设置为 `0.06 / 0.24`，等价于截图中的 `0.3 * (0.2N + 0.8V)`；**Reset bias defaults** 恢复原默认值。均无需重新 Bake，不增加距离图采样和切比雪夫次数。
+两个系数独立调节，组合向量不再归一化。插件原始默认与 **Reset bias defaults** 为 `0.05 / 0`；当前预览与防漏光预设使用 `0.05 / 0.05`。点击 **Normal/view formula preset** 设置为 `0.06 / 0.24`，等价于截图中的 `0.3 * (0.2N + 0.8V)`。仅调整 bias 无需重新 Bake，不增加距离图采样和切比雪夫次数。
 
 固定一个问题选点，对比默认、纯 normal、组合 bias 下的 **Q point / mean / HIT / V / w**。黄色线段表示完整 normal+view 偏移；面板显示 Q 世界坐标。开启 view bias 后移动相机会自动刷新已选世界点的数据。bias 同时改变查询方向、距离及网格权重，不保证 d 与 mean 一直同号；过大的偏移可能穿过其他几何，view bias 也会引入随视角变化的光照。本版未增加深度检测或偏移回退。
 

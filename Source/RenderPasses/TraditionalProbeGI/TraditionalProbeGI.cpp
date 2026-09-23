@@ -56,6 +56,7 @@ static void registerProbeBindings(pybind11::module& m)
     pass.def("inspectSurfacePoint", &TraditionalProbeGI::inspectSurfacePoint);
     pass.def("cancelBake", &TraditionalProbeGI::cancelBake);
     pass.def("configureDebug", [](TraditionalProbeGI& self, pybind11::dict props) { self.configureDebug(Properties(props)); });
+    pass.def("applyLeakResistantPreset", &TraditionalProbeGI::applyLeakResistantPreset);
     pass.def("pickSurface", &TraditionalProbeGI::pickSurface);
     pass.def_property_readonly("debugInfo", [](TraditionalProbeGI& self) { return self.getDebugInfo().toPython(); });
     pass.def_property_readonly("ready", &TraditionalProbeGI::isReady);
@@ -315,6 +316,27 @@ void TraditionalProbeGI::configureVisibility(const Properties& props)
     mNormalHemisphere = hemisphere;
 }
 
+void TraditionalProbeGI::applyLeakResistantPreset()
+{
+    Properties bake;
+    bake["distanceBakeMode"] = "texelLocal";
+    bake["distanceResolution"] = 128u;
+    bake["distanceSamplesPerTexel"] = 32u;
+    configureBake(bake);
+    Properties visibility;
+    visibility["useVisibility"] = true;
+    visibility["visibilityMode"] = "moments";
+    visibility["useNormalWeight"] = true;
+    visibility["normalHemisphere"] = true;
+    visibility["normalBias"] = 0.05f;
+    visibility["viewBias"] = 0.05f;
+    visibility["distanceBilinear"] = true;
+    visibility["distanceSmooth"] = false;
+    visibility["varianceBase"] = 1e-6f;
+    visibility["visibilityPower"] = 3.f;
+    configureVisibility(visibility);
+}
+
 void TraditionalProbeGI::clearDebugSelection()
 {
     std::fill(mDebugData.begin(), mDebugData.end(), float4(0));
@@ -497,6 +519,8 @@ void TraditionalProbeGI::drawDebug(RenderContext* ctx, const ref<Texture>& color
 
 void TraditionalProbeGI::resetBake()
 {
+    // A legacy file may have been loaded. A new bake always uses the parameterized path.
+    if (mConfiguredCacheFile.empty()) mCacheFile = automaticCacheFile();
     clearProbes();
     mBaking = true;
     mStatus = "Baking. The completed result will be saved automatically.";
@@ -508,6 +532,26 @@ std::string TraditionalProbeGI::configurationError() const
     if (!finite3(mGridMin) || !finite3(mGridMax) || !all(mGridMax > mGridMin))
         return "Invalid bounds: each Grid max must be greater than Grid min.";
     return {};
+}
+
+std::filesystem::path TraditionalProbeGI::automaticCacheFile(bool legacy) const
+{
+    uint64_t hash = 14695981039346656037ull;
+    for (unsigned char c : mSceneKey)
+    {
+        hash ^= c;
+        hash *= 1099511628211ull;
+    }
+    std::ostringstream name;
+    name << std::filesystem::path(mSceneKey).stem().string() << '-' << std::hex << hash;
+    if (mDistanceBakeMode == "angular") name << "-angular";
+    else
+    {
+        name << "-texel-local";
+        if (!legacy) name << "-r" << std::dec << mDistanceResolution << "-s" << mDistanceSamples;
+    }
+    name << ".shprobe";
+    return std::filesystem::path("F:/build/probes") / name.str();
 }
 
 void TraditionalProbeGI::initializeProbes(bool allowAutomatic)
@@ -523,18 +567,7 @@ void TraditionalProbeGI::initializeProbes(bool allowAutomatic)
     mSceneKey = path.generic_string();
     mSceneStamp = std::filesystem::exists(path) ? int64_t(std::filesystem::last_write_time(path).time_since_epoch().count()) : 0;
     mCacheFile = mConfiguredCacheFile;
-    if (mCacheFile.empty())
-    {
-        uint64_t hash = 14695981039346656037ull;
-        for (unsigned char c : mSceneKey)
-        {
-            hash ^= c;
-            hash *= 1099511628211ull;
-        }
-        std::ostringstream name;
-        name << path.stem().string() << '-' << std::hex << hash << (mDistanceBakeMode == "angular" ? "-angular.shprobe" : "-texel-local.shprobe");
-        mCacheFile = std::filesystem::path("F:/build/probes") / name.str();
-    }
+    if (mCacheFile.empty()) mCacheFile = automaticCacheFile();
     clearProbes();
     mInitialized = true;
     mSettingsChanged = false;
@@ -561,13 +594,21 @@ void TraditionalProbeGI::initializeProbes(bool allowAutomatic)
 
 bool TraditionalProbeGI::loadCache()
 {
+    auto readFile = mCacheFile;
     auto reject = [&](const std::string& why)
     {
         mStatus = std::string("Cache not loaded: ") + why + ". Check the settings or click Bake.";
-        logWarning("TraditionalProbeGI: cache rejected: {} ({})", why, mCacheFile.string());
+        logWarning("TraditionalProbeGI: cache rejected: {} ({})", why, readFile.string());
         return false;
     };
     std::ifstream in(mCacheFile);
+    // Only fall back when the new file is absent, never conceal a corrupt new cache.
+    if (!in && !std::filesystem::exists(mCacheFile) && mConfiguredCacheFile.empty() && mDistanceBakeMode == "texelLocal")
+    {
+        readFile = automaticCacheFile(true);
+        in.clear();
+        in.open(readFile);
+    }
     in.imbue(std::locale::classic());
     if (!in)
         return reject("cannot open");
@@ -645,6 +686,7 @@ bool TraditionalProbeGI::loadCache()
     mBaking = false;
     mDirty = true;
     mStatus = "Ready: loaded matching probe cache.";
+    mCacheFile = readFile;
     mDebugRefresh = true;
     logInfo("TraditionalProbeGI: LOAD ready, {} probes, no baking dispatch", probeCount());
     return true;
@@ -1094,6 +1136,8 @@ void TraditionalProbeGI::renderUI(Gui::Widgets& w)
         changes["maxBounces"] = bounces;
     if (auto d = w.group("Distance map bake settings"))
     {
+        if (d.button("Leak-resistant preset (128)")) applyLeakResistantPreset();
+        d.tooltip("128x128 texel-local distance, 32 rays/texel, view bias 0.05 and back-facing rejection. Requires a matching cache or Bake. About 103 MiB for 384 probes.");
         auto resolution = mDistanceResolution;
         auto distanceSamples = mDistanceSamples;
         auto range = mDistanceRangeScale;

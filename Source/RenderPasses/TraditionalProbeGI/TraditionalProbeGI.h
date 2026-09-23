@@ -28,6 +28,7 @@ public:
     Properties getDebugInfo() const;
     void configureBake(const Properties& props);
     void configureVisibility(const Properties& props);
+    void applyLeakResistantPreset();
     void requestBake() { mAction = Action::Bake; }
     void requestLoad() { mAction = Action::Load; }
     void cancelBake() { mAction = Action::Cancel; }
@@ -41,6 +42,7 @@ public:
 private:
     void prepareVars();
     void initializeProbes(bool allowAutomatic);
+    std::filesystem::path automaticCacheFile(bool legacy = false) const;
     void clearProbes();
     std::string configurationError() const;
     void resetBake();

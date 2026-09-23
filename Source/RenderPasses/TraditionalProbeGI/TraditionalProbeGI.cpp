@@ -32,10 +32,27 @@
 #include <iomanip>
 #include <limits>
 #include <cmath>
+#include <sstream>
+
+static void registerProbeBindings(pybind11::module& m)
+{
+    pybind11::class_<TraditionalProbeGI, RenderPass, ref<TraditionalProbeGI>> pass(m, "TraditionalProbeGI");
+    pass.def("configureBake", [](TraditionalProbeGI& self, pybind11::dict props) { self.configureBake(Properties(props)); });
+    pass.def("bake", &TraditionalProbeGI::requestBake);
+    pass.def("loadCache", &TraditionalProbeGI::requestLoad);
+    pass.def("cancelBake", &TraditionalProbeGI::cancelBake);
+    pass.def_property_readonly("ready", &TraditionalProbeGI::isReady);
+    pass.def_property_readonly("baking", &TraditionalProbeGI::isBaking);
+    pass.def_property_readonly("completedSamples", &TraditionalProbeGI::getCompletedSamples);
+    pass.def_property_readonly("status", &TraditionalProbeGI::getStatus);
+    pass.def_property_readonly("cacheFile", &TraditionalProbeGI::getCacheFile);
+    pass.def_property_readonly("settings", [](TraditionalProbeGI& self) { return self.getProperties().toPython(); });
+}
 
 extern "C" FALCOR_API_EXPORT void registerPlugin(Falcor::PluginRegistry& registry)
 {
     registry.registerClass<RenderPass, TraditionalProbeGI>();
+    ScriptBindings::registerBinding(registerProbeBindings);
 }
 
 namespace
@@ -83,7 +100,7 @@ TraditionalProbeGI::TraditionalProbeGI(ref<Device> device, const Properties& pro
         else if (key == "mode")
             mMode = value.operator std::string();
         else if (key == "cacheFile")
-            mCacheFile = value.operator std::filesystem::path();
+            mConfiguredCacheFile = value.operator std::filesystem::path();
         else if (key == "sceneRevision")
             mRevision = value.operator std::string();
         else if (key == "intensity")
@@ -94,6 +111,8 @@ TraditionalProbeGI::TraditionalProbeGI(ref<Device> device, const Properties& pro
             mEnable = value;
         else if (key == "showProbeOnly")
             mProbeOnly = value;
+        else if (key == "previewUnbaked")
+            mPreview = value;
         else
             FALCOR_THROW("TraditionalProbeGI: unknown property '{}'", key);
     }
@@ -106,8 +125,7 @@ TraditionalProbeGI::TraditionalProbeGI(ref<Device> device, const Properties& pro
     FALCOR_CHECK(
         std::isfinite(mIntensity) && mIntensity >= 0 && std::isfinite(mNormalBias) && mNormalBias >= 0, "Invalid probe intensity/bias."
     );
-    FALCOR_CHECK(mMode == "bake" || mMode == "load" || mMode == "auto", "mode must be bake/load/auto.");
-    FALCOR_CHECK(!mCacheFile.empty(), "cacheFile is required.");
+    FALCOR_CHECK(mMode == "manual" || mMode == "bake" || mMode == "load" || mMode == "auto", "mode must be manual/bake/load/auto.");
     mpSampleGenerator = SampleGenerator::create(mpDevice, SAMPLE_GENERATOR_UNIFORM);
 }
 
@@ -124,12 +142,13 @@ Properties TraditionalProbeGI::getProperties() const
     p["samplesPerFrame"] = mBatch;
     p["maxBounces"] = mMaxBounces;
     p["mode"] = mMode;
-    p["cacheFile"] = mCacheFile;
+    p["cacheFile"] = mConfiguredCacheFile;
     p["sceneRevision"] = mRevision;
     p["intensity"] = mIntensity;
     p["normalBias"] = mNormalBias;
     p["enableProbes"] = mEnable;
     p["showProbeOnly"] = mProbeOnly;
+    p["previewUnbaked"] = mPreview;
     return p;
 }
 
@@ -141,7 +160,7 @@ RenderPassReflection TraditionalProbeGI::reflect(const CompileData&)
     return r;
 }
 
-void TraditionalProbeGI::resetBake()
+void TraditionalProbeGI::clearProbes()
 {
     std::vector<float4> zero(probeCount() * 9, float4(0));
     mpSH = mpDevice->createStructuredBuffer(
@@ -153,11 +172,26 @@ void TraditionalProbeGI::resetBake()
     );
     mCompleted = 0;
     mReady = false;
+    mBaking = false;
     mDirty = true;
+}
+
+void TraditionalProbeGI::resetBake()
+{
+    clearProbes();
+    mBaking = true;
+    mStatus = "Baking. The completed result will be saved automatically.";
     logInfo("TraditionalProbeGI: BAKE start, {} probes x {} samples, cache {}", probeCount(), mSamples, mCacheFile.string());
 }
 
-void TraditionalProbeGI::initializeProbes()
+std::string TraditionalProbeGI::configurationError() const
+{
+    if (!finite3(mGridMin) || !finite3(mGridMax) || !all(mGridMax > mGridMin))
+        return "Invalid bounds: each Grid max must be greater than Grid min.";
+    return {};
+}
+
+void TraditionalProbeGI::initializeProbes(bool allowAutomatic)
 {
     if (!mExplicitBounds)
     {
@@ -166,10 +200,36 @@ void TraditionalProbeGI::initializeProbes()
         mGridMin = bounds.minPoint + inset;
         mGridMax = bounds.maxPoint - inset;
     }
-    FALCOR_CHECK(finite3(mGridMin) && finite3(mGridMax) && all(mGridMax > mGridMin), "Invalid probe volume bounds.");
     auto path = std::filesystem::weakly_canonical(mpScene->getPath());
     mSceneKey = path.generic_string();
     mSceneStamp = std::filesystem::exists(path) ? int64_t(std::filesystem::last_write_time(path).time_since_epoch().count()) : 0;
+    mCacheFile = mConfiguredCacheFile;
+    if (mCacheFile.empty())
+    {
+        uint64_t hash = 14695981039346656037ull;
+        for (unsigned char c : mSceneKey)
+        {
+            hash ^= c;
+            hash *= 1099511628211ull;
+        }
+        std::ostringstream name;
+        name << path.stem().string() << '-' << std::hex << hash << ".shprobe";
+        mCacheFile = std::filesystem::path("F:/build/probes") / name.str();
+    }
+    clearProbes();
+    mInitialized = true;
+    mSettingsChanged = false;
+    mStatus = "Waiting: configure the probes, then click Bake or Load matching cache.";
+    const auto error = configurationError();
+    if (!error.empty())
+    {
+        mStatus = error;
+        if (allowAutomatic && mMode != "manual")
+            FALCOR_THROW("{}", error);
+        return;
+    }
+    if (!allowAutomatic || mMode == "manual")
+        return;
     bool loaded = false;
     if (mMode != "bake")
         loaded = loadCache();
@@ -178,13 +238,13 @@ void TraditionalProbeGI::initializeProbes()
         FALCOR_CHECK(mMode != "load", "TraditionalProbeGI: cache missing, invalid or incompatible: {}", mCacheFile.string());
         resetBake();
     }
-    mInitialized = true;
 }
 
 bool TraditionalProbeGI::loadCache()
 {
     auto reject = [&](const char* why)
     {
+        mStatus = std::string("Cache not loaded: ") + why + ". Check the settings or click Bake.";
         logWarning("TraditionalProbeGI: cache rejected: {} ({})", why, mCacheFile.string());
         return false;
     };
@@ -228,7 +288,9 @@ bool TraditionalProbeGI::loadCache()
     );
     mCompleted = mSamples;
     mReady = true;
+    mBaking = false;
     mDirty = true;
+    mStatus = "Ready: loaded matching probe cache.";
     logInfo("TraditionalProbeGI: LOAD ready, {} probes, no baking dispatch", probeCount());
     return true;
 }
@@ -254,6 +316,7 @@ void TraditionalProbeGI::saveCache()
     out.flush();
     FALCOR_CHECK(bool(out), "Failed writing probe cache {}", mCacheFile.string());
     logInfo("TraditionalProbeGI: BAKE complete and SAVED {}", mCacheFile.string());
+    mStatus = "Ready: bake completed and saved.";
 }
 
 void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
@@ -271,14 +334,40 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
                               U::LightIntensityChanged | U::LightPropertiesChanged | U::LightCountChanged | U::EnvMapChanged |
                               U::EnvMapPropertiesChanged | U::RenderSettingsChanged | U::EmissiveMaterialsChanged | U::CurvesMoved |
                               U::DisplacementChanged | U::SDFGeometryChanged | U::RecompileNeeded;
-    if (mFrame > 0 && is_set(mpScene->getUpdates(), invalidating))
-        FALCOR_THROW("TraditionalProbeGI: scene lighting/geometry changed. Restart with mode=bake and a new sceneRevision.");
-    if (!mInitialized)
-        initializeProbes();
-    if (mRebake)
+    const bool sceneChanged = mFrame > 0 && is_set(mpScene->getUpdates(), invalidating);
+    if (sceneChanged)
     {
-        resetBake();
-        mRebake = false;
+        // Existing scene interfaces rebuild shader modules and hit groups when required.
+        // Camera movement is not part of the invalidating mask.
+        setScene(ctx, mpScene);
+        mAllowStartupActions = false;
+    }
+    if (!mInitialized || mSettingsChanged)
+    {
+        initializeProbes(mAllowStartupActions && !mSettingsChanged);
+        mAllowStartupActions = false;
+    }
+    if (sceneChanged)
+        mStatus = "Scene changed. Pause animations and click Bake to update the probes.";
+    const auto action = mAction;
+    mAction = Action::None;
+    if (action == Action::Cancel)
+    {
+        clearProbes();
+        mStatus = "Bake cancelled. No partial result was saved.";
+    }
+    else if (action != Action::None)
+    {
+        const auto error = configurationError();
+        if (!error.empty())
+            mStatus = error;
+        else if (action == Action::Bake)
+            resetBake();
+        else if (action == Action::Load)
+        {
+            clearProbes();
+            loadCache(); // UI requests report errors in the panel instead of terminating.
+        }
     }
     if (mpScene->getRenderSettings().useEmissiveLights)
         mpScene->getLightCollection(ctx);
@@ -308,9 +397,10 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
     cb["gIntensity"] = mIntensity;
     cb["gNormalBias"] = mNormalBias;
     cb["gProbeOnly"] = mProbeOnly;
+    cb["gPreviewUnbaked"] = mPreview && !mReady;
     var["CB"]["gFrameCount"] = mFrame;
     var["CB"]["gPRNGDimension"] = 0u;
-    if (!mReady)
+    if (mBaking)
     {
         uint32_t batch = std::min(mBatch, mSamples - mCompleted);
         cb["gBake"] = true;
@@ -321,13 +411,25 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
         mCompleted += batch;
         if (mCompleted == mSamples)
         {
-            saveCache();
             mReady = true;
+            mBaking = false;
             mDirty = true;
+            try
+            {
+                saveCache();
+            }
+            catch (const std::exception& e)
+            {
+                mStatus = std::string("Ready in GPU memory, but saving failed: ") + e.what();
+                if (mMode != "manual")
+                    throw;
+                logWarning("TraditionalProbeGI: {}", mStatus);
+            }
         }
     }
     cb["gBake"] = false;
     cb["gReady"] = mReady && mEnable;
+    cb["gPreviewUnbaked"] = mPreview && !mReady;
     mpScene->raytrace(ctx, p.get(), mTracer.pVars, uint3(data.getDefaultTextureDims(), 1));
     if (mDirty)
     {
@@ -339,24 +441,141 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
     ++mFrame;
 }
 
+void TraditionalProbeGI::configureBake(const Properties& props)
+{
+    auto counts = mCounts;
+    auto lo = mGridMin, hi = mGridMax;
+    auto samples = mSamples, batch = mBatch, bounces = mMaxBounces;
+    auto revision = mRevision;
+    auto explicitBounds = mExplicitBounds;
+    for (const auto& [key, value] : props)
+    {
+        if (key == "gridCounts")
+            counts = value;
+        else if (key == "gridMin")
+        {
+            lo = value;
+            explicitBounds = true;
+        }
+        else if (key == "gridMax")
+        {
+            hi = value;
+            explicitBounds = true;
+        }
+        else if (key == "autoBounds")
+            explicitBounds = !value.operator bool();
+        else if (key == "samplesPerProbe")
+            samples = value;
+        else if (key == "samplesPerFrame")
+            batch = value;
+        else if (key == "maxBounces")
+            bounces = value;
+        else if (key == "sceneRevision")
+            revision = value.operator std::string();
+        else
+            FALCOR_THROW("Unknown bake setting '{}'", key);
+    }
+    FALCOR_CHECK(all(counts >= uint3(2)) && all(counts <= uint3(32)), "gridCounts must be 2..32 per axis.");
+    FALCOR_CHECK(samples >= 1 && samples <= 65536 && batch >= 1 && batch <= 64 && bounces <= 8, "Invalid sampling settings.");
+    // Bounds may be temporarily inverted while typing. The UI rejects Bake/Load until fixed.
+    const bool changed = any(counts != mCounts) || any(lo != mGridMin) || any(hi != mGridMax) || samples != mSamples ||
+                         bounces != mMaxBounces || revision != mRevision || explicitBounds != mExplicitBounds;
+    mCounts = counts;
+    mGridMin = lo;
+    mGridMax = hi;
+    mSamples = samples;
+    mBatch = batch;
+    mMaxBounces = bounces;
+    mRevision = revision;
+    mExplicitBounds = explicitBounds;
+    if (changed)
+    {
+        mSettingsChanged = true;
+        mReady = false;
+        mBaking = false;
+        mCompleted = 0;
+        mAction = Action::None;
+        mDirty = true;
+        mStatus = "Bake settings changed. Click Bake to apply them.";
+    }
+}
+
 void TraditionalProbeGI::renderUI(Gui::Widgets& w)
 {
-    w.text(mReady ? "Baked probes ready (sampling only)" : "Baking probes...");
+    if (!mpScene)
+    {
+        w.text("Load a scene using File > Load Scene.");
+        return;
+    }
+    w.text("Scene: " + mpScene->getPath().filename().string());
+    w.text(mStatus);
+    if (!mReady && mPreview)
+        w.text("Unbaked material preview (not probe lighting)");
     w.text(std::to_string(mCompleted) + " / " + std::to_string(mSamples) + " samples per probe");
+    auto counts = mCounts;
+    auto samples = mSamples, batch = mBatch, bounces = mMaxBounces;
+    auto lo = mGridMin, hi = mGridMax;
+    bool automatic = !mExplicitBounds;
+    auto revision = mRevision;
+    Properties changes;
+    if (w.var("Grid counts XYZ", counts, 2u, 32u))
+        changes["gridCounts"] = counts;
+    if (w.checkbox("Fit bounds to scene", automatic))
+        changes["autoBounds"] = automatic;
+    if (!automatic)
+    {
+        if (w.var("Grid min", lo))
+            changes["gridMin"] = lo;
+        if (w.var("Grid max", hi))
+            changes["gridMax"] = hi;
+    }
+    if (w.var("Samples per probe", samples, 1u, 65536u))
+        changes["samplesPerProbe"] = samples;
+    if (w.var("Samples per frame", batch, 1u, 64u))
+        changes["samplesPerFrame"] = batch;
+    w.tooltip("Controls baking work per frame. Changing this preserves completed samples.");
+    if (w.var("Max bounces", bounces, 0u, 8u))
+        changes["maxBounces"] = bounces;
+    if (w.textbox("Scene revision", revision))
+        changes["sceneRevision"] = revision;
+    configureBake(changes);
+    w.text(std::to_string(probeCount()) + " probes, " + std::to_string(uint64_t(probeCount()) * mSamples) + " total paths");
+    w.text("Cache: " + mCacheFile.string());
+    const auto error = configurationError();
+    if (!error.empty())
+        w.text(error);
+    else
+    {
+        if (w.button(mBaking ? "Restart bake" : "Bake"))
+            requestBake();
+        if (!mBaking && w.button("Load matching cache"))
+            requestLoad();
+    }
+    if (mBaking && w.button("Cancel bake"))
+        cancelBake();
+    mDirty |= w.checkbox("Preview unbaked surfaces", mPreview);
     mDirty |= w.checkbox("Enable probes", mEnable);
     mDirty |= w.checkbox("Probe lighting only", mProbeOnly);
     mDirty |= w.var("Probe intensity", mIntensity, 0.f, 10.f);
-    if (w.button("Re-bake and save"))
-        mRebake = true;
+    mDirty |= w.var("Normal bias", mNormalBias, 0.f, 1.f);
     w.text("Static diffuse SH. No visibility correction; thin-wall light leaks are expected.");
 }
 
 void TraditionalProbeGI::setScene(RenderContext* pRenderContext, const ref<Scene>& pScene)
 {
+    if (pScene && mHasScene && pScene != mpScene)
+        mExplicitBounds = false;
+    if (pScene)
+        mHasScene = true;
     mInitialized = false;
     mReady = false;
+    mBaking = false;
+    mCompleted = 0;
+    mSettingsChanged = false;
+    mAllowStartupActions = true;
+    mStatus = "Waiting: configure the probes, then click Bake.";
     mpSH = nullptr;
-    mRebake = false;
+    mAction = Action::None;
     // Clear data for previous scene.
     // After changing scene, the raytracing program should to be recreated.
     mTracer.pProgram = nullptr;

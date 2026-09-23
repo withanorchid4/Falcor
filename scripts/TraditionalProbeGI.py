@@ -5,8 +5,8 @@ import os
 
 def render_graph_TraditionalProbeGI():
     props = {
-        "mode": os.environ.get("PROBE_GI_MODE", "auto"),
-        "cacheFile": os.environ.get("PROBE_GI_CACHE", "F:/build/probes/cornell.shprobe"),
+        "mode": os.environ.get("PROBE_GI_MODE", "manual"),
+        "cacheFile": os.environ.get("PROBE_GI_CACHE", ""),
         "sceneRevision": os.environ.get("PROBE_GI_REVISION", "1"),
         "gridCounts": uint3(8, 6, 8),
         "samplesPerProbe": int(os.environ.get("PROBE_GI_SAMPLES", "2048")),

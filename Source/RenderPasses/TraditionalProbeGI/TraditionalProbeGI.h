@@ -19,10 +19,21 @@ public:
     void setScene(RenderContext*, const ref<Scene>&) override;
     void execute(RenderContext*, const RenderData&) override;
     void renderUI(Gui::Widgets&) override;
+    void configureBake(const Properties& props);
+    void requestBake() { mAction = Action::Bake; }
+    void requestLoad() { mAction = Action::Load; }
+    void cancelBake() { mAction = Action::Cancel; }
+    bool isReady() const { return mReady; }
+    bool isBaking() const { return mBaking; }
+    uint32_t getCompletedSamples() const { return mCompleted; }
+    const std::string& getStatus() const { return mStatus; }
+    std::string getCacheFile() const { return mCacheFile.string(); }
 
 private:
     void prepareVars();
-    void initializeProbes();
+    void initializeProbes(bool allowAutomatic);
+    void clearProbes();
+    std::string configurationError() const;
     void resetBake();
     bool loadCache();
     void saveCache();
@@ -42,10 +53,21 @@ private:
     bool mExplicitBounds = false;
     uint32_t mSamples = 2048, mBatch = 16, mMaxBounces = 3;
     uint32_t mCompleted = 0, mFrame = 0;
-    bool mInitialized = false, mReady = false, mDirty = true, mRebake = false;
+    enum class Action
+    {
+        None,
+        Bake,
+        Load,
+        Cancel
+    };
+    Action mAction = Action::None;
+    bool mInitialized = false, mReady = false, mDirty = true, mBaking = false;
+    bool mSettingsChanged = false, mAllowStartupActions = true, mHasScene = false;
+    bool mPreview = true;
     bool mEnable = true, mProbeOnly = false;
     float mIntensity = 1.f, mNormalBias = 0.05f;
-    std::string mMode = "auto", mRevision = "1", mSceneKey;
+    std::string mMode = "manual", mRevision = "1", mSceneKey;
+    std::string mStatus = "Load a scene to configure probes.";
     int64_t mSceneStamp = 0;
-    std::filesystem::path mCacheFile = "F:/build/probes/default.shprobe";
+    std::filesystem::path mConfiguredCacheFile, mCacheFile;
 };

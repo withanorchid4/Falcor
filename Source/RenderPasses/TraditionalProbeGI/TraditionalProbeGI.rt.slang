@@ -26,6 +26,7 @@ cbuffer ProbeCB
     bool gBake;
     bool gReady;
     bool gProbeOnly;
+    bool gPreviewUnbaked;
     float gIntensity;
     float gNormalBias;
 }
@@ -560,6 +561,12 @@ void rayGen()
             probeColor = properties.diffuseReflectionAlbedo * sampleProbeIrradiance(sd.posW, sd.frame.N) *
                 (gIntensity / 3.1415926536f);
         color += probeColor;
+        if (gPreviewUnbaked)
+        {
+            // Only a geometry preview while waiting/baking, never part of the GI result.
+            float shade = 0.25f + 0.75f * max(0.f, dot(sd.frame.N, normalize(float3(0.3f, 0.8f, 0.5f))));
+            color = properties.emission + properties.diffuseReflectionAlbedo * shade;
+        }
     }
     else if (kUseEnvBackground) color = gScene.envMap.eval(direction);
     gProbeLighting[pixel] = float4(probeColor, 1.f);

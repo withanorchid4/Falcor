@@ -4,10 +4,37 @@
 
 ## 启动
 
-在 Falcor 根目录双击 `Run-ProbeGI.cmd`。默认打开 Cornell：如果有匹配缓存就加载，没有则开始烘焙。首次画面只有直接解析光和表面自发光，探针完成后才加入完整探针照明。
+在 Falcor 根目录双击 `Run-ProbeGI.cmd`。默认打开 Cornell 并等待手动操作，不会自动 Bake。未烘焙时显示材质颜色预览，面板标为 `Unbaked material preview`，方便观察场景；该预览不是 GI 结果。
+
+### 在程序内切场景和手动 Bake
+
+1. 使用 **File → Load Scene**，或 **Ctrl+Shift+O**，选择新的 `.pyscene` 等支持的场景文件。已有场景在 `F:\media\test_scenes\` 和 `F:\media\Arcade\` 下。
+2. 在渲染图控制面板展开 **Probes** Pass，调整下面的参数。若看不到图控制面板，可按 F6 切换显示。
+3. 点击 **Bake**。烘焙期间显示每探针已完成样本数；可点 **Cancel bake** 取消，或点 **Restart bake** 从头开始。
+4. 完成后自动保存并显示探针照明。需要使用以前的结果时，设置相同参数后点 **Load matching cache**；加载不匹配会在面板提示，程序不会退出。
+
+换场景会清掉旧场景的探针、重置进度并自动适配新范围；样本数和网格密度等参数保留。新场景仍然等待你点击 Bake。可以在同一个窗口里反复切换，无需重启。
+
+| 面板参数 | 含义 | 修改后的行为 |
+| --- | --- | --- |
+| Grid counts XYZ | 每个轴的探针数量，2..32 | 旧结果失效，等待 Bake |
+| Fit bounds to scene | 自动使用场景包围盒向内缩 5% 的范围 | 旧结果失效，等待 Bake |
+| Grid min / Grid max | 关闭自动范围后设置世界坐标边界 | 旧结果失效；边界非法时提示并禁用 Bake/Load |
+| Samples per probe | 每个探针的总样本数，1..65536 | 旧结果失效，等待 Bake |
+| Samples per frame | 每帧每个探针的工作量，1..64 | 可在烘焙中调整，保留进度；越大越可能影响交互流畅度 |
+| Max bounces | 探针路径允许的反射继续次数，0..8 | 旧结果失效，等待 Bake |
+| Scene revision | 外部模型、贴图等资产的手动版本标签 | 旧结果失效，等待 Bake |
+| Probe intensity / Normal bias | 实时光照强度和采样偏移 | 即时生效，不重烘焙 |
+
+修改影响烘焙的参数会中止正在进行的 Bake，防止不同参数的样本混在一起。只有完整烘焙才写缓存，取消不会覆盖已有缓存。
+
+### 可选命令行方式
 
 ```powershell
-# 强制重新烘焙，完成后自动保存并继续显示
+# 默认手动模式
+.\Run-ProbeGI.cmd -Scene Cornell -Mode manual
+
+# 自动开始烘焙，完成后自动保存并继续显示
 .\Run-ProbeGI.cmd -Scene Cornell -Mode bake
 
 # 只从文件加载；缺失或不匹配时会报错
@@ -22,7 +49,7 @@
 .\Run-ProbeGI.cmd -Scene Cornell -Mode load -Samples 8192
 ```
 
-窗口内展开 `Probes` Pass，可看到烘焙进度，并操作 `Enable probes`、`Probe lighting only`、`Probe intensity`、`Re-bake and save`。勾选只看探针贡献时，直接光、可见发光面和环境背景不会混入该调试图。
+窗口内还可操作 `Enable probes`、`Probe lighting only` 和 `Preview unbaked surfaces`。勾选只看探针贡献时，直接光、可见发光面和环境背景不会混入该调试图；没有有效探针时该输出为黑色。关闭未烘焙预览后，未烘焙状态只显示直接解析光和表面自发光。
 
 启动器默认 Vulkan，沿用 F: 映射和原有 UTF-8 修复。每次命令新开一个窗口，不要让多个烘焙进程写同一个缓存文件。
 
@@ -30,9 +57,11 @@
 
 默认 8×6×8，共 384 个探针，每个探针 2048 样本、最多 3 次反射继续，每帧每探针追踪 16 条路径，128 个渲染帧完成烘焙。这不是“128 秒”：实际时间取决于场景、设备和首次着色器编译。
 
-烘焙结果保存为 `build/probes/cornell.shprobe`、`room.shprobe` 或 `arcade.shprobe`。缓存是带版本与元数据的文本文件，保存平均入射辐亮度 SH。完成后只在 GPU 上插值与卷积，不会继续追踪探针路径，也不逐帧读回 CPU。相机可见性和解析光源阴影仍使用光追。
+交互缓存保存为 `build/probes/<场景文件名>-<路径标识>.shprobe`，完整位置显示在面板中。不同场景使用不同文件，切换场景不会互相覆盖。高级脚本仍可显式指定 `cacheFile`；原有 `cornell.shprobe` 属于显式文件，可通过该属性继续使用。自动命名不会删除旧文件。
 
-修改 `scripts/TraditionalProbeGI.py` 中的参数即可改变网格。例如可为场景手动增加：
+缓存是带版本与元数据的文本文件，保存平均入射辐亮度 SH。完成后只在 GPU 上插值与卷积，不会继续追踪探针路径，也不逐帧读回 CPU。相机可见性和解析光源阴影仍使用光追。
+
+通常直接在面板改参数即可。需要保存自己的默认配置时，也可修改 `scripts/TraditionalProbeGI.py`，例如增加：
 
 ```python
 "gridCounts": uint3(12, 8, 12),
@@ -57,7 +86,7 @@ Cornell 主要使用发光面照明，因此关闭探针后房间大部分变黑
 
 这是静态漫反射近似，不提供镜面间接反射或正确透射。SH 只有低频方向信息；有限采样有噪声，普通三线性插值会跨墙混光，实体内探针也会污染结果。增大采样数能减少 Monte Carlo 噪声，不能解决这些结构性问题。
 
-相机移动和窗口尺寸变化不要求重新烘焙。运行时若修改灯光、材质或几何，插件会拒绝继续使用已经失效的数据，提示重启并烘焙。动态物体和连续动画不是本版支持范围。
+相机移动和窗口尺寸变化不要求重新烘焙。运行时修改灯光、材质或几何后，插件会清掉失效数据，提示再次点击 Bake，不再要求退出程序。动态物体和连续动画不是本版支持范围；烘焙前请暂停动画，否则变化会不断使正在烘焙的数据失效。
 
 ## 实现入口
 
@@ -70,6 +99,7 @@ Cornell 主要使用发光面照明，因此关闭探针后房间大部分变黑
 | `scripts/TraditionalProbeGIValidation.py` | 固定场景、离屏捕获、PathTracer 参考与失败时退出 |
 | `tests/probe_gi/run_validation.py` | 在独立进程中执行完整集成验收 |
 | `tests/probe_gi/check_results.py` | 无第三方包的 SH 数学、缓存和 HDR 检查 |
+| `tests/probe_gi/interactive_script.py` | 同一进程切场景、手动 Bake、改参、取消和错误恢复验收 |
 
 ## 构建与复验
 
@@ -81,6 +111,12 @@ Set-Location F:\
     --config Release --target TraditionalProbeGI --parallel 8
 
 & '.\tools\.packman\python\python.exe' '.\tests\probe_gi\run_validation.py'
+
+# 交互控制流程复验：同进程切换场景，调用与 UI 按钮相同的接口
+$env:FALCOR_MEDIA_FOLDERS = 'F:\media'
+& '.\build\windows-vs2022\bin\Release\Mogwai.exe' --device-type vulkan `
+    --headless --deferred --script 'F:\tests\probe_gi\interactive_script.py' `
+    --width 320 --height 240 --logfile 'F:\build\probe-interactive.log'
 ```
 
 验收会重新烘焙默认 Cornell 缓存，依次测试独立加载、移动相机、关闭探针对照、2048 spp PathTracer 参考和错误缓存。输出在 `build/probe-validation/`，日志在 `build/probe-*.log`。`results.json` 记录图像数值，`integration.json` 只在整个流程成功后生成。该目录和缓存位于已有 Git 忽略范围内。
@@ -90,6 +126,8 @@ Set-Location F:\
 ## 本轮结果
 
 Cornell / Vulkan / Release 已通过实际烘焙、独立加载、相机移动、探针开关及 6 类错误缓存检查。384 探针的文本缓存约 117 KiB；保存前/加载后的 HDR 最大差异为 0，所有像素有限。与 2048 spp PathTracer 参考的线性 RGB RMSE 为 0.104725。完整记录见开发契约末尾。
+
+交互扩展也已通过同进程 Cornell → Room → Cornell 切换、手动 Bake/取消/改参/加载、非法参数和保存失败恢复检查；默认启动保持等待，不自动烘焙。测试使用与面板按钮共用的控制接口。
 
 Room/Arcade 的入口可用，但本轮没有对它们执行完整数值验收。当前结果仍可见局部块状变化与偏暗，不应视为生产级探针方案。
 

@@ -1,6 +1,6 @@
 param(
     [ValidateSet('Room', 'Cornell', 'Arcade')][string]$Scene = 'Cornell',
-    [ValidateSet('auto', 'bake', 'load')][string]$Mode = 'auto',
+    [ValidateSet('manual', 'auto', 'bake', 'load')][string]$Mode = 'manual',
     [ValidateRange(1, 65536)][int]$Samples = 2048,
     [string]$Revision = '1'
 )
@@ -43,7 +43,7 @@ $env:FALCOR_MEDIA_FOLDERS = 'F:\media'
 $env:PROBE_GI_MODE = $Mode
 $env:PROBE_GI_SAMPLES = [string]$Samples
 $env:PROBE_GI_REVISION = $Revision
-$env:PROBE_GI_CACHE = 'F:/build/probes/' + $Scene.ToLowerInvariant() + '.shprobe'
+$env:PROBE_GI_CACHE = ''
 $env:PROBE_GI_ENABLED = '1'
 $launchArguments = @(
     '--device-type', 'vulkan',

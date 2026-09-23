@@ -4,7 +4,9 @@
 
 ## 启动
 
-在 Falcor 根目录双击 `Run-ProbeGI.cmd`。默认打开 Cornell 并等待手动操作，不会自动 Bake。未烘焙时显示材质颜色预览，面板标为 `Unbaked material preview`，方便观察场景；该预览不是 GI 结果。
+统一入口为 `Run-Falcor.cmd`，在 **Active Graph** 选择 `TraditionalProbeGI` 即可；同一窗口可切回 PathTracer 或 PathTracerNRD。原来的 `Run-ProbeGI.cmd` 保留为快捷方式，默认打开 Cornell、选中 Probe 并等待手动操作，不会自动 Bake。未烘焙时显示材质颜色预览，面板标为 `Unbaked material preview`，方便观察场景；该预览不是 GI 结果。
+
+切换 Active Graph 不会清掉已烘焙探针。烘焙期间切到其他图会暂停烘焙，切回继续；只有当前图执行。
 
 ### 在程序内切场景和手动 Bake
 

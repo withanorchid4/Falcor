@@ -1009,7 +1009,7 @@ set_target_properties(Falcor PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY ${FALCOR_LIBRARY_OUTPUT_DIRECTORY}
 )
 
-add_dependencies(Falcor packman_dependencies)
+add_dependencies(Falcor packman_dependencies falcor-copy-files)
 
 validate_headers(Falcor)
 

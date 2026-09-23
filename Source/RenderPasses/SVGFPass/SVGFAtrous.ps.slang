@@ -57,7 +57,7 @@ float computeVarianceCenter(int2 ipos)
     {
         for (int xx = -radius; xx <= radius; xx++)
         {
-            const int2 p = clamp(ipos + int2(xx, yy), int2(0), getTextureDims(gIllumination, 0) - 1);
+            const int2 p = ipos + int2(xx, yy);
             const float k = kernel[abs(xx)][abs(yy)];
             sum += gIllumination.Load(int3(p, 0)).a * k;
         }

@@ -26,7 +26,6 @@
  # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  **************************************************************************/
 #include "SVGFPass.h"
-#include "RenderGraph/RenderPassStandardFlags.h"
 
 /*
 TODO:
@@ -77,12 +76,6 @@ const char kOutputBufferFilteredImage[] = "Filtered image";
 extern "C" FALCOR_API_EXPORT void registerPlugin(Falcor::PluginRegistry& registry)
 {
     registry.registerClass<RenderPass, SVGFPass>();
-    ScriptBindings::registerBinding([](pybind11::module& m)
-    {
-        pybind11::class_<SVGFPass, RenderPass, ref<SVGFPass>> pass(m, "SVGFPass");
-        pass.def("resetHistory", &SVGFPass::resetHistory);
-        pass.def_property_readonly("historyFrames", &SVGFPass::getHistoryFrames);
-    });
 }
 
 SVGFPass::SVGFPass(ref<Device> pDevice, const Properties& props) : RenderPass(pDevice)
@@ -91,8 +84,6 @@ SVGFPass::SVGFPass(ref<Device> pDevice, const Properties& props) : RenderPass(pD
     {
         if (key == kEnabled)
             mFilterEnabled = value;
-        else if (key == "Demodulate")
-            mDemodulate = value;
         else if (key == kIterations)
             mFilterIterations = value;
         else if (key == kFeedbackTap)
@@ -123,7 +114,6 @@ Properties SVGFPass::getProperties() const
 {
     Properties props;
     props[kEnabled] = mFilterEnabled;
-    props["Demodulate"] = mDemodulate;
     props[kIterations] = mFilterIterations;
     props[kFeedbackTap] = mFeedbackTap;
     props[kVarianceEpsilon] = mVarainceEpsilon;
@@ -155,8 +145,7 @@ RenderPassReflection SVGFPass::reflect(const CompileData& compileData)
     reflector.addInput(kInputBufferEmission, "Emission");
     reflector.addInput(kInputBufferWorldPosition, "World Position");
     reflector.addInput(kInputBufferWorldNormal, "World Normal");
-    reflector.addInput(kInputBufferPosNormalFwidth, "PositionNormalFwidth (generated from guides if omitted)")
-        .flags(RenderPassReflection::Field::Flags::Optional);
+    reflector.addInput(kInputBufferPosNormalFwidth, "PositionNormalFwidth");
     reflector.addInput(kInputBufferLinearZ, "LinearZ");
     reflector.addInput(kInputBufferMotionVector, "Motion vectors");
 
@@ -170,7 +159,7 @@ RenderPassReflection SVGFPass::reflect(const CompileData& compileData)
         .format(ResourceFormat::RG32Float)
         .bindFlags(ResourceBindFlags::RenderTarget | ResourceBindFlags::ShaderResource);
 
-    reflector.addOutput(kOutputBufferFilteredImage, "Filtered image").format(ResourceFormat::RGBA32Float);
+    reflector.addOutput(kOutputBufferFilteredImage, "Filtered image").format(ResourceFormat::RGBA16Float);
 
     return reflector;
 }
@@ -178,34 +167,11 @@ RenderPassReflection SVGFPass::reflect(const CompileData& compileData)
 void SVGFPass::compile(RenderContext* pRenderContext, const CompileData& compileData)
 {
     allocateFbos(compileData.defaultTexDims, pRenderContext);
-    resetHistory();
-}
-
-void SVGFPass::setScene(RenderContext* pRenderContext, const ref<Scene>& pScene)
-{
-    mpScene = pScene;
-    resetHistory();
-}
-
-void SVGFPass::onSceneUpdates(RenderContext* pRenderContext, IScene::UpdateFlags updates)
-{
-    // Ordinary camera motion is handled by reprojection, including camera jitter.
-    const auto cameraFlags = IScene::UpdateFlags::CameraMoved | IScene::UpdateFlags::CameraPropertiesChanged;
-    if ((updates & ~cameraFlags) != IScene::UpdateFlags::None)
-        resetHistory();
-    if (mpScene && is_set(updates, IScene::UpdateFlags::CameraPropertiesChanged))
-    {
-        const auto excluded = Camera::Changes::Movement | Camera::Changes::Jitter | Camera::Changes::History;
-        if ((mpScene->getCamera()->getChanges() & ~excluded) != Camera::Changes::None)
-            resetHistory();
-    }
+    mBuffersNeedClear = true;
 }
 
 void SVGFPass::execute(RenderContext* pRenderContext, const RenderData& renderData)
 {
-    const auto refresh = renderData.getDictionary().getValue(kRenderPassRefreshFlags, RenderPassRefreshFlags::None);
-    if (refresh != RenderPassRefreshFlags::None)
-        resetHistory();
     ref<Texture> pAlbedoTexture = renderData.getTexture(kInputBufferAlbedo);
     ref<Texture> pColorTexture = renderData.getTexture(kInputBufferColor);
     ref<Texture> pEmissionTexture = renderData.getTexture(kInputBufferEmission);
@@ -232,8 +198,7 @@ void SVGFPass::execute(RenderContext* pRenderContext, const RenderData& renderDa
     {
         // Grab linear z and its derivative and also pack the normal into
         // the last two channels of the mpLinearZAndNormalFbo.
-        computeLinearZAndNormal(pRenderContext, pLinearZTexture, pWorldNormalTexture, pWorldPositionTexture);
-        if (!pPosNormalFwidthTexture) pPosNormalFwidthTexture = mpLinearZAndNormalFbo->getColorTexture(1);
+        computeLinearZAndNormal(pRenderContext, pLinearZTexture, pWorldNormalTexture);
 
         // Demodulate input color & albedo to get illumination and lerp in
         // reprojected filtered illumination from the previous frame.
@@ -266,9 +231,6 @@ void SVGFPass::execute(RenderContext* pRenderContext, const RenderData& renderDa
         perImageCB["gAlbedo"] = pAlbedoTexture;
         perImageCB["gEmission"] = pEmissionTexture;
         perImageCB["gIllumination"] = mpPingPongFbo[0]->getColorTexture(0);
-        perImageCB["gColor"] = pColorTexture;
-        perImageCB["gDemodulate"] = mDemodulate;
-        perImageCB["gLinearZAndNormal"] = mpLinearZAndNormalFbo->getColorTexture(0);
         mpFinalModulate->execute(pRenderContext, mpFinalFbo);
 
         // Blit into the output texture.
@@ -277,12 +239,10 @@ void SVGFPass::execute(RenderContext* pRenderContext, const RenderData& renderDa
         // Swap resources so we're ready for next frame.
         std::swap(mpCurReprojFbo, mpPrevReprojFbo);
         pRenderContext->blit(mpLinearZAndNormalFbo->getColorTexture(0)->getSRV(), pPrevLinearZAndNormalTexture->getRTV());
-        ++mHistoryFrames;
     }
     else
     {
         pRenderContext->blit(pColorTexture->getSRV(), pOutputTexture->getRTV());
-        resetHistory();
     }
 }
 
@@ -304,7 +264,6 @@ void SVGFPass::allocateFbos(uint2 dim, RenderContext* pRenderContext)
         // Screen-size RGBA32F buffer for linear Z, derivative, and packed normal
         Fbo::Desc desc;
         desc.setColorTarget(0, Falcor::ResourceFormat::RGBA32Float);
-        desc.setColorTarget(1, Falcor::ResourceFormat::RG32Float); // generated position/normal fwidth
         mpLinearZAndNormalFbo = Fbo::create2D(mpDevice, dim.x, dim.y, desc);
     }
 
@@ -342,13 +301,11 @@ void SVGFPass::clearBuffers(RenderContext* pRenderContext, const RenderData& ren
 // (It's slightly wasteful to copy linear z here, but having this all
 // together in a single buffer is a small simplification, since we make a
 // copy of it to refer to in the next frame.)
-void SVGFPass::computeLinearZAndNormal(RenderContext* pRenderContext, ref<Texture> pLinearZTexture, ref<Texture> pWorldNormalTexture,
-                                     ref<Texture> pWorldPositionTexture)
+void SVGFPass::computeLinearZAndNormal(RenderContext* pRenderContext, ref<Texture> pLinearZTexture, ref<Texture> pWorldNormalTexture)
 {
     auto perImageCB = mpPackLinearZAndNormal->getRootVar()["PerImageCB"];
     perImageCB["gLinearZ"] = pLinearZTexture;
     perImageCB["gNormal"] = pWorldNormalTexture;
-    perImageCB["gWorldPosition"] = pWorldPositionTexture;
 
     mpPackLinearZAndNormal->execute(pRenderContext, mpLinearZAndNormalFbo);
 }
@@ -379,7 +336,6 @@ void SVGFPass::computeReprojection(
 
     // Setup variables for our reprojection pass
     perImageCB["gAlpha"] = mAlpha;
-    perImageCB["gDemodulate"] = mDemodulate;
     perImageCB["gMomentsAlpha"] = mMomentsAlpha;
 
     mpReprojection->execute(pRenderContext, mpCurReprojFbo);
@@ -437,12 +393,8 @@ void SVGFPass::computeAtrousDecomposition(RenderContext* pRenderContext, ref<Tex
 
 void SVGFPass::renderUI(Gui::Widgets& widget)
 {
-    if (widget.button("Reset history")) resetHistory();
-    widget.text("Frames since reset: " + std::to_string(mHistoryFrames));
     int dirty = 0;
     dirty |= (int)widget.checkbox("Enable SVGF", mFilterEnabled);
-    dirty |= (int)widget.checkbox("Demodulate diffuse albedo", mDemodulate);
-    widget.tooltip("Disable for a combined diffuse/specular/transmission color signal to avoid tinting reflections by diffuse albedo.");
 
     widget.text("");
     widget.text("Number of filter iterations.  Which");
@@ -462,5 +414,5 @@ void SVGFPass::renderUI(Gui::Widgets& widget)
     dirty |= (int)widget.var("Moments Alpha", mMomentsAlpha, 0.0f, 1.0f, 0.001f);
 
     if (dirty)
-        resetHistory();
+        mBuffersNeedClear = true;
 }

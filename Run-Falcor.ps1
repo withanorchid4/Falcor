@@ -2,12 +2,21 @@ param(
     [ValidateSet('Room', 'Cornell', 'Arcade')]
     [string]$Scene = 'Room',
     [ValidateSet('vulkan', 'd3d12')]
-    [string]$Device = 'vulkan',
-    [ValidateSet('PathTracer', 'SVGF')]
-    [string]$Renderer = 'PathTracer'
+    [string]$Device = 'd3d12',
+    [ValidateSet('PathTracer', 'NRD', 'Probe')]
+    [string]$Renderer = 'PathTracer',
+    [ValidateSet('manual', 'auto', 'bake', 'load')][string]$Mode = 'manual',
+    [ValidateRange(1, 65536)][int]$Samples = 2048,
+    [string]$Revision = '1'
 )
 
 $ErrorActionPreference = 'Stop'
+if ($Renderer -eq 'NRD') {
+    if ($PSBoundParameters.ContainsKey('Device') -and $Device -ne 'd3d12') {
+        throw 'The official Falcor NRD pass requires D3D12. Use -Device d3d12 or omit -Device.'
+    }
+    $Device = 'd3d12'
+}
 $projectRoot = $PSScriptRoot.TrimEnd('\')
 $aliasRoot = 'F:\'
 
@@ -24,7 +33,7 @@ public static extern uint QueryDosDevice(string name, System.Text.StringBuilder 
     $mapping = New-Object System.Text.StringBuilder 4096
     $queryResult = [FalcorPreview.NativeMethods]::QueryDosDevice('F:', $mapping, $mapping.Capacity)
     $expected = '\??\' + $projectRoot
-    if ($queryResult -eq 0 -or $mapping.ToString().TrimEnd('\') -ine $expected) {
+    if ($projectRoot -ine 'F:' -and ($queryResult -eq 0 -or $mapping.ToString().TrimEnd('\') -ine $expected)) {
         throw 'F: is already in use by another location. Free F: before launching this build.'
     }
 } else {
@@ -44,7 +53,20 @@ $scenes = @{
 }
 $env:FALCOR_MEDIA_FOLDERS = 'F:\media'
 $env:FALCOR_SCENE_FOLDER = 'F:\media'
-$graphScript = if ($Renderer -eq 'SVGF') { 'PathTracerSVGFPreview.py' } else { 'PathTracer.py' }
+$env:FALCOR_START_RENDERER = $Renderer
+$env:PROBE_GI_MODE = $Mode
+$env:PROBE_GI_SAMPLES = [string]$Samples
+$env:PROBE_GI_REVISION = $Revision
+$env:PROBE_GI_CACHE = ''
+$env:PROBE_GI_ENABLED = '1'
+$graphScript = if ($Device -eq 'd3d12') {
+    'GIPreview.py'
+} else {
+    switch ($Renderer) {
+        'Probe' { 'TraditionalProbeGI.py' }
+        default { 'PathTracer.py' }
+    }
+}
 $launchArguments = @(
     '--device-type', $Device,
     '--script', ('F:\scripts\' + $graphScript),

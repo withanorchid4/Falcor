@@ -557,7 +557,8 @@ endmacro()
 
 # Fetch agility-sdk
 if(FALCOR_HAS_D3D12 AND (CMAKE_SYSTEM_NAME STREQUAL "Windows"))
-    set(AGILITY_SDK_VERSION "1.717.0-preview")
+    # Use the retail runtime; keep Core/Macros.h's exported SDK version in sync.
+    set(AGILITY_SDK_VERSION "1.616.0")
     FetchPackage(agility_sdk URL "https://www.nuget.org/api/v2/package/Microsoft.Direct3D.D3D12/${AGILITY_SDK_VERSION}")
     copy_file(${agility_sdk_SOURCE_DIR}/build/native/bin/x64/D3D12Core.dll D3D12)
     copy_file(${agility_sdk_SOURCE_DIR}/build/native/bin/x64/d3d12SDKLayers.dll D3D12)

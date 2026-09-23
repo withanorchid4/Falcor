@@ -1,16 +1,26 @@
 # 本地运行
 
-体验 SVGF 时空降噪可双击 `Run-SVGF.cmd`，或运行 `Run-Falcor.cmd -Renderer SVGF`。详见 [SVGF 使用说明](C:/Users/Admin/Desktop/实时GI/Falcor/SVGF.md)。
+统一入口为 `Run-Falcor.cmd`：默认使用 D3D12，在一个窗口内加载 PathTracer、PathTracerNRD 和 TraditionalProbeGI。通过左侧 **Graphs → Active Graph** 下拉框切换算法，不需要换启动文件。
+
+| Active Graph | 默认 Output | 用途 |
+| --- | --- | --- |
+| PathTracer | ToneMapper.dst | 普通路径追踪与逐帧累积 |
+| PathTracerNRD | ToneMapperNRD.dst | 官方 NRD + DLSS Balanced |
+| TraditionalProbeGI | Display.dst | 传统探针，手动 Bake 或 Load matching cache |
+
+三个图共用当前场景和相机；只有选中的图执行。切图保留 Probe 的烘焙数据，切离 Probe 时烘焙暂停，切回继续；换场景则需要重新 Bake 或加载匹配缓存。首次切到某个图可能需要编译着色器。Output 下拉框只选当前图的显示结果，不用于切算法。
+
+`Run-NRD.cmd` 是同一入口的快捷方式，只把初始图设为 NRD。详见 [NRD 使用说明](C:/Users/Admin/Desktop/实时GI/Falcor/NRD.md)。
 
 算法开发、渲染图配置和探针 GI 扩展请参阅 [Falcor 使用与 GI 算法开发指南](C:/Users/Admin/Desktop/实时GI/Falcor/DEVELOPMENT-GUIDE.zh-CN.md)。
 
-运行新增的传统光照探针请双击 `Run-ProbeGI.cmd`，详见 [光照探针使用说明](C:/Users/Admin/Desktop/实时GI/Falcor/PROBE-GI.md)。
+`Run-ProbeGI.cmd` 同样加载三个图，初始选择 Probe，并保留默认 Cornell 场景及烘焙命令行参数。详见 [光照探针使用说明](C:/Users/Admin/Desktop/实时GI/Falcor/PROBE-GI.md)。
 
 本工程的示例入口是 Mogwai。首次构建使用 Visual Studio 2022、MSVC 14.38.33130 和 Windows SDK 10.0.22621.0，配置为 Release。
 
 ## 打开场景
 
-在文件资源管理器中双击 `Run-Falcor.cmd`，默认使用 Vulkan 后端打开灰白室内场景和 PathTracer 渲染管线。
+在文件资源管理器中双击 `Run-Falcor.cmd`，默认使用 D3D12 后端打开灰白室内场景，初始选中 PathTracer，随时可切到另外两个图。
 
 也可以在本目录的 PowerShell 中选择场景：
 
@@ -30,7 +40,7 @@
 
 运行时，Falcor 会将部分路径还原为原始中文路径。为此，`Source/Mogwai/Mogwai.manifest` 为 Mogwai 进程启用 UTF-8 编码，避免 Slang 无法打开着色器文件；这不会修改系统编码设置。
 
-本机首次使用默认 D3D12 后端时创建设备失败，日志包含实验性功能初始化失败提示。当前改用可初始化设备的 Vulkan 后端，未修改系统开发者设置。后续若需要单独排查 D3D12，可运行 `Run-Falcor.cmd -Device d3d12`。
+本机此前 D3D12 失败的诊断发现，程序缺少 Agility 部署文件，且 717 预览运行库的最小设备测试返回 0x887e0003。项目现使用与导出版本匹配的 Agility 616 正式版，并让目标构建自动部署运行库；没有修改系统开发者设置或驱动。统一入口默认 D3D12。显式指定 `-Device vulkan` 时保留单图兼容方式，不提供 NRD；运行中的进程不能切换图形 API。诊断与验证见 `docs/development/path-tracer-nrd.md`。
 
 依赖缓存：`tools/.packman/cache-ascii/`。示例场景：`media/`。编译输出：`build/windows-vs2022/bin/Release/`。它们均已由上游 `.gitignore` 排除。
 

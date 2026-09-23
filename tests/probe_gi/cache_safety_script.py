@@ -34,16 +34,20 @@ try:
     handle = kernel.CreateFileW(str(target), 0x80000000, 1, None, 3, 0, None)
     assert handle not in (None, ct.c_void_p(-1).value), ct.get_last_error()
     p.bake()
-    renderFrame()
+    for _ in range(64):
+        renderFrame()
+        if p.ready: break
     assert p.ready and "saving failed" in p.status, p.status
     assert target.read_bytes() == sentinel
     assert not list(output.glob(target.name + ".tmp-*"))
     kernel.CloseHandle(handle)
     handle = None
     p.bake()
-    renderFrame()
+    for _ in range(64):
+        renderFrame()
+        if p.ready: break
     assert p.ready and "saved" in p.status, p.status
-    assert target.read_bytes().startswith(b"FALCOR_PROBE_SH 1\n")
+    assert target.read_bytes().startswith(b"FALCOR_PROBE_SH 3\n")
     assert not list(output.glob(target.name + ".tmp-*"))
     p.loadCache()
     renderFrame()

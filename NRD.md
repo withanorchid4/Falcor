@@ -2,7 +2,7 @@
 
 双击统一入口 `Run-Falcor.cmd`，在 **Active Graph** 中选择 `PathTracerNRD`；同一窗口也能切换普通 PathTracer 和 TraditionalProbeGI。`Run-NRD.cmd` 保留为初始选择 NRD 的快捷入口。其他场景可用 `Run-Falcor.cmd -Renderer NRD -Scene Cornell`，也可以从程序的场景加载入口换场景。
 
-组合脚本 `scripts/GIPreview.py` 加载官方 `scripts/PathTracerNRD.py`，完整保留官方示例的 Pass 参数与连线：Halton 32 相机采样、PathTracer 1 spp、NRD 降噪、DLSS 启用且使用 Balanced 配置。启动时暂停场景时钟，方便静态观察，相机仍可移动。这是本仓库版本的官方示例默认值，并非适合所有场景的最佳参数保证。
+组合脚本 `scripts/GIPreview.py` 加载基于官方示例的 `scripts/PathTracerNRD.py`。按用户要求，PathTracer 默认改为 8 spp（上游示例为 1 spp）；其余参数与连线沿用官方配置，包括 Halton 32 相机采样、NRD 降噪、DLSS 启用且使用 Balanced 配置。启动时暂停场景时钟，方便静态观察，相机仍可移动。
 
 ## 显示结果
 

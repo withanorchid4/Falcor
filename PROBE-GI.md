@@ -1,5 +1,89 @@
 # 传统光照探针：使用与结果
 
+## 墙面硬边修复与对照开关
+
+预览脚本现在默认开启 **Probes → Distance visibility → Reject back-facing probes**。它在原朝向权重上增加平滑半球抑制：表面背面的 Probe 不再保留最低权重，接近切平面的方向平滑淡出。已在保存的问题快照和另一个房间视角验证，消除了该墙面上由明亮墙后 Probe 引起的块状硬边；不增加射线或距离图读取，不需要重新 Bake。
+
+- 保持 **Enable visibility** 和 **Normal direction weight** 开启；关闭 **Reject back-facing probes** 可对比原效果。
+- **Distance map filtering → Smooth moments** 是另一项独立实验：对同样四个 texel 使用 smoothstep 权重重建一阶/二阶矩，减轻方差的网格硬边。它只能使本次暗块变软，不能单独消除漏光，因此默认仍为 Bilinear。
+- 两个开关会保存到图和问题快照。旧图未指定新选项时仍保持旧行为；新启动的预览图默认开启背面抑制。
+- 这不是完整遮挡替代：位于正面但被另一面墙挡住的 Probe 仍依赖距离矩。覆盖不足时可能变暗，墙角、装饰线和其他漏光仍需单独排查。
+
+实验与验证记录见 [硬边修复文档](docs/development/probe-hard-edge-fix.md)。
+
+## 保存问题视角，使用脚本重现
+
+发现墙面问题时，保持当前相机和参数，可先右键选点，再通过 **File → Load Script** 运行 `F:/scripts/SaveProbeSnapshot.py`。要求Probe已Ready、未在Bake，Display关闭Auto Exposure。结果保存到 `F:/build/probe-issues/日期时间-ID/`，`latest.txt` 指向最近一次成功保存的案例。
+
+快照包含相机位置/角度/焦距、分辨率、当前图和参数、选点及八探针数据、缓存副本与哈希、环境/常用材质与光源属性、干净PNG及HDR/EXR。保存过程短暂关闭调试覆盖层并冻结时间，随后恢复；不操作相机、不重烘焙。
+
+之后复现不需要在程序中点击。在项目目录执行：
+
+```powershell
+.\Replay-ProbeSnapshot.ps1 -Snapshot 'F:\build\probe-issues\日期时间-ID'
+```
+
+它启动独立headless Mogwai，恢复状态、加载快照缓存、渲染后退出，不操作已打开的窗口。结果位于该案例的 `runs/日期时间-ID/`：`display.png`、`before-after.png`（左原始/右重放）、`difference-x8.png`、`comparison.json`（HDR误差及选点前后数据）、`render.json`（实际参数与DLL/shader哈希）。无代码/参数变化时，先确认误差接近零，再使用这个案例验证修复。
+
+若要显式调整参数，写一个JSON文件（例如 `{"normalBias":0.06,"viewBias":0.24}`），传入 `-Overrides 参数文件.json`。若修改烘焙算法，额外传 `-Rebake`，新缓存只写本次run的 `rebaked.shprobe`，原案例不变。仅改变运行时算法时保持原缓存。
+
+第一版针对标准Probe图，固定曝光；不保存PathTracer/NRD历史，不是完整场景资产打包。几何和纹理仍依赖原文件；交互式纹理替换、未落盘的几何编辑、自定义材质内部数据不保证复原。场景入口/主模型/环境图和快照缓存发生已检测到的变化时拒绝重放。详见 [开发文档](docs/development/probe-issue-replay.md)。
+
+## 距离矩防漏光（新增）
+
+本轮预览脚本默认启用 **Probes → Distance map bake settings → Distance bake mode → Angular weighted (DDGI-style)**。先用 **Distance rays per probe = 2048、Angular sharpness = 50**，然后重新 **Bake**。角度加权只发生在烘焙阶段；运行时仍每 Probe 一次切比雪夫。需要对比旧方式时切回 **Texel-local**，恢复原分辨率/每texel样本数后 Load matching cache。
+
+角度滤波用 `max(dot(texelDirection, rayDirection),0)^sharpness` 分别加权平均距离和距离平方。指数越大范围越窄；可能减轻不连续感，也可能把近远表面的距离混合而增加漏光，不保证单独消除墙面伪影。本版没有额外高斯模糊或DDGI动态历史混合。
+
+当前基础方差实验采用 `max(E[d²] - E[d]², 0) + 1e-6`，在距离矩插值后相加。**Base variance (normalized)** 可调；选点中的 `variance` 仍表示未加基础值的测得方差，面板另行列出基础值。已有缓存直接使用，无需重烘焙。零方差位置与原先1e-6下限效果相同；不能据此保证消除明暗边界。
+
+### Normal / View bias 对比
+
+在 **Probes** 面板调整 **Normal bias** 与 **View bias**，分别沿表面法线和朝相机方向偏移查询点：
+
+`Q = P + minProbeSpacing * (normalBias * N + viewBias * normalize(cameraPosition - P))`
+
+两个系数独立调节，组合向量不再归一化。默认仍为 `0.05 / 0`。点击 **Normal/view formula preset** 设置为 `0.06 / 0.24`，等价于截图中的 `0.3 * (0.2N + 0.8V)`；**Reset bias defaults** 恢复原默认值。均无需重新 Bake，不增加距离图采样和切比雪夫次数。
+
+固定一个问题选点，对比默认、纯 normal、组合 bias 下的 **Q point / mean / HIT / V / w**。黄色线段表示完整 normal+view 偏移；面板显示 Q 世界坐标。开启 view bias 后移动相机会自动刷新已选世界点的数据。bias 同时改变查询方向、距离及网格权重，不保证 d 与 mean 一直同号；过大的偏移可能穿过其他几何，view bias 也会引入随视角变化的光照。本版未增加深度检测或偏移回退。
+
+开发与验证见 [normal/view bias 文档](docs/development/probe-normal-view-bias.md)。
+
+### 实时射线参考与选点距离对照
+
+在 **Probes → Distance visibility → Visibility method** 中切换：
+
+- **Distance moments**：默认，使用烘焙距离矩和切比雪夫权重。
+- **Ray traced (debug)**：从每个邻近 Probe 向偏移查询点发射遮挡射线，被挡住时权重为 0；每像素最多增加 8 条射线，用于检查距离矩误判，可能明显降低帧率。
+
+两种模式共用同一份已烘焙 SH 和距离图，切换无需重新 Bake。`Enable visibility` 总开关关闭时恢复原三线性插值；`Visibility power` / `Base variance` 只影响距离矩模式。
+
+在 Debugging 开启 **Pick surface (right click)** 后右键选点，每个邻居显示：
+
+- **Q**：经过 Normal + View bias 的实际 GI 查询点；**P**：原始选中表面点。
+- **stored mean**：按 Probe→对应点方向查询距离矩。默认 Bilinear 混合附近4个 texel 的一阶/二阶矩；Point 直接读取对应1个 texel。烘焙数据可来自 Texel-local 独立采样或 Angular weighted 方向加权；运行时读取模式与烘焙模式独立。
+- **point**：Probe 到对应点的距离；**HIT**：从 Probe 沿相同方向发射射线所得最近交点距离，单位均为世界单位。
+- **MISS**：在射线范围内没有交点，不能理解为遮挡距离恰好等于最大范围。范围至少为距离图最大范围，也覆盖查询点。
+- **V moment / ray / used**：距离矩估计、硬射线判断、当前真正采用的可见性；**w** 仍是归一化后的最终光照权重。
+
+例如 `HIT < point` 且 `stored mean > point` 时（忽略很小的端点容差），射线已经发现遮挡，但距离矩认为可见；射线模式应把该邻居权重归零。若 P 与 Q 的判断不同，先检查 Normal bias。所有邻居都被遮挡时 Probe 光照会变黑；墙内 Probe、覆盖不足及硬遮挡切换仍需另外处理。此参考不计算玻璃透射/折射。
+
+实现及验证见 [射线可见性开发文档](docs/development/probe-ray-visibility.md)。
+
+探针现在同时烘焙 SH 光照和八面体距离矩。运行时使用三线性权重、法线方向权重与切比雪夫可见性权重混合，降低被墙遮挡的 Probe 的贡献。仍是静态烘焙，不是完整动态 DDGI。
+
+两种烘焙模式都将所有 Probe 的 SH 和距离矩保存在一个 `.shprobe` 文件中。Texel-local 沿用 version 3、自动后缀 `-texel-local`；Angular weighted 使用 version 4、后缀 `-angular`，两份缓存不会互相覆盖。version 1/2 仍要求重烘焙；新模式不能直接加载旧模式的数据。默认 SH 每 Probe 2048 样本；先完成 SH，再完成距离阶段才保存。
+
+| 面板 | 参数及作用 |
+| --- | --- |
+| Distance map bake settings | Interior resolution 可调4..128，默认14；Distance bake mode 选择 Angular weighted 或 Texel-local。Angular：Distance rays per probe 默认2048，可调1..65536；Angular sharpness 默认50，可调1..256，同一条球面射线按夹角权重贡献给多个texel。Texel-local：每texel独立射线默认16，可调1..2048。两种模式的距离射线都与 SH 样本独立。Distance range 默认为格子对角线的2倍。修改后重新 Bake。384个 Probe 在128分辨率时 atlas 约占103.1 MiB。 |
+| Distance visibility → Distance map filtering | 默认 Bilinear，也可选 Point。即时切换、不重烘焙，兼容现有version 3缓存。八面体边缘折叠回同一Probe，避免采到空边界或邻居Probe。生产可见性、P/Q调试及距离图预览共用该选项。Q texel仍显示包含方向的texel，Bilinear实际读取周围4个。 |
+| Distance visibility | Enable visibility 默认开启；关闭恢复原三线性插值。Visibility method 可切换距离矩或射线参考。Normal direction weight 可单独关闭。距离矩模式下 Visibility power 越大抑制越强，Base variance 默认1e-6，统一加在插值后的非负方差上，越大越宽松（不再是最小值截断）。修改不重烘焙。 |
+| Debugging → Surface view | Visibility support 显示估计的可见性支持程度；Selected probe: mean distance / distance stddev 显示选中 Probe 的完整八面体图，亮度按最大距离归一化。 |
+| Debugging → Pick surface | 右键选点，显示 tri（原权重）、三种 V、w（最终权重）、P/Q 的距离均值/方差与真实 HIT。连线颜色来自 Probe→Q 的最近交点判断，便于发现估计与真实遮挡不一致。 |
+
+距离使用独立射线的最近交点，不是多次反弹的路径长度。未命中按最大距离；透明材质在本版距离图中也算几何遮挡。距离图分辨率有限，低样本、薄几何或墙内探针仍可能出现瑕疵；本版未做 Probe relocation。所有权重都很小时会衰减为暗色，避免重新放大被遮挡 Probe 的残余。角度模式实现及验证见 [方向加权恢复文档](docs/development/probe-angular-restore.md)，独立模式见 [texel 内采样开发文档](docs/development/probe-texel-local-distance.md)。
+
 这是规则网格 + 9 项 RGB 球谐的静态漫反射光照探针实现。先烘焙，再从文件加载并实时采样。开发顺序与算法约定见 [开发契约](C:/Users/Admin/Desktop/实时GI/Falcor/docs/development/traditional-probes.md)。
 
 ## 启动
@@ -30,11 +114,11 @@
 | Grid counts XYZ | 每个轴的探针数量，2..32 | 旧结果失效，等待 Bake |
 | Fit bounds to scene | 自动使用场景包围盒向内缩 5% 的范围 | 旧结果失效，等待 Bake |
 | Grid min / Grid max | 关闭自动范围后设置世界坐标边界 | 旧结果失效；边界非法时提示并禁用 Bake/Load |
-| Samples per probe | 每个探针的总样本数，1..65536 | 旧结果失效，等待 Bake |
+| SH samples per probe | 每个探针的光照路径总样本数，1..65536；不是每 texel 的距离样本 | 旧结果失效，等待 Bake |
 | Samples per frame | 每帧每个探针的工作量，1..64 | 可在烘焙中调整，保留进度；越大越可能影响交互流畅度 |
 | Max bounces | 探针路径允许的反射继续次数，0..8 | 旧结果失效，等待 Bake |
 | Scene revision | 外部模型、贴图等资产的手动版本标签 | 旧结果失效，等待 Bake |
-| Probe intensity / Normal bias | 实时光照强度和采样偏移 | 即时生效，不重烘焙 |
+| Probe intensity / Normal bias / View bias | 实时光照强度、法线/朝相机的采样偏移 | 即时生效，不重烘焙 |
 
 修改影响烘焙的参数会中止正在进行的 Bake，防止不同参数的样本混在一起。只有完整烘焙才写缓存，取消不会覆盖已有缓存。
 
@@ -65,11 +149,11 @@
 
 ## 数据与参数
 
-默认 8×6×8，共 384 个探针，每个探针 2048 样本、最多 3 次反射继续，每帧每探针追踪 16 条路径，128 个渲染帧完成烘焙。这不是“128 秒”：实际时间取决于场景、设备和首次着色器编译。
+默认8×6×8，共384个探针。SH阶段：每 Probe 2048样本、最多3次反射继续，每帧每 Probe 16条路径，共128帧。距离阶段：每 texel 独立16条最近命中射线，按批次额外执行，不计算光照反弹；单次派发最多8192 texel / 65536射线。两个阶段都完成才 Ready。实际耗时取决于分辨率、样本数、场景和设备。
 
-交互缓存保存为 `build/probes/<场景文件名>-<路径标识>.shprobe`，完整位置显示在面板中。不同场景使用不同文件，切换场景不会互相覆盖。高级脚本仍可显式指定 `cacheFile`；原有 `cornell.shprobe` 属于显式文件，可通过该属性继续使用。自动命名不会删除旧文件。
+交互缓存保存为 `build/probes/<场景文件名>-<路径标识>-texel-local.shprobe`，完整位置显示在面板中。不同场景使用不同文件，切换场景不会互相覆盖。高级脚本仍可显式指定 `cacheFile`；原有 `cornell.shprobe` 属于显式文件，可通过该属性继续使用。自动命名不会删除旧文件。
 
-缓存是带版本与元数据的文本文件，保存平均入射辐亮度 SH。完成后只在 GPU 上插值与卷积，不会继续追踪探针路径，也不逐帧读回 CPU。相机可见性和解析光源阴影仍使用光追。
+缓存是带版本与元数据的文本文件，保存平均入射辐亮度 SH 和归一化距离的一阶/二阶矩。完成后只在 GPU 上查图、加权插值与卷积，不会继续追踪探针路径，也不逐帧读回 CPU。相机可见性和解析光源阴影仍使用光追。
 
 通常直接在面板改参数即可。需要保存自己的默认配置时，也可修改 `scripts/TraditionalProbeGI.py`，例如增加：
 
@@ -94,7 +178,7 @@ Cornell 主要使用发光面照明，因此关闭探针后房间大部分变黑
 
 ## 第一版的限制
 
-这是静态漫反射近似，不提供镜面间接反射或正确透射。SH 只有低频方向信息；有限采样有噪声，普通三线性插值会跨墙混光，实体内探针也会污染结果。增大采样数能减少 Monte Carlo 噪声，不能解决这些结构性问题。
+这是静态漫反射近似，不提供镜面间接反射或正确透射。SH 只有低频方向信息；有限采样有噪声，距离矩权重能缓解跨墙混光，但有限角分辨率和实体内探针仍会造成误差。增大采样数能减少 Monte Carlo 噪声，不能独自解决这些结构性问题。
 
 相机移动和窗口尺寸变化不要求重新烘焙。运行时修改灯光、材质或几何后，插件会清掉失效数据，提示再次点击 Bake，不再要求退出程序。动态物体和连续动画不是本版支持范围；烘焙前请暂停动画，否则变化会不断使正在烘焙的数据失效。
 
@@ -141,17 +225,17 @@ Cornell / Vulkan / Release 已通过实际烘焙、独立加载、相机移动�
 
 ## 探针调试显示
 
-展开 **Probes → Debugging → Enable debug**。调试默认关闭，不重新 Bake，不改变缓存，也不会为生产光照自动添加遮挡修正。
+展开 **Probes → Debugging → Enable debug**。调试默认关闭，不重新 Bake，不改变缓存；生产光照的遮挡修正由独立的 Distance visibility 开关控制。
 
 针对墙上斑块和墙边漏光，推荐这样操作：
 
 1. 等待 Bake 完成，或点击 **Load matching cache** 加载已有结果。
 2. 开启 **Pick surface (right click)**，在有问题的墙面右键点击一次。选中的是世界空间表面位置，之后可以用左键拖动视角绕着观察；右键点击背景或 **Clear selection** 清除选择。点击时请避开面板。右键在 6DoF 相机中原本用于翻滚，开启选点时由探针通道接管，关闭选点或 debug 后恢复原绑定。
-3. 打开 **X-ray overlays**、**Only selected cell probes**、**Show probe IDs** 和 **Show contribution links**。查看这个位置对应的八个探针：**绿线表示可见，红线表示被遮挡，黄线表示 Normal bias 偏移**。线宽随插值权重增加，零权重不画线。黄色标记是原始表面位置。
-4. 面板逐项显示探针 ID、位置、实际插值权重，以及 `weighted E`（该探针对选中法线的辐照度贡献，已乘权重，尚未对总和取非负）。权重和为 1；Blocked 的探针仍有非零权重，说明当前传统插值确实使用了隔着几何体的探针。
-5. 调整 **Normal bias** 可实时观察偏移、八探针和可见性的变化；无须重新烘焙。`clamped: yes` 表示偏移后的采样位置在网格外，采样坐标被夹到了网格边缘。
+3. 打开 **X-ray overlays**、**Only selected cell probes**、**Show probe IDs** 和 **Show contribution links**。查看这个位置对应的八个探针：**绿线表示可见，红线表示被遮挡，黄线表示 Normal + View bias 偏移**。线宽随最终插值权重增加；被可见性拒绝的探针仍画细线，原三线性权重为零的连线不画。黄色标记是原始表面位置。
+4. 面板逐项显示探针 ID、位置、实际插值权重，以及 `weighted E`（该探针对选中法线的辐照度贡献，已乘权重，尚未对总和取非负）。通常权重和为 1；所有权重极小时和小于 1，避免放大遮挡残余。可比较 tri、V 和最终 w；距离矩是估计，Blocked 的探针不一定严格为零。
+5. 调整 **Normal bias / View bias** 可实时观察偏移、八探针和可见性的变化；无须重新烘焙。`clamped: yes` 表示偏移后的采样位置在网格外，采样坐标被夹到了网格边缘。
 
-**Surface view** 提供六种模式：
+**Surface view** 的基础模式如下；新增三种距离可见性模式见文首：
 
 | 模式 | 内容 |
 | --- | --- |
@@ -188,6 +272,12 @@ p.configureDebug({"enabled": False})
 `tests/probe_gi/debug_script.py` 用 headless Vulkan 验证实际着色器、拾取、遮挡、锚点和场景切换；`check_debug_results.py` 检查 HDR 数值和调试关闭后的输出一致性。图像和结果位于 `build/probe-debug-validation/`。
 
 ## 缓存保存与异常提示
+
+### 保存和恢复调试选点
+
+选点不包含在 `Save Config` 中。右键选中表面并等待调试数据显示后，通过 **File → Load Script** 打开 `F:/scripts/SaveProbeSelection.py`，将世界坐标、法线、normalBias 和 viewBias 保存到 `F:/build/probe-selection.json`。再次保存会覆盖上次选点。旧文件缺少 viewBias 时恢复为 0；相机不保存在该文件中，view bias 使用恢复时的当前相机。
+
+重启后先加载同一个场景、相应 Probe 缓存（或完成 Bake），再通过 **File → Load Script** 打开 `F:/scripts/LoadProbeSelection.py`。它恢复固定世界位置并启用调试连线，下一帧刷新距离和权重。脚本不保存相机、不自动 Bake、不退出程序。改变分辨率或重新 Bake 会清除当前选点，因此应在烘焙后恢复。
 
 缓存需要与当前场景、网格、样本数、反弹数和 Scene revision 匹配。`cannot open` 表示文件打不开，`metadata mismatch` 表示参数不匹配，`truncated file at SH coefficient ...` 表示文件内容不完整；它们是不同问题。
 

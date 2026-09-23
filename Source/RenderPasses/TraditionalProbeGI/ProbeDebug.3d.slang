@@ -138,10 +138,10 @@ VertexOut vsMain(uint vertex : SV_VertexID, uint instance : SV_InstanceID)
                             ++cursor;
                         }
                 float4 data = gInspection[5 + 3 * corner];
-                if (data.x < 1e-6f) return o;
+                if (data.z < 1e-6f) return o;
                 a = gInspection[2].xyz; b = gInspection[4 + 3 * corner].xyz;
                 o.color = data.y > 0.f ? float3(0.02f, 1.f, 0.12f) : float3(1.f, 0.015f, 0.01f);
-                thickness = 1.f + 4.f * data.x;
+                thickness = 1.f + 4.f * data.x; // Keep rejected links visible at minimum thickness.
             }
         }
         float2 sa, sb;

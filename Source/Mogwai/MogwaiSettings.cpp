@@ -30,6 +30,7 @@
 #include "Core/Program/ProgramManager.h"
 #include "Utils/Scripting/Console.h"
 #include "Utils/Settings/Settings.h"
+#include <algorithm>
 #include <iomanip>
 #include <sstream>
 
@@ -192,8 +193,28 @@ namespace Mogwai
     {
         if (!mShowGraphUI || mpRenderer->mGraphs.empty()) return;
 
+        // A DPI-scaled or restored panel can extend below the framebuffer. ImGui
+        // scrolls to its window bottom, not the visible framebuffer bottom.
+        const ImVec2 display = ImGui::GetIO().DisplaySize;
+        const float margin = 8.f;
+        const float top = ImGui::GetFrameHeight() + margin;
+        ImGui::SetNextWindowSizeConstraints(
+            ImVec2(0.f, 0.f),
+            ImVec2(std::max(1.f, display.x - 2.f * margin), std::max(1.f, display.y - top - margin)),
+            [](ImGuiSizeCallbackData* data)
+            {
+                const float available = ImGui::GetIO().DisplaySize.y - std::max(data->Pos.y, 0.f) - 8.f;
+                data->DesiredSize.y = std::min(data->DesiredSize.y, std::max(ImGui::GetStyle().WindowMinSize.y, available));
+            });
         Gui::Window w(pGui, "Graphs", mShowGraphUI, { 300, 600 }, { 10, 80 }, Gui::WindowFlags::Default);
         if (!mShowGraphUI) return;
+
+        const ImVec2 pos = ImGui::GetWindowPos();
+        const ImVec2 size = ImGui::GetWindowSize();
+        const ImVec2 visiblePos(
+            std::clamp(pos.x, margin, std::max(margin, display.x - size.x - margin)),
+            std::clamp(pos.y, top, std::max(top, display.y - size.y - margin)));
+        if (visiblePos.x != pos.x || visiblePos.y != pos.y) ImGui::SetWindowPos(visiblePos);
 
         if (mpRenderer->mEditorProcess == 0)
         {

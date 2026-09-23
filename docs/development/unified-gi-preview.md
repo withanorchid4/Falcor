@@ -1,5 +1,9 @@
 # 单窗口 GI 算法切换
 
+## 默认采样数调整（2026-09-23，实施前）
+
+按用户要求，将普通 PathTracer 和 PathTracerNRD 的 `samplesPerPixel` 从 1 改为 8。只调整每帧每像素路径样本数，不改变累积、NRD/DLSS 参数或 Probe 烘焙采样数；重新加载图或启动程序后生效。NRD 的本地默认采样数因此与上游示例的 1 spp 不同。
+
 2026-09-23，实施前记录。用户要求在一个程序中切换普通 PathTracer、官方 NRD 和传统 Probe。
 
 ## 方案

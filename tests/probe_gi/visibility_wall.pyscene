@@ -1,0 +1,28 @@
+# Closed two-room fixture with an opaque divider and contrasting ceiling emitters.
+wall = StandardMaterial('Neutral wall')
+wall.baseColor = float4(.7, .7, .7, 1)
+wall.roughness = 1
+cube = TriangleMesh.createCube()
+def box(name, position, scale):
+    sceneBuilder.addMeshInstance(sceneBuilder.addNode(name, Transform(translation=float3(*position), scaling=float3(*scale))),
+        sceneBuilder.addTriangleMesh(cube, wall))
+box('floor', (0,-.02,0), (2.08,.04,2.08))
+box('ceiling', (0,2.02,0), (2.08,.04,2.08))
+box('left', (-1.02,1,0), (.04,2,2.08))
+box('right', (1.02,1,0), (.04,2,2.08))
+box('back', (0,1,-1.02), (2.08,2,.04))
+box('front', (0,1,1.02), (2.08,2,.04))
+box('divider', (0,1,0), (.04,2,2.08))
+for x, strength, name in [(-.5,.08,'Dim ceiling'),(.5,20,'Bright ceiling')]:
+    light = StandardMaterial(name)
+    light.emissiveColor = float3(strength)
+    light.emissiveFactor = 1
+    sceneBuilder.addMeshInstance(sceneBuilder.addNode(name, Transform(translation=float3(x,1.995,0),
+        scaling=float3(.9,1,1.8), rotationEulerDeg=float3(180,0,0))),
+        sceneBuilder.addTriangleMesh(TriangleMesh.createQuad(), light))
+camera = Camera()
+camera.position = float3(-.7,1.2,.8)
+camera.target = float3(-.3,.15,-.2)
+camera.up = float3(0,1,0)
+camera.focalLength = 24
+sceneBuilder.addCamera(camera)

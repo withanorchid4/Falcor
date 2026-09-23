@@ -12,6 +12,10 @@ def render_graph_TraditionalProbeGI():
         "samplesPerProbe": int(os.environ.get("PROBE_GI_SAMPLES", "2048")),
         "samplesPerFrame": 16,
         "maxBounces": 3,
+        "distanceBakeMode": "angular",
+        "distanceRaysPerProbe": 2048,
+        "distanceExponent": 50.0,
+        "normalHemisphere": True,
         "enableProbes": os.environ.get("PROBE_GI_ENABLED", "1") != "0",
     }
     g = RenderGraph("TraditionalProbeGI")

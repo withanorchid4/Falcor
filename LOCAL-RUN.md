@@ -10,6 +10,8 @@
 
 三个图共用当前场景和相机；只有选中的图执行。切图保留 Probe 的烘焙数据，切离 Probe 时烘焙暂停，切回继续；换场景则需要重新 Bake 或加载匹配缓存。首次切到某个图可能需要编译着色器。Output 下拉框只选当前图的显示结果，不用于切算法。
 
+普通 PathTracer 和 PathTracerNRD 默认均为 8 samples/pixel（每帧每像素 8 个样本），可在 PathTracer 面板调整。Probe 烘焙采样数单独配置。
+
 `Run-NRD.cmd` 是同一入口的快捷方式，只把初始图设为 NRD。详见 [NRD 使用说明](C:/Users/Admin/Desktop/实时GI/Falcor/NRD.md)。
 
 算法开发、渲染图配置和探针 GI 扩展请参阅 [Falcor 使用与 GI 算法开发指南](C:/Users/Admin/Desktop/实时GI/Falcor/DEVELOPMENT-GUIDE.zh-CN.md)。

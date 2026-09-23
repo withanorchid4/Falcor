@@ -32,6 +32,7 @@
 #include <iomanip>
 #include <limits>
 #include <cmath>
+#include <cstring>
 #include <sstream>
 #include <locale>
 #include <random>
@@ -49,8 +50,10 @@ static void registerProbeBindings(pybind11::module& m)
 {
     pybind11::class_<TraditionalProbeGI, RenderPass, ref<TraditionalProbeGI>> pass(m, "TraditionalProbeGI");
     pass.def("configureBake", [](TraditionalProbeGI& self, pybind11::dict props) { self.configureBake(Properties(props)); });
+    pass.def("configureVisibility", [](TraditionalProbeGI& self, pybind11::dict props) { self.configureVisibility(Properties(props)); });
     pass.def("bake", &TraditionalProbeGI::requestBake);
     pass.def("loadCache", &TraditionalProbeGI::requestLoad);
+    pass.def("inspectSurfacePoint", &TraditionalProbeGI::inspectSurfacePoint);
     pass.def("cancelBake", &TraditionalProbeGI::cancelBake);
     pass.def("configureDebug", [](TraditionalProbeGI& self, pybind11::dict props) { self.configureDebug(Properties(props)); });
     pass.def("pickSurface", &TraditionalProbeGI::pickSurface);
@@ -58,6 +61,7 @@ static void registerProbeBindings(pybind11::module& m)
     pass.def_property_readonly("ready", &TraditionalProbeGI::isReady);
     pass.def_property_readonly("baking", &TraditionalProbeGI::isBaking);
     pass.def_property_readonly("completedSamples", &TraditionalProbeGI::getCompletedSamples);
+    pass.def_property_readonly("completedDistanceSamples", &TraditionalProbeGI::getCompletedDistanceSamples);
     pass.def_property_readonly("status", &TraditionalProbeGI::getStatus);
     pass.def_property_readonly("cacheFile", &TraditionalProbeGI::getCacheFile);
     pass.def_property_readonly("settings", [](TraditionalProbeGI& self) { return self.getProperties().toPython(); });
@@ -72,8 +76,9 @@ extern "C" FALCOR_API_EXPORT void registerPlugin(Falcor::PluginRegistry& registr
 namespace
 {
 const char kShaderFile[] = "RenderPasses/TraditionalProbeGI/TraditionalProbeGI.rt.slang";
-const uint32_t kMaxPayloadSizeBytes = 72u;
+const uint32_t kMaxPayloadSizeBytes = 80u;
 const uint32_t kMaxRecursionDepth = 2u;
+const uint32_t kMaxDistanceResolution = 128u;
 const ChannelList kInputChannels = {
     {"vbuffer", "gVBuffer", "Packed camera hit"},
     {"viewW", "gViewW", "World-space view direction", true},
@@ -85,6 +90,11 @@ const ChannelList kOutputChannels = {
 bool finite3(float3 v)
 {
     return std::isfinite(v.x) && std::isfinite(v.y) && std::isfinite(v.z);
+}
+bool validMoments(float4 v)
+{
+    return std::isfinite(v.x) && std::isfinite(v.y) && v.x >= 0.f && v.x <= 1.f && v.y >= 0.f &&
+        v.y <= v.x + 2e-5f && v.y + 2e-5f >= v.x * v.x;
 }
 } // namespace
 
@@ -121,6 +131,25 @@ TraditionalProbeGI::TraditionalProbeGI(ref<Device> device, const Properties& pro
             mIntensity = value;
         else if (key == "normalBias")
             mNormalBias = value;
+        else if (key == "viewBias")
+            mViewBias = value;
+        else if (key == "distanceResolution") mDistanceResolution = value;
+        else if (key == "distanceBilinear") mDistanceBilinear = value;
+        else if (key == "distanceSmooth") mDistanceSmooth = value;
+        else if (key == "normalHemisphere") mNormalHemisphere = value;
+        else if (key == "distanceSamplesPerTexel") mDistanceSamples = value;
+        else if (key == "distanceExponent") mDistanceExponent = value;
+        else if (key == "distanceBakeMode") mDistanceBakeMode = value.operator std::string();
+        else if (key == "distanceRaysPerProbe") mDistanceRays = value;
+        else if (key == "distanceRangeScale") mDistanceRangeScale = value;
+        else if (key == "useVisibility") mUseVisibility = value;
+        else if (key == "visibilityMode") mVisibilityMode = value.operator std::string();
+        else if (key == "useNormalWeight") mUseNormalWeight = value;
+        else if (key == "visibilityPower") mVisibilityPower = value;
+        else if (key == "varianceBase" || key == "varianceFloor")
+        {
+            if (key == "varianceBase" || !props.has("varianceBase")) mVarianceBase = value;
+        }
         else if (key == "enableProbes")
             mEnable = value;
         else if (key == "showProbeOnly")
@@ -137,11 +166,23 @@ TraditionalProbeGI::TraditionalProbeGI(ref<Device> device, const Properties& pro
         mSamples >= 1 && mSamples <= 65536 && mBatch >= 1 && mBatch <= 64 && mMaxBounces <= 8, "Invalid probe sampling parameters."
     );
     FALCOR_CHECK(
-        std::isfinite(mIntensity) && mIntensity >= 0 && std::isfinite(mNormalBias) && mNormalBias >= 0, "Invalid probe intensity/bias."
+        std::isfinite(mIntensity) && mIntensity >= 0 && std::isfinite(mNormalBias) && mNormalBias >= 0 &&
+        std::isfinite(mViewBias) && mViewBias >= 0 && mViewBias <= 1.f, "Invalid probe intensity/bias."
     );
     FALCOR_CHECK(mMode == "manual" || mMode == "bake" || mMode == "load" || mMode == "auto", "mode must be manual/bake/load/auto.");
+    FALCOR_CHECK(mDistanceResolution >= 4 && mDistanceResolution <= kMaxDistanceResolution && mDistanceSamples >= 1 &&
+        mDistanceSamples <= 2048 && std::isfinite(mDistanceRangeScale) &&
+        mDistanceRangeScale >= 1.f && mDistanceRangeScale <= 10.f, "Invalid distance bake settings.");
+    FALCOR_CHECK((mDistanceBakeMode == "texelLocal" || mDistanceBakeMode == "angular") &&
+        mDistanceRays >= 1 && mDistanceRays <= 65536 && std::isfinite(mDistanceExponent) &&
+        mDistanceExponent >= 1.f && mDistanceExponent <= 256.f, "Invalid angular distance settings.");
+    Properties visibilitySettings;
+    visibilitySettings["visibilityPower"] = mVisibilityPower;
+    visibilitySettings["varianceBase"] = mVarianceBase;
+    visibilitySettings["visibilityMode"] = mVisibilityMode;
+    configureVisibility(visibilitySettings);
     mpSampleGenerator = SampleGenerator::create(mpDevice, SAMPLE_GENERATOR_UNIFORM);
-    mpDebugData = mpDevice->createStructuredBuffer(sizeof(float4), 28,
+    mpDebugData = mpDevice->createStructuredBuffer(sizeof(float4), uint32_t(mDebugData.size()),
         ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess, MemoryType::DeviceLocal, mDebugData.data());
     mpDebugDistance = mpDevice->createTexture2D(1, 1, ResourceFormat::R32Float, 1, 1, nullptr,
         ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
@@ -164,6 +205,21 @@ Properties TraditionalProbeGI::getProperties() const
     p["sceneRevision"] = mRevision;
     p["intensity"] = mIntensity;
     p["normalBias"] = mNormalBias;
+    p["viewBias"] = mViewBias;
+    p["distanceResolution"] = mDistanceResolution;
+    p["distanceBilinear"] = mDistanceBilinear;
+    p["distanceSmooth"] = mDistanceSmooth;
+    p["normalHemisphere"] = mNormalHemisphere;
+    p["distanceSamplesPerTexel"] = mDistanceSamples;
+    p["distanceBakeMode"] = mDistanceBakeMode;
+    p["distanceRaysPerProbe"] = mDistanceRays;
+    p["distanceExponent"] = mDistanceExponent;
+    p["distanceRangeScale"] = mDistanceRangeScale;
+    p["useVisibility"] = mUseVisibility;
+    p["visibilityMode"] = mVisibilityMode;
+    p["useNormalWeight"] = mUseNormalWeight;
+    p["visibilityPower"] = mVisibilityPower;
+    p["varianceBase"] = mVarianceBase;
     p["enableProbes"] = mEnable;
     p["showProbeOnly"] = mProbeOnly;
     p["previewUnbaked"] = mPreview;
@@ -195,10 +251,68 @@ void TraditionalProbeGI::clearProbes()
         MemoryType::DeviceLocal,
         zero.data()
     );
+    mpDistanceRays = mpDevice->createStructuredBuffer(sizeof(float4),
+        mDistanceBakeMode == "angular" ? probeCount() * 16u : 1u,
+        ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
+    const auto size = distanceAtlasSize();
+    std::vector<float4> moments(size_t(size.x) * size.y, float4(1, 1, 0, 0));
+    mpDistanceMoments = mpDevice->createTexture2D(size.x, size.y, ResourceFormat::RGBA32Float, 1, 1, moments.data(),
+        ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
+    mDistanceMax = mDistanceRangeScale * length((mGridMax - mGridMin) / float3(mCounts - uint3(1)));
+    if (!std::isfinite(mDistanceMax) || mDistanceMax <= 0.f) mDistanceMax = 1.f;
     mCompleted = 0;
+    mDistanceCompleted = mDistanceTexelOffset = 0;
     mReady = false;
     mBaking = false;
     mDirty = true;
+}
+
+uint2 TraditionalProbeGI::distanceAtlasSize() const
+{
+    const uint32_t columns = uint32_t(std::ceil(std::sqrt(double(probeCount()))));
+    return uint2(columns, (probeCount() + columns - 1) / columns) * (mDistanceResolution + 2);
+}
+
+void TraditionalProbeGI::configureVisibility(const Properties& props)
+{
+    bool enabled = mUseVisibility, normal = mUseNormalWeight, bilinear = mDistanceBilinear;
+    bool smooth = mDistanceSmooth, hemisphere = mNormalHemisphere;
+    std::string mode = mVisibilityMode;
+    float power = mVisibilityPower, base = mVarianceBase;
+    float normalBias = mNormalBias, viewBias = mViewBias;
+    for (const auto& [key, value] : props)
+    {
+        if (key == "useVisibility") enabled = value;
+        else if (key == "visibilityMode") mode = value.operator std::string();
+        else if (key == "useNormalWeight") normal = value;
+        else if (key == "distanceBilinear") bilinear = value;
+        else if (key == "distanceSmooth") smooth = value;
+        else if (key == "normalHemisphere") hemisphere = value;
+        else if (key == "visibilityPower") power = value;
+        else if (key == "varianceBase" || key == "varianceFloor")
+        {
+            if (key == "varianceBase" || !props.has("varianceBase")) base = value;
+        }
+        else if (key == "normalBias") normalBias = value;
+        else if (key == "viewBias") viewBias = value;
+        else FALCOR_THROW("Unknown visibility setting '{}'", key);
+    }
+    FALCOR_CHECK(std::isfinite(power) && power >= 1.f && power <= 8.f &&
+        std::isfinite(base) && base >= 1e-8f && base <= 0.01f, "Invalid visibility settings.");
+    FALCOR_CHECK(mode == "moments" || mode == "rayTraced", "visibilityMode must be moments or rayTraced.");
+    FALCOR_CHECK(std::isfinite(normalBias) && normalBias >= 0.f &&
+        std::isfinite(viewBias) && viewBias >= 0.f && viewBias <= 1.f, "Invalid query bias.");
+    if (props.has("normalBias")) FALCOR_CHECK(normalBias <= 1.f, "Normal bias out of range.");
+    if (normalBias != mNormalBias || viewBias != mViewBias) mDirty = mDebugRefresh = true;
+    mNormalBias = normalBias; mViewBias = viewBias;
+    if (enabled != mUseVisibility || normal != mUseNormalWeight || power != mVisibilityPower || base != mVarianceBase ||
+        mode != mVisibilityMode || bilinear != mDistanceBilinear || smooth != mDistanceSmooth || hemisphere != mNormalHemisphere)
+        mDirty = mDebugRefresh = true;
+    mUseVisibility = enabled; mUseNormalWeight = normal; mVisibilityPower = power; mVarianceBase = base;
+    mVisibilityMode = mode;
+    mDistanceBilinear = bilinear;
+    mDistanceSmooth = smooth;
+    mNormalHemisphere = hemisphere;
 }
 
 void TraditionalProbeGI::clearDebugSelection()
@@ -218,6 +332,17 @@ void TraditionalProbeGI::pickSurface(float2 uv)
     mDebugEnabled = true;
 }
 
+void TraditionalProbeGI::inspectSurfacePoint(float3 position, float3 normal)
+{
+    FALCOR_CHECK(finite3(position) && finite3(normal) && std::isfinite(length(normal)) && length(normal) > 1e-8f,
+        "Inspection needs a finite world position and nonzero normal.");
+    clearDebugSelection();
+    mDebugData[0] = float4(position, 1.f);
+    mDebugData[1] = float4(normalize(normal), 0.f);
+    mpDebugData->setBlob(mDebugData.data(), 0, mDebugData.size() * sizeof(float4));
+    mDebugEnabled = mDebugRefresh = true;
+}
+
 bool TraditionalProbeGI::onMouseEvent(const MouseEvent& e)
 {
     if (mDebugEnabled && mPickEnabled && e.type == MouseEvent::Type::ButtonDown && e.button == Input::MouseButton::Right)
@@ -233,11 +358,11 @@ void TraditionalProbeGI::configureDebug(const Properties& props)
     // Validate the complete request before modifying live settings.
     for (const auto& [key, value] : props)
     {
-        if (key == "view") FALCOR_CHECK(uint32_t(value) <= 5, "Debug view must be 0..5.");
+        if (key == "view") FALCOR_CHECK(uint32_t(value) <= 8, "Debug view must be 0..8.");
         else if (key == "selectedProbe") FALCOR_CHECK(uint32_t(value) < probeCount(), "Probe ID out of range.");
         else if (key == "radius") FALCOR_CHECK(std::isfinite(float(value)) && float(value) >= 0.01f && float(value) <= 0.3f, "Radius out of range.");
         else if (key == "exposure") FALCOR_CHECK(std::isfinite(float(value)) && std::abs(float(value)) <= 10.f, "Exposure out of range.");
-        else if (key == "normalBias") FALCOR_CHECK(std::isfinite(float(value)) && float(value) >= 0.f && float(value) <= 1.f, "Bias out of range.");
+        else if (key == "normalBias" || key == "viewBias") FALCOR_CHECK(std::isfinite(float(value)) && float(value) >= 0.f && float(value) <= 1.f, "Bias out of range.");
         else if (key != "enabled" && key != "pickEnabled" && key != "showProbes" && key != "showBounds" && key != "showLinks" &&
                  key != "showIds" && key != "xray" && key != "preview" && key != "radiance" && key != "negative" && key != "onlyContributors")
             FALCOR_THROW("Unknown debug setting '{}'", key);
@@ -261,6 +386,7 @@ void TraditionalProbeGI::configureDebug(const Properties& props)
         else if (key == "radius") mProbeRadius = value;
         else if (key == "exposure") mDebugExposure = value;
         else if (key == "normalBias") mNormalBias = value;
+        else if (key == "viewBias") mViewBias = value;
     }
     mDebugRefresh = mDirty = true;
 }
@@ -275,8 +401,22 @@ Properties TraditionalProbeGI::getDebugInfo() const
     p["normal"] = xyz(mDebugData[1]);
     p["clamped"] = mDebugData[1].w > 0.f;
     p["samplePosition"] = xyz(mDebugData[2]);
+    p["normalBias"] = mNormalBias;
+    p["viewBias"] = mViewBias;
     p["irradiance"] = xyz(mDebugData[3]);
     p["selectedProbe"] = mSelectedProbe;
+    p["useVisibility"] = mUseVisibility;
+    p["visibilityMode"] = mVisibilityMode;
+    p["distanceMax"] = mDistanceMax;
+    p["varianceBase"] = mVarianceBase;
+    p["distanceBilinear"] = mDistanceBilinear;
+    p["distanceSmooth"] = mDistanceSmooth;
+    p["normalHemisphere"] = mNormalHemisphere;
+    p["distanceResolution"] = mDistanceResolution;
+    p["distanceSamplesPerTexel"] = mDistanceSamples;
+    p["distanceBakeMode"] = mDistanceBakeMode;
+    p["distanceRaysPerProbe"] = mDistanceRays;
+    p["distanceExponent"] = mDistanceExponent;
     p["invalidBakeAttempts"] = mInvalidAttempts;
     p["failedBakeSamples"] = mFailedSamples;
     p["firstInvalidProbe"] = mFirstInvalidProbe;
@@ -288,6 +428,21 @@ Properties TraditionalProbeGI::getDebugInfo() const
         p["position" + suffix] = xyz(mDebugData[4 + 3 * i]);
         p["weight" + suffix] = mDebugData[5 + 3 * i].x;
         p["visible" + suffix] = mDebugData[5 + 3 * i].y > 0.f;
+        p["trilinearWeight" + suffix] = mDebugData[5 + 3 * i].z;
+        p["visibility" + suffix] = mDebugData[5 + 3 * i].w;
+        p["meanDistance" + suffix] = mDebugData[28 + i].x;
+        p["distanceVariance" + suffix] = mDebugData[28 + i].y;
+        p["queryDistance" + suffix] = mDebugData[28 + i].z;
+        p["normalWeight" + suffix] = mDebugData[28 + i].w;
+        p["queryHitDistance" + suffix] = mDebugData[36 + i].x;
+        p["surfaceHitDistance" + suffix] = mDebugData[36 + i].y;
+        p["surfaceDistance" + suffix] = mDebugData[36 + i].z;
+        p["rayVisibility" + suffix] = mDebugData[36 + i].w;
+        p["surfaceMeanDistance" + suffix] = mDebugData[44 + i].x;
+        p["surfaceVariance" + suffix] = mDebugData[44 + i].y;
+        const auto texel = uint32_t(mDebugData[44 + i].z);
+        p["queryTexel" + suffix] = uint2(texel % mDistanceResolution, texel / mDistanceResolution);
+        p["appliedVisibility" + suffix] = mDebugData[44 + i].w;
         p["contribution" + suffix] = xyz(mDebugData[6 + 3 * i]);
     }
     return p;
@@ -377,7 +532,7 @@ void TraditionalProbeGI::initializeProbes(bool allowAutomatic)
             hash *= 1099511628211ull;
         }
         std::ostringstream name;
-        name << path.stem().string() << '-' << std::hex << hash << ".shprobe";
+        name << path.stem().string() << '-' << std::hex << hash << (mDistanceBakeMode == "angular" ? "-angular.shprobe" : "-texel-local.shprobe");
         mCacheFile = std::filesystem::path("F:/build/probes") / name.str();
     }
     clearProbes();
@@ -424,12 +579,28 @@ bool TraditionalProbeGI::loadCache()
     in >> magic >> version >> std::quoted(scene) >> stamp >> std::quoted(revision);
     in >> counts.x >> counts.y >> counts.z >> samples >> bounces;
     in >> lo.x >> lo.y >> lo.z >> hi.x >> hi.y >> hi.z;
-    if (!in || magic != "FALCOR_PROBE_SH" || version != 1)
+    if (magic == "FALCOR_PROBE_SH" && (version == 1 || version == 2))
+        return reject("legacy distance cache; rebake required");
+    if (!in || magic != "FALCOR_PROBE_SH" || (version != 3 && version != 4))
         return reject("bad header/version");
     if (scene != mSceneKey || stamp != mSceneStamp || revision != mRevision || any(counts != mCounts) || samples != mSamples ||
         bounces != mMaxBounces || !finite3(lo) || !finite3(hi) || any(abs(lo - mGridMin) > float3(1e-5f)) ||
         any(abs(hi - mGridMax) > float3(1e-5f)))
         return reject("metadata mismatch");
+    uint32_t resolution = 0, width = 0, height = 0;
+    float range = 0.f;
+    uint32_t distanceSamples = 0;
+    std::string method;
+    in >> method >> resolution >> distanceSamples >> range >> width >> height;
+    float exponent = 0.f;
+    if (version == 4) in >> exponent;
+    const bool angular = mDistanceBakeMode == "angular";
+    const bool matchingMethod = angular ? (version == 4 && method == "angular_cosine" && exponent == mDistanceExponent)
+                                       : (version == 3 && method == "texel_local_uv_point");
+    const auto size = distanceAtlasSize();
+    if (!in || !matchingMethod || resolution != mDistanceResolution || distanceSamples != distanceSampleTarget() || range != mDistanceRangeScale ||
+        width != size.x || height != size.y)
+        return reject("distance metadata mismatch");
     std::vector<float4> data(probeCount() * 9);
     for (size_t i = 0; i < data.size(); ++i)
     {
@@ -444,6 +615,17 @@ bool TraditionalProbeGI::loadCache()
         if (!finite3(float3(c.x, c.y, c.z)))
             return reject("coefficient overflow");
     }
+    std::string marker;
+    in >> marker;
+    if (!in || marker != "DISTANCE_MOMENTS") return reject("missing distance moments");
+    std::vector<float4> moments(size_t(size.x) * size.y);
+    for (size_t i = 0; i < moments.size(); ++i)
+    {
+        auto& v = moments[i];
+        in >> v.x >> v.y;
+        v.z = 1.f; v.w = 0.f;
+        if (!in || !validMoments(v)) return reject(fmt::format("truncated/invalid distance moments at texel {}", i));
+    }
     std::string extra;
     if (in >> extra)
         return reject("trailing data");
@@ -454,7 +636,11 @@ bool TraditionalProbeGI::loadCache()
         MemoryType::DeviceLocal,
         data.data()
     );
+    mpDistanceMoments = mpDevice->createTexture2D(size.x, size.y, ResourceFormat::RGBA32Float, 1, 1, moments.data(),
+        ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
     mCompleted = mSamples;
+    mDistanceCompleted = distanceSampleTarget();
+    mDistanceTexelOffset = 0;
     mReady = true;
     mBaking = false;
     mDirty = true;
@@ -472,9 +658,14 @@ void TraditionalProbeGI::saveCache()
     std::ostringstream out;
     out.imbue(std::locale::classic());
     out << std::setprecision(std::numeric_limits<float>::max_digits10);
-    out << "FALCOR_PROBE_SH 1\n" << std::quoted(mSceneKey) << '\n' << mSceneStamp << '\n' << std::quoted(mRevision) << '\n';
+    out << "FALCOR_PROBE_SH " << (mDistanceBakeMode == "angular" ? 4 : 3) << '\n' << std::quoted(mSceneKey) << '\n' << mSceneStamp << '\n' << std::quoted(mRevision) << '\n';
     out << mCounts.x << ' ' << mCounts.y << ' ' << mCounts.z << ' ' << mSamples << ' ' << mMaxBounces << '\n';
     out << mGridMin.x << ' ' << mGridMin.y << ' ' << mGridMin.z << ' ' << mGridMax.x << ' ' << mGridMax.y << ' ' << mGridMax.z << '\n';
+    const auto size = distanceAtlasSize();
+    out << (mDistanceBakeMode == "angular" ? "angular_cosine " : "texel_local_uv_point ") << mDistanceResolution << ' '
+        << distanceSampleTarget() << ' ' << mDistanceRangeScale << ' ' << size.x << ' ' << size.y;
+    if (mDistanceBakeMode == "angular") out << ' ' << mDistanceExponent;
+    out << '\n';
     for (size_t i = 0; i < data.size(); ++i)
     {
         auto c = data[i];
@@ -485,6 +676,21 @@ void TraditionalProbeGI::saveCache()
             FALCOR_THROW("Non-finite SH coefficient {} (probe {}). Existing cache was not changed.", i, i / 9);
         }
         out << c.x << ' ' << c.y << ' ' << c.z << '\n';
+    }
+    const auto bytes = mpDevice->getRenderContext()->readTextureSubresource(mpDistanceMoments.get(), 0);
+    FALCOR_CHECK(bytes.size() == size_t(size.x) * size.y * sizeof(float4), "Unexpected distance atlas readback size.");
+    out << "DISTANCE_MOMENTS\n";
+    for (size_t i = 0; i < bytes.size() / sizeof(float4); ++i)
+    {
+        float4 v;
+        std::memcpy(&v, bytes.data() + i * sizeof(float4), sizeof(float4));
+        if (!validMoments(v))
+        {
+            mReady = false;
+            FALCOR_THROW("Invalid distance moments at texel {}: mean={:.9g}, second={:.9g}, weight={:.9g}, variance={:.9g}. Existing cache was not changed.",
+                i, v.x, v.y, v.z, v.y - v.x * v.x);
+        }
+        out << v.x << ' ' << v.y << '\n';
     }
     FALCOR_CHECK(bool(out), "Failed serializing probe cache.");
     const auto contents = out.str();
@@ -531,6 +737,9 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
     }
     // First-frame scene initialization is not a user edit. Camera flags are intentionally omitted.
     using U = IScene::UpdateFlags;
+    if (mViewBias > 0.f && mDebugData[0].w > 0.f &&
+        is_set(mpScene->getUpdates(), U::CameraMoved | U::CameraSwitched))
+        mDebugRefresh = true;
     const auto invalidating = U::GeometryMoved | U::GeometryChanged | U::MeshesChanged | U::MaterialsChanged | U::LightsMoved |
                               U::LightIntensityChanged | U::LightPropertiesChanged | U::LightCountChanged | U::EnvMapChanged |
                               U::EnvMapPropertiesChanged | U::RenderSettingsChanged | U::EmissiveMaterialsChanged | U::CurvesMoved |
@@ -591,6 +800,8 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
         var[c.texname] = data.getTexture(c.name);
     var["gProbeSH"] = mpSH;
     var["gBakeHealth"] = mpBakeHealth;
+    var["gDistanceMoments"] = mpDistanceMoments;
+    var["gDistanceRays"] = mpDistanceRays;
     auto cb = var["ProbeCB"];
     cb["gGridCounts"] = mCounts;
     cb["gGridMin"] = mGridMin;
@@ -598,6 +809,19 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
     cb["gSampleTotal"] = mSamples;
     cb["gIntensity"] = mIntensity;
     cb["gNormalBias"] = mNormalBias;
+    cb["gViewBias"] = mViewBias;
+    cb["gDistanceResolution"] = mDistanceResolution;
+    cb["gDistanceAtlasSize"] = distanceAtlasSize();
+    cb["gDistanceMax"] = mDistanceMax;
+    cb["gDistanceBilinear"] = mDistanceBilinear;
+    cb["gDistanceSmooth"] = mDistanceSmooth;
+    cb["gNormalHemisphere"] = mNormalHemisphere;
+    cb["gUseVisibility"] = mUseVisibility;
+    cb["gRayTracedVisibility"] = mVisibilityMode == "rayTraced";
+    cb["gUseNormalWeight"] = mUseNormalWeight;
+    cb["gVisibilityPower"] = mVisibilityPower;
+    cb["gVarianceBase"] = mVarianceBase;
+    cb["gSelectedProbe"] = mSelectedProbe;
     cb["gProbeOnly"] = mProbeOnly;
     cb["gPreviewUnbaked"] = mPreview && !mReady;
     const uint2 debugDims = data.getDefaultTextureDims();
@@ -609,6 +833,8 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
     var["gDebugDistance"] = mpDebugDistance;
     cb["gDebugEnabled"] = debugActive;
     cb["gDebugView"] = mDebugView;
+    cb["gBakeDistance"] = false;
+    cb["gBakeDistanceRays"] = false;
     cb["gInspect"] = false;
     cb["gPick"] = false;
     cb["gPickPixel"] = min(uint2(mPickUV * float2(debugDims)), debugDims - 1u);
@@ -617,14 +843,64 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
     var["CB"]["gPRNGDimension"] = 0u;
     if (mBaking)
     {
-        uint32_t batch = std::min(mBatch, mSamples - mCompleted);
-        cb["gBake"] = true;
-        cb["gSampleStart"] = mCompleted;
-        cb["gSampleBatch"] = batch;
-        mpScene->raytrace(ctx, p.get(), mTracer.pVars, uint3(probeCount(), 1, 1));
-        ctx->uavBarrier(mpSH.get());
-        mCompleted += batch;
-        if (mCompleted == mSamples)
+        if (mCompleted < mSamples)
+        {
+            const uint32_t batch = std::min(mBatch, mSamples - mCompleted);
+            cb["gBake"] = true;
+            cb["gSampleStart"] = mCompleted;
+            cb["gSampleBatch"] = batch;
+            mpScene->raytrace(ctx, p.get(), mTracer.pVars, uint3(probeCount(), 1, 1));
+            ctx->uavBarrier(mpSH.get());
+            mCompleted += batch;
+        }
+        else if (mDistanceCompleted < distanceSampleTarget())
+        {
+            // Keep the sample range fixed across a partial sweep, even if the UI batch changes.
+            if (mDistanceTexelOffset == 0)
+                mDistanceSweepBatch = std::min({mBatch, 16u, distanceSampleTarget() - mDistanceCompleted});
+            const uint32_t batch = mDistanceSweepBatch;
+            const uint32_t total = probeCount() * mDistanceResolution * mDistanceResolution;
+            const uint32_t count = std::min({8192u, 65536u / batch, total - mDistanceTexelOffset});
+            cb["gBake"] = false;
+            cb["gBakeDistance"] = true;
+            cb["gDistanceTexelOffset"] = mDistanceTexelOffset;
+            cb["gSampleStart"] = mDistanceCompleted;
+            cb["gSampleBatch"] = batch;
+            if (mDistanceBakeMode == "angular")
+            {
+                cb["gBakeDistance"] = false;
+                if (mDistanceTexelOffset == 0)
+                {
+                    cb["gBakeDistanceRays"] = true;
+                    mpScene->raytrace(ctx, p.get(), mTracer.pVars, uint3(probeCount(), 1, 1));
+                    ctx->uavBarrier(mpDistanceRays.get());
+                    cb["gBakeDistanceRays"] = false;
+                }
+                if (!mpDistanceBlend)
+                    mpDistanceBlend = ComputePass::create(mpDevice, "RenderPasses/TraditionalProbeGI/ProbeDistanceBlend.cs.slang", "main");
+                auto blend = mpDistanceBlend->getRootVar();
+                blend["gRays"] = mpDistanceRays;
+                blend["gMoments"] = mpDistanceMoments;
+                auto constants = blend["BlendCB"];
+                constants["gOffset"] = mDistanceTexelOffset;
+                constants["gCount"] = count;
+                constants["gResolution"] = mDistanceResolution;
+                constants["gColumns"] = distanceAtlasSize().x / (mDistanceResolution + 2);
+                constants["gBatch"] = batch;
+                constants["gExponent"] = mDistanceExponent;
+                mpDistanceBlend->execute(ctx, uint3(count, 1, 1));
+            }
+            else mpScene->raytrace(ctx, p.get(), mTracer.pVars, uint3(count, 1, 1));
+            ctx->uavBarrier(mpDistanceMoments.get());
+            cb["gBakeDistance"] = false;
+            mDistanceTexelOffset += count;
+            if (mDistanceTexelOffset == total)
+            {
+                mDistanceTexelOffset = 0;
+                mDistanceCompleted += batch;
+            }
+        }
+        if (mCompleted == mSamples && mDistanceCompleted == distanceSampleTarget())
         {
             const auto health = mpBakeHealth->getElements<uint4>();
             for (uint32_t i = 0; i < health.size(); ++i)
@@ -685,7 +961,7 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
         cb["gPick"] = false;
     }
     mpScene->raytrace(ctx, p.get(), mTracer.pVars, uint3(data.getDefaultTextureDims(), 1));
-    if (debugActive) drawDebug(ctx, data.getTexture("color"));
+    if (debugActive && mDebugView < 7) drawDebug(ctx, data.getTexture("color"));
     if (mDirty)
     {
         auto& dict = data.getDictionary();
@@ -701,6 +977,12 @@ void TraditionalProbeGI::configureBake(const Properties& props)
     auto counts = mCounts;
     auto lo = mGridMin, hi = mGridMax;
     auto samples = mSamples, batch = mBatch, bounces = mMaxBounces;
+    auto distanceResolution = mDistanceResolution;
+    auto distanceSamples = mDistanceSamples;
+    auto distanceRange = mDistanceRangeScale;
+    auto distanceMode = mDistanceBakeMode;
+    auto distanceRays = mDistanceRays;
+    auto distanceExponent = mDistanceExponent;
     auto revision = mRevision;
     auto explicitBounds = mExplicitBounds;
     for (const auto& [key, value] : props)
@@ -727,14 +1009,27 @@ void TraditionalProbeGI::configureBake(const Properties& props)
             bounces = value;
         else if (key == "sceneRevision")
             revision = value.operator std::string();
+        else if (key == "distanceResolution") distanceResolution = value;
+        else if (key == "distanceSamplesPerTexel") distanceSamples = value;
+        else if (key == "distanceExponent") distanceExponent = value;
+        else if (key == "distanceBakeMode") distanceMode = value.operator std::string();
+        else if (key == "distanceRaysPerProbe") distanceRays = value;
+        else if (key == "distanceRangeScale") distanceRange = value;
         else
             FALCOR_THROW("Unknown bake setting '{}'", key);
     }
     FALCOR_CHECK(all(counts >= uint3(2)) && all(counts <= uint3(32)), "gridCounts must be 2..32 per axis.");
     FALCOR_CHECK(samples >= 1 && samples <= 65536 && batch >= 1 && batch <= 64 && bounces <= 8, "Invalid sampling settings.");
+    FALCOR_CHECK(distanceResolution >= 4 && distanceResolution <= kMaxDistanceResolution && distanceSamples >= 1 &&
+        distanceSamples <= 2048 && std::isfinite(distanceRange) &&
+        distanceRange >= 1.f && distanceRange <= 10.f, "Invalid distance bake settings.");
+    FALCOR_CHECK((distanceMode == "texelLocal" || distanceMode == "angular") && distanceRays >= 1 && distanceRays <= 65536 &&
+        std::isfinite(distanceExponent) && distanceExponent >= 1.f && distanceExponent <= 256.f, "Invalid angular distance settings.");
     // Bounds may be temporarily inverted while typing. The UI rejects Bake/Load until fixed.
     const bool changed = any(counts != mCounts) || any(lo != mGridMin) || any(hi != mGridMax) || samples != mSamples ||
-                         bounces != mMaxBounces || revision != mRevision || explicitBounds != mExplicitBounds;
+                         bounces != mMaxBounces || revision != mRevision || explicitBounds != mExplicitBounds ||
+                         distanceResolution != mDistanceResolution || distanceSamples != mDistanceSamples || distanceRange != mDistanceRangeScale ||
+                         distanceMode != mDistanceBakeMode || distanceRays != mDistanceRays || distanceExponent != mDistanceExponent;
     mCounts = counts;
     mGridMin = lo;
     mGridMax = hi;
@@ -743,12 +1038,15 @@ void TraditionalProbeGI::configureBake(const Properties& props)
     mMaxBounces = bounces;
     mRevision = revision;
     mExplicitBounds = explicitBounds;
+    mDistanceResolution = distanceResolution; mDistanceSamples = distanceSamples; mDistanceRangeScale = distanceRange;
+    mDistanceBakeMode = distanceMode; mDistanceRays = distanceRays; mDistanceExponent = distanceExponent;
     if (changed)
     {
         mSettingsChanged = true;
         mReady = false;
         mBaking = false;
         mCompleted = 0;
+        mDistanceCompleted = mDistanceTexelOffset = 0;
         mAction = Action::None;
         mDirty = true;
         mStatus = "Bake settings changed. Click Bake to apply them.";
@@ -767,7 +1065,9 @@ void TraditionalProbeGI::renderUI(Gui::Widgets& w)
     if (mInvalidAttempts) w.text(fmt::format("Numerical path attempts rejected: {}; failed samples: {}", mInvalidAttempts, mFailedSamples));
     if (!mReady && mPreview)
         w.text("Unbaked material preview (not probe lighting)");
-    w.text(std::to_string(mCompleted) + " / " + std::to_string(mSamples) + " samples per probe");
+    w.text(std::to_string(mCompleted) + " / " + std::to_string(mSamples) + " SH samples per probe");
+    w.text(fmt::format("Distance: {} / {} rays per {}; {} texels in current sweep",
+        mDistanceCompleted, distanceSampleTarget(), mDistanceBakeMode == "angular" ? "probe" : "texel", mDistanceTexelOffset));
     auto counts = mCounts;
     auto samples = mSamples, batch = mBatch, bounces = mMaxBounces;
     auto lo = mGridMin, hi = mGridMax;
@@ -785,13 +1085,43 @@ void TraditionalProbeGI::renderUI(Gui::Widgets& w)
         if (w.var("Grid max", hi))
             changes["gridMax"] = hi;
     }
-    if (w.var("Samples per probe", samples, 1u, 65536u))
+    if (w.var("SH samples per probe", samples, 1u, 65536u))
         changes["samplesPerProbe"] = samples;
     if (w.var("Samples per frame", batch, 1u, 64u))
         changes["samplesPerFrame"] = batch;
     w.tooltip("Controls baking work per frame. Changing this preserves completed samples.");
     if (w.var("Max bounces", bounces, 0u, 8u))
         changes["maxBounces"] = bounces;
+    if (auto d = w.group("Distance map bake settings"))
+    {
+        auto resolution = mDistanceResolution;
+        auto distanceSamples = mDistanceSamples;
+        auto range = mDistanceRangeScale;
+        if (d.var("Interior resolution", resolution, 4u, kMaxDistanceResolution)) changes["distanceResolution"] = resolution;
+        uint32_t mode = mDistanceBakeMode == "angular" ? 1u : 0u;
+        const Gui::DropdownList modes = {{0, "Texel-local"}, {1, "Angular weighted (DDGI-style)"}};
+        if (d.dropdown("Distance bake mode", modes, mode)) changes["distanceBakeMode"] = mode ? "angular" : "texelLocal";
+        if (mode)
+        {
+            auto rays = mDistanceRays;
+            auto exponent = mDistanceExponent;
+            if (d.var("Distance rays per probe", rays, 1u, 65536u)) changes["distanceRaysPerProbe"] = rays;
+            if (d.var("Angular sharpness", exponent, 1.f, 256.f)) changes["distanceExponent"] = exponent;
+            d.tooltip("Weight = max(dot(texel direction, ray direction), 0)^sharpness. Higher values narrow the filter.");
+            d.text(fmt::format("{} shared distance rays total", uint64_t(probeCount()) * rays));
+        }
+        else
+        {
+            if (d.var("Distance samples per texel", distanceSamples, 1u, 2048u)) changes["distanceSamplesPerTexel"] = distanceSamples;
+            d.text("Independent rays inside each texel. No angular blend.");
+            d.text(fmt::format("{} distance rays total", uint64_t(probeCount()) * mDistanceResolution * mDistanceResolution * mDistanceSamples));
+        }
+        if (d.var("Distance range / grid diagonal", range, 1.f, 10.f)) changes["distanceRangeScale"] = range;
+        const auto size = distanceAtlasSize();
+        d.text(fmt::format("Atlas {}x{}; {:.2f} MiB; range {:.3f} world units", size.x, size.y,
+            double(size.x) * size.y * sizeof(float4) / (1024.0 * 1024.0), mDistanceMax));
+        d.text("Changes require a new Bake. One folded border texel per side.");
+    }
     if (w.textbox("Scene revision", revision))
         changes["sceneRevision"] = revision;
     configureBake(changes);
@@ -814,7 +1144,53 @@ void TraditionalProbeGI::renderUI(Gui::Widgets& w)
     mDirty |= w.checkbox("Probe lighting only", mProbeOnly);
     mDirty |= w.var("Probe intensity", mIntensity, 0.f, 10.f);
     if (w.var("Normal bias", mNormalBias, 0.f, 1.f)) mDirty = mDebugRefresh = true;
-    w.text("Static diffuse SH. No visibility correction; thin-wall light leaks are expected.");
+    w.tooltip("Offset along the surface normal, in units of minimum probe spacing. No rebake.");
+    if (w.var("View bias", mViewBias, 0.f, 1.f)) mDirty = mDebugRefresh = true;
+    w.tooltip("Offset toward the camera, in units of minimum probe spacing. Changes with camera position.");
+    if (w.button("Normal/view formula preset"))
+    {
+        mNormalBias = 0.06f; mViewBias = 0.24f;
+        mDirty = mDebugRefresh = true;
+    }
+    w.tooltip("Q = P + minSpacing * 0.3 * (0.2 * normal + 0.8 * directionToCamera).");
+    if (w.button("Reset bias defaults"))
+    {
+        mNormalBias = 0.05f; mViewBias = 0.f;
+        mDirty = mDebugRefresh = true;
+    }
+    if (auto v = w.group("Distance visibility"))
+    {
+        bool enabled = mUseVisibility, normal = mUseNormalWeight, hemisphere = mNormalHemisphere;
+        float power = mVisibilityPower, base = mVarianceBase;
+        v.checkbox("Enable visibility", enabled);
+        v.tooltip("Off restores the original trilinear SH interpolation, without direction weighting.");
+        uint32_t method = mVisibilityMode == "rayTraced" ? 1u : 0u;
+        const Gui::DropdownList methods = {{0, "Distance moments"}, {1, "Ray traced (debug)"}};
+        v.dropdown("Visibility method", methods, method);
+        uint32_t filter = mDistanceBilinear ? (mDistanceSmooth ? 2u : 1u) : 0u;
+        const Gui::DropdownList filters = {{0, "Point"}, {1, "Bilinear"}, {2, "Smooth moments"}};
+        v.dropdown("Distance map filtering", filters, filter);
+        v.tooltip("Smooth moments uses smoothstep interpolation of the same four texels. Softens texel-grid edges; does not itself prevent light leaking. No rebake.");
+        v.checkbox("Normal direction weight", normal);
+        v.checkbox("Reject back-facing probes", hemisphere);
+        v.tooltip("With normal weighting enabled, smoothly fade grazing probes and reject probes behind the surface. No extra rays or rebake. Sparse probe coverage can become darker.");
+        v.var("Visibility power", power, 1.f, 8.f);
+        v.var("Base variance (normalized)", base, 1e-8f, 0.01f, 0.000001f);
+        v.tooltip("Added to the nonnegative variance after moment interpolation. Not a minimum clamp; no rebake.");
+        Properties settings;
+        settings["useVisibility"] = enabled;
+        settings["visibilityMode"] = method ? "rayTraced" : "moments";
+        settings["distanceBilinear"] = filter != 0;
+        settings["distanceSmooth"] = filter == 2;
+        settings["useNormalWeight"] = normal;
+        settings["normalHemisphere"] = hemisphere;
+        settings["visibilityPower"] = power;
+        settings["varianceBase"] = base;
+        configureVisibility(settings);
+        v.text("Immediate changes, no rebake. No probe relocation.");
+        if (method) v.text("Debug reference: up to 8 extra shadow rays per pixel. Power/base affect moments only.");
+    }
+    w.text("Static diffuse SH + octahedral distance moments.");
     if (auto d = w.group("Debugging"))
     {
         if (d.checkbox("Enable debug", mDebugEnabled)) mDirty = mDebugRefresh = true;
@@ -822,7 +1198,8 @@ void TraditionalProbeGI::renderUI(Gui::Widgets& w)
         {
             if (!configurationError().empty()) d.text("Debug paused: fix the invalid grid bounds first.");
             const Gui::DropdownList views = {{0, "Normal lighting"}, {1, "Irradiance (no albedo)"},
-                {2, "Diffuse albedo"}, {3, "World normal"}, {4, "Probe cell"}, {5, "Grid clamp mask"}};
+                {2, "Diffuse albedo"}, {3, "World normal"}, {4, "Probe cell"}, {5, "Grid clamp mask"},
+                {6, "Visibility support"}, {7, "Selected probe: mean distance"}, {8, "Selected probe: distance stddev"}};
             mDirty |= d.dropdown("Surface view", views, mDebugView);
             d.checkbox("Show probe spheres", mShowProbes);
             d.checkbox("Show probe IDs", mShowIds);
@@ -835,8 +1212,16 @@ void TraditionalProbeGI::renderUI(Gui::Widgets& w)
             d.checkbox("Show contribution links", mShowLinks);
             if (d.button("Clear selection")) clearDebugSelection();
             if (d.button("Refresh inspection")) mDebugRefresh = true;
-            d.text("Links: green visible, red blocked; yellow = normal-bias offset.");
-            d.text("Visibility is diagnostic only; production weights are unchanged.");
+            d.text("Links: Probe->Q ray, green visible / red blocked; yellow = normal + view bias.");
+            d.text("Q = biased query (used by GI)\nP = picked surface; world units.");
+            d.text(fmt::format("Bias / spacing: normal {:.3f}, view {:.3f}", mNormalBias, mViewBias));
+            if (mDebugData[0].w > 0.f)
+                d.text(fmt::format("Q ({:.4f}, {:.4f}, {:.4f})", mDebugData[2].x, mDebugData[2].y, mDebugData[2].z));
+            d.text(mDistanceBilinear ? (mDistanceSmooth ? "Stored mean: smooth distance moments" : "Stored mean: bilinear distance moments") : "Stored mean: point distance moments");
+            d.text(fmt::format("Base variance: {:.2e} normalized / {:.2e} world^2", mVarianceBase, mVarianceBase * mDistanceMax * mDistanceMax));
+            d.text("Listed variance excludes the additive base.");
+            d.text("HIT: nearest geometry\nMISS: no hit within ray range");
+            d.text(fmt::format("Visibility: {}; enabled: {}; ray range >= {:.3f}", mVisibilityMode, mUseVisibility, mDistanceMax));
             if (mDebugData[0].w > 0.f)
             {
                 d.text(fmt::format("Surface ({:.3f}, {:.3f}, {:.3f}); clamped: {}", mDebugData[0].x,
@@ -847,6 +1232,16 @@ void TraditionalProbeGI::renderUI(Gui::Widgets& w)
                     d.text(fmt::format("#{} w={:.4f} {} weighted E=({:.3f},{:.3f},{:.3f})", uint32_t(a.w), b.x,
                         b.y > 0.f ? "visible" : "BLOCKED", c.x, c.y, c.z));
                     d.text(fmt::format("  pos=({:.3f},{:.3f},{:.3f})", a.x, a.y, a.z));
+                    auto info = mDebugData[28 + i];
+                    auto ray = mDebugData[36 + i], surface = mDebugData[44 + i];
+                    const auto hitLabel = [](float t) { return t < 0.f ? std::string("MISS") : fmt::format("{:.4f}", t); };
+                    d.text(fmt::format("  tri={:.4f} dir={:.3f}\n  V moment={:.4f} ray={:.0f}\n  V used={:.4f}", b.z, info.w, b.w, ray.w, surface.w));
+                    const auto texel = uint32_t(surface.z);
+                    d.text(fmt::format("  Q texel=({}, {}) mean={:.4f}\n     point={:.4f} HIT={}",
+                        texel % mDistanceResolution, texel / mDistanceResolution, info.x, info.z, hitLabel(ray.x)));
+                    d.text(fmt::format("     variance={:.6f}", info.y));
+                    d.text(fmt::format("  P stored mean={:.4f}\n     point={:.4f} HIT={}", surface.x, ray.z, hitLabel(ray.y)));
+                    d.text(fmt::format("     variance={:.6f}", surface.y));
                 }
             }
             else d.text("No surface selected. Enable Pick surface, then click the scene.");
@@ -856,6 +1251,7 @@ void TraditionalProbeGI::renderUI(Gui::Widgets& w)
             d.checkbox("Highlight negative SH (magenta)", mShowNegative);
             d.var("Sphere exposure (EV)", mDebugExposure, -10.f, 10.f);
             d.text("Direction sphere: camera-facing world directions; radiance is an L2 SH reconstruction.");
+            d.text("Distance maps: full octahedron, +Z center; values divided by max range (stddev likewise).");
             if (!mReady) d.text("No completed bake: gray spheres, irradiance view is black.");
         }
     }
@@ -872,6 +1268,7 @@ void TraditionalProbeGI::setScene(RenderContext* pRenderContext, const ref<Scene
     mReady = false;
     mBaking = false;
     mCompleted = 0;
+    mDistanceCompleted = mDistanceTexelOffset = 0;
     mSettingsChanged = false;
     mAllowStartupActions = true;
     mStatus = "Waiting: configure the probes, then click Bake.";

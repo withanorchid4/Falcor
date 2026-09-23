@@ -52,10 +52,10 @@ def main():
         run_case("reference", PROBE_GI_REFERENCE="1")
     original = CACHE.read_text(encoding="utf-8")
     variants = {
-        "bad-version": original.replace("FALCOR_PROBE_SH 1", "FALCOR_PROBE_SH 999", 1),
+        "bad-version": original.replace(original.splitlines()[0], "FALCOR_PROBE_SH 999", 1),
         "truncated": "\n".join(original.splitlines()[:8]),
         "trailing": original + "unexpected-data\n",
-        "nonfinite": "\n".join(original.splitlines()[:6]) + "\nnan 0 0\n",
+        "nonfinite": "\n".join(original.splitlines()[:7]) + "\nnan 0 0\n",
     }
     for tag, data in variants.items():
         path = ROOT / f"build/probes/{tag}.shprobe"

@@ -4,7 +4,7 @@ def render_graph_PathTracerNRD():
     g = RenderGraph("PathTracerNRD")
     GBufferRT = createPass("GBufferRT", {'samplePattern': 'Halton', 'sampleCount': 32, 'useAlphaTest': True})
     g.addPass(GBufferRT, "GBufferRT")
-    PathTracer = createPass("PathTracer", {'samplesPerPixel': 1, 'tracePassMode': 'MinimalPayload', 'maxSurfaceBounces': 10, 'useRussianRoulette': True})
+    PathTracer = createPass("PathTracer", {'samplesPerPixel': 8, 'tracePassMode': 'MinimalPayload', 'maxSurfaceBounces': 10, 'useRussianRoulette': True})
     g.addPass(PathTracer, "PathTracer")
 
     # Reference path passes

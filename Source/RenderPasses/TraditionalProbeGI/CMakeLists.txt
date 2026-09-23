@@ -4,6 +4,8 @@ target_sources(TraditionalProbeGI PRIVATE
     TraditionalProbeGI.cpp
     TraditionalProbeGI.rt.slang
     ProbeSH.slang
+    ProbeDistance.slang
+    ProbeDistanceBlend.cs.slang
     ProbeDebug.3d.slang
 )
 target_copy_shaders(TraditionalProbeGI RenderPasses/TraditionalProbeGI)

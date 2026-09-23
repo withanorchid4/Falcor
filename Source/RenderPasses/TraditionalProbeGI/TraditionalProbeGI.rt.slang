@@ -14,6 +14,7 @@ import Utils.Geometry.GeometryHelpers;
 import Utils.Sampling.SampleGenerator;
 import Rendering.Lights.LightHelpers;
 import ProbeSH;
+import ProbeDistance;
 
 cbuffer ProbeCB
 {
@@ -24,11 +25,27 @@ cbuffer ProbeCB
     uint gSampleBatch;
     uint gSampleTotal;
     bool gBake;
+    bool gBakeDistance;
+    bool gBakeDistanceRays;
+    uint gDistanceTexelOffset;
     bool gReady;
     bool gProbeOnly;
     bool gPreviewUnbaked;
     float gIntensity;
     float gNormalBias;
+    float gViewBias;
+    uint gDistanceResolution;
+    uint2 gDistanceAtlasSize;
+    float gDistanceMax;
+    bool gDistanceBilinear;
+    bool gDistanceSmooth;
+    bool gNormalHemisphere;
+    bool gUseVisibility;
+    bool gRayTracedVisibility;
+    bool gUseNormalWeight;
+    float gVisibilityPower;
+    float gVarianceBase;
+    uint gSelectedProbe;
     bool gDebugEnabled;
     bool gHasBakedData;
     uint gDebugView;
@@ -40,6 +57,8 @@ cbuffer ProbeCB
 RWStructuredBuffer<float4> gProbeSH;
 // Per probe: rejected attempts, unrecovered samples, first rejected sample + 1, reason flags.
 RWStructuredBuffer<uint4> gBakeHealth;
+RWTexture2D<float4> gDistanceMoments;
+RWStructuredBuffer<float4> gDistanceRays;
 RWTexture2D<float4> gProbeLighting;
 RWStructuredBuffer<float4> gDebugData;
 RWTexture2D<float> gDebugDistance;
@@ -78,7 +97,7 @@ struct ShadowRayData
 };
 
 /**
- * Payload for scatter ray (up to 72B).
+ * Payload for scatter ray (up to 80B).
  */
 struct ScatterRayData
 {
@@ -88,6 +107,8 @@ struct ScatterRayData
     uint pathLength;  ///< Path length in number of path segments (0 at origin, 1 at first secondary hit, etc.). Max 2^31.
     float3 origin;    ///< Next path segment origin.
     float3 direction; ///< Next path segment direction.
+    float firstHitDistance;
+    bool distanceOnly;
 
     SampleGenerator sg; ///< Per-ray state for the sample generator (up to 16B).
 
@@ -102,6 +123,8 @@ struct ScatterRayData
         this.thp = float3(1, 1, 1);
         this.origin = float3(0, 0, 0);
         this.direction = float3(0, 0, 0);
+        this.firstHitDistance = gDistanceMax;
+        this.distanceOnly = false;
         this.sg = sg;
     }
 };
@@ -222,6 +245,45 @@ void traceScatterRay(inout ScatterRayData rayData)
     TraceRay(gScene.rtAccel, rayFlags, 0xff /* instanceInclusionMask */, 0 /* hitIdx */, rayTypeCount, 0 /* missIdx */, ray, rayData);
 }
 
+float probeRayEpsilon()
+{
+    float3 spacing = (gGridMax - gGridMin) / float3(gGridCounts - 1);
+    return max(1e-6f, min(spacing.x, min(spacing.y, spacing.z)) * 1e-4f);
+}
+
+// Nearest hit, not the first hit encountered in BVH traversal. A negative value means MISS.
+// Uses the same geometry hit groups and alpha testing as probe baking, without material shading.
+float traceProbeDistance(float3 probe, float3 point)
+{
+    float3 delta = point - probe;
+    float distance = length(delta);
+    if (distance <= 1e-8f) return -1.f;
+    ScatterRayData payload = ScatterRayData(SampleGenerator(uint2(0), 0));
+    payload.distanceOnly = true;
+    payload.firstHitDistance = -1.f;
+    RayDesc ray;
+    ray.Origin = probe;
+    ray.Direction = delta / distance;
+    ray.TMin = 0.f;
+    ray.TMax = max(gDistanceMax, distance + probeRayEpsilon());
+    TraceRay(gScene.rtAccel, 0, 0xff, 0, rayTypeCount, 0, ray, payload);
+    return payload.firstHitDistance;
+}
+
+bool probeHitVisible(float hitDistance, float pointDistance)
+{
+    return hitDistance < 0.f || hitDistance >= pointDistance - probeRayEpsilon();
+}
+
+float traceProbeVisibility(float3 probe, float3 point)
+{
+    float3 delta = point - probe;
+    float distance = length(delta);
+    if (distance <= probeRayEpsilon()) return 1.f;
+    // Only a boolean is needed here, so early-out on any accepted segment hit is correct.
+    return traceShadowRay(probe, delta / distance, distance - probeRayEpsilon()) ? 1.f : 0.f;
+}
+
 /**
  * Evaluates the direct illumination from analytic lights.
  * This function samples Falcor's light list uniformly with one shadow ray.
@@ -303,6 +365,13 @@ bool generateScatterRay(const ShadingData sd, const IMaterialInstance mi, bool i
  */
 void handleHit(const HitInfo hit, inout ScatterRayData rayData)
 {
+    if (rayData.distanceOnly)
+    {
+        rayData.firstHitDistance = RayTCurrent();
+        rayData.terminated = true;
+        return;
+    }
+    if (rayData.pathLength == 0) rayData.firstHitDistance = min(RayTCurrent(), gDistanceMax);
     const bool isCurveHit = hit.getType() == HitType::Curve;
 
     // Load shading data.
@@ -364,6 +433,7 @@ void scatterMiss(inout ScatterRayData rayData)
 {
     // Ray missed the scene. Mark the ray as terminated.
     rayData.terminated = true;
+    if (rayData.distanceOnly) return;
 
     // Add contribution from distant light (env map) in this direction.
     if (kUseEnvLight && (kComputeDirect || rayData.pathLength > 0))
@@ -565,7 +635,17 @@ void bakeProbe(uint index)
 uint3 probeCell(float3 position, float3 normal, out float3 t, out float3 biasedPosition, out bool clamped)
 {
     float3 spacing = (gGridMax - gGridMin) / float3(gGridCounts - 1);
-    position += normal * (gNormalBias * min(spacing.x, min(spacing.y, spacing.z)));
+    float minSpacing = min(spacing.x, min(spacing.y, spacing.z));
+    // Compute both components at P. Do not normalize the combined bias vector.
+    float3 bias = normal * (gNormalBias * minSpacing);
+    if (gViewBias > 0.f)
+    {
+        float3 toCamera = gScene.camera.getPosition() - position;
+        float cameraDistance = length(toCamera);
+        float3 viewDirection = cameraDistance > 1e-8f ? toCamera / cameraDistance : float3(0.f);
+        bias += viewDirection * (gViewBias * minSpacing);
+    }
+    position += bias;
     biasedPosition = position;
     float3 raw = (position - gGridMin) / spacing;
     clamped = any(raw < 0.f) || any(raw > float3(gGridCounts - 1));
@@ -575,23 +655,127 @@ uint3 probeCell(float3 position, float3 normal, out float3 t, out float3 biasedP
     return cell;
 }
 
+uint2 distanceTexel(float3 direction)
+{
+    return min(uint2(saturate(probeOctEncode(direction)) * float(gDistanceResolution)), uint2(gDistanceResolution - 1));
+}
+
+uint2 distancePixel(uint index, uint2 texel)
+{
+    uint tileSize = gDistanceResolution + 2;
+    uint columns = gDistanceAtlasSize.x / tileSize;
+    uint2 tile = uint2(index % columns, index / columns);
+    return tile * tileSize + 1 + texel;
+}
+
+float2 distanceMoments(uint index, float3 direction)
+{
+    if (!gDistanceBilinear)
+        return gDistanceMoments[distancePixel(index, distanceTexel(direction))].xy;
+    // Bilinear interpolation of the two moments, with folded octahedral edges.
+    // Old caches have unused padding: never sample padding or another probe's tile.
+    float2 p = saturate(probeOctEncode(direction)) * float(gDistanceResolution) - 0.5f;
+    int2 base = int2(floor(p));
+    float2 t = frac(p);
+    // Convex moment interpolation, with zero slope at texel centers. Same four reads.
+    if (gDistanceSmooth) t = t * t * (3.f - 2.f * t);
+    int n = int(gDistanceResolution);
+    float2 m00 = gDistanceMoments[distancePixel(index, uint2(probeOctWrap(base, n)))].xy;
+    float2 m10 = gDistanceMoments[distancePixel(index, uint2(probeOctWrap(base + int2(1,0), n)))].xy;
+    float2 m01 = gDistanceMoments[distancePixel(index, uint2(probeOctWrap(base + int2(0,1), n)))].xy;
+    float2 m11 = gDistanceMoments[distancePixel(index, uint2(probeOctWrap(base + int2(1,1), n)))].xy;
+    return lerp(lerp(m00, m10, t.x), lerp(m01, m11, t.x), t.y);
+}
+
+void bakeDistanceRays(uint index)
+{
+    uint3 grid = uint3(index % gGridCounts.x, (index / gGridCounts.x) % gGridCounts.y,
+        index / (gGridCounts.x * gGridCounts.y));
+    float3 origin = lerp(gGridMin, gGridMax, float3(grid) / float3(gGridCounts - 1));
+    for (uint s = 0; s < gSampleBatch; ++s)
+    {
+        float3 direction = probeDistanceRayDirection(index, gSampleStart + s);
+        float hit = traceProbeDistance(origin, origin + direction * gDistanceMax);
+        gDistanceRays[index * 16 + s] = float4(direction, hit < 0.f ? 1.f : saturate(hit / gDistanceMax));
+    }
+}
+
+void bakeDistanceTexel(uint task)
+{
+    uint linear = gDistanceTexelOffset + task;
+    uint area = gDistanceResolution * gDistanceResolution;
+    uint index = linear / area;
+    uint local = linear % area;
+    uint2 texel = uint2(local % gDistanceResolution, local / gDistanceResolution);
+    uint3 grid = uint3(index % gGridCounts.x, (index / gGridCounts.x) % gGridCounts.y,
+        index / (gGridCounts.x * gGridCounts.y));
+    float3 origin = lerp(gGridMin, gGridMax, float3(grid) / float3(gGridCounts - 1));
+    uint2 pixel = distancePixel(index, texel);
+    float2 sum = gDistanceMoments[pixel].xy * float(gSampleStart);
+    for (uint s = 0; s < gSampleBatch; ++s)
+    {
+        SampleGenerator sg = SampleGenerator(uint2(linear, gSampleStart + s), 0);
+        // Uniform within this UV square; no samples from other texels.
+        float2 jitter = clamp(sampleNext2D(sg), float2(1e-5f), float2(1.f - 1e-5f));
+        float3 direction = probeOctDecode((float2(texel) + jitter) / float(gDistanceResolution));
+        float hit = traceProbeDistance(origin, origin + direction * gDistanceMax);
+        float d = hit < 0.f ? 1.f : saturate(hit / gDistanceMax);
+        sum += float2(d, d * d);
+    }
+    uint count = gSampleStart + gSampleBatch;
+    gDistanceMoments[pixel] = float4(sum / float(count), float(count), 0.f);
+}
+
+// Unnormalized weights are shared by final shading, support view and point inspection.
+float cornerWeight(float3 position, float3 normal, float3 biased, uint3 cell, float3 t, uint corner,
+    out float trilinear, out float visibility, out float4 distanceInfo)
+{
+    uint3 offset = uint3(corner & 1, (corner >> 1) & 1, (corner >> 2) & 1);
+    float3 factors = lerp(1.f - t, t, float3(offset));
+    trilinear = factors.x * factors.y * factors.z;
+    float3 probePosition = lerp(gGridMin, gGridMax, float3(cell + offset) / float3(gGridCounts - 1));
+    float3 delta = biased - probePosition;
+    float distance = length(delta);
+    float3 dir = distance > 1e-8f ? delta / distance : float3(0, 0, 1);
+    float2 moments = gHasBakedData ? distanceMoments(flattenProbe(cell + offset), dir) : float2(1);
+    visibility = probeChebyshev(distance / gDistanceMax, moments, gVarianceBase, gVisibilityPower);
+    if (gUseVisibility && gRayTracedVisibility && gHasBakedData && trilinear > 0.f)
+        visibility = traceProbeVisibility(probePosition, biased);
+    float3 toProbe = probePosition - position;
+    float cosine = dot(normal, toProbe / max(length(toProbe), 1e-8f));
+    float wrap = saturate(cosine * 0.5f + 0.5f);
+    float normalWeight = gUseNormalWeight ? wrap * wrap + 0.2f : 1.f;
+    if (gUseNormalWeight && gNormalHemisphere)
+    {
+        // Reject the opposite half-space without a hard angular cutoff at grazing angles.
+        float gate = saturate(cosine / 0.2f);
+        normalWeight *= gate * gate * (3.f - 2.f * gate);
+    }
+    distanceInfo = float4(moments.x * gDistanceMax,
+        max(0.f, moments.y - moments.x * moments.x) * gDistanceMax * gDistanceMax, distance, normalWeight);
+    return trilinear * (gUseVisibility && gHasBakedData ? normalWeight * visibility : 1.f);
+}
+
 float3 sampleProbeIrradiance(float3 position, float3 normal)
 {
     float3 t, biasedPosition;
     bool clamped;
     uint3 cell = probeCell(position, normal, t, biasedPosition, clamped);
     float3 irradiance = float3(0);
+    float totalWeight = 0.f;
     for (uint corner = 0; corner < 8; ++corner)
     {
         uint3 offset = uint3(corner & 1, (corner >> 1) & 1, (corner >> 2) & 1);
-        float3 w = lerp(1.f - t, t, float3(offset));
-        float weight = w.x * w.y * w.z;
+        float tri, visibility;
+        float4 info;
+        float weight = cornerWeight(position, normal, biasedPosition, cell, t, corner, tri, visibility, info);
+        totalWeight += weight;
         uint index = flattenProbe(cell + offset);
         for (uint k = 0; k < 9; ++k)
             irradiance += weight * gProbeSH[index * 9 + k].xyz *
                 (probeSH(k, normal) * probeCosineKernel(k) / float(gSampleTotal));
     }
-    return max(irradiance, float3(0));
+    return max(irradiance / max(totalWeight, 1e-4f), float3(0));
 }
 
 // One invocation, only on demand. Inspection never feeds back into production lighting.
@@ -599,7 +783,7 @@ void inspectSurface()
 {
     if (gPick)
     {
-        for (uint i = 0; i < 28; ++i) gDebugData[i] = float4(0);
+        for (uint i = 0; i < 52; ++i) gDebugData[i] = float4(0);
         HitInfo hit = HitInfo(gVBuffer[gPickPixel]);
         if (!hit.isValid()) return;
         float3 direction = getPrimaryRayDir(gPickPixel, gFrameDim, gScene.camera);
@@ -615,20 +799,32 @@ void inspectSurface()
     gDebugData[1] = float4(normal, clamped ? 1.f : 0.f);
     gDebugData[2] = float4(biased, 1.f);
     float3 total = float3(0);
-    float3 spacing = (gGridMax - gGridMin) / float3(gGridCounts - 1);
-    float epsilon = max(1e-6f, min(spacing.x, min(spacing.y, spacing.z)) * 1e-4f);
+    float totalWeight = 0.f;
+    for (uint j = 0; j < 8; ++j)
+    {
+        float tri, visibility;
+        float4 info;
+        totalWeight += cornerWeight(position, normal, biased, cell, t, j, tri, visibility, info);
+    }
     for (uint corner = 0; corner < 8; ++corner)
     {
         uint3 offset = uint3(corner & 1, (corner >> 1) & 1, (corner >> 2) & 1);
-        float3 w = lerp(1.f - t, t, float3(offset));
-        float weight = w.x * w.y * w.z;
+        float tri, visibility;
+        float4 info;
+        float weight = cornerWeight(position, normal, biased, cell, t, corner, tri, visibility, info) / max(totalWeight, 1e-4f);
         uint index = flattenProbe(cell + offset);
         float3 probePosition = lerp(gGridMin, gGridMax, float3(cell + offset) / float3(gGridCounts - 1));
-        float3 delta = probePosition - biased;
-        float distance = length(delta);
-        bool visible = true;
-        if (distance > 2.f * epsilon)
-            visible = traceShadowRay(biased + delta / distance * epsilon, delta / distance, distance - 2.f * epsilon);
+        float queryHit = traceProbeDistance(probePosition, biased);
+        float surfaceHit = traceProbeDistance(probePosition, position);
+        float3 queryDelta = biased - probePosition;
+        float3 surfaceDelta = position - probePosition;
+        float surfaceDistance = length(surfaceDelta);
+        bool visible = probeHitVisible(queryHit, info.z);
+        float2 queryMoments = gHasBakedData ? distanceMoments(index, info.z > 1e-8f ? queryDelta / info.z : float3(0,0,1)) : float2(1);
+        float momentVisibility = probeChebyshev(info.z / gDistanceMax, queryMoments, gVarianceBase, gVisibilityPower);
+        float2 surfaceMoments = gHasBakedData ? distanceMoments(index,
+            surfaceDistance > 1e-8f ? surfaceDelta / surfaceDistance : float3(0,0,1)) : float2(1);
+        float appliedVisibility = !gUseVisibility || !gHasBakedData ? 1.f : (gRayTracedVisibility ? (visible ? 1.f : 0.f) : momentVisibility);
         float3 contribution = float3(0);
         if (gHasBakedData)
             for (uint k = 0; k < 9; ++k)
@@ -636,8 +832,14 @@ void inspectSurface()
                     (probeSH(k, normal) * probeCosineKernel(k) / float(gSampleTotal));
         total += contribution;
         gDebugData[4 + 3 * corner] = float4(probePosition, float(index));
-        gDebugData[5 + 3 * corner] = float4(weight, visible ? 1.f : 0.f, 0.f, 0.f);
+        gDebugData[5 + 3 * corner] = float4(weight, visible ? 1.f : 0.f, tri, momentVisibility);
         gDebugData[6 + 3 * corner] = float4(contribution, 0.f);
+        gDebugData[28 + corner] = info;
+        gDebugData[36 + corner] = float4(queryHit, surfaceHit, surfaceDistance, visible ? 1.f : 0.f);
+        uint2 queryTexel = distanceTexel(info.z > 1e-8f ? queryDelta / info.z : float3(0,0,1));
+        gDebugData[44 + corner] = float4(surfaceMoments.x * gDistanceMax,
+            max(0.f, surfaceMoments.y - surfaceMoments.x * surfaceMoments.x) * gDistanceMax * gDistanceMax,
+            float(queryTexel.x + queryTexel.y * gDistanceResolution), appliedVisibility);
     }
     gDebugData[3] = float4(max(total, float3(0)), 1.f);
 }
@@ -646,8 +848,19 @@ void inspectSurface()
 void rayGen()
 {
     uint2 pixel = DispatchRaysIndex().xy;
+    if (gBakeDistanceRays) { bakeDistanceRays(pixel.x); return; }
+    if (gBakeDistance) { bakeDistanceTexel(pixel.x); return; }
     if (gBake) { bakeProbe(pixel.x); return; }
     if (gInspect) { inspectSurface(); return; }
+    if (gDebugEnabled && gDebugView >= 7)
+    {
+        float2 uv = (float2(pixel) + 0.5f) / float2(gFrameDim);
+        float2 moments = distanceMoments(gSelectedProbe, probeOctDecode(uv));
+        float value = gDebugView == 7 ? moments.x : sqrt(max(0.f, moments.y - moments.x * moments.x));
+        gOutputColor[pixel] = float4(gHasBakedData ? float3(value) : float3(0), 1);
+        gProbeLighting[pixel] = float4(0, 0, 0, 1);
+        return;
+    }
     float3 direction = getPrimaryRayDir(pixel, DispatchRaysDimensions().xy, gScene.camera);
     HitInfo hit = HitInfo(gVBuffer[pixel]);
     float3 color = float3(0), probeColor = float3(0);
@@ -682,7 +895,19 @@ void rayGen()
                 bool clamped;
                 uint3 cell = probeCell(sd.posW, sd.frame.N, t, biased, clamped);
                 if (gDebugView == 4) color = frac(float3(cell) * float3(0.618034f, 0.414214f, 0.732051f) + 0.15f);
-                else color = clamped ? float3(1, 0, 1) : float3(0.04f);
+                else if (gDebugView == 5) color = clamped ? float3(1, 0, 1) : float3(0.04f);
+                else
+                {
+                    float support = 0.f;
+                    for (uint corner = 0; corner < 8; ++corner)
+                    {
+                        float tri, visibility;
+                        float4 info;
+                        cornerWeight(sd.posW, sd.frame.N, biased, cell, t, corner, tri, visibility, info);
+                        support += tri * visibility;
+                    }
+                    color = gHasBakedData ? float3(support) : float3(0);
+                }
             }
         }
     }

@@ -80,12 +80,24 @@ def check_math():
 
 def check_cache(path):
     lines = Path(path).read_text(encoding="utf-8").splitlines()
-    assert lines[0] == "FALCOR_PROBE_SH 1"
+    assert lines[0] in ("FALCOR_PROBE_SH 2", "FALCOR_PROBE_SH 3", "FALCOR_PROBE_SH 4")
     nx, ny, nz, samples, bounces = map(int, lines[4].split())
     assert all(2 <= v <= 32 for v in (nx, ny, nz))
-    coeff = [float(v) for line in lines[6:] for v in line.split()]
+    marker = lines.index('DISTANCE_MOMENTS')
+    coeff = [float(v) for line in lines[7:marker] for v in line.split()]
     assert len(coeff) == nx * ny * nz * 27
     assert all(math.isfinite(v) for v in coeff) and max(map(abs, coeff)) > 0
+    metadata = lines[6].split()
+    if lines[0] == "FALCOR_PROBE_SH 3":
+        assert metadata.pop(0) == 'texel_local_uv_point'
+    elif lines[0] == "FALCOR_PROBE_SH 4":
+        assert metadata.pop(0) == 'angular_cosine'
+        assert 1 <= float(metadata.pop()) <= 256
+    resolution, sampling_parameter, distance_range, width, height = map(float, metadata)
+    moments = [list(map(float, line.split())) for line in lines[marker+1:]]
+    assert len(moments) == int(width * height)
+    assert all(len(v) == 2 and all(math.isfinite(x) for x in v) and
+               0 <= v[0] <= 1 and 0 <= v[1] <= v[0] + 2e-5 and v[1] + 2e-5 >= v[0]**2 for v in moments)
     return {"probes": nx*ny*nz, "samples": samples, "bounces": bounces,
             "bytes": Path(path).stat().st_size, "max_abs_coefficient": max(map(abs, coeff))}
 

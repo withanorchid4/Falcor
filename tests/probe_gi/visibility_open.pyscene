@@ -1,0 +1,11 @@
+# Open floor: positive normal bias can point lower probes upward into empty space.
+floor = StandardMaterial('Floor')
+floor.baseColor = float4(.7,.7,.7,1)
+floor.roughness = 1
+sceneBuilder.addMeshInstance(sceneBuilder.addNode('Floor', Transform(scaling=float3(20,1,20))),
+    sceneBuilder.addTriangleMesh(TriangleMesh.createQuad(), floor))
+camera = Camera()
+camera.position = float3(0,2,2)
+camera.target = float3(0,0,0)
+camera.up = float3(0,1,0)
+sceneBuilder.addCamera(camera)

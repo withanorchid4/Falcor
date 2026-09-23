@@ -34,7 +34,7 @@ def inspect(uv):
     info = p.debugInfo
     if info["valid"]:
         weights = [info[f"weight{i}"] for i in range(8)]
-        assert min(weights) >= 0 and abs(sum(weights) - 1) < 2e-6, weights
+        assert min(weights) >= 0 and 0 <= sum(weights) <= 1 + 2e-6, weights
         ids = [info[f"probe{i}"] for i in range(8)]
         assert len(set(ids)) == 8 and all(0 <= i < 384 for i in ids), ids
         for key in ("position", "samplePosition", "normal", "irradiance"):

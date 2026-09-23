@@ -1,5 +1,7 @@
 # Falcor 使用与 GI 算法开发指南
 
+新增：仓库现已提供 `TraditionalProbeGI`，可直接按 [传统光照探针使用说明](C:/Users/Admin/Desktop/实时GI/Falcor/PROBE-GI.md) 烘焙和加载。本文后续 `MyGI`、`ProbeBakePass` 等仍是讲解扩展方法的示例名称。
+
 本文针对当前本地 Falcor 9.0 源码及 Windows 配置编写。项目位于 `C:\Users\Admin\Desktop\实时GI\Falcor`，上游基线为 `759aad03`，本地启动与 UTF-8 路径修复提交为 `392d9d44`。
 
 已完成的能力：Mogwai Release 构建、Vulkan 后端启动、灰白室内场景加载。本文中的 `MyGI`、`ProbeBakePass` 等名称是开发示例，目前没有在仓库中实现。下面的创建命令供开发时执行，编写本文时没有执行，也没有新增或编译这些示例插件。

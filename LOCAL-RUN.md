@@ -2,6 +2,8 @@
 
 算法开发、渲染图配置和探针 GI 扩展请参阅 [Falcor 使用与 GI 算法开发指南](C:/Users/Admin/Desktop/实时GI/Falcor/DEVELOPMENT-GUIDE.zh-CN.md)。
 
+运行新增的传统光照探针请双击 `Run-ProbeGI.cmd`，详见 [光照探针使用说明](C:/Users/Admin/Desktop/实时GI/Falcor/PROBE-GI.md)。
+
 本工程的示例入口是 Mogwai。首次构建使用 Visual Studio 2022、MSVC 14.38.33130 和 Windows SDK 10.0.22621.0，配置为 Release。
 
 ## 打开场景

@@ -1,5 +1,9 @@
 add_falcor_executable(Mogwai)
 
+if(WIN32)
+    target_sources(Mogwai PRIVATE Mogwai.manifest)
+endif()
+
 target_sources(Mogwai PRIVATE
     AppData.cpp
     AppData.h

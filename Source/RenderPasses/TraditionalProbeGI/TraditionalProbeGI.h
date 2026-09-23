@@ -1,5 +1,6 @@
 #pragma once
 #include "Falcor.h"
+#include "Core/Pass/RasterPass.h"
 #include "RenderGraph/RenderPass.h"
 #include "Utils/Sampling/SampleGenerator.h"
 
@@ -19,6 +20,10 @@ public:
     void setScene(RenderContext*, const ref<Scene>&) override;
     void execute(RenderContext*, const RenderData&) override;
     void renderUI(Gui::Widgets&) override;
+    bool onMouseEvent(const MouseEvent&) override;
+    void configureDebug(const Properties& props);
+    void pickSurface(float2 uv);
+    Properties getDebugInfo() const;
     void configureBake(const Properties& props);
     void requestBake() { mAction = Action::Bake; }
     void requestLoad() { mAction = Action::Load; }
@@ -37,6 +42,8 @@ private:
     void resetBake();
     bool loadCache();
     void saveCache();
+    void clearDebugSelection();
+    void drawDebug(RenderContext*, const ref<Texture>& color);
     uint32_t probeCount() const { return mCounts.x * mCounts.y * mCounts.z; }
 
     ref<Scene> mpScene;
@@ -48,6 +55,18 @@ private:
         ref<RtProgramVars> pVars;
     } mTracer;
     ref<Buffer> mpSH;
+    ref<Buffer> mpDebugData;
+    ref<Texture> mpDebugDistance;
+    ref<RasterPass> mpDebugOverlay;
+    ref<Fbo> mpDebugFbo;
+    std::vector<float4> mDebugData = std::vector<float4>(28, float4(0));
+    bool mDebugEnabled = false, mPickEnabled = false, mPickPending = false, mDebugRefresh = false;
+    bool mShowProbes = true, mShowBounds = true, mShowLinks = true, mShowIds = false, mDebugXRay = false;
+    bool mOnlyContributors = false;
+    bool mShowProbePreview = true, mPreviewRadiance = false, mShowNegative = false;
+    uint32_t mDebugView = 0, mSelectedProbe = 0;
+    float mProbeRadius = 0.08f, mDebugExposure = 0.f;
+    float2 mPickUV = float2(0.5f);
     uint3 mCounts = uint3(8, 6, 8);
     float3 mGridMin = {}, mGridMax = {};
     bool mExplicitBounds = false;

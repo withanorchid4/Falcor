@@ -137,6 +137,54 @@ Cornell / Vulkan / Release 已通过实际烘焙、独立加载、相机移动�
 
 交互扩展也已通过同进程 Cornell → Room → Cornell 切换、手动 Bake/取消/改参/加载、非法参数和保存失败恢复检查；默认启动保持等待，不自动烘焙。测试使用与面板按钮共用的控制接口。
 
+## 探针调试显示
+
+展开 **Probes → Debugging → Enable debug**。调试默认关闭，不重新 Bake，不改变缓存，也不会为生产光照自动添加遮挡修正。
+
+针对墙上斑块和墙边漏光，推荐这样操作：
+
+1. 等待 Bake 完成，或点击 **Load matching cache** 加载已有结果。
+2. 开启 **Pick surface (left click)**，在有问题的墙面点击一次。选中的是世界空间表面位置，之后可以移动相机绕着观察；点击背景或 **Clear selection** 清除选择。点击时请避开面板。
+3. 打开 **X-ray overlays**、**Only selected cell probes**、**Show probe IDs** 和 **Show contribution links**。查看这个位置对应的八个探针：**绿线表示可见，红线表示被遮挡，黄线表示 Normal bias 偏移**。线宽随插值权重增加，零权重不画线。黄色标记是原始表面位置。
+4. 面板逐项显示探针 ID、位置、实际插值权重，以及 `weighted E`（该探针对选中法线的辐照度贡献，已乘权重，尚未对总和取非负）。权重和为 1；Blocked 的探针仍有非零权重，说明当前传统插值确实使用了隔着几何体的探针。
+5. 调整 **Normal bias** 可实时观察偏移、八探针和可见性的变化；无须重新烘焙。`clamped: yes` 表示偏移后的采样位置在网格外，采样坐标被夹到了网格边缘。
+
+**Surface view** 提供六种模式：
+
+| 模式 | 内容 |
+| --- | --- |
+| Normal lighting | 原有合成光照；可叠加探针诊断 |
+| Irradiance (no albedo) | 未乘材质颜色、未除以 π、未乘 Probe intensity 的探针辐照度；便于检查斑块 |
+| Diffuse albedo | 漫反射反射率，排除材质颜色因素 |
+| World normal | 世界空间着色法线映射到 RGB，检查法线突变 |
+| Probe cell | 以不同颜色标记参与插值的网格单元 |
+| Grid clamp mask | 网格外采样为洋红色，网格内为暗灰色 |
+
+非 Normal 模式优先于旧的 **Probe lighting only**。纯辐照度诊断直接读取已完成的探针数据，不受 Enable probes 开关影响；尚未完成 Bake 时为黑色。显示仍经过原来的 ToneMapper，检查原始数值可查看 `Probes.color` 的 HDR 输出。
+
+**Show probe spheres** 显示探针位置和方向光照，**Show grid bounds** 显示蓝色体积边界。关闭 X-ray 后叠加内容被场景表面遮挡；开启后可看墙后探针。球大小由 **Sphere radius / spacing** 控制，表示最小网格间距的比例。球是用于诊断的屏幕空间球形标记；为了可见性，屏幕尺寸有上下限，不能据此判断探针是否精确落在几何体内。
+
+右下角的 **Selected probe direction sphere** 放大显示 **Selected probe ID** 的 SH 重建，黄色描边标记该探针。选择表面时默认挑权重最大的探针，也可手动输入八个 ID 中的任一个。默认显示方向辐照度；勾选 **Sphere shows radiance** 切换到未经余弦卷积的 L2 SH 辐亮度。**Highlight negative SH (magenta)** 把重建的负值标洋红，帮助检查 SH 截断误差；未勾选时负值取零显示。**Sphere exposure (EV)** 只调整球显示亮度。
+
+方向球按当前相机朝向展示对应世界方向，移动相机可观察不同方向；它不是原始烘焙 cubemap。未烘焙时球为灰色占位。编号较密时推荐只显示选中单元的探针。
+
+遮挡检测从 Normal bias 偏移位置发射带小 epsilon 的 alpha-test 阴影射线，只在主动拾取或调试参数刷新时执行。它用于检查连线是否被挡，**不会修改生产插值权重，也不等于完整的探针有效性检测**。修改场景、探针网格或重置烘焙会清除旧选择；网格边界无效时暂停调试绘制，修正后恢复。调试会增加绘制成本，主动拾取时有一次少量 GPU 数据同步读回。
+
+脚本接口与 GUI 共用控制器，例如：
+
+```python
+p = TraditionalProbeGI.getPass("Probes")
+p.configureDebug({"enabled": True, "xray": True, "onlyContributors": True,
+                  "showIds": True, "pickEnabled": True})
+p.pickSurface(float2(0.5, 0.5))  # 归一化视口坐标，左上角为 (0,0)
+renderFrame()
+print(p.debugInfo)  # 世界位置、8 个探针、权重、可见性与贡献
+p.configureDebug({"view": 1})  # 0..5 对应上表
+p.configureDebug({"enabled": False})
+```
+
+`tests/probe_gi/debug_script.py` 用 headless Vulkan 验证实际着色器、拾取、遮挡、锚点和场景切换；`check_debug_results.py` 检查 HDR 数值和调试关闭后的输出一致性。图像和结果位于 `build/probe-debug-validation/`。
+
 Room/Arcade 的入口可用，但本轮没有对它们执行完整数值验收。当前结果仍可见局部块状变化与偏暗，不应视为生产级探针方案。
 
 探针结果：

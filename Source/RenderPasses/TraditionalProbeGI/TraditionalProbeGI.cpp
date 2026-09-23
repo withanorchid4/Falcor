@@ -41,6 +41,9 @@ static void registerProbeBindings(pybind11::module& m)
     pass.def("bake", &TraditionalProbeGI::requestBake);
     pass.def("loadCache", &TraditionalProbeGI::requestLoad);
     pass.def("cancelBake", &TraditionalProbeGI::cancelBake);
+    pass.def("configureDebug", [](TraditionalProbeGI& self, pybind11::dict props) { self.configureDebug(Properties(props)); });
+    pass.def("pickSurface", &TraditionalProbeGI::pickSurface);
+    pass.def_property_readonly("debugInfo", [](TraditionalProbeGI& self) { return self.getDebugInfo().toPython(); });
     pass.def_property_readonly("ready", &TraditionalProbeGI::isReady);
     pass.def_property_readonly("baking", &TraditionalProbeGI::isBaking);
     pass.def_property_readonly("completedSamples", &TraditionalProbeGI::getCompletedSamples);
@@ -127,6 +130,10 @@ TraditionalProbeGI::TraditionalProbeGI(ref<Device> device, const Properties& pro
     );
     FALCOR_CHECK(mMode == "manual" || mMode == "bake" || mMode == "load" || mMode == "auto", "mode must be manual/bake/load/auto.");
     mpSampleGenerator = SampleGenerator::create(mpDevice, SAMPLE_GENERATOR_UNIFORM);
+    mpDebugData = mpDevice->createStructuredBuffer(sizeof(float4), 28,
+        ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess, MemoryType::DeviceLocal, mDebugData.data());
+    mpDebugDistance = mpDevice->createTexture2D(1, 1, ResourceFormat::R32Float, 1, 1, nullptr,
+        ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
 }
 
 Properties TraditionalProbeGI::getProperties() const
@@ -157,11 +164,13 @@ RenderPassReflection TraditionalProbeGI::reflect(const CompileData&)
     RenderPassReflection r;
     addRenderPassInputs(r, kInputChannels);
     addRenderPassOutputs(r, kOutputChannels);
+    r.getField("color")->bindFlags(ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess | ResourceBindFlags::RenderTarget);
     return r;
 }
 
 void TraditionalProbeGI::clearProbes()
 {
+    clearDebugSelection();
     std::vector<float4> zero(probeCount() * 9, float4(0));
     mpSH = mpDevice->createStructuredBuffer(
         sizeof(float4),
@@ -174,6 +183,141 @@ void TraditionalProbeGI::clearProbes()
     mReady = false;
     mBaking = false;
     mDirty = true;
+}
+
+void TraditionalProbeGI::clearDebugSelection()
+{
+    std::fill(mDebugData.begin(), mDebugData.end(), float4(0));
+    if (mpDebugData) mpDebugData->setBlob(mDebugData.data(), 0, mDebugData.size() * sizeof(float4));
+    mPickPending = mDebugRefresh = false;
+    mSelectedProbe = 0;
+}
+
+void TraditionalProbeGI::pickSurface(float2 uv)
+{
+    FALCOR_CHECK(std::isfinite(uv.x) && std::isfinite(uv.y) && all(uv >= float2(0)) && all(uv <= float2(1)),
+        "Pick coordinates must be normalized to [0,1].");
+    mPickUV = uv;
+    mPickPending = true;
+    mDebugEnabled = true;
+}
+
+bool TraditionalProbeGI::onMouseEvent(const MouseEvent& e)
+{
+    if (mDebugEnabled && mPickEnabled && e.type == MouseEvent::Type::ButtonDown && e.button == Input::MouseButton::Left)
+    {
+        pickSurface(clamp(e.pos, float2(0), float2(1)));
+        return true;
+    }
+    return false;
+}
+
+void TraditionalProbeGI::configureDebug(const Properties& props)
+{
+    // Validate the complete request before modifying live settings.
+    for (const auto& [key, value] : props)
+    {
+        if (key == "view") FALCOR_CHECK(uint32_t(value) <= 5, "Debug view must be 0..5.");
+        else if (key == "selectedProbe") FALCOR_CHECK(uint32_t(value) < probeCount(), "Probe ID out of range.");
+        else if (key == "radius") FALCOR_CHECK(std::isfinite(float(value)) && float(value) >= 0.01f && float(value) <= 0.3f, "Radius out of range.");
+        else if (key == "exposure") FALCOR_CHECK(std::isfinite(float(value)) && std::abs(float(value)) <= 10.f, "Exposure out of range.");
+        else if (key == "normalBias") FALCOR_CHECK(std::isfinite(float(value)) && float(value) >= 0.f && float(value) <= 1.f, "Bias out of range.");
+        else if (key != "enabled" && key != "pickEnabled" && key != "showProbes" && key != "showBounds" && key != "showLinks" &&
+                 key != "showIds" && key != "xray" && key != "preview" && key != "radiance" && key != "negative" && key != "onlyContributors")
+            FALCOR_THROW("Unknown debug setting '{}'", key);
+        else (void)bool(value);
+    }
+    for (const auto& [key, value] : props)
+    {
+        if (key == "enabled") mDebugEnabled = value;
+        else if (key == "pickEnabled") mPickEnabled = value;
+        else if (key == "showProbes") mShowProbes = value;
+        else if (key == "showBounds") mShowBounds = value;
+        else if (key == "showLinks") mShowLinks = value;
+        else if (key == "showIds") mShowIds = value;
+        else if (key == "onlyContributors") mOnlyContributors = value;
+        else if (key == "xray") mDebugXRay = value;
+        else if (key == "preview") mShowProbePreview = value;
+        else if (key == "radiance") mPreviewRadiance = value;
+        else if (key == "negative") mShowNegative = value;
+        else if (key == "view") mDebugView = value;
+        else if (key == "selectedProbe") mSelectedProbe = value;
+        else if (key == "radius") mProbeRadius = value;
+        else if (key == "exposure") mDebugExposure = value;
+        else if (key == "normalBias") mNormalBias = value;
+    }
+    mDebugRefresh = mDirty = true;
+}
+
+Properties TraditionalProbeGI::getDebugInfo() const
+{
+    auto xyz = [](float4 v) { return float3(v.x, v.y, v.z); };
+    Properties p;
+    p["enabled"] = mDebugEnabled;
+    p["valid"] = mDebugData[0].w > 0.f;
+    p["position"] = xyz(mDebugData[0]);
+    p["normal"] = xyz(mDebugData[1]);
+    p["clamped"] = mDebugData[1].w > 0.f;
+    p["samplePosition"] = xyz(mDebugData[2]);
+    p["irradiance"] = xyz(mDebugData[3]);
+    p["selectedProbe"] = mSelectedProbe;
+    for (uint32_t i = 0; i < 8; ++i)
+    {
+        const auto suffix = std::to_string(i);
+        p["probe" + suffix] = uint32_t(mDebugData[4 + 3 * i].w);
+        p["position" + suffix] = xyz(mDebugData[4 + 3 * i]);
+        p["weight" + suffix] = mDebugData[5 + 3 * i].x;
+        p["visible" + suffix] = mDebugData[5 + 3 * i].y > 0.f;
+        p["contribution" + suffix] = xyz(mDebugData[6 + 3 * i]);
+    }
+    return p;
+}
+
+void TraditionalProbeGI::drawDebug(RenderContext* ctx, const ref<Texture>& color)
+{
+    if (!mpDebugOverlay)
+    {
+        mpDebugOverlay = RasterPass::create(mpDevice, "RenderPasses/TraditionalProbeGI/ProbeDebug.3d.slang", "vsMain", "psMain");
+        auto state = mpDebugOverlay->getState();
+        state->setVao(Vao::create(Vao::Topology::TriangleList));
+        state->setRasterizerState(RasterizerState::create(RasterizerState::Desc().setCullMode(RasterizerState::CullMode::None)));
+        state->setDepthStencilState(DepthStencilState::create(DepthStencilState::Desc().setDepthEnabled(false).setDepthWriteMask(false)));
+        mpDebugFbo = Fbo::create(mpDevice);
+    }
+    mpDebugFbo->attachColorTarget(color, 0);
+    mpDebugOverlay->getState()->setFbo(mpDebugFbo);
+    auto v = mpDebugOverlay->getRootVar();
+    v["gSH"] = mpSH;
+    v["gInspection"] = mpDebugData;
+    v["gDistance"] = mpDebugDistance;
+    auto cb = v["DebugCB"];
+    auto camera = mpScene->getCamera();
+    cb["gViewProj"] = camera->getViewProjMatrix();
+    cb["gCameraPosition"] = camera->getPosition();
+    const float3 forward = normalize(camera->getTarget() - camera->getPosition());
+    const float3 right = normalize(cross(forward, camera->getUpVector()));
+    cb["gCameraRight"] = right;
+    cb["gCameraUp"] = normalize(cross(right, forward));
+    cb["gCameraForward"] = forward;
+    cb["gDimensions"] = float2(color->getWidth(), color->getHeight());
+    cb["gCounts"] = mCounts;
+    cb["gMin"] = mGridMin;
+    cb["gMax"] = mGridMax;
+    cb["gSamples"] = mSamples;
+    cb["gReady"] = mReady;
+    cb["gShowProbes"] = mShowProbes;
+    cb["gShowIds"] = mShowIds;
+    cb["gOnlyContributors"] = mOnlyContributors;
+    cb["gShowBounds"] = mShowBounds;
+    cb["gShowLinks"] = mShowLinks;
+    cb["gXRay"] = mDebugXRay;
+    cb["gPreview"] = mShowProbePreview;
+    cb["gRadiance"] = mPreviewRadiance;
+    cb["gNegative"] = mShowNegative;
+    cb["gSelectedProbe"] = std::min(mSelectedProbe, probeCount() - 1u);
+    cb["gRadius"] = mProbeRadius;
+    cb["gExposure"] = std::exp2(mDebugExposure);
+    ctx->drawInstanced(mpDebugOverlay->getState().get(), mpDebugOverlay->getVars().get(), 6, probeCount() + 23, 0, 0);
 }
 
 void TraditionalProbeGI::resetBake()
@@ -291,6 +435,7 @@ bool TraditionalProbeGI::loadCache()
     mBaking = false;
     mDirty = true;
     mStatus = "Ready: loaded matching probe cache.";
+    mDebugRefresh = true;
     logInfo("TraditionalProbeGI: LOAD ready, {} probes, no baking dispatch", probeCount());
     return true;
 }
@@ -398,6 +543,19 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
     cb["gNormalBias"] = mNormalBias;
     cb["gProbeOnly"] = mProbeOnly;
     cb["gPreviewUnbaked"] = mPreview && !mReady;
+    const uint2 debugDims = data.getDefaultTextureDims();
+    const bool debugActive = mDebugEnabled && configurationError().empty();
+    if (debugActive && (mpDebugDistance->getWidth() != debugDims.x || mpDebugDistance->getHeight() != debugDims.y))
+        mpDebugDistance = mpDevice->createTexture2D(debugDims.x, debugDims.y, ResourceFormat::R32Float, 1, 1, nullptr,
+            ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
+    var["gDebugData"] = mpDebugData;
+    var["gDebugDistance"] = mpDebugDistance;
+    cb["gDebugEnabled"] = debugActive;
+    cb["gDebugView"] = mDebugView;
+    cb["gInspect"] = false;
+    cb["gPick"] = false;
+    cb["gPickPixel"] = min(uint2(mPickUV * float2(debugDims)), debugDims - 1u);
+    cb["gFrameDim"] = debugDims;
     var["CB"]["gFrameCount"] = mFrame;
     var["CB"]["gPRNGDimension"] = 0u;
     if (mBaking)
@@ -412,6 +570,7 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
         if (mCompleted == mSamples)
         {
             mReady = true;
+            mDebugRefresh = true;
             mBaking = false;
             mDirty = true;
             try
@@ -429,8 +588,31 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
     }
     cb["gBake"] = false;
     cb["gReady"] = mReady && mEnable;
+    cb["gHasBakedData"] = mReady;
     cb["gPreviewUnbaked"] = mPreview && !mReady;
+    if (debugActive && (mPickPending || mDebugRefresh))
+    {
+        cb["gInspect"] = true;
+        cb["gPick"] = mPickPending;
+        mpScene->raytrace(ctx, p.get(), mTracer.pVars, uint3(1));
+        ctx->uavBarrier(mpDebugData.get());
+        mDebugData = mpDebugData->getElements<float4>();
+        if (mPickPending && mDebugData[0].w > 0.f)
+        {
+            float best = -1.f;
+            for (uint32_t i = 0; i < 8; ++i)
+                if (mDebugData[5 + 3 * i].x > best)
+                {
+                    best = mDebugData[5 + 3 * i].x;
+                    mSelectedProbe = uint32_t(mDebugData[4 + 3 * i].w);
+                }
+        }
+        mPickPending = mDebugRefresh = false;
+        cb["gInspect"] = false;
+        cb["gPick"] = false;
+    }
     mpScene->raytrace(ctx, p.get(), mTracer.pVars, uint3(data.getDefaultTextureDims(), 1));
+    if (debugActive) drawDebug(ctx, data.getTexture("color"));
     if (mDirty)
     {
         auto& dict = data.getDictionary();
@@ -557,12 +739,56 @@ void TraditionalProbeGI::renderUI(Gui::Widgets& w)
     mDirty |= w.checkbox("Enable probes", mEnable);
     mDirty |= w.checkbox("Probe lighting only", mProbeOnly);
     mDirty |= w.var("Probe intensity", mIntensity, 0.f, 10.f);
-    mDirty |= w.var("Normal bias", mNormalBias, 0.f, 1.f);
+    if (w.var("Normal bias", mNormalBias, 0.f, 1.f)) mDirty = mDebugRefresh = true;
     w.text("Static diffuse SH. No visibility correction; thin-wall light leaks are expected.");
+    if (auto d = w.group("Debugging"))
+    {
+        if (d.checkbox("Enable debug", mDebugEnabled)) mDirty = mDebugRefresh = true;
+        if (mDebugEnabled)
+        {
+            if (!configurationError().empty()) d.text("Debug paused: fix the invalid grid bounds first.");
+            const Gui::DropdownList views = {{0, "Normal lighting"}, {1, "Irradiance (no albedo)"},
+                {2, "Diffuse albedo"}, {3, "World normal"}, {4, "Probe cell"}, {5, "Grid clamp mask"}};
+            mDirty |= d.dropdown("Surface view", views, mDebugView);
+            d.checkbox("Show probe spheres", mShowProbes);
+            d.checkbox("Show probe IDs", mShowIds);
+            d.checkbox("Only selected cell probes", mOnlyContributors);
+            d.checkbox("Show grid bounds", mShowBounds);
+            d.checkbox("X-ray overlays", mDebugXRay);
+            d.var("Sphere radius / spacing", mProbeRadius, 0.01f, 0.3f);
+            d.checkbox("Pick surface (left click)", mPickEnabled);
+            d.checkbox("Show contribution links", mShowLinks);
+            if (d.button("Clear selection")) clearDebugSelection();
+            if (d.button("Refresh inspection")) mDebugRefresh = true;
+            d.text("Links: green visible, red blocked; yellow = normal-bias offset.");
+            d.text("Visibility is diagnostic only; production weights are unchanged.");
+            if (mDebugData[0].w > 0.f)
+            {
+                d.text(fmt::format("Surface ({:.3f}, {:.3f}, {:.3f}); clamped: {}", mDebugData[0].x,
+                    mDebugData[0].y, mDebugData[0].z, mDebugData[1].w > 0.f ? "yes" : "no"));
+                for (uint32_t i = 0; i < 8; ++i)
+                {
+                    auto a = mDebugData[4 + 3 * i], b = mDebugData[5 + 3 * i], c = mDebugData[6 + 3 * i];
+                    d.text(fmt::format("#{} w={:.4f} {} weighted E=({:.3f},{:.3f},{:.3f})", uint32_t(a.w), b.x,
+                        b.y > 0.f ? "visible" : "BLOCKED", c.x, c.y, c.z));
+                    d.text(fmt::format("  pos=({:.3f},{:.3f},{:.3f})", a.x, a.y, a.z));
+                }
+            }
+            else d.text("No surface selected. Enable Pick surface, then click the scene.");
+            d.checkbox("Selected probe direction sphere", mShowProbePreview);
+            d.var("Selected probe ID", mSelectedProbe, 0u, probeCount() - 1u);
+            d.checkbox("Sphere shows radiance", mPreviewRadiance);
+            d.checkbox("Highlight negative SH (magenta)", mShowNegative);
+            d.var("Sphere exposure (EV)", mDebugExposure, -10.f, 10.f);
+            d.text("Direction sphere: camera-facing world directions; radiance is an L2 SH reconstruction.");
+            if (!mReady) d.text("No completed bake: gray spheres, irradiance view is black.");
+        }
+    }
 }
 
 void TraditionalProbeGI::setScene(RenderContext* pRenderContext, const ref<Scene>& pScene)
 {
+    clearDebugSelection();
     if (pScene && mHasScene && pScene != mpScene)
         mExplicitBounds = false;
     if (pScene)

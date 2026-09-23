@@ -29,9 +29,18 @@ cbuffer ProbeCB
     bool gPreviewUnbaked;
     float gIntensity;
     float gNormalBias;
+    bool gDebugEnabled;
+    bool gHasBakedData;
+    uint gDebugView;
+    bool gInspect;
+    bool gPick;
+    uint2 gPickPixel;
+    uint2 gFrameDim;
 }
 RWStructuredBuffer<float4> gProbeSH;
 RWTexture2D<float4> gProbeLighting;
+RWStructuredBuffer<float4> gDebugData;
+RWTexture2D<float> gDebugDistance;
 
 cbuffer CB
 {
@@ -520,13 +529,24 @@ void bakeProbe(uint index)
     for (uint k = 0; k < 9; ++k) gProbeSH[index * 9 + k] = float4(coefficients[k], 0.f);
 }
 
-float3 sampleProbeIrradiance(float3 position, float3 normal)
+uint3 probeCell(float3 position, float3 normal, out float3 t, out float3 biasedPosition, out bool clamped)
 {
     float3 spacing = (gGridMax - gGridMin) / float3(gGridCounts - 1);
     position += normal * (gNormalBias * min(spacing.x, min(spacing.y, spacing.z)));
-    float3 q = clamp((position - gGridMin) / spacing, float3(0), float3(gGridCounts - 1));
+    biasedPosition = position;
+    float3 raw = (position - gGridMin) / spacing;
+    clamped = any(raw < 0.f) || any(raw > float3(gGridCounts - 1));
+    float3 q = clamp(raw, float3(0), float3(gGridCounts - 1));
     uint3 cell = min(uint3(floor(q)), gGridCounts - 2);
-    float3 t = q - float3(cell);
+    t = q - float3(cell);
+    return cell;
+}
+
+float3 sampleProbeIrradiance(float3 position, float3 normal)
+{
+    float3 t, biasedPosition;
+    bool clamped;
+    uint3 cell = probeCell(position, normal, t, biasedPosition, clamped);
     float3 irradiance = float3(0);
     for (uint corner = 0; corner < 8; ++corner)
     {
@@ -541,17 +561,68 @@ float3 sampleProbeIrradiance(float3 position, float3 normal)
     return max(irradiance, float3(0));
 }
 
+// One invocation, only on demand. Inspection never feeds back into production lighting.
+void inspectSurface()
+{
+    if (gPick)
+    {
+        for (uint i = 0; i < 28; ++i) gDebugData[i] = float4(0);
+        HitInfo hit = HitInfo(gVBuffer[gPickPixel]);
+        if (!hit.isValid()) return;
+        float3 direction = getPrimaryRayDir(gPickPixel, gFrameDim, gScene.camera);
+        ShadingData sd = loadShadingData(hit, gScene.camera.getPosition(), direction);
+        gDebugData[0] = float4(sd.posW, 1.f);
+        gDebugData[1] = float4(sd.frame.N, 0.f);
+    }
+    if (gDebugData[0].w == 0.f) return;
+    float3 position = gDebugData[0].xyz, normal = gDebugData[1].xyz;
+    float3 t, biased;
+    bool clamped;
+    uint3 cell = probeCell(position, normal, t, biased, clamped);
+    gDebugData[1] = float4(normal, clamped ? 1.f : 0.f);
+    gDebugData[2] = float4(biased, 1.f);
+    float3 total = float3(0);
+    float3 spacing = (gGridMax - gGridMin) / float3(gGridCounts - 1);
+    float epsilon = max(1e-6f, min(spacing.x, min(spacing.y, spacing.z)) * 1e-4f);
+    for (uint corner = 0; corner < 8; ++corner)
+    {
+        uint3 offset = uint3(corner & 1, (corner >> 1) & 1, (corner >> 2) & 1);
+        float3 w = lerp(1.f - t, t, float3(offset));
+        float weight = w.x * w.y * w.z;
+        uint index = flattenProbe(cell + offset);
+        float3 probePosition = lerp(gGridMin, gGridMax, float3(cell + offset) / float3(gGridCounts - 1));
+        float3 delta = probePosition - biased;
+        float distance = length(delta);
+        bool visible = true;
+        if (distance > 2.f * epsilon)
+            visible = traceShadowRay(biased + delta / distance * epsilon, delta / distance, distance - 2.f * epsilon);
+        float3 contribution = float3(0);
+        if (gHasBakedData)
+            for (uint k = 0; k < 9; ++k)
+                contribution += weight * gProbeSH[index * 9 + k].xyz *
+                    (probeSH(k, normal) * probeCosineKernel(k) / float(gSampleTotal));
+        total += contribution;
+        gDebugData[4 + 3 * corner] = float4(probePosition, float(index));
+        gDebugData[5 + 3 * corner] = float4(weight, visible ? 1.f : 0.f, 0.f, 0.f);
+        gDebugData[6 + 3 * corner] = float4(contribution, 0.f);
+    }
+    gDebugData[3] = float4(max(total, float3(0)), 1.f);
+}
+
 [shader("raygeneration")]
 void rayGen()
 {
     uint2 pixel = DispatchRaysIndex().xy;
     if (gBake) { bakeProbe(pixel.x); return; }
+    if (gInspect) { inspectSurface(); return; }
     float3 direction = getPrimaryRayDir(pixel, DispatchRaysDimensions().xy, gScene.camera);
     HitInfo hit = HitInfo(gVBuffer[pixel]);
     float3 color = float3(0), probeColor = float3(0);
+    float surfaceDistance = FLT_MAX;
     if (hit.isValid())
     {
         ShadingData sd = loadShadingData(hit, gScene.camera.getPosition(), direction);
+        surfaceDistance = length(sd.posW - gScene.camera.getPosition());
         let mi = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f));
         let properties = mi.getProperties(sd);
         SampleGenerator sg = SampleGenerator(pixel, gFrameCount);
@@ -567,8 +638,23 @@ void rayGen()
             float shade = 0.25f + 0.75f * max(0.f, dot(sd.frame.N, normalize(float3(0.3f, 0.8f, 0.5f))));
             color = properties.emission + properties.diffuseReflectionAlbedo * shade;
         }
+        if (gDebugEnabled && gDebugView != 0)
+        {
+            if (gDebugView == 1) color = gHasBakedData ? sampleProbeIrradiance(sd.posW, sd.frame.N) : float3(0);
+            else if (gDebugView == 2) color = properties.diffuseReflectionAlbedo;
+            else if (gDebugView == 3) color = sd.frame.N * 0.5f + 0.5f;
+            else
+            {
+                float3 t, biased;
+                bool clamped;
+                uint3 cell = probeCell(sd.posW, sd.frame.N, t, biased, clamped);
+                if (gDebugView == 4) color = frac(float3(cell) * float3(0.618034f, 0.414214f, 0.732051f) + 0.15f);
+                else color = clamped ? float3(1, 0, 1) : float3(0.04f);
+            }
+        }
     }
     else if (kUseEnvBackground) color = gScene.envMap.eval(direction);
     gProbeLighting[pixel] = float4(probeColor, 1.f);
-    gOutputColor[pixel] = float4(gProbeOnly ? probeColor : color, 1.f);
+    gOutputColor[pixel] = float4(gProbeOnly && !(gDebugEnabled && gDebugView != 0) ? probeColor : color, 1.f);
+    if (gDebugEnabled) gDebugDistance[pixel] = surfaceDistance;
 }

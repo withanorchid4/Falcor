@@ -33,6 +33,17 @@
 #include <limits>
 #include <cmath>
 #include <sstream>
+#include <locale>
+#include <random>
+#if defined(_WIN32)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+#endif
 
 static void registerProbeBindings(pybind11::module& m)
 {
@@ -171,6 +182,11 @@ RenderPassReflection TraditionalProbeGI::reflect(const CompileData&)
 void TraditionalProbeGI::clearProbes()
 {
     clearDebugSelection();
+    std::vector<uint4> health(probeCount(), uint4(0));
+    mpBakeHealth = mpDevice->createStructuredBuffer(sizeof(uint4), probeCount(),
+        ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess, MemoryType::DeviceLocal, health.data());
+    mInvalidAttempts = mFailedSamples = 0;
+    mFirstInvalidProbe = mFirstInvalidSample = 0;
     std::vector<float4> zero(probeCount() * 9, float4(0));
     mpSH = mpDevice->createStructuredBuffer(
         sizeof(float4),
@@ -261,6 +277,10 @@ Properties TraditionalProbeGI::getDebugInfo() const
     p["samplePosition"] = xyz(mDebugData[2]);
     p["irradiance"] = xyz(mDebugData[3]);
     p["selectedProbe"] = mSelectedProbe;
+    p["invalidBakeAttempts"] = mInvalidAttempts;
+    p["failedBakeSamples"] = mFailedSamples;
+    p["firstInvalidProbe"] = mFirstInvalidProbe;
+    p["firstInvalidSample"] = mFirstInvalidSample;
     for (uint32_t i = 0; i < 8; ++i)
     {
         const auto suffix = std::to_string(i);
@@ -386,13 +406,14 @@ void TraditionalProbeGI::initializeProbes(bool allowAutomatic)
 
 bool TraditionalProbeGI::loadCache()
 {
-    auto reject = [&](const char* why)
+    auto reject = [&](const std::string& why)
     {
         mStatus = std::string("Cache not loaded: ") + why + ". Check the settings or click Bake.";
         logWarning("TraditionalProbeGI: cache rejected: {} ({})", why, mCacheFile.string());
         return false;
     };
     std::ifstream in(mCacheFile);
+    in.imbue(std::locale::classic());
     if (!in)
         return reject("cannot open");
     std::string magic, scene, revision;
@@ -410,12 +431,15 @@ bool TraditionalProbeGI::loadCache()
         any(abs(hi - mGridMax) > float3(1e-5f)))
         return reject("metadata mismatch");
     std::vector<float4> data(probeCount() * 9);
-    for (auto& c : data)
+    for (size_t i = 0; i < data.size(); ++i)
     {
+        auto& c = data[i];
         in >> c.x >> c.y >> c.z;
         c.w = 0;
-        if (!in || !finite3(float3(c.x, c.y, c.z)))
-            return reject("truncated/non-finite coefficients");
+        if (!in)
+            return reject(fmt::format("{} at SH coefficient {} of {}", in.eof() ? "truncated file" : "invalid numeric data", i, data.size()));
+        if (!finite3(float3(c.x, c.y, c.z)))
+            return reject(fmt::format("non-finite coefficient {}", i));
         c *= float(mSamples); // Same GPU representation as completed baking: unnormalized sums.
         if (!finite3(float3(c.x, c.y, c.z)))
             return reject("coefficient overflow");
@@ -444,24 +468,56 @@ void TraditionalProbeGI::saveCache()
 {
     std::vector<float4> data(probeCount() * 9);
     mpSH->getBlob(data.data(), 0, data.size() * sizeof(float4));
-    if (!mCacheFile.parent_path().empty())
-        std::filesystem::create_directories(mCacheFile.parent_path());
-    std::ofstream out(mCacheFile, std::ios::trunc);
-    FALCOR_CHECK(bool(out), "Cannot write probe cache {}", mCacheFile.string());
+    // Validate and serialize everything before touching the existing cache.
+    std::ostringstream out;
+    out.imbue(std::locale::classic());
     out << std::setprecision(std::numeric_limits<float>::max_digits10);
     out << "FALCOR_PROBE_SH 1\n" << std::quoted(mSceneKey) << '\n' << mSceneStamp << '\n' << std::quoted(mRevision) << '\n';
     out << mCounts.x << ' ' << mCounts.y << ' ' << mCounts.z << ' ' << mSamples << ' ' << mMaxBounces << '\n';
     out << mGridMin.x << ' ' << mGridMin.y << ' ' << mGridMin.z << ' ' << mGridMax.x << ' ' << mGridMax.y << ' ' << mGridMax.z << '\n';
-    for (auto c : data)
+    for (size_t i = 0; i < data.size(); ++i)
     {
+        auto c = data[i];
         c /= float(mSamples);
-        FALCOR_CHECK(finite3(float3(c.x, c.y, c.z)), "Non-finite probe coefficient; bake failed.");
+        if (!finite3(float3(c.x, c.y, c.z)))
+        {
+            mReady = false;
+            FALCOR_THROW("Non-finite SH coefficient {} (probe {}). Existing cache was not changed.", i, i / 9);
+        }
         out << c.x << ' ' << c.y << ' ' << c.z << '\n';
     }
-    out.flush();
-    FALCOR_CHECK(bool(out), "Failed writing probe cache {}", mCacheFile.string());
+    FALCOR_CHECK(bool(out), "Failed serializing probe cache.");
+    const auto contents = out.str();
+    if (!mCacheFile.parent_path().empty()) std::filesystem::create_directories(mCacheFile.parent_path());
+    auto temporary = mCacheFile;
+    std::random_device random;
+    temporary += fmt::format(".tmp-{:08x}{:08x}", random(), random());
+    FALCOR_CHECK(!std::filesystem::exists(temporary), "Temporary cache path already exists.");
+    try
+    {
+        std::ofstream file(temporary, std::ios::binary | std::ios::trunc);
+        FALCOR_CHECK(bool(file), "Cannot write temporary cache {}", temporary.string());
+        file.write(contents.data(), contents.size());
+        file.flush();
+        FALCOR_CHECK(bool(file), "Failed writing temporary cache {}", temporary.string());
+        file.close();
+        FALCOR_CHECK(bool(file), "Failed closing temporary cache {}", temporary.string());
+#if defined(_WIN32)
+        FALCOR_CHECK(MoveFileExW(temporary.c_str(), mCacheFile.c_str(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH),
+            "Cannot replace probe cache {} (Windows error {}). Existing cache was kept.", mCacheFile.string(), GetLastError());
+#else
+        std::filesystem::rename(temporary, mCacheFile);
+#endif
+    }
+    catch (...)
+    {
+        std::error_code ignored;
+        std::filesystem::remove(temporary, ignored);
+        throw;
+    }
     logInfo("TraditionalProbeGI: BAKE complete and SAVED {}", mCacheFile.string());
-    mStatus = "Ready: bake completed and saved.";
+    mStatus = mInvalidAttempts ? fmt::format("Ready: saved; recovered from {} non-finite path attempts (see log).", mInvalidAttempts)
+                              : "Ready: bake completed and saved.";
 }
 
 void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
@@ -534,6 +590,7 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
     for (const auto& c : kOutputChannels)
         var[c.texname] = data.getTexture(c.name);
     var["gProbeSH"] = mpSH;
+    var["gBakeHealth"] = mpBakeHealth;
     auto cb = var["ProbeCB"];
     cb["gGridCounts"] = mCounts;
     cb["gGridMin"] = mGridMin;
@@ -569,17 +626,33 @@ void TraditionalProbeGI::execute(RenderContext* ctx, const RenderData& data)
         mCompleted += batch;
         if (mCompleted == mSamples)
         {
-            mReady = true;
+            const auto health = mpBakeHealth->getElements<uint4>();
+            for (uint32_t i = 0; i < health.size(); ++i)
+            {
+                if (!mInvalidAttempts && health[i].x)
+                {
+                    mFirstInvalidProbe = i;
+                    mFirstInvalidSample = health[i].z - 1u;
+                }
+                mInvalidAttempts += health[i].x;
+                mFailedSamples += health[i].y;
+            }
+            if (mInvalidAttempts)
+                logWarning("TraditionalProbeGI: {} non-finite path attempts, {} unrecovered samples. First: probe {}, sample {}.",
+                    mInvalidAttempts, mFailedSamples, mFirstInvalidProbe, mFirstInvalidSample);
+            mReady = mFailedSamples == 0;
             mDebugRefresh = true;
             mBaking = false;
             mDirty = true;
             try
             {
+                FALCOR_CHECK(mReady, "{} samples failed after bounded retries. First invalid path: probe {}, sample {}. Existing cache was kept.",
+                    mFailedSamples, mFirstInvalidProbe, mFirstInvalidSample);
                 saveCache();
             }
             catch (const std::exception& e)
             {
-                mStatus = std::string("Ready in GPU memory, but saving failed: ") + e.what();
+                mStatus = std::string(mReady ? "Ready in GPU memory, but saving failed: " : "Bake failed: ") + e.what();
                 if (mMode != "manual")
                     throw;
                 logWarning("TraditionalProbeGI: {}", mStatus);
@@ -690,7 +763,8 @@ void TraditionalProbeGI::renderUI(Gui::Widgets& w)
         return;
     }
     w.text("Scene: " + mpScene->getPath().filename().string());
-    w.text(mStatus);
+    w.textWrapped(mStatus);
+    if (mInvalidAttempts) w.text(fmt::format("Numerical path attempts rejected: {}; failed samples: {}", mInvalidAttempts, mFailedSamples));
     if (!mReady && mPreview)
         w.text("Unbaked material preview (not probe lighting)");
     w.text(std::to_string(mCompleted) + " / " + std::to_string(mSamples) + " samples per probe");

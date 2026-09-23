@@ -185,6 +185,16 @@ p.configureDebug({"enabled": False})
 
 `tests/probe_gi/debug_script.py` 用 headless Vulkan 验证实际着色器、拾取、遮挡、锚点和场景切换；`check_debug_results.py` 检查 HDR 数值和调试关闭后的输出一致性。图像和结果位于 `build/probe-debug-validation/`。
 
+## 缓存保存与异常提示
+
+缓存需要与当前场景、网格、样本数、反弹数和 Scene revision 匹配。`cannot open` 表示文件打不开，`metadata mismatch` 表示参数不匹配，`truncated file at SH coefficient ...` 表示文件内容不完整；它们是不同问题。
+
+已修复 Room 场景中异常路径导致缓存写到一半的问题：旧版先清空正式缓存，再逐项检查系数，碰到非有限值会留下半截文件。现在先在内存中校验完整数据，再写同目录临时文件，成功后替换正式缓存；失败会保留旧文件。原有 v1 有效缓存仍兼容，已经截断的缓存需要重新 Bake，不能补零当作有效结果。
+
+烘焙会检测 NaN/Inf 路径，使用确定性的备用种子最多重试 8 次。恢复成功时，面板及日志仍显示异常尝试数量；如果有样本始终无法恢复，本次烘焙不标记 Ready，也不覆盖缓存。该保护不意味着异常材质或几何已被修复。状态文字会自动换行，便于读完整错误原因。
+
+本次 Room 验证定位到探针 378、样本 1974（均从 0 编号）的一次异常，重试恢复后成功保存，并在独立进程加载，HDR 最大差异为 0。原始截断缓存和日志保存在 `build/probe-cache-repair/`，验证脚本为 `tests/probe_gi/run_cache_repair_validation.py`。
+
 Room/Arcade 的入口可用，但本轮没有对它们执行完整数值验收。当前结果仍可见局部块状变化与偏暗，不应视为生产级探针方案。
 
 探针结果：

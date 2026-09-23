@@ -55,6 +55,9 @@ private:
         ref<RtProgramVars> pVars;
     } mTracer;
     ref<Buffer> mpSH;
+    ref<Buffer> mpBakeHealth;
+    uint64_t mInvalidAttempts = 0, mFailedSamples = 0;
+    uint32_t mFirstInvalidProbe = 0, mFirstInvalidSample = 0;
     ref<Buffer> mpDebugData;
     ref<Texture> mpDebugDistance;
     ref<RasterPass> mpDebugOverlay;

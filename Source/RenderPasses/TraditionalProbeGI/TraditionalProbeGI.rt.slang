@@ -38,6 +38,8 @@ cbuffer ProbeCB
     uint2 gFrameDim;
 }
 RWStructuredBuffer<float4> gProbeSH;
+// Per probe: rejected attempts, unrecovered samples, first rejected sample + 1, reason flags.
+RWStructuredBuffer<uint4> gBakeHealth;
 RWTexture2D<float4> gProbeLighting;
 RWStructuredBuffer<float4> gDebugData;
 RWTexture2D<float> gDebugDistance;
@@ -508,25 +510,56 @@ void bakeProbe(uint index)
     float3 origin = lerp(gGridMin, gGridMax, float3(p) / float3(gGridCounts - 1));
     float3 coefficients[9];
     for (uint k = 0; k < 9; ++k) coefficients[k] = gProbeSH[index * 9 + k].xyz;
+    uint4 health = gBakeHealth[index];
     for (uint s = 0; s < gSampleBatch; ++s)
     {
-        // Fixed per-probe/per-sample seeds: independent of frame batching and camera.
-        SampleGenerator sg = SampleGenerator(uint2(index, gSampleStart + s), 0);
-        float2 u = sampleNext2D(sg);
-        float z = 1.f - 2.f * u.x;
-        float r = sqrt(max(0.f, 1.f - z * z));
-        float phi = 6.28318530718f * u.y;
-        float3 direction = float3(r * cos(phi), r * sin(phi), z);
-        ScatterRayData payload = ScatterRayData(sg);
-        payload.origin = origin;
-        payload.direction = direction;
-        for (uint depth = 0; depth <= kMaxBounces && !payload.terminated; ++depth)
-            traceScatterRay(payload);
-        for (uint k = 0; k < 9; ++k)
-            coefficients[k] += payload.radiance * (12.5663706144f * probeSH(k, direction));
+        bool accepted = false;
+        for (uint attempt = 0; attempt <= 8 && !accepted; ++attempt)
+        {
+            // Attempt 0 is identical to the original estimator. Recovery seeds are deterministic.
+            SampleGenerator sg = SampleGenerator(uint2(index, gSampleStart + s), attempt);
+            float2 u = sampleNext2D(sg);
+            float z = 1.f - 2.f * u.x;
+            float r = sqrt(max(0.f, 1.f - z * z));
+            float phi = 6.28318530718f * u.y;
+            float3 direction = float3(r * cos(phi), r * sin(phi), z);
+            ScatterRayData payload = ScatterRayData(sg);
+            payload.origin = origin;
+            payload.direction = direction;
+            uint reason = 0;
+            for (uint depth = 0; depth <= kMaxBounces && !payload.terminated; ++depth)
+            {
+                if (!all(isfinite(payload.origin))) reason |= 4;
+                if (!all(isfinite(payload.direction)) || dot(payload.direction, payload.direction) < 1e-12f) reason |= 8;
+                if (reason != 0) break;
+                traceScatterRay(payload);
+                if (!all(isfinite(payload.radiance))) reason |= 1;
+                if (!all(isfinite(payload.thp))) reason |= 2;
+                if (reason != 0) break;
+            }
+            float3 candidate[9];
+            if (reason == 0)
+                for (uint k = 0; k < 9; ++k)
+                {
+                    candidate[k] = coefficients[k] + payload.radiance * (12.5663706144f * probeSH(k, direction));
+                    if (!all(isfinite(candidate[k]))) reason |= 16;
+                }
+            if (reason == 0)
+            {
+                for (uint k = 0; k < 9; ++k) coefficients[k] = candidate[k];
+                accepted = true;
+            }
+            else
+            {
+                if (health.x == 0) { health.z = gSampleStart + s + 1; health.w = reason; }
+                ++health.x;
+            }
+        }
+        if (!accepted) ++health.y;
     }
     // This invocation exclusively owns this probe; no atomics are needed.
     for (uint k = 0; k < 9; ++k) gProbeSH[index * 9 + k] = float4(coefficients[k], 0.f);
+    gBakeHealth[index] = health;
 }
 
 uint3 probeCell(float3 position, float3 normal, out float3 t, out float3 biasedPosition, out bool clamped)

@@ -144,7 +144,7 @@ Cornell / Vulkan / Release 已通过实际烘焙、独立加载、相机移动�
 针对墙上斑块和墙边漏光，推荐这样操作：
 
 1. 等待 Bake 完成，或点击 **Load matching cache** 加载已有结果。
-2. 开启 **Pick surface (left click)**，在有问题的墙面点击一次。选中的是世界空间表面位置，之后可以移动相机绕着观察；点击背景或 **Clear selection** 清除选择。点击时请避开面板。
+2. 开启 **Pick surface (right click)**，在有问题的墙面右键点击一次。选中的是世界空间表面位置，之后可以用左键拖动视角绕着观察；右键点击背景或 **Clear selection** 清除选择。点击时请避开面板。右键在 6DoF 相机中原本用于翻滚，开启选点时由探针通道接管，关闭选点或 debug 后恢复原绑定。
 3. 打开 **X-ray overlays**、**Only selected cell probes**、**Show probe IDs** 和 **Show contribution links**。查看这个位置对应的八个探针：**绿线表示可见，红线表示被遮挡，黄线表示 Normal bias 偏移**。线宽随插值权重增加，零权重不画线。黄色标记是原始表面位置。
 4. 面板逐项显示探针 ID、位置、实际插值权重，以及 `weighted E`（该探针对选中法线的辐照度贡献，已乘权重，尚未对总和取非负）。权重和为 1；Blocked 的探针仍有非零权重，说明当前传统插值确实使用了隔着几何体的探针。
 5. 调整 **Normal bias** 可实时观察偏移、八探针和可见性的变化；无须重新烘焙。`clamped: yes` 表示偏移后的采样位置在网格外，采样坐标被夹到了网格边缘。

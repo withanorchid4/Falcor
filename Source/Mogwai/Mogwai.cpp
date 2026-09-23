@@ -775,7 +775,7 @@ namespace Mogwai
             if (pe->mouseEvent(mouseEvent)) return true;
         }
 
-        if (mGraphs.size()) mGraphs[mActiveGraph].pGraph->onMouseEvent(mouseEvent);
+        if (mGraphs.size() && mGraphs[mActiveGraph].pGraph->onMouseEvent(mouseEvent)) return true;
         return mpScene ? mpScene->onMouseEvent(mouseEvent) : false;
     }
 

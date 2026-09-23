@@ -204,7 +204,7 @@ void TraditionalProbeGI::pickSurface(float2 uv)
 
 bool TraditionalProbeGI::onMouseEvent(const MouseEvent& e)
 {
-    if (mDebugEnabled && mPickEnabled && e.type == MouseEvent::Type::ButtonDown && e.button == Input::MouseButton::Left)
+    if (mDebugEnabled && mPickEnabled && e.type == MouseEvent::Type::ButtonDown && e.button == Input::MouseButton::Right)
     {
         pickSurface(clamp(e.pos, float2(0), float2(1)));
         return true;
@@ -756,7 +756,8 @@ void TraditionalProbeGI::renderUI(Gui::Widgets& w)
             d.checkbox("Show grid bounds", mShowBounds);
             d.checkbox("X-ray overlays", mDebugXRay);
             d.var("Sphere radius / spacing", mProbeRadius, 0.01f, 0.3f);
-            d.checkbox("Pick surface (left click)", mPickEnabled);
+            d.checkbox("Pick surface (right click)", mPickEnabled);
+            d.tooltip("Right click selects a surface instead of 6DoF camera roll. Left drag still controls the camera.");
             d.checkbox("Show contribution links", mShowLinks);
             if (d.button("Clear selection")) clearDebugSelection();
             if (d.button("Refresh inspection")) mDebugRefresh = true;

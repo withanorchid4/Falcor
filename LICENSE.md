@@ -21,6 +21,6 @@ This software links to the following components which are not licensed under the
 For details on the specific licenses please refer to the provided links.
 
 - DLSS: https://github.com/NVIDIA/DLSS/blob/main/LICENSE.txt
-- RTXGI: https://github.com/NVIDIAGameWorks/RTXGI/blob/main/License.txt
+- RTXGI-DDGI v1.3.7 (fetched separately; original shader library used by RTXGIDDGI): https://github.com/NVIDIAGameWorks/RTXGI-DDGI/blob/c233266e95931231961f35c842c78e7c4bdc50cf/License.txt
 - RTXDI: https://github.com/NVIDIAGameWorks/RTXDI/blob/main/LICENSE.txt
 - NRD: https://github.com/NVIDIAGameWorks/RayTracingDenoiser/blob/master/LICENSE.txt

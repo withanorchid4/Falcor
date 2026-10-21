@@ -3,7 +3,7 @@ param(
     [string]$Scene = 'Room',
     [ValidateSet('vulkan', 'd3d12')]
     [string]$Device = 'd3d12',
-    [ValidateSet('PathTracer', 'NRD', 'Probe')]
+    [ValidateSet('PathTracer', 'NRD', 'Probe', 'DDGI')]
     [string]$Renderer = 'PathTracer',
     [ValidateSet('manual', 'auto', 'bake', 'load')][string]$Mode = 'manual',
     [ValidateRange(1, 65536)][int]$Samples = 2048,
@@ -11,9 +11,9 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-if ($Renderer -eq 'NRD') {
+if ($Renderer -in @('NRD', 'DDGI')) {
     if ($PSBoundParameters.ContainsKey('Device') -and $Device -ne 'd3d12') {
-        throw 'The official Falcor NRD pass requires D3D12. Use -Device d3d12 or omit -Device.'
+        throw "$Renderer requires D3D12 in this integration. Use -Device d3d12 or omit -Device."
     }
     $Device = 'd3d12'
 }

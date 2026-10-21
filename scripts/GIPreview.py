@@ -7,14 +7,18 @@ import runpy
 def create_preview_graphs():
     directory = Path(__file__).parent
     graphs = {}
-    for name in ("PathTracer", "PathTracerNRD", "TraditionalProbeGI"):
+    for name in ("PathTracer", "PathTracerNRD", "TraditionalProbeGI", "RTXGIDDGI"):
         graphs[name] = runpy.run_path(str(directory / (name + ".py")))[name]
     return graphs
 
 
 graphs = create_preview_graphs()
 renderer = os.environ.get("FALCOR_START_RENDERER", "PathTracer")
-initial_graph = {"NRD": "PathTracerNRD", "Probe": "TraditionalProbeGI"}.get(renderer, "PathTracer")
+initial_graph = {
+    "NRD": "PathTracerNRD",
+    "Probe": "TraditionalProbeGI",
+    "DDGI": "RTXGIDDGI",
+}.get(renderer, "PathTracer")
 try:
     for graph in graphs.values():
         m.addGraph(graph)

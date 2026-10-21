@@ -284,6 +284,7 @@ target_sources(Falcor PRIVATE
     Rendering/Materials/BSDFs/SpecularMicrofacet.slang
     Rendering/Materials/BSDFs/StandardBSDF.slang
 
+    Rendering/RTXDI/Environment.slang
     Rendering/RTXDI/EnvLightUpdater.cs.slang
     Rendering/RTXDI/LightUpdater.cs.slang
     Rendering/RTXDI/PackedTypes.slang
@@ -295,6 +296,7 @@ target_sources(Falcor PRIVATE
     Rendering/RTXDI/RTXDIApplicationBridge.slangh
     Rendering/RTXDI/RTXDISDK.cpp
     Rendering/RTXDI/RTXDISetup.cs.slang
+    Rendering/RTXDI/SanitizeEnvironment.cs.slang
     Rendering/RTXDI/SurfaceData.slang
 
     Rendering/Utils/PixelStats.cpp

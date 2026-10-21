@@ -19,6 +19,7 @@ const char kRayShader[] = "RenderPasses/RTXGIDDGI/RTXGIDDGI.rt.slang";
 const ChannelList kInputs = {
     {"vbuffer", "gVBuffer", "Camera surface visibility"},
     {"viewW", "gViewW", "Camera view direction", true},
+    {"directLighting", "gDirectLighting", "External direct lighting including emission and background (RTXDI)", true},
 };
 const ChannelList kOutputs = {
     {"color", "gOutputColor", "Direct light, emission, and dynamic DDGI", false, ResourceFormat::RGBA32Float},
@@ -71,6 +72,7 @@ Properties RTXGIDDGI::getProperties() const
     p["enableGI"] = mOptions.enableGI;
     p["showProbes"] = mOptions.showProbes;
     p["indirectOnly"] = mOptions.indirectOnly;
+    p["useRTXDI"] = mOptions.useRTXDI;
     return p;
 }
 
@@ -94,6 +96,7 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         else if (name == "enableGI") next.enableGI = value;
         else if (name == "showProbes") next.showProbes = value;
         else if (name == "indirectOnly") next.indirectOnly = value;
+        else if (name == "useRTXDI") next.useRTXDI = value;
         else FALCOR_THROW("Unknown RTXGIDDGI property '{}'.", name);
     }
     FALCOR_CHECK(all(next.counts >= uint3(2)) && all(next.counts <= uint3(32)), "DDGI gridCounts must be 2..32 per axis.");
@@ -128,6 +131,7 @@ void RTXGIDDGI::setScene(RenderContext* context, const ref<Scene>& scene)
     mReallocate = mRebuildPrograms = mResetPending = true;
     mFrame = mUpdatedFrames = 0;
     mSupported = true;
+    mHasDirectLighting = false;
     mStatus = scene ? "Initializing dynamic DDGI." : "No scene.";
     if (scene && (scene->hasGeometryType(Scene::GeometryType::Custom) || scene->hasGeometryType(Scene::GeometryType::Curve) ||
                   scene->hasGeometryType(Scene::GeometryType::SDFGrid) || scene->hasGeometryType(Scene::GeometryType::DisplacedTriangleMesh)))
@@ -278,6 +282,7 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     changed |= ray.program->addDefine("USE_ENV_BACKGROUND", mpScene->useEnvBackground() ? "1" : "0");
     changed |= ray.program->addDefine("OUTPUT_INDIRECT", data.getTexture("indirect") ? "1" : "0");
     changed |= ray.program->addDefine("is_valid_gViewW", data.getTexture("viewW") ? "1" : "0");
+    changed |= ray.program->addDefine("HAS_DIRECT_LIGHTING", data.getTexture("directLighting") ? "1" : "0");
     if (changed) ray.vars = nullptr;
     if (!ray.vars)
     {
@@ -297,6 +302,7 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
         root["gSafeEnvironment"] = mpEnvMapSampler->getEnvMap()->getEnvMap();
     root["gVBuffer"] = data.getTexture("vbuffer");
     root["gViewW"] = data.getTexture("viewW");
+    if (data.getTexture("directLighting")) root["gDirectLighting"] = data.getTexture("directLighting");
     root["gOutputColor"] = data.getTexture("color");
     if (data.getTexture("indirect")) root["gOutputIndirect"] = data.getTexture("indirect");
     auto cb = root["PerFrameCB"];
@@ -304,6 +310,7 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     cb["gFrameDim"] = data.getDefaultTextureDims();
     cb["gEnableGI"] = mOptions.enableGI;
     cb["gIndirectOnly"] = mOptions.indirectOnly;
+    cb["gUseRTXDI"] = mOptions.useRTXDI;
     cb["gShowProbes"] = mOptions.showProbes;
     cb["gHistoryValid"] = mUpdatedFrames > 0;
     cb["gIntensity"] = mOptions.intensity;
@@ -348,6 +355,7 @@ void RTXGIDDGI::updateProbes(RenderContext* context)
 
 void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
 {
+    mHasDirectLighting = data.getTexture("directLighting") != nullptr;
     if (!mpScene || !mSupported)
     {
         for (const auto& output : kOutputs)
@@ -403,6 +411,7 @@ Properties RTXGIDDGI::getStats() const
     stats["totalProbes"] = allocated ? mOptions.counts.x * mOptions.counts.y * mOptions.counts.z : 0u;
     stats["status"] = mStatus;
     stats["supported"] = mSupported;
+    stats["usingRTXDI"] = mHasDirectLighting && mOptions.useRTXDI;
     stats["gridMin"] = mGridMin;
     stats["gridMax"] = mGridMax;
     uint32_t active = 0, relocated = 0, nonFinite = 0;
@@ -467,6 +476,11 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
     if (widgets.button("Reset history")) reset();
     if (widgets.checkbox("Enable DDGI", options.enableGI)) p["enableGI"] = options.enableGI;
     if (widgets.checkbox("Indirect only", options.indirectOnly)) p["indirectOnly"] = options.indirectOnly;
+    if (mHasDirectLighting)
+    {
+        if (widgets.checkbox("Use RTXDI direct light", options.useRTXDI)) p["useRTXDI"] = options.useRTXDI;
+        widgets.tooltip("Use ReSTIR DI for camera-visible lighting. Disable to compare the original one-sample lighting; probe history is preserved.");
+    }
     if (widgets.checkbox("Show probes", options.showProbes)) p["showProbes"] = options.showProbes;
     if (widgets.checkbox("Probe relocation", options.relocation)) p["enableRelocation"] = options.relocation;
     if (widgets.checkbox("Probe classification", options.classification)) p["enableClassification"] = options.classification;

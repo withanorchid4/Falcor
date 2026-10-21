@@ -348,6 +348,9 @@ namespace Falcor
         ref<Texture>      mpLocalLightPdfTexture;                   ///< Texture storing the PDF for sampling local lights proportional to radiant flux.
         ref<Texture>      mpEnvLightLuminanceTexture;               ///< Texture storing luminance of the environment light.
         ref<Texture>      mpEnvLightPdfTexture;                     ///< Texture storing the PDF for sampling the environment light proportional to luminance (times solid angle).
+        ref<Texture>      mpEnvMapSourceTexture;                    ///< Source texture used to build the validated environment copy.
+        ref<Texture>      mpSafeEnvMapTexture;                       ///< Finite, nonnegative source shared by environment sampling and shading.
+        ref<ComputePass>  mpSanitizeEnvMapPass;                      ///< Cleans source HDR texels before any filtering or PDF construction.
 
         ref<Buffer>       mpLightTileBuffer;                        ///< Buffer storing precomputed light tiles (see presampleLights()). This is called "ris buffer" in RTXDI.
         ref<Buffer>       mpCompactLightInfoBuffer;                 ///< Optional buffer storing compact light info for samples in the light tile buffer for improved coherence.

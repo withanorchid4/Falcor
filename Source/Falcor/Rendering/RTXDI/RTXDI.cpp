@@ -353,6 +353,7 @@ namespace Falcor
         var["localLightPdfTexture"] = mpLocalLightPdfTexture;
         var["envLightLuminanceTexture"] = mpEnvLightLuminanceTexture;
         var["envLightPdfTexture"] = mpEnvLightPdfTexture;
+        var["safeEnvMapTexture"] = mpSafeEnvMapTexture;
 
         // Bind the scene.
         if (bindScene)
@@ -504,6 +505,32 @@ namespace Falcor
     {
         FALCOR_PROFILE(pRenderContext, "updateEnvLight");
 
+        // Validate unfiltered HDR texels before either lighting or background
+        // sampling. Keep the original scene texture, rotation, and intensity.
+        if (mpScene->getEnvMap())
+        {
+            const auto& pSource = mpScene->getEnvMap()->getEnvMap();
+            if (mFlags.updateEnvLight || pSource != mpEnvMapSourceTexture || !mpSafeEnvMapTexture)
+            {
+                FALCOR_ASSERT(pSource);
+                if (!mpSafeEnvMapTexture || mpSafeEnvMapTexture->getWidth() != pSource->getWidth() ||
+                    mpSafeEnvMapTexture->getHeight() != pSource->getHeight())
+                {
+                    mpSafeEnvMapTexture = mpDevice->createTexture2D(
+                        pSource->getWidth(), pSource->getHeight(), ResourceFormat::RGBA32Float, 1, 1, nullptr,
+                        ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
+                }
+                if (!mpSanitizeEnvMapPass)
+                    mpSanitizeEnvMapPass = ComputePass::create(mpDevice, "Rendering/RTXDI/SanitizeEnvironment.cs.slang", "main");
+                auto rootVar = mpSanitizeEnvMapPass->getRootVar();
+                rootVar["gSource"] = pSource;
+                rootVar["gDestination"] = mpSafeEnvMapTexture;
+                mpSanitizeEnvMapPass->execute(pRenderContext, pSource->getWidth(), pSource->getHeight());
+                mpEnvMapSourceTexture = pSource;
+                mFlags.updateEnvLight = true;
+            }
+        }
+
         // If scene uses an environment light, create a luminance & pdf texture for sampling it.
         if (mpScene->useEnvLight() && mFlags.updateEnvLight)
         {
@@ -536,6 +563,7 @@ namespace Falcor
             auto var = mpUpdateEnvLightPass->getRootVar()["gEnvLightUpdater"];
             var["envLightLuminance"] = pLuminanceTexture;
             var["envLightPdf"] = pPdfTexture;
+            var["safeEnvMap"] = mpSafeEnvMapTexture;
             var["texDim"] = uint2(width, height);
             mpScene->bindShaderData(mpUpdateEnvLightPass->getRootVar()["gScene"]);
             mpUpdateEnvLightPass->execute(pRenderContext, width, height);

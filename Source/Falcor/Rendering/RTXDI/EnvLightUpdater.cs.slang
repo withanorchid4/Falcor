@@ -29,6 +29,7 @@
 
 import Scene.Scene;
 import Utils.Color.ColorHelpers;
+import Environment;
 
 /** Update the env light luminance and PDF textures by sampling the scene's env map.
 */
@@ -36,6 +37,7 @@ struct EnvLightUpdater
 {
     RWTexture2D<float> envLightLuminance;
     RWTexture2D<float> envLightPdf;
+    Texture2D<float4> safeEnvMap;
 
     uint2 texDim;
 
@@ -47,7 +49,7 @@ struct EnvLightUpdater
         float2 uv = (texelID + float2(0.5f)) / texDim;
 
         // Evaluate the env map luminance.
-        float L = max(0.f, luminance(gScene.envMap.eval(uv)));
+        float L = luminance(evalRTXDIEnvironment(safeEnvMap, gScene.envMap.envSampler, uv, gScene.envMap.getIntensity()));
 
         // Write luminance.
         envLightLuminance[texelID] = L;

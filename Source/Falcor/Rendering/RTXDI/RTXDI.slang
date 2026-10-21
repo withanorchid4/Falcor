@@ -31,6 +31,7 @@ import Utils.Color.ColorHelpers;
 import Utils.Debug.PixelDebug;
 import PackedTypes;
 import Scene.RaytracingInline;
+import Environment;
 
 // Set default value for RTXDI_INSTALLED.
 // We want this shader module to compile even if no external defines are set.
@@ -103,6 +104,7 @@ struct RTXDI
     Texture2D localLightPdfTexture;                     ///< PDF texture for sampling local lights (emissive triangles, local analytical lights).
     Texture2D envLightLuminanceTexture;                 ///< Luminance texture for evaluating the environment light.
     Texture2D envLightPdfTexture;                       ///< PDF texture for sampling environment light.
+    Texture2D<float4> safeEnvMapTexture;                 ///< Validated unfiltered source for RGB environment shading.
 };
 
 // HACK: PolymorphicLight.slang contains light sampling functions accessing data in gRTXDI.
@@ -140,6 +142,18 @@ struct RTXDI {};
 */
 extension RTXDI
 {
+    /** Evaluate the environment using the same validated source as light sampling.
+    */
+    float3 evalEnvironment(float3 direction)
+    {
+#if RTXDI_INSTALLED
+        return evalRTXDIEnvironment(safeEnvMapTexture, gScene.envMap.envSampler,
+            gScene.envMap.worldToUv(direction), gScene.envMap.getIntensity());
+#else
+        return sanitizeRTXDIEnvironmentRadiance(gScene.envMap.eval(direction));
+#endif
+    }
+
     /** Set the per-pixel surface data required for RTXDI at valid surface hits.
         Note: The provided position should be save to trace visibility rays from (i.e. is offseted from the true surface).
         \param[in] pixel Pixel coordinate.

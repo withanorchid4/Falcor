@@ -348,7 +348,7 @@ struct EnvLight : IPolymorphicLight
         }
         else
         {
-            ls.Li = gScene.envMap.eval(uv);
+            ls.Li = evalRTXDIEnvironment(gRTXDI.safeEnvMapTexture, gScene.envMap.envSampler, uv, gScene.envMap.getIntensity());
         }
         ls.pdf = 1.f / max(FLT_MIN, 2.f * M_PI * M_PI * relativeSolidAngle);
         ls.Li /= ls.pdf;

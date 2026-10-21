@@ -50,6 +50,7 @@ private:
         bool enableGI = true;
         bool showProbes = false;
         bool indirectOnly = false;
+        bool useRTXDI = true;
     } mOptions;
     struct RayProgram
     {
@@ -76,6 +77,7 @@ private:
     float3 mGridMin = float3(0.f), mGridMax = float3(0.f), mSpacing = float3(1.f);
     uint32_t mFrame = 0, mUpdatedFrames = 0;
     bool mSupported = true;
+    bool mHasDirectLighting = false;
     bool mReallocate = true, mRebuildPrograms = true, mResetPending = true, mOptionsChanged = true;
     std::string mStatus = "Load a scene to start DDGI.";
     std::mt19937 mRandom{1337};

@@ -132,7 +132,7 @@ struct FinalShading
             if (kUseEnvBackground)
             {
                 float3 dir = gScene.camera.computeRayPinhole(pixel, frameDim).dir;
-                emission = gScene.envMap.eval(dir);
+                emission = gRTXDI.evalEnvironment(dir);
                 color = emission;
             }
         }

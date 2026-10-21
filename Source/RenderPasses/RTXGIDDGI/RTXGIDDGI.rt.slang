@@ -51,6 +51,7 @@ cbuffer PerFrameCB
     uint2 gFrameDim;
     bool gEnableGI;
     bool gIndirectOnly;
+    bool gUseRTXDI;
     bool gShowProbes;
     bool gHistoryValid;
     float gIntensity; // Display scaling only; recursive transport stays physical.
@@ -74,6 +75,9 @@ Texture2D<float4> gSafeEnvironment;
 RWStructuredBuffer<uint> gDiagnostics;
 Texture2D<PackedHitInfo> gVBuffer;
 Texture2D<float4> gViewW;
+#if HAS_DIRECT_LIGHTING
+Texture2D<float4> gDirectLighting;
+#endif
 RWTexture2D<float4> gOutputColor;
 #if OUTPUT_INDIRECT
 RWTexture2D<float4> gOutputIndirect;
@@ -392,6 +396,13 @@ void render()
     HitInfo hit = HitInfo(gVBuffer[pixel]);
     float3 color = float3(0.f);
     float3 indirect = float3(0.f);
+    bool useExternalDirect = false;
+#if HAS_DIRECT_LIGHTING
+    useExternalDirect = gUseRTXDI;
+    // RTXDIPass.color already includes surface emission and environment background.
+    // Only the camera lighting changes; probe rays keep their own direct-light estimator.
+    if (useExternalDirect && !gIndirectOnly) color = finiteRadiance(gDirectLighting[pixel].rgb, 1u);
+#endif
     float surfaceDistance = FLT_MAX;
     if (hit.isValid())
     {
@@ -399,7 +410,7 @@ void render()
         surfaceDistance = length(sd.posW - origin);
         let material = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f));
         let properties = material.getProperties(sd);
-        if (!gIndirectOnly && validSurface(sd))
+        if (!gIndirectOnly && !useExternalDirect && validSurface(sd))
         {
             SampleGenerator sg = SampleGenerator(pixel, gFrameCount);
             color = finiteRadiance(properties.emission, 0u) + evaluateDirect(sd, material, false, sg);
@@ -413,7 +424,7 @@ void render()
         }
     }
 #if USE_ENV_BACKGROUND
-    else if (!gIndirectOnly)
+    else if (!gIndirectOnly && !useExternalDirect)
     {
         color = evaluateSafeEnvironment(direction);
     }

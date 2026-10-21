@@ -1,10 +1,14 @@
-"""Dynamic diffuse GI using the NVIDIA RTXGI-DDGI probe pipeline (D3D12)."""
+"""RTXDI direct lighting plus NVIDIA RTXGI-DDGI diffuse indirect lighting (D3D12)."""
 from falcor import *
 
 
 def render_graph_RTXGIDDGI():
     g = RenderGraph("RTXGIDDGI")
-    g.addPass(createPass("VBufferRT", {"samplePattern": "Center", "useAlphaTest": True}), "Visibility")
+    g.addPass(createPass("VBufferRT", {"samplePattern": "Center", "useAlphaTest": True, "useDOF": False}), "Visibility")
+    g.addPass(createPass("RTXDIPass", {"options": {
+        "mode": "SpatiotemporalResampling",
+        "biasCorrection": "RayTraced",
+    }}), "DirectLighting")
     g.addPass(createPass("RTXGIDDGI", {
         "gridCounts": uint3(8, 6, 8),
         "raysPerProbe": 256,
@@ -17,11 +21,15 @@ def render_graph_RTXGIDDGI():
         "autoBounds": True,
         "showProbes": False,
         "indirectOnly": False,
+        "useRTXDI": True,
         "intensity": 1.0,
     }), "DDGI")
     g.addPass(createPass("ToneMapper", {"autoExposure": False, "exposureCompensation": 0.0}), "Display")
     g.addEdge("Visibility.vbuffer", "DDGI.vbuffer")
     g.addEdge("Visibility.viewW", "DDGI.viewW")
+    g.addEdge("Visibility.vbuffer", "DirectLighting.vbuffer")
+    g.addEdge("Visibility.mvec", "DirectLighting.mvec")
+    g.addEdge("DirectLighting.color", "DDGI.directLighting")
     g.addEdge("DDGI.color", "Display.src")
     g.markOutput("Display.dst")
     return g

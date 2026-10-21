@@ -1,14 +1,22 @@
-"""RTXDI direct lighting plus NVIDIA RTXGI-DDGI diffuse indirect lighting (D3D12)."""
+"""NRD-denoised RTXDI direct lighting plus RTXGI-DDGI diffuse indirect (D3D12)."""
 from falcor import *
 
 
 def render_graph_RTXGIDDGI():
     g = RenderGraph("RTXGIDDGI")
-    g.addPass(createPass("VBufferRT", {"samplePattern": "Center", "useAlphaTest": True, "useDOF": False}), "Visibility")
+    # The same primary visibility supplies RTXDI and NRD's surface guides.
+    g.addPass(createPass("GBufferRT", {"samplePattern": "Center", "useAlphaTest": True, "useDOF": False}), "Visibility")
     g.addPass(createPass("RTXDIPass", {"options": {
         "mode": "SpatiotemporalResampling",
         "biasCorrection": "RayTraced",
     }}), "DirectLighting")
+    g.addPass(createPass("NRD", {
+        "method": "RelaxDiffuseSpecular",
+        "enabled": True,
+        "worldSpaceMotion": True,
+        "maxIntensity": 10000.0,
+    }), "DirectDenoiser")
+    g.addPass(createPass("ModulateIllumination", {"useResidualRadiance": False}), "DirectModulate")
     g.addPass(createPass("RTXGIDDGI", {
         "gridCounts": uint3(8, 6, 8),
         "raysPerProbe": 256,
@@ -29,7 +37,18 @@ def render_graph_RTXGIDDGI():
     g.addEdge("Visibility.viewW", "DDGI.viewW")
     g.addEdge("Visibility.vbuffer", "DirectLighting.vbuffer")
     g.addEdge("Visibility.mvec", "DirectLighting.mvec")
-    g.addEdge("DirectLighting.color", "DDGI.directLighting")
+    g.addEdge("DirectLighting.diffuseIllumination", "DirectDenoiser.diffuseRadianceHitDist")
+    g.addEdge("DirectLighting.specularIllumination", "DirectDenoiser.specularRadianceHitDist")
+    g.addEdge("Visibility.mvecW", "DirectDenoiser.mvec")
+    g.addEdge("Visibility.linearZ", "DirectDenoiser.viewZ")
+    g.addEdge("Visibility.normWRoughnessMaterialID", "DirectDenoiser.normWRoughnessMaterialID")
+    g.addEdge("DirectDenoiser.filteredDiffuseRadianceHitDist", "DirectModulate.diffuseRadiance")
+    g.addEdge("DirectDenoiser.filteredSpecularRadianceHitDist", "DirectModulate.specularRadiance")
+    g.addEdge("DirectLighting.diffuseReflectance", "DirectModulate.diffuseReflectance")
+    g.addEdge("DirectLighting.specularReflectance", "DirectModulate.specularReflectance")
+    # Emission and the environment background bypass the denoiser.
+    g.addEdge("DirectLighting.emission", "DirectModulate.emission")
+    g.addEdge("DirectModulate.output", "DDGI.directLighting")
     g.addEdge("DDGI.color", "Display.src")
     g.markOutput("Display.dst")
     return g

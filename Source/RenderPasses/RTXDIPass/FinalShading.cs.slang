@@ -63,7 +63,8 @@ struct FinalShading
         float3 diffuseIllumination = {};
         float3 specularReflectance = {};
         float3 specularIllumination = {};
-        float hitT = 10000.f; // TODO: Remove magic number also used in SpatioTemporalResampling pass.
+        // NRD uses zero hit distance for samples without a lighting contribution.
+        float hitT = 0.f;
 
         ShadingData sd;
         if (loadShadingData(pixel, frameDim, gScene.camera, vbuffer, sd))

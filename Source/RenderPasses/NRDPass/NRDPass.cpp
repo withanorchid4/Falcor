@@ -29,6 +29,7 @@
 #include "Core/API/NativeHandleTraits.h"
 
 #include "NRDPass.h"
+#include "RenderGraph/RenderPassStandardFlags.h"
 #include "RenderPasses/Shared/Denoising/NRDConstants.slang"
 
 namespace
@@ -56,6 +57,7 @@ const char kOutputDeltaMotionVectors[] = "deltaMvec";
 const char kEnabled[] = "enabled";
 const char kMethod[] = "method";
 const char kOutputSize[] = "outputSize";
+const char kResetHistory[] = "resetHistory";
 
 // Common settings.
 const char kWorldSpaceMotion[] = "worldSpaceMotion";
@@ -146,15 +148,39 @@ NRDPass::NRDPass(ref<Device> pDevice, const Properties& props) : RenderPass(pDev
     mRelaxDiffuseSettings.atrousIterationNum = 6;
     mRelaxDiffuseSettings.depthThreshold = 0.02f;
 
-    // Deserialize pass from dictionary.
+    setProperties(props);
+}
+
+NRDPass::~NRDPass()
+{
+    if (mpDenoiser)
+        nrd::DestroyDenoiser(*mpDenoiser);
+}
+
+void NRDPass::setProperties(const Properties& props)
+{
+    const Properties previousProperties = getProperties();
+    const auto previousMethod = mDenoisingMethod;
+    const auto previousOutputSize = mOutputSizeSelection;
+
+    // Method-specific settings must not depend on dictionary insertion order.
+    mDenoisingMethod = props.get(kMethod, mDenoisingMethod);
     for (const auto& [key, value] : props)
     {
         if (key == kEnabled)
             mEnabled = value;
         else if (key == kMethod)
-            mDenoisingMethod = value;
+            continue;
         else if (key == kOutputSize)
             mOutputSizeSelection = value;
+        else if (key == kResetHistory)
+        {
+            if (bool(value))
+            {
+                mResetHistory = true;
+                mOptionsChanged = true;
+            }
+        }
 
         // Common settings.
         else if (key == kWorldSpaceMotion)
@@ -281,6 +307,17 @@ NRDPass::NRDPass(ref<Device> pDevice, const Properties& props) : RenderPass(pDev
         {
             logWarning("Unknown property '{}' in NRD properties.", key);
         }
+    }
+
+    if (previousProperties != getProperties())
+    {
+        mResetHistory = true;
+        mOptionsChanged = true;
+    }
+    if (previousMethod != mDenoisingMethod || previousOutputSize != mOutputSizeSelection)
+    {
+        mRecreateDenoiser = true;
+        requestRecompile();
     }
 }
 
@@ -433,15 +470,24 @@ void NRDPass::execute(RenderContext* pRenderContext, const RenderData& renderDat
     if (!mpScene)
         return;
 
-    bool enabled = false;
-    enabled = mEnabled;
+    auto& dictionary = renderData.getDictionary();
+    auto refreshFlags = dictionary.getValue(kRenderPassRefreshFlags, RenderPassRefreshFlags::None);
+    if (refreshFlags != RenderPassRefreshFlags::None)
+        mResetHistory = true;
+    if (mOptionsChanged)
+    {
+        dictionary[kRenderPassRefreshFlags] = refreshFlags | RenderPassRefreshFlags::RenderOptionsChanged;
+        mOptionsChanged = false;
+    }
 
-    if (enabled)
+    if (mEnabled)
     {
         executeInternal(pRenderContext, renderData);
     }
     else
     {
+        // Motion vectors describe consecutive scene frames, so history is stale after bypassing the denoiser.
+        mResetHistory = true;
         if (mDenoisingMethod == DenoisingMethod::RelaxDiffuseSpecular || mDenoisingMethod == DenoisingMethod::ReblurDiffuseSpecular)
         {
             pRenderContext->blit(
@@ -496,11 +542,19 @@ void NRDPass::renderUI(Gui::Widgets& widget)
     _snprintf_s(name, 255, "NRD Library v%u.%u.%u", nrdLibraryDesc.versionMajor, nrdLibraryDesc.versionMinor, nrdLibraryDesc.versionBuild);
     widget.text(name);
 
-    widget.checkbox("Enabled", mEnabled);
+    if (widget.checkbox("Enabled", mEnabled))
+    {
+        mResetHistory = true;
+        mOptionsChanged = true;
+    }
 
     if (mDenoisingMethod == DenoisingMethod::RelaxDiffuseSpecular || mDenoisingMethod == DenoisingMethod::ReblurDiffuseSpecular)
     {
-        mRecreateDenoiser = widget.dropdown("Denoising method", kDenoisingMethod, reinterpret_cast<uint32_t&>(mDenoisingMethod));
+        if (widget.dropdown("Denoising method", kDenoisingMethod, reinterpret_cast<uint32_t&>(mDenoisingMethod)))
+        {
+            mRecreateDenoiser = true;
+            mOptionsChanged = true;
+        }
     }
 
     if (mDenoisingMethod == DenoisingMethod::RelaxDiffuseSpecular)
@@ -673,6 +727,25 @@ void NRDPass::renderUI(Gui::Widgets& widget)
 void NRDPass::setScene(RenderContext* pRenderContext, const ref<Scene>& pScene)
 {
     mpScene = pScene;
+    mResetHistory = true;
+}
+
+void NRDPass::onSceneUpdates(RenderContext* pRenderContext, IScene::UpdateFlags sceneUpdates)
+{
+    using U = IScene::UpdateFlags;
+    const auto resetFlags = U::CameraSwitched | U::LightIntensityChanged | U::LightPropertiesChanged | U::LightCountChanged |
+                            U::MaterialsChanged | U::EmissiveMaterialsChanged | U::EnvMapChanged | U::EnvMapPropertiesChanged |
+                            U::RenderSettingsChanged | U::GeometryChanged | U::RecompileNeeded;
+    if (is_set(sceneUpdates, resetFlags))
+        mResetHistory = true;
+
+    // CameraPropertiesChanged also includes jitter/history changes. Those must retain temporal reprojection.
+    if (mpScene && is_set(sceneUpdates, U::CameraPropertiesChanged))
+    {
+        using C = Camera::Changes;
+        if (is_set(mpScene->getCamera()->getChanges(), C::Frustum | C::FocalDistance | C::Aperture))
+            mResetHistory = true;
+    }
 }
 
 static void* nrdAllocate(void* userArg, size_t size, size_t alignment)
@@ -818,7 +891,11 @@ static void copyMatrix(float* dstMatrix, const float4x4& srcMatrix)
 void NRDPass::reinit()
 {
     // Create a new denoiser instance.
+    if (mpDenoiser)
+        nrd::DestroyDenoiser(*mpDenoiser);
     mpDenoiser = nullptr;
+    mFrameIndex = 0;
+    mResetHistory = true;
 
     const nrd::LibraryDesc& libraryDesc = nrd::GetLibraryDesc();
 
@@ -838,6 +915,7 @@ void NRDPass::reinit()
 
     createResources();
     createPipelines();
+    mRecreateDenoiser = false;
 }
 
 void NRDPass::createPipelines()
@@ -1075,7 +1153,11 @@ void NRDPass::executeInternal(RenderContext* pRenderContext, const RenderData& r
     // Initialize common settings.
     float4x4 viewMatrix = mpScene->getCamera()->getViewMatrix();
     float4x4 projMatrix = mpScene->getCamera()->getData().projMatNoJitter;
-    if (mFrameIndex == 0)
+    // A graph may have been inactive while the scene advanced. Its old history no longer matches one-frame motion vectors.
+    if (mFrameIndex > 0 &&
+        (mpScene->getCamera()->getPrevViewMatrix() != mPrevViewMatrix || projMatrix != mPrevProjMatrix))
+        mResetHistory = true;
+    if (mFrameIndex == 0 || mResetHistory)
     {
         mPrevViewMatrix = viewMatrix;
         mPrevProjMatrix = projMatrix;
@@ -1092,6 +1174,7 @@ void NRDPass::executeInternal(RenderContext* pRenderContext, const RenderData& r
     mCommonSettings.disocclusionThreshold = mDisocclusionThreshold * 0.01f;
     mCommonSettings.frameIndex = mFrameIndex;
     mCommonSettings.isMotionVectorInWorldSpace = mWorldSpaceMotion;
+    mCommonSettings.accumulationMode = mResetHistory ? nrd::AccumulationMode::CLEAR_AND_RESTART : nrd::AccumulationMode::CONTINUE;
 
     mPrevViewMatrix = viewMatrix;
     mPrevProjMatrix = projMatrix;
@@ -1109,6 +1192,10 @@ void NRDPass::executeInternal(RenderContext* pRenderContext, const RenderData& r
         FALCOR_PROFILE(pRenderContext, dispatchDesc.name);
         dispatch(pRenderContext, renderData, dispatchDesc);
     }
+
+    if (mResetHistory)
+        ++mResetHistoryCount;
+    mResetHistory = false;
 
     // Submit the existing command list and start a new one.
     pRenderContext->submit();
@@ -1272,4 +1359,9 @@ void NRDPass::dispatch(RenderContext* pRenderContext, const RenderData& renderDa
 extern "C" FALCOR_API_EXPORT void registerPlugin(PluginRegistry& registry)
 {
     registry.registerClass<RenderPass, NRDPass>();
+    ScriptBindings::registerBinding([](pybind11::module& module)
+    {
+        pybind11::class_<NRDPass, RenderPass, ref<NRDPass>> pass(module, "NRDPass");
+        pass.def_property_readonly("resetHistoryCount", &NRDPass::getResetHistoryCount);
+    });
 }

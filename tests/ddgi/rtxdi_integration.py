@@ -77,6 +77,11 @@ def measure_mode(p, name, mode):
 
 try:
     graph = runpy.run_path(str(ROOT / "scripts/RTXGIDDGI.py"))["RTXGIDDGI"]
+    # Keep this suite a strict raw-RTXDI integration check after the production
+    # graph starts feeding denoised lighting to DDGI. Unused NRD passes are
+    # culled by the render graph when their outputs are not marked.
+    graph.removeEdge("DirectModulate.output", "DDGI.directLighting")
+    graph.addEdge("DirectLighting.color", "DDGI.directLighting")
     graph.unmarkOutput("Display.dst")
     for channel in CHANNELS:
         graph.markOutput(channel)

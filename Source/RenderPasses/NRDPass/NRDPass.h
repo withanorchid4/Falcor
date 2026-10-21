@@ -66,13 +66,18 @@ public:
     static ref<NRDPass> create(ref<Device> pDevice, const Properties& props) { return make_ref<NRDPass>(pDevice, props); }
 
     NRDPass(ref<Device> pDevice, const Properties& props);
+    ~NRDPass() override;
 
+    virtual void setProperties(const Properties& props) override;
     virtual Properties getProperties() const override;
     virtual RenderPassReflection reflect(const CompileData& compileData) override;
     virtual void compile(RenderContext* pRenderContext, const CompileData& compileData) override;
     virtual void execute(RenderContext* pRenderContext, const RenderData& renderData) override;
     virtual void renderUI(Gui::Widgets& widget) override;
     virtual void setScene(RenderContext* pRenderContext, const ref<Scene>& pScene) override;
+    virtual void onSceneUpdates(RenderContext* pRenderContext, IScene::UpdateFlags sceneUpdates) override;
+
+    uint64_t getResetHistoryCount() const { return mResetHistoryCount; }
 
 private:
     ref<Scene> mpScene;
@@ -91,6 +96,9 @@ private:
     bool mEnabled = true;
     DenoisingMethod mDenoisingMethod = DenoisingMethod::RelaxDiffuseSpecular;
     bool mRecreateDenoiser = false;
+    bool mResetHistory = true;
+    bool mOptionsChanged = true;
+    uint64_t mResetHistoryCount = 0;
     bool mWorldSpaceMotion = true;
     float mMaxIntensity = 1000.f;
     float mDisocclusionThreshold = 2.f;

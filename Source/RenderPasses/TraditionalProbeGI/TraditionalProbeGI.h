@@ -1,5 +1,6 @@
 #pragma once
 #include "Falcor.h"
+#include "WickedProbeVisibility.h"
 #include "Core/Pass/RasterPass.h"
 #include "Core/Pass/ComputePass.h"
 #include "RenderGraph/RenderPass.h"
@@ -28,15 +29,19 @@ public:
     Properties getDebugInfo() const;
     void configureBake(const Properties& props);
     void configureVisibility(const Properties& props);
+    void configureSampling(const Properties& props);
+    void configureAntiLeak(const Properties& props);
+    std::string getWickedCacheFile() const { return mpWicked->cacheFile.string(); }
     void applyLeakResistantPreset();
-    void requestBake() { mAction = Action::Bake; }
+    void applyDDGIPreset();
+    void requestBake() { mAction = mAntiLeakMode == "wickedStatic" ? Action::WickedBake : Action::Bake; }
     void requestLoad() { mAction = Action::Load; }
     void cancelBake() { mAction = Action::Cancel; }
-    bool isReady() const { return mReady; }
-    bool isBaking() const { return mBaking; }
+    bool isReady() const { return mReady && (mAntiLeakMode != "wickedStatic" || mpWicked->ready); }
+    bool isBaking() const { return mBaking || mpWicked->baking; }
     uint32_t getCompletedSamples() const { return mCompleted; }
-    uint32_t getCompletedDistanceSamples() const { return mDistanceCompleted; }
-    const std::string& getStatus() const { return mStatus; }
+    uint32_t getCompletedDistanceSamples() const { return mAntiLeakMode == "wickedStatic" ? mpWicked->completed : mDistanceCompleted; }
+    const std::string& getStatus() const { return mAntiLeakMode == "wickedStatic" ? mpWicked->status : mStatus; }
     std::string getCacheFile() const { return mCacheFile.string(); }
 
 private:
@@ -54,6 +59,8 @@ private:
     uint32_t probeCount() const { return mCounts.x * mCounts.y * mCounts.z; }
     uint32_t distanceSampleTarget() const { return mDistanceBakeMode == "angular" ? mDistanceRays : mDistanceSamples; }
 
+    std::string mAntiLeakMode = "current", mWickedVisibilityMode = "moments";
+    std::unique_ptr<WickedProbeVisibility> mpWicked;
     ref<Scene> mpScene;
     ref<SampleGenerator> mpSampleGenerator;
     struct
@@ -63,19 +70,27 @@ private:
         ref<RtProgramVars> pVars;
     } mTracer;
     ref<Buffer> mpSH;
+    std::string mSamplingMode = "full";
+    uint32_t mSparseStride = 2;
+    ref<Texture> mpSparseIrradiance, mpSparsePosition, mpSparseNormal;
+    ref<Texture> mpResolvedIrradiance;
+    ref<ComputePass> mpSparseResolve;
     ref<Texture> mpDistanceMoments;
     ref<Buffer> mpDistanceRays;
     ref<ComputePass> mpDistanceBlend;
     std::string mDistanceBakeMode = "texelLocal";
     uint32_t mDistanceRays = 2048;
-    float mDistanceExponent = 50.f;
+    float mDistanceExponent = 64.f;
+    float mDistanceWeightCutoff = 0.f, mDistanceHitBias = 0.f;
     uint32_t mDistanceResolution = 14;
     uint32_t mDistanceSamples = 16, mDistanceCompleted = 0, mDistanceTexelOffset = 0;
     uint32_t mDistanceSweepBatch = 0;
     float mDistanceRangeScale = 2.f, mDistanceMax = 1.f;
     bool mUseVisibility = true, mUseNormalWeight = true;
     bool mDistanceBilinear = true;
-    bool mDistanceSmooth = false, mNormalHemisphere = false;
+    bool mDistanceSmooth = false;
+    bool mDDGIWeights = false;
+    bool mWickedWeights = false;
     std::string mVisibilityMode = "moments";
     float mVisibilityPower = 3.f, mVarianceBase = 1e-6f;
     ref<Buffer> mpBakeHealth;
@@ -102,6 +117,7 @@ private:
     {
         None,
         Bake,
+        WickedBake,
         Load,
         Cancel
     };

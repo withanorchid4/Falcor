@@ -10,6 +10,7 @@ cbuffer BlendCB
     uint gColumns;
     uint gBatch;
     float gExponent;
+    float gWeightCutoff;
 }
 
 [numthreads(64, 1, 1)]
@@ -30,6 +31,7 @@ void main(uint3 tid : SV_DispatchThreadID)
     {
         float4 ray = gRays[probe * 16 + s];
         float weight = pow(saturate(dot(direction, ray.xyz)), gExponent);
+        if (weight <= gWeightCutoff) continue;
         sum += weight * float2(ray.w, ray.w * ray.w);
         total += weight;
     }

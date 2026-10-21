@@ -37,14 +37,16 @@ cbuffer ProbeCB
     uint gDistanceResolution;
     uint2 gDistanceAtlasSize;
     float gDistanceMax;
+    float gDistanceHitBias;
     bool gDistanceBilinear;
     bool gDistanceSmooth;
-    bool gNormalHemisphere;
     bool gUseVisibility;
     bool gRayTracedVisibility;
     bool gUseNormalWeight;
     float gVisibilityPower;
     float gVarianceBase;
+    bool gDDGIWeights;
+    bool gWickedWeights;
     uint gSelectedProbe;
     bool gDebugEnabled;
     bool gHasBakedData;
@@ -53,7 +55,26 @@ cbuffer ProbeCB
     bool gPick;
     uint2 gPickPixel;
     uint2 gFrameDim;
+    bool gSparseBuild;
+    bool gSparseEnabled;
+    uint gSparseStride;
+    uint2 gSparseDim;
 }
+cbuffer WickedCB
+{
+    bool gWickedActive;
+    bool gWickedBake;
+    uint gWickedRayCount;
+    float gWickedNormalBias;
+    float gWickedSmoothBackface;
+}
+Texture2D<float2> gWickedMoments;
+SamplerState gWickedSampler;
+RWStructuredBuffer<float4> gWickedRays;
+RWTexture2D<float4> gSparseIrradiance;
+RWTexture2D<float4> gSparsePosition;
+RWTexture2D<float4> gSparseNormal;
+Texture2D<float4> gResolvedIrradiance;
 RWStructuredBuffer<float4> gProbeSH;
 // Per probe: rejected attempts, unrecovered samples, first rejected sample + 1, reason flags.
 RWStructuredBuffer<uint4> gBakeHealth;
@@ -75,6 +96,7 @@ Texture2D<float4> gViewW; // Optional
 
 // Outputs
 RWTexture2D<float4> gOutputColor;
+RWTexture2D<float4> gSamplingInfo;
 
 // Static configuration based on defines set from the host.
 #define is_valid(name) (is_valid_##name != 0)
@@ -136,67 +158,7 @@ struct ScatterRayData
  * @param[in] rayDir Normalized ray direction.
  * @return ShadingData struct.
  */
-ShadingData loadShadingData(const HitInfo hit, const float3 rayOrigin, const float3 rayDir)
-{
-    VertexData v = {};
-    uint materialID = {};
-
-#if SCENE_HAS_GEOMETRY_TYPE(GEOMETRY_TYPE_TRIANGLE_MESH)
-    if (hit.getType() == HitType::Triangle)
-    {
-        const TriangleHit triangleHit = hit.getTriangleHit();
-        v = gScene.getVertexData(triangleHit);
-        materialID = gScene.getMaterialID(triangleHit.instanceID);
-    }
-#endif
-#if SCENE_HAS_GEOMETRY_TYPE(GEOMETRY_TYPE_DISPLACED_TRIANGLE_MESH)
-    if (hit.getType() == HitType::DisplacedTriangle)
-    {
-        const DisplacedTriangleHit displacedTriangleHit = hit.getDisplacedTriangleHit();
-        v = gScene.getVertexData(displacedTriangleHit, -rayDir);
-        materialID = gScene.getMaterialID(displacedTriangleHit.instanceID);
-    }
-#endif
-#if SCENE_HAS_GEOMETRY_TYPE(GEOMETRY_TYPE_CURVE)
-    if (hit.getType() == HitType::Curve)
-    {
-        const CurveHit curveHit = hit.getCurveHit();
-        v = gScene.getVertexDataFromCurve(curveHit);
-        materialID = gScene.getMaterialID(curveHit.instanceID);
-    }
-#endif
-#if SCENE_HAS_GEOMETRY_TYPE(GEOMETRY_TYPE_SDF_GRID)
-    if (hit.getType() == HitType::SDFGrid)
-    {
-        const SDFGridHit sdfGridHit = hit.getSDFGridHit();
-        v = gScene.getVertexDataFromSDFGrid(sdfGridHit, rayOrigin, rayDir);
-        materialID = gScene.getMaterialID(sdfGridHit.instanceID);
-    }
-#endif
-
-    ShadingData sd = gScene.materials.prepareShadingData(v, materialID, -rayDir);
-
-    return sd;
-}
-
-/**
- * Returns the primary ray's direction.
- */
-float3 getPrimaryRayDir(uint2 launchIndex, uint2 launchDim, const Camera camera)
-{
-    if (is_valid(gViewW))
-    {
-        // If we have the view vector bound as a buffer, just fetch it. No need to compute anything.
-        return -gViewW[launchIndex].xyz;
-    }
-    else
-    {
-        // Compute the view vector. This must exactly match what the G-buffer pass is doing (jitter etc.).
-        // Note that we do not take depth-of-field into account as it would require exactly matching the
-        // sample generator between the passes, which is error prone. The host side will issue a warning instead.
-        return camera.computeRayPinhole(launchIndex, launchDim).dir;
-    }
-}
+#include "ProbeSurface.slang"
 
 /**
  * Traces a shadow ray towards a light source.
@@ -266,7 +228,7 @@ float traceProbeDistance(float3 probe, float3 point)
     ray.Direction = delta / distance;
     ray.TMin = 0.f;
     ray.TMax = max(gDistanceMax, distance + probeRayEpsilon());
-    TraceRay(gScene.rtAccel, 0, 0xff, 0, rayTypeCount, 0, ray, payload);
+    TraceRay(gScene.rtAccel, gWickedActive ? (RAY_FLAG_FORCE_OPAQUE | RAY_FLAG_SKIP_PROCEDURAL_PRIMITIVES) : 0, 0xff, 0, rayTypeCount, 0, ray, payload);
     return payload.firstHitDistance;
 }
 
@@ -281,6 +243,15 @@ float traceProbeVisibility(float3 probe, float3 point)
     float distance = length(delta);
     if (distance <= probeRayEpsilon()) return 1.f;
     // Only a boolean is needed here, so early-out on any accepted segment hit is correct.
+    if (gWickedActive)
+    {
+        RayDesc ray;
+        ray.Origin = probe; ray.Direction = delta / distance; ray.TMin = 0.f; ray.TMax = distance - probeRayEpsilon();
+        ShadowRayData payload; payload.visible = false;
+        TraceRay(gScene.rtAccel, RAY_FLAG_FORCE_OPAQUE | RAY_FLAG_SKIP_PROCEDURAL_PRIMITIVES | RAY_FLAG_ACCEPT_FIRST_HIT_AND_END_SEARCH,
+            0xff, 1, rayTypeCount, 1, ray, payload);
+        return payload.visible ? 1.f : 0.f;
+    }
     return traceShadowRay(probe, delta / distance, distance - probeRayEpsilon()) ? 1.f : 0.f;
 }
 
@@ -473,6 +444,8 @@ void scatterTriangleMeshClosestHit(inout ScatterRayData rayData, BuiltInTriangle
     triangleHit.primitiveIndex = PrimitiveIndex();
     triangleHit.barycentrics = attribs.barycentrics;
     handleHit(HitInfo(triangleHit), rayData);
+    if (gWickedBake && rayData.distanceOnly && HitKind() == HIT_KIND_TRIANGLE_BACK_FACE)
+        rayData.firstHitDistance *= 0.9f;
 }
 
 [shader("anyhit")]
@@ -632,8 +605,11 @@ void bakeProbe(uint index)
     gBakeHealth[index] = health;
 }
 
+#include "WickedProbeVisibility.slang"
+
 uint3 probeCell(float3 position, float3 normal, out float3 t, out float3 biasedPosition, out bool clamped)
 {
+    if (gWickedActive) return wickedCell(position, normal, t, biasedPosition, clamped);
     float3 spacing = (gGridMax - gGridMin) / float3(gGridCounts - 1);
     float minSpacing = min(spacing.x, min(spacing.y, spacing.z));
     // Compute both components at P. Do not normalize the combined bias vector.
@@ -670,6 +646,7 @@ uint2 distancePixel(uint index, uint2 texel)
 
 float2 distanceMoments(uint index, float3 direction)
 {
+    if (gWickedActive) return wickedMoments(index, direction) / float2(gDistanceMax, gDistanceMax * gDistanceMax);
     if (!gDistanceBilinear)
         return gDistanceMoments[distancePixel(index, distanceTexel(direction))].xy;
     // Bilinear interpolation of the two moments, with folded octahedral edges.
@@ -696,7 +673,7 @@ void bakeDistanceRays(uint index)
     {
         float3 direction = probeDistanceRayDirection(index, gSampleStart + s);
         float hit = traceProbeDistance(origin, origin + direction * gDistanceMax);
-        gDistanceRays[index * 16 + s] = float4(direction, hit < 0.f ? 1.f : saturate(hit / gDistanceMax));
+        gDistanceRays[index * 16 + s] = float4(direction, hit < 0.f ? 1.f : saturate((hit - gDistanceHitBias) / gDistanceMax));
     }
 }
 
@@ -719,41 +696,69 @@ void bakeDistanceTexel(uint task)
         float2 jitter = clamp(sampleNext2D(sg), float2(1e-5f), float2(1.f - 1e-5f));
         float3 direction = probeOctDecode((float2(texel) + jitter) / float(gDistanceResolution));
         float hit = traceProbeDistance(origin, origin + direction * gDistanceMax);
-        float d = hit < 0.f ? 1.f : saturate(hit / gDistanceMax);
+        float d = hit < 0.f ? 1.f : saturate((hit - gDistanceHitBias) / gDistanceMax);
         sum += float2(d, d * d);
     }
     uint count = gSampleStart + gSampleBatch;
     gDistanceMoments[pixel] = float4(sum / float(count), float(count), 0.f);
 }
 
+// Static adaptation of DDGI moment weighting; ray visibility remains an exact reference.
+bool ddgiWeightingActive()
+{
+    return gDDGIWeights && gUseVisibility && gHasBakedData && !gRayTracedVisibility;
+}
+
+float rawMomentVisibility(float query, float2 moments)
+{
+    if (!gDDGIWeights && !gWickedActive) return probeChebyshev(query, moments, gVarianceBase, gVisibilityPower);
+    // This branch also covers the zero-variance, zero-distance-difference case.
+    if (query <= moments.x) return 1.f;
+    float difference = query - moments.x;
+    float variance = abs(moments.y - moments.x * moments.x);
+    float probability = variance / (variance + difference * difference);
+    return probability * probability * probability;
+}
+
+float probeWeightDenominator(float total)
+{
+    // DDGI may intentionally produce tiny weights: normalize their actual sum.
+    return max(total, (gWickedActive || ddgiWeightingActive()) ? 1e-20f : 1e-4f);
+}
+
 // Unnormalized weights are shared by final shading, support view and point inspection.
 float cornerWeight(float3 position, float3 normal, float3 biased, uint3 cell, float3 t, uint corner,
     out float trilinear, out float visibility, out float4 distanceInfo)
 {
+    if (gWickedActive) return wickedCornerWeight(position, normal, biased, cell, t, corner, trilinear, visibility, distanceInfo);
     uint3 offset = uint3(corner & 1, (corner >> 1) & 1, (corner >> 2) & 1);
     float3 factors = lerp(1.f - t, t, float3(offset));
+    if (ddgiWeightingActive() && !gWickedWeights) factors = max(factors, float3(0.001f));
     trilinear = factors.x * factors.y * factors.z;
     float3 probePosition = lerp(gGridMin, gGridMax, float3(cell + offset) / float3(gGridCounts - 1));
     float3 delta = biased - probePosition;
     float distance = length(delta);
     float3 dir = distance > 1e-8f ? delta / distance : float3(0, 0, 1);
     float2 moments = gHasBakedData ? distanceMoments(flattenProbe(cell + offset), dir) : float2(1);
-    visibility = probeChebyshev(distance / gDistanceMax, moments, gVarianceBase, gVisibilityPower);
-    if (gUseVisibility && gRayTracedVisibility && gHasBakedData && trilinear > 0.f)
-        visibility = traceProbeVisibility(probePosition, biased);
+    visibility = rawMomentVisibility(distance / gDistanceMax, moments);
+    if (ddgiWeightingActive() && !gWickedWeights) visibility = max(visibility, 0.05f);
+    if (gUseVisibility && gRayTracedVisibility && gHasBakedData)
+        visibility = trilinear > 0.f ? traceProbeVisibility(probePosition, biased) : 0.f;
     float3 toProbe = probePosition - position;
     float cosine = dot(normal, toProbe / max(length(toProbe), 1e-8f));
     float wrap = saturate(cosine * 0.5f + 0.5f);
     float normalWeight = gUseNormalWeight ? wrap * wrap + 0.2f : 1.f;
-    if (gUseNormalWeight && gNormalHemisphere)
-    {
-        // Reject the opposite half-space without a hard angular cutoff at grazing angles.
-        float gate = saturate(cosine / 0.2f);
-        normalWeight *= gate * gate * (3.f - 2.f * gate);
-    }
+    float rawVariance = moments.y - moments.x * moments.x;
     distanceInfo = float4(moments.x * gDistanceMax,
-        max(0.f, moments.y - moments.x * moments.x) * gDistanceMax * gDistanceMax, distance, normalWeight);
-    return trilinear * (gUseVisibility && gHasBakedData ? normalWeight * visibility : 1.f);
+        (gDDGIWeights ? abs(rawVariance) : max(0.f, rawVariance)) * gDistanceMax * gDistanceMax, distance, normalWeight);
+    float support = normalWeight * visibility;
+    if (ddgiWeightingActive())
+    {
+        support = max(support, gWickedWeights ? 0.01f : 1e-6f);
+        float compression = min(support / 0.2f, 1.f);
+        support *= compression * compression;
+    }
+    return trilinear * (gUseVisibility && gHasBakedData ? support : 1.f);
 }
 
 float3 sampleProbeIrradiance(float3 position, float3 normal)
@@ -775,8 +780,10 @@ float3 sampleProbeIrradiance(float3 position, float3 normal)
             irradiance += weight * gProbeSH[index * 9 + k].xyz *
                 (probeSH(k, normal) * probeCosineKernel(k) / float(gSampleTotal));
     }
-    return max(irradiance / max(totalWeight, 1e-4f), float3(0));
+    return max(irradiance / probeWeightDenominator(totalWeight), float3(0));
 }
+
+#include "ProbeSparse.slang"
 
 // One invocation, only on demand. Inspection never feeds back into production lighting.
 void inspectSurface()
@@ -811,7 +818,7 @@ void inspectSurface()
         uint3 offset = uint3(corner & 1, (corner >> 1) & 1, (corner >> 2) & 1);
         float tri, visibility;
         float4 info;
-        float weight = cornerWeight(position, normal, biased, cell, t, corner, tri, visibility, info) / max(totalWeight, 1e-4f);
+        float weight = cornerWeight(position, normal, biased, cell, t, corner, tri, visibility, info) / probeWeightDenominator(totalWeight);
         uint index = flattenProbe(cell + offset);
         float3 probePosition = lerp(gGridMin, gGridMax, float3(cell + offset) / float3(gGridCounts - 1));
         float queryHit = traceProbeDistance(probePosition, biased);
@@ -821,10 +828,11 @@ void inspectSurface()
         float surfaceDistance = length(surfaceDelta);
         bool visible = probeHitVisible(queryHit, info.z);
         float2 queryMoments = gHasBakedData ? distanceMoments(index, info.z > 1e-8f ? queryDelta / info.z : float3(0,0,1)) : float2(1);
-        float momentVisibility = probeChebyshev(info.z / gDistanceMax, queryMoments, gVarianceBase, gVisibilityPower);
+        float momentVisibility = gWickedActive ? wickedVisibility(info.z, wickedMoments(index,
+            info.z > 1e-8f ? queryDelta / info.z : float3(0,0,1))) : rawMomentVisibility(info.z / gDistanceMax, queryMoments);
         float2 surfaceMoments = gHasBakedData ? distanceMoments(index,
             surfaceDistance > 1e-8f ? surfaceDelta / surfaceDistance : float3(0,0,1)) : float2(1);
-        float appliedVisibility = !gUseVisibility || !gHasBakedData ? 1.f : (gRayTracedVisibility ? (visible ? 1.f : 0.f) : momentVisibility);
+        float appliedVisibility = !gUseVisibility || !gHasBakedData ? 1.f : visibility;
         float3 contribution = float3(0);
         if (gHasBakedData)
             for (uint k = 0; k < 9; ++k)
@@ -848,11 +856,19 @@ void inspectSurface()
 void rayGen()
 {
     uint2 pixel = DispatchRaysIndex().xy;
+    if (gWickedBake) { bakeWickedRays(DispatchRaysIndex().x); return; }
     if (gBakeDistanceRays) { bakeDistanceRays(pixel.x); return; }
     if (gBakeDistance) { bakeDistanceTexel(pixel.x); return; }
     if (gBake) { bakeProbe(pixel.x); return; }
     if (gInspect) { inspectSurface(); return; }
-    if (gDebugEnabled && gDebugView >= 7)
+#if SPARSE_RUNTIME
+    if (gSparseBuild) { buildSparseSample(pixel); return; }
+#endif
+    float3 samplingInfo = float3(0);
+#if is_valid(gSamplingInfo)
+    gSamplingInfo[pixel] = float4(0, 0, 0, 1);
+#endif
+    if (gDebugEnabled && gDebugView >= 7 && gDebugView <= 8)
     {
         float2 uv = (float2(pixel) + 0.5f) / float2(gFrameDim);
         float2 moments = distanceMoments(gSelectedProbe, probeOctDecode(uv));
@@ -861,7 +877,7 @@ void rayGen()
         gProbeLighting[pixel] = float4(0, 0, 0, 1);
         return;
     }
-    float3 direction = getPrimaryRayDir(pixel, DispatchRaysDimensions().xy, gScene.camera);
+    float3 direction = getPrimaryRayDir(pixel, gFrameDim, gScene.camera);
     HitInfo hit = HitInfo(gVBuffer[pixel]);
     float3 color = float3(0), probeColor = float3(0);
     float surfaceDistance = FLT_MAX;
@@ -875,8 +891,21 @@ void rayGen()
         color = properties.emission;
         if (kUseAnalyticLights) color += evalDirectAnalytic(sd, mi, sg);
         if (gReady)
-            probeColor = properties.diffuseReflectionAlbedo * sampleProbeIrradiance(sd.posW, sd.frame.N) *
-                (gIntensity / 3.1415926536f);
+        {
+            float3 irradiance;
+            bool reused = false;
+#if SPARSE_RUNTIME
+            if (gSparseEnabled)
+            {
+                float4 cached = gResolvedIrradiance[pixel];
+                irradiance = cached.xyz;
+                reused = cached.w > 0.f;
+            }
+#endif
+            if (!reused) irradiance = sampleProbeIrradiance(sd.posW, sd.frame.N);
+            samplingInfo = float3(reused ? 1.f : 0.f, reused ? 0.f : 1.f, 1.f);
+            probeColor = properties.diffuseReflectionAlbedo * irradiance * (gIntensity / 3.1415926536f);
+        }
         color += probeColor;
         if (gPreviewUnbaked)
         {
@@ -886,7 +915,20 @@ void rayGen()
         }
         if (gDebugEnabled && gDebugView != 0)
         {
-            if (gDebugView == 1) color = gHasBakedData ? sampleProbeIrradiance(sd.posW, sd.frame.N) : float3(0);
+            if (gDebugView >= 9)
+            {
+                float3 t, Q; bool clamped;
+                probeCell(sd.posW, sd.frame.N, t, Q, clamped);
+                uint3 coord = uint3(gSelectedProbe % gGridCounts.x, (gSelectedProbe / gGridCounts.x) % gGridCounts.y,
+                    gSelectedProbe / (gGridCounts.x * gGridCounts.y));
+                float3 probe = lerp(gGridMin, gGridMax, float3(coord) / float3(gGridCounts - 1));
+                float3 delta = Q - probe;
+                float2 moments = distanceMoments(gSelectedProbe, delta / max(length(delta), 1e-8f));
+                float mu2 = moments.x * moments.x * gDistanceMax * gDistanceMax;
+                float m2 = moments.y * gDistanceMax * gDistanceMax;
+                color = float3(gDebugView == 9 ? m2 : gDebugView == 10 ? mu2 : abs(m2 - mu2));
+            }
+            else if (gDebugView == 1) color = gHasBakedData ? sampleProbeIrradiance(sd.posW, sd.frame.N) : float3(0);
             else if (gDebugView == 2) color = properties.diffuseReflectionAlbedo;
             else if (gDebugView == 3) color = sd.frame.N * 0.5f + 0.5f;
             else
@@ -915,4 +957,7 @@ void rayGen()
     gProbeLighting[pixel] = float4(probeColor, 1.f);
     gOutputColor[pixel] = float4(gProbeOnly && !(gDebugEnabled && gDebugView != 0) ? probeColor : color, 1.f);
     if (gDebugEnabled) gDebugDistance[pixel] = surfaceDistance;
+#if is_valid(gSamplingInfo)
+    gSamplingInfo[pixel] = float4(samplingInfo, 1.f);
+#endif
 }

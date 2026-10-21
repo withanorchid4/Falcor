@@ -180,7 +180,7 @@ def save_snapshot(m, frame, root=None):
     case.mkdir(parents=True,exist_ok=False)
     with cache.open(encoding='utf-8') as stream:
         magic=stream.readline().strip()
-        if magic not in ('FALCOR_PROBE_SH 3','FALCOR_PROBE_SH 4'): raise RuntimeError('Unsupported cache format.')
+        if magic not in ('FALCOR_PROBE_SH 3','FALCOR_PROBE_SH 4','FALCOR_PROBE_SH 5'): raise RuntimeError('Unsupported cache format.')
         source=Path(json.loads(stream.readline()))
     companion=source.with_suffix('.pyscene')
     entry=companion if companion.is_file() else source
@@ -200,6 +200,11 @@ def save_snapshot(m, frame, root=None):
           'probeSettings':json_value(p.settings),'selection':json_value(p.debugInfo),
           'cacheOriginal':str(cache),'cacheSha256':digest(case/'probes.shprobe'),
           'graphSha256':digest(case/'graph.py'),'build':build_identity(Path(__file__).resolve().parents[1])}
+    if p.settings.get('antiLeakMode','current') == 'wickedStatic':
+        wicked=Path(p.wickedCacheFile)
+        if not wicked.is_file(): raise RuntimeError('Save the Wicked distance cache before taking a snapshot.')
+        shutil.copyfile(wicked,case/'visibility.wdist')
+        data['wickedCacheSha256']=digest(case/'visibility.wdist')
     old_time_scale=m.clock.timeScale
     try:
         m.clock.timeScale=0
@@ -218,6 +223,8 @@ def verify(case):
         if not Path(path).is_file() or digest(path)!=expected: raise RuntimeError('Scene asset changed: '+path)
     for name,key in (('probes.shprobe','cacheSha256'),('graph.py','graphSha256')):
         if digest(case/name)!=data[key]: raise RuntimeError('Snapshot modified: '+name)
+    if 'wickedCacheSha256' in data and digest(case/'visibility.wdist') != data['wickedCacheSha256']:
+        raise RuntimeError('Snapshot modified: visibility.wdist')
     return data
 
 def replay(m, frame, case, output, overrides=None, rebake=False):
@@ -236,11 +243,14 @@ def replay(m, frame, case, output, overrides=None, rebake=False):
         props=dict(props)
         for key,value in overrides.items():
             # Explicit opt-in for runtime options introduced after older snapshots were saved.
-            extensions={'distanceSmooth':False,'normalHemisphere':False}
+            extensions={'distanceSmooth':False,'normalHemisphere':False,'samplingMode':'full','sparseStride':2,'ddgiWeights':False,'wickedWeights':False,'distanceWeightCutoff':0.,'distanceHitBias':0.,'antiLeakMode':'current','wickedNormalBias':.001,'wickedSmoothBackface':.01,'wickedExponent':64.,'wickedResolution':14,'wickedRaysPerProbe':2048,'wickedCacheFile':'','wickedVisibilityMode':'moments'}
             if key not in props and key not in extensions: raise ValueError('Unknown override: '+key)
             props[key]=like(props.get(key,extensions.get(key)),value)
         props['mode']='manual'
-        props['cacheFile']=str(output/'rebaked.shprobe' if rebake else case/'probes.shprobe')
+        wicked=props.get('antiLeakMode','current') == 'wickedStatic'
+        props['cacheFile']=str(output/'rebaked.shprobe' if rebake and not wicked else case/'probes.shprobe')
+        if wicked and 'wickedCacheFile' not in overrides:
+            props['wickedCacheFile']=str(output/'visibility.wdist' if rebake else case/'visibility.wdist')
         return props
     tree=ast.fix_missing_locations(Rewrite().visit(ast.parse((case/'graph.py').read_text(encoding='utf-8'))))
     scope={'_snapshot_props':snapshot_props}
@@ -263,7 +273,13 @@ def replay(m, frame, case, output, overrides=None, rebake=False):
             if obj.name!=record['name']: raise RuntimeError(kind+' identity changed')
             restore(obj,record['properties'])
     frame(); frame(); p=graph.getPass('Probes')
-    if rebake: p.bake()
+    if p.settings.get('antiLeakMode','current') == 'wickedStatic' and rebake:
+        p.configureAntiLeak({'antiLeakMode':'current'})
+        p.loadCache(); frame()
+        if not p.ready: raise RuntimeError(p.status)
+        p.configureAntiLeak({'antiLeakMode':'wickedStatic'})
+        p.bake()
+    elif rebake: p.bake()
     else: p.loadCache()
     for i in range(200000 if rebake else 2):
         frame()

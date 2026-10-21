@@ -1193,6 +1193,20 @@ Gui::Gui(ref<Device> pDevice, uint32_t width, uint32_t height, float scaleFactor
 
     // Add the default font
     addFont("", getRuntimeDirectory() / "data/framework/fonts/trebucbd.ttf");
+    // Merge the glyphs used by the localized probe sampling control into the default font.
+    // Keep the ranges alive until the font atlas is built by the next addFont() call.
+    if (auto windowsDirectory = getEnvironmentVariable("WINDIR"))
+    {
+        const auto fontPath = std::filesystem::path(*windowsDirectory) / "Fonts/msyh.ttc";
+        if (std::filesystem::exists(fontPath))
+        {
+            static const ImWchar ranges[] = {0x6837, 0x6837, 0x758f, 0x758f, 0x7a00, 0x7a00, 0x91c7, 0x91c7, 0};
+            ImFontConfig config;
+            config.MergeMode = true;
+            config.PixelSnapH = true;
+            ImGui::GetIO().Fonts->AddFontFromFileTTF(fontPath.string().c_str(), 14.f * scaleFactor, &config, ranges);
+        }
+    }
     addFont("monospace", getRuntimeDirectory() / "data/framework/fonts/consolab.ttf");
     setActiveFont("");
 

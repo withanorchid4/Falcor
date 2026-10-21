@@ -17,8 +17,7 @@ def render_graph_TraditionalProbeGI():
         "distanceSamplesPerTexel": 32,
         "viewBias": 0.05,
         "distanceRaysPerProbe": 2048,
-        "distanceExponent": 50.0,
-        "normalHemisphere": True,
+        "distanceExponent": 64.0,
         "enableProbes": os.environ.get("PROBE_GI_ENABLED", "1") != "0",
     }
     g = RenderGraph("TraditionalProbeGI")

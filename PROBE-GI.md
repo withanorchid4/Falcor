@@ -1,8 +1,47 @@
 # 传统光照探针：使用与结果
 
+## DDGI 距离矩对照预设
+
+在 **Probes → Distance map bake settings → DDGI-style preset (14)** 应用对照配置，再点击 **Bake**：14×14 距离图、angular 方向加权、2048 rays/probe、sharpness 50、距离范围为格子对角线的 1.5 倍。预设保留当前 normal/view bias、SH 烘焙参数及稀疏开关。2048 是本项目静态烘焙样本数，不是官方推荐值。
+
+**Distance visibility → DDGI moment weights** 可单独开关，无需重烘焙。开启后 moments 模式按绝对矩差求方差，不加基础方差，使用三次方切比雪夫、0.05 可见性下限、小权重压低和 DDGI 三线性下限。射线模式保持原来的 0/1 可见性，不受这个开关影响。旧图默认关闭此开关，新快照会保存其状态。
+
+这是静态距离矩和权重数学的对照，仍使用本项目 SH 与静态烘焙，不包含动态时序更新、Probe relocation/classification。滤波发生在从共享射线生成距离矩时；没有额外的图像模糊 pass。实施与验证见 [DDGI 对照记录](docs/development/probe-ddgi-alignment.md)。
+
+```python
+p = m.activeGraph.getPass("Probes")
+p.applyDDGIPreset()  # 保留当前查询 bias 和稀疏设置
+p.bake()
+# 烘焙完成后，单独比较权重规则：
+p.configureVisibility({"ddgiWeights": False})
+p.configureVisibility({"ddgiWeights": True})
+```
+
+## 稀疏运行时采样
+
+在 **Probes** 中直接勾选 **稀疏采样**（位于 Enable probes 下方）。默认关闭，即逐像素采样；开启后才显示 **Sample spacing**，可选择 **2×2 / 4×4 / 8×8** 间隔。它与 **Distance visibility → Visibility method** 独立：距离矩和 Ray traced 都支持。切换不需重新 Bake，关闭后保留上次间隔；显式保存过模式的脚本会恢复其设置。实测 1280×720 的问题墙面用 4×4 可省约 13% 的距离矩 Probe 耗时、37% 的射线 Probe 耗时；复杂房间全景反而约慢 16% / 3.5%，该视角建议关闭稀疏采样。
+
+稀疏位置仍执行完整八探针光照计算，独立 Compute 阶段插值未乘 albedo 的辐照度，最终全屏着色应用材质；材质纹理、直接光与自发光保持全分辨率。图元、法线/几何不一致、邻点光照变化过大、alpha-mask 材质或屏幕边缘回退到精确计算，因此场景越复杂，节省越少，低间隔也可能比逐像素慢。没有跨帧历史。4×4、1280×720 额外图像显存约 16.7 MiB。
+
+**射线模式仍会做真实遮挡检测**，但仅发生在稀疏求值点和精确回退点；重建像素不保证与逐像素射线结果完全相同，仍可能遗漏狭窄光照变化。这是借鉴 TLOU2 稀疏缓存思路的屏幕空间适配，不是其对象 OBB 体积缓存原实现。
+
+勾选 **List All Outputs** 可查看 `Probes.samplingInfo`：R 为复用缓存，G 为精确求值，B 为有效受光表面（原始数据用于统计，经过 ToneMapper 的颜色不宜作计数）。点选仍展示该点的精确八探针参考值，不是重建后像素的权重。非普通光照的调试视图自动绕过稀疏计算。
+
+脚本调用：
+
+```python
+p = m.activeGraph.getPass("Probes")
+p.configureSampling({"samplingMode": "screenSparse", "sparseStride": 4})
+p.configureVisibility({"visibilityMode": "rayTraced"})  # 或 moments
+# 切回原始逐像素结果
+p.configureSampling({"samplingMode": "full"})
+```
+
+开发、性能和画质结果见 [稀疏采样记录](docs/development/probe-sparse-sampling.md)。
+
 ## 当前默认防漏光预设
 
-预览脚本使用 **Texel-local，128×128，每 texel 32 条距离射线，Normal/View bias = 0.05/0.05**，开启背面 Probe 抑制，保持双线性距离矩采样和 `1e-6` 基础方差。已在保存的 Room 问题视角、第二视角和隔墙测试中减少墙角亮边，并检查开放地面仍正常受光。
+预览脚本使用 **Texel-local，128×128，每 texel 32 条距离射线，Normal/View bias = 0.05/0.05**，保持双线性距离矩采样和 `1e-6` 基础方差。当前已移除背面 Probe 剔除，恢复带 0.2 底值的方向权重；此前包含背面抑制的画质验证属于历史实验，不能代表当前版本。
 
 已有图可以点击 **Probes → Distance map bake settings → Leak-resistant preset (128)**，然后 **Load matching cache**；没有匹配缓存才需要 Bake。Room 的新缓存已预先烘焙。旧图和旧问题快照仍恢复其保存的参数，不会自动套用新预设。
 
@@ -12,14 +51,13 @@
 
 实验、图像和限制见 [漏光修复记录](docs/development/probe-light-leak-fix.md)。
 
-## 墙面硬边修复与对照开关
+## 方向权重与墙面硬边
 
-预览脚本现在默认开启 **Probes → Distance visibility → Reject back-facing probes**。它在原朝向权重上增加平滑半球抑制：表面背面的 Probe 不再保留最低权重，接近切平面的方向平滑淡出。已在保存的问题快照和另一个房间视角验证，消除了该墙面上由明亮墙后 Probe 引起的块状硬边；不增加射线或距离图读取，不需要重新 Bake。
+当前使用 `wDirection = ((cos(theta) + 1) / 2)^2 + 0.2`，theta 由原始表面点 P 到 Probe 的方向与表面法线决定。正前方为 1.2、切平面为 0.45、正后方为 0.2。这只是未归一化权重的一项，还需结合三线性和可见性权重。
 
-- 保持 **Enable visibility** 和 **Normal direction weight** 开启；关闭 **Reject back-facing probes** 可对比原效果。
+- 保持 **Enable visibility** 和 **Normal direction weight** 开启。额外的背面剔除逻辑和 **Reject back-facing probes** 开关已移除；旧脚本中的 `normalHemisphere=true` 会提示并忽略，保存时报告 false。无需重新 Bake。
 - **Distance map filtering → Smooth moments** 是另一项独立实验：对同样四个 texel 使用 smoothstep 权重重建一阶/二阶矩，减轻方差的网格硬边。它只能使本次暗块变软，不能单独消除漏光，因此默认仍为 Bilinear。
-- 两个开关会保存到图和问题快照。旧图未指定新选项时仍保持旧行为；新启动的预览图默认开启背面抑制。
-- 这不是完整遮挡替代：位于正面但被另一面墙挡住的 Probe 仍依赖距离矩。覆盖不足时可能变暗，墙角、装饰线和其他漏光仍需单独排查。
+- 此前半球抑制只是消除了问题 Probe 的贡献，没有修复距离矩/方差本身。恢复公式后硬边或漏光可能重新出现，需要继续定位可见性数据。
 
 实验与验证记录见 [硬边修复文档](docs/development/probe-hard-edge-fix.md)。
 
@@ -308,3 +346,23 @@ Room/Arcade 的入口可用，但本轮没有对它们执行完整数值验收�
 相同相机的 PathTracer 参考：
 
 ![Cornell 路径追踪参考](C:/Users/Admin/Desktop/实时GI/Falcor/build/probe-validation/reference.Display.dst.0.png)
+# 独立 Wicked 静态防漏光选项
+
+在 `Probes → Anti-leak scheme` 选择 `Wicked static`（默认14×14）。默认仍为 `Current`，原距离缓存、原参数和 SH 不会被此选项覆盖。
+
+1. 在 Current 下先加载或烘焙当前场景的 SH。
+2. 切换到 Wicked static，点击 `Bake Wicked visibility`。这里只重新烘焙距离图，不重算 SH。
+3. 下次启动先加载 SH，然后切换新选项，点击 `Load matching Wicked cache`。
+4. 随时切回 Current 对比。稀疏采样仍由原来的独立开关控制。
+
+想直接查看已验证的硬边视角：`File → Load Script` 打开 `F:/scripts/LoadWickedStaticProbeGI.py`。此脚本会加载保存的 Room 场景、相机和新缓存。
+
+新参数完全独立：`Wicked normal bias (world)` 默认 0.001；`Wicked smooth backface` 默认 0.01，改为 1 可保留 wrapped 背面权重；`Visibility method` 可切换距离矩和严格射线参考。运行时参数无需重新 Bake。距离图默认 14×14，`Wicked distance resolution` 可调至128（需独立重烘焙），RGBA32F 临时累积，最终 RG32F + 折叠边框，384 Probe 约 0.78 MiB。
+
+`SaveProbeSnapshot.py` 现在同时保存基础 SH 缓存和 Wicked 的 `visibility.wdist`，回放会恢复对应选项。调试 `Surface view` 新增指定 Probe 的 m2、mean squared、variance 画面，均是当前查询位置的世界空间距离矩。
+
+**目前结果：移植完成，不代表硬边已解决。** 默认的强背面抑制明显压暗这面墙；恢复 wrapped 权重、设 bias=0 后，硬边仍可见。实验对照与具体移植范围见 [开发文档](docs/development/wicked-static-visibility.md)。
+
+分辨率对照实验：`File → Load Script → F:/scripts/LoadWickedResolution.py` 加载128×128及原问题视角。14/32/64/128均已测试；在固定cos^64角度滤波和2048射线下，墙角亮边仍在。实验结果详见开发文档。
+
+角度精度联动实验：`File → Load Script → F:/scripts/LoadWickedAngularPrecision.py` 加载128×128、171200条射线/Probe、cos^5350滤波的独立缓存。亮带明显变窄，但仍有残留及细碎边缘。UI新增 `Wicked angular sharpness`，默认64，越大滤波角度越窄；射线数上限262144。修改指数或射线数均需重新烘焙。射线数是每个Probe的总数，不是每texel数量；正常启动默认仍是14/2048/64。

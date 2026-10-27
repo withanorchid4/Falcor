@@ -5,6 +5,10 @@ target_sources(RTXGIDDGI PRIVATE
     RTXGIDDGI.h
     RTXGIDDGI.cpp
     RTXGIDDGI.rt.slang
+    WorldRadianceCache.rt.slang
+    WorldRadianceCache.slang
+    WorldRadianceCache.cs.slang
+    WorldRadianceCacheDebug.slang
     RTXGIConfig.slang
     ProbeBlending.cs.slang
     ProbeRelocation.cs.slang

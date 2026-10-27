@@ -37,6 +37,12 @@
 
 import Scene.Raytracing;
 import Scene.Intersection;
+#ifndef DDGI_INLINE_SHADOW
+#define DDGI_INLINE_SHADOW 0
+#endif
+#if DDGI_INLINE_SHADOW
+import Scene.RaytracingInline;
+#endif
 import Utils.Math.MathHelpers;
 import Utils.Geometry.GeometryHelpers;
 import Utils.Sampling.SampleGenerator;
@@ -53,6 +59,7 @@ cbuffer PerFrameCB
     bool gIndirectOnly;
     bool gUseRTXDI;
     bool gShowProbes;
+    bool gShowWrcCells;
     bool gHistoryValid;
     float gIntensity; // Display scaling only; recursive transport stays physical.
     float gProbeRadius; // World-space radius of the optional diagnostic spheres.
@@ -79,6 +86,7 @@ Texture2D<float4> gViewW;
 Texture2D<float4> gDirectLighting;
 #endif
 RWTexture2D<float4> gOutputColor;
+RWTexture2D<float> gWrcDebugDepth;
 #if OUTPUT_INDIRECT
 RWTexture2D<float4> gOutputIndirect;
 #endif
@@ -169,6 +177,10 @@ bool traceShadow(float3 origin, float3 direction, float distance)
         return false;
     }
     if (distance <= 0.f) return false;
+#if DDGI_INLINE_SHADOW
+    SceneRayQuery<1> rayQuery;
+    return rayQuery.traceVisibilityRay(Ray(origin, direction, 0.f, distance));
+#else
     RayDesc ray;
     ray.Origin = origin;
     ray.Direction = direction;
@@ -179,6 +191,7 @@ bool traceShadow(float3 origin, float3 direction, float distance)
     TraceRay(gScene.rtAccel, RAY_FLAG_ACCEPT_FIRST_HIT_AND_END_SEARCH | RAY_FLAG_SKIP_CLOSEST_HIT_SHADER,
         0xff, 1, rayTypeCount, 1, ray, payload);
     return payload.visible;
+#endif
 }
 
 float3 evaluateBRDFCosine(ShadingData sd, IMaterialInstance material, float3 direction, bool diffuseOnly, inout SampleGenerator sg)
@@ -430,6 +443,7 @@ void render()
     }
 #endif
     if (gShowProbes) color = overlayProbes(color, origin, direction, surfaceDistance, volume);
+    if (gShowWrcCells) gWrcDebugDepth[pixel] = surfaceDistance;
     gOutputColor[pixel] = float4(finiteRadiance(color, 3u), 1.f);
 #if OUTPUT_INDIRECT
     gOutputIndirect[pixel] = float4(indirect, 1.f);

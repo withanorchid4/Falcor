@@ -3,6 +3,7 @@
 #include "RenderGraph/RenderPass.h"
 #include "Utils/Sampling/SampleGenerator.h"
 #include "Core/Pass/ComputePass.h"
+#include "Core/Pass/RasterPass.h"
 #include "Rendering/Lights/EnvMapSampler.h"
 #include <random>
 
@@ -51,6 +52,20 @@ private:
         bool showProbes = false;
         bool indirectOnly = false;
         bool useRTXDI = true;
+        bool useWRC = false;
+        bool wrcGroupByMaterial = true;
+        float wrcCellScale = 0.1f;
+        float wrcLodDistance = 8.f; // In units of the smallest probe spacing.
+        uint32_t wrcMaxLod = 16;
+        uint32_t wrcProbeLimit = 16;
+        uint32_t wrcTableSize = 65536;
+        uint32_t wrcMaxAge = 0;
+        uint32_t wrcShadeSamples = 1;
+        bool wrcBypassSharing = false; // Validation: split dispatches with original per-ray shading.
+        bool showWrcCells = false;
+        bool wrcCellsXRay = false;
+        uint32_t wrcCellsLod = 0; // 0 shows every occupied LOD.
+        float wrcCellsOpacity = 0.65f;
     } mOptions;
     struct RayProgram
     {
@@ -58,8 +73,21 @@ private:
         ref<RtBindingTable> table;
         ref<RtProgramVars> vars;
     } mTrace, mRender;
+    RayProgram mWrcTrace;
+    ref<ComputePass> mpWrcBuild, mpWrcPrepare, mpWrcShade, mpWrcGather;
+    uint32_t mWrcTypeCount = 0;
+    uint32_t getWrcDispatchCount() const { return mOptions.wrcGroupByMaterial ? mWrcTypeCount : 1u; }
 
+    void buildRayProgram(RayProgram& ray, const char* shader, const char* entry);
     void createPrograms();
+    void allocateWrcResources();
+    void clearWrc(RenderContext* context);
+    void bindWrcProgram(RayProgram& ray, const RenderData& data);
+    void bindWrcResources(const ShaderVar& root, uint32_t shaderBucket = 0);
+    void bindWrcCompute(RenderContext* context, const ref<ComputePass>& pass, const RenderData& data, uint32_t shaderBucket = 0);
+    ref<ComputePass> createWrcCompute(const char* entry);
+    void traceWithWrc(RenderContext* context, const RenderData& data);
+    void drawWrcCells(RenderContext* context, const ref<Texture>& color);
     void allocateResources(RenderContext* context);
     void clearHistory(RenderContext* context);
     void uploadConstants();
@@ -69,6 +97,15 @@ private:
     ref<SampleGenerator> mpSampleGenerator;
     ref<Buffer> mpVolume;
     ref<Buffer> mpDiagnostics;
+    ref<Buffer> mpWrcHits, mpWrcOwners, mpWrcKeys, mpWrcRadiance, mpWrcLastUpdate, mpWrcCounters;
+    ref<Buffer> mpWrcRaySlots, mpWrcActiveSlots, mpWrcActiveCounts, mpWrcDispatchArgs, mpWrcTypeMap;
+    ref<ComputePass> mpWrcDebugPrepare;
+    ref<RasterPass> mpWrcDebugDraw;
+    ref<Buffer> mpWrcDebugArgs;
+    ref<Texture> mpWrcDebugDepth;
+    ref<Fbo> mpWrcDebugFbo;
+    bool mWrcReallocate = true, mWrcResetPending = true;
+    uint64_t mWrcInvalidations = 0, mWrcAllocatedBytes = 0;
     std::unique_ptr<EnvMapSampler> mpEnvMapSampler;
     ref<EnvMap> mpSamplerSource;
     ref<Texture> mpRayData, mpIrradiance, mpDistance, mpProbeData, mpVariability;

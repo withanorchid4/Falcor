@@ -1,5 +1,9 @@
 add_falcor_executable(FalcorTest)
 
+if(WIN32)
+    target_sources(FalcorTest PRIVATE FalcorTest.manifest)
+endif()
+
 target_sources(FalcorTest PRIVATE
     FalcorTest.cpp
 

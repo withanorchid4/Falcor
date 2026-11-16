@@ -13,6 +13,9 @@ def create_preview_graphs():
 
 
 graphs = create_preview_graphs()
+if os.environ.get("FALCOR_START_SCENE") == "Cornell":
+    cornell_setup = runpy.run_path(str(Path(__file__).parent / "scenes/cornell_rtxgi.py"))
+    cornell_setup["configure_graph"](graphs["RTXGIDDGI"])
 renderer = os.environ.get("FALCOR_START_RENDERER", "PathTracer")
 initial_graph = {
     "NRD": "PathTracerNRD",

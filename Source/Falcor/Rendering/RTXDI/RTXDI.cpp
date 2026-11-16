@@ -429,10 +429,12 @@ namespace Falcor
         uint32_t localLightCount = mLights.getLocalLightCount();
         uint32_t totalLightCount = mLights.getTotalLightCount();
 
-        // Allocate buffer for light infos.
-        if (!mpLightInfoBuffer || mpLightInfoBuffer->getElementCount() < totalLightCount)
+        // Keep a valid binding when all lights are disabled. The logical light
+        // counts remain zero, so RTXDI won't sample the unused placeholder.
+        const uint32_t lightInfoCapacity = std::max(1u, totalLightCount);
+        if (!mpLightInfoBuffer || mpLightInfoBuffer->getElementCount() < lightInfoCapacity)
         {
-            mpLightInfoBuffer = mpDevice->createStructuredBuffer(mpReflectTypes->getRootVar()["lightInfo"], totalLightCount);
+            mpLightInfoBuffer = mpDevice->createStructuredBuffer(mpReflectTypes->getRootVar()["lightInfo"], lightInfoCapacity);
         }
 
         // Allocate local light PDF texture, which RTXDI uses for importance sampling.

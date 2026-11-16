@@ -1,0 +1,25 @@
+{
+  "command": [
+    "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\runtime\\Mogwai.exe",
+    "--device-type",
+    "d3d12",
+    "--headless",
+    "--deferred",
+    "--script",
+    "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\capture.py",
+    "--width",
+    "960",
+    "--height",
+    "540",
+    "--logfile",
+    "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\pt-a\\mogwai.log"
+  ],
+  "cwd": "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\runtime",
+  "environment": {
+    "FALCOR_DEVMODE": "0",
+    "FALCOR_MEDIA_FOLDERS": "F:/media",
+    "GI_CASE": "pt-a",
+    "GI_SMOKE": "0"
+  },
+  "start": 1794831655.6768641
+}

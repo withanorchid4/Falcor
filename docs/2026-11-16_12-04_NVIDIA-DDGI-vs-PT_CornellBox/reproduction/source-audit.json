@@ -1,0 +1,12 @@
+{
+  "official_archive": "F:/build/official-ddgi/v1.3.7.zip",
+  "archive_sha256": "45988541508f1957d09fecf3dca35fad13af058be3a04a12aaa1d46c0f16cf3a",
+  "compared_sdk_and_harness_shader_files": 47,
+  "mismatches": [],
+  "original_restored": {
+    "main.cpp": true,
+    "Window.cpp": true,
+    "Direct3D12.cpp": true,
+    "executable": true
+  }
+}

@@ -1,0 +1,222 @@
+{
+  "schema_version": "gi-evaluation-v1",
+  "run_id": "2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox",
+  "case_id": "lambert-control",
+  "created_at": "2026-11-16T20:17:49.466534+08:00",
+  "status": "complete",
+  "comparison_project": "Falcor DDGI vs Falcor PT - Lambert control",
+  "result_directory": "F:\\docs\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\lambert-control",
+  "timezone": "Asia/Hong_Kong",
+  "candidate": {
+    "name": "Falcor RTXGIDDGI",
+    "sdk": "1.3.7",
+    "git_commit": "ebd92432101982c8f0be25e6b9c51c0175b940e5",
+    "source_snapshot": "../reproduction/source-record.json",
+    "parameters": {
+      "gridCounts": [
+        9,
+        9,
+        9
+      ],
+      "raysPerProbe": 256,
+      "hysteresis": 0.97,
+      "normalBias": 0.06666666666666667,
+      "viewBias": 0.33333333333333337,
+      "gridMin": [
+        -1.2000000476837158,
+        -0.20000000298023224,
+        -1.2000000476837158
+      ],
+      "gridMax": [
+        1.2000000476837158,
+        2.200000047683716,
+        1.2000000476837158
+      ],
+      "autoBounds": false,
+      "enableRelocation": true,
+      "enableClassification": true,
+      "useRTXDI": false,
+      "useWRC": false,
+      "showProbes": false,
+      "indirectOnly": true,
+      "intensity": 1.0
+    },
+    "random_seed": "Existing renderer sequence; saved host implementation in reproduction/source"
+  },
+  "reference": {
+    "name": "Falcor PathTracer",
+    "parameters": {
+      "samplesPerPixel": 8,
+      "maxSurfaceBounces": 19,
+      "maxDiffuseBounces": 19,
+      "maxSpecularBounces": 19,
+      "maxTransmissionBounces": 0,
+      "useRussianRoulette": false,
+      "useNEE": true,
+      "useMIS": true,
+      "useRTXDI": false,
+      "useReSTIRPT": false,
+      "useNRDDemodulation": false,
+      "colorFormat": "RGBA32F",
+      "tracePassMode": "Default",
+      "fixedSeed": 1
+    },
+    "path": "reference/pt.exr",
+    "sha256": "2384acbec0646d81c9e47778687ae239983ab97cf564f2d907c620038a588218",
+    "spp": 32768,
+    "independent_path": "reference/pt-independent.exr",
+    "independent_sha256": "656092a75dff24034b4fb5cc76110987cfa2009cafc029701838aa68541023ff",
+    "seed": "fixedSeed=frame (1..4096), second sequence frame+104729; 8 samples/pixel/frame",
+    "check": {
+      "spp_each": 32768,
+      "mean_hdr_flip": 0.024091977498901896,
+      "linear_rgb_mse": 7.194868193713916e-06,
+      "flip_fraction_of_candidate_error": 0.11141751845273784,
+      "half_spp_vs_full": {
+        "mean_hdr_flip": 0.01889266006550643,
+        "linear_rgb_mse": 3.5775298188985385e-06
+      },
+      "reliability": "Finite-sample reference, independent-sequence noise measured; not an exact infinite-bounce solution."
+    },
+    "measurement_patch": "../reproduction/pt-indirect.patch"
+  },
+  "scene": {
+    "asset": "F:\\build\\windows-vs2022\\_deps\\rtxgi_ddgi-src\\samples\\test-harness\\data\\gltf\\cornell\\cornell.glb",
+    "sha256": "c83bd499d38b088f865efa1085f8d3f667be8b4e2b5e90aa88ff066dd68220e1",
+    "configuration": "../reproduction/scene.json",
+    "material": "Lambert control",
+    "control_scene": "../reproduction/lambert.pyscene",
+    "environment": "disabled / black",
+    "lighting": "Falcor native ceiling point, white intensity 1 at (0,1.9,0); directional disabled"
+  },
+  "camera": {
+    "position": [
+      0.10000000149011612,
+      1.0,
+      4.0
+    ],
+    "target": [
+      0.10000000149011612,
+      1.0,
+      0.0
+    ],
+    "up": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "focalLength": 28.970561981201172,
+    "frameHeight": 24.0,
+    "aspectRatio": 1.7777777910232544,
+    "vertical_fov_degrees": 45,
+    "pixel_sampling": "Center; no DOF; clock paused; camera animation disabled",
+    "near_plane": null,
+    "far_plane": null
+  },
+  "signal": {
+    "name": "indirect_diffuse_radiance",
+    "definition": "DDGI.indirect, and PT nrdDiffuseRadianceHitDist with useNRDDemodulation=False after suppressing only primary-hit direct/emission. Primary albedo/BRDF included; camera specular omitted. Later bounces use each renderer material model.",
+    "color_space": "linear RGB, scene working sRGB primaries",
+    "scale": "native radiance; no fitting or normalization"
+  },
+  "image": {
+    "width": 960,
+    "height": 540,
+    "format": "OpenEXR float32 RGB ZIP",
+    "mask": "mask.png",
+    "mask_sha256": "641590f345f16f4398b54edc5cb2c89f8543deb74b92f17d3263672cf1e6c3d8",
+    "valid_pixels": 188790,
+    "mask_definition": "PT GBufferRT normW length > 0.5; exactly matches DDGI and official geometry mask",
+    "nonfinite_values": 0,
+    "negative_rgb_values": 0
+  },
+  "display": {
+    "exposure_ev": 3,
+    "tone_mapper": "ACES fitted",
+    "transfer": "standard sRGB",
+    "shared": true
+  },
+  "flip": {
+    "implementation": "NVIDIA flip-evaluator",
+    "version": "1.7",
+    "mode": "HDR",
+    "parameters": {
+      "ppd": 67.0,
+      "startExposure": 4.001879692077637,
+      "stopExposure": 6.461174011230469,
+      "numExposures": 3,
+      "tonemapper": "ACES"
+    },
+    "input_clamp": "none; finite nonnegative asserted",
+    "reduction": "full image FLIP then fixed mask mean",
+    "error_channel": "Y",
+    "legend": [
+      0,
+      1
+    ]
+  },
+  "capture": {
+    "warmup_frames": 16384,
+    "warmup_seconds": 14.263902800012147,
+    "target_frame_count": 32,
+    "actual_frame_count": 32,
+    "frame_ids": [
+      16385,
+      16416
+    ],
+    "representative_index": 31,
+    "fixed_budget_test": true,
+    "stability_check": {
+      "256": {
+        "mean_hdr_flip": 0.21627243444017885,
+        "linear_rgb_mse": 0.00015629241171619557,
+        "mean_luminance": 0.056762100585938814
+      },
+      "1024": {
+        "mean_hdr_flip": 0.21958950057097334,
+        "linear_rgb_mse": 0.0001627915917661154,
+        "mean_luminance": 0.05659304197106741
+      },
+      "4096": {
+        "mean_hdr_flip": 0.2176673227104402,
+        "linear_rgb_mse": 0.0001520945615590992,
+        "mean_luminance": 0.057063930463565525
+      },
+      "8192": {
+        "mean_hdr_flip": 0.21808383056563524,
+        "linear_rgb_mse": 0.00015730075018767376,
+        "mean_luminance": 0.056812654288682374
+      },
+      "16384": {
+        "mean_hdr_flip": 0.2158330957765337,
+        "linear_rgb_mse": 0.000153644094467048,
+        "mean_luminance": 0.05697074622164375
+      }
+    }
+  },
+  "timing": {
+    "tool": "Falcor GPU profiler D3D12 timestamps",
+    "gpu": "NVIDIA GeForce RTX 5080",
+    "driver": "617.14",
+    "sample_count": 511,
+    "path": "timing.csv",
+    "scope": "DDGI pass aggregate; stages overlap with aggregate, do not sum",
+    "method": "16 frames profiler warmup then 512 render calls, profiler returned 511 complete intervals; after readback captures"
+  },
+  "reproduction": {
+    "work_directory": "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox",
+    "runtime": "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\runtime\\Mogwai.exe",
+    "script": "../reproduction/capture.py",
+    "instructions": "../reproduction/README.md"
+  },
+  "limitations": [
+    "Static Cornell scene and one camera only; not a relocation flicker or moving-camera test.",
+    "20 surface vertices maximum, no RR; finite-path PT rather than infinite-bounce ground truth.",
+    "DDGI uses Lambertian albedo/pi. Native StandardMaterial PT uses Frostbite diffuse + GGX; Lambert control explicitly replaces materials in an isolated scene.",
+    "Official baseline uses a different point-light falloff, packed probe formats, relocation minimum distance, thresholds and warmup budget. Cross-engine comparison is descriptive, not a controlled integration pass/fail test.",
+    "FLIP exposures frozen from the previous official reference for a common viewing range, not refitted to each new scene variant.",
+    "Measured DDGI pass includes probe update, screen query and unavoidable pass overhead; excludes GBuffer, UI, file IO and PT.",
+    "16,384 warmup frames: checkpoint evolution recorded, no claim of exact convergence.",
+    "Camera near/far clip values not exported; GBufferRT center rays and surface mask agree exactly with baseline."
+  ]
+}

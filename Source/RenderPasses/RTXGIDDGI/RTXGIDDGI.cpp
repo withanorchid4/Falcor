@@ -78,6 +78,9 @@ Properties RTXGIDDGI::getProperties() const
     p["useRTXDI"] = mOptions.useRTXDI;
     p["useWRC"] = mOptions.useWRC;
     p["wrcGroupByMaterial"] = mOptions.wrcGroupByMaterial;
+    p["wrcStressMode"] = mOptions.wrcStressMode;
+    p["wrcStressIterations"] = mOptions.wrcStressIterations;
+    p["wrcStressStats"] = mOptions.wrcStressStats;
     p["wrcCellScale"] = mOptions.wrcCellScale;
     p["wrcLodDistance"] = mOptions.wrcLodDistance;
     p["wrcMaxLod"] = mOptions.wrcMaxLod;
@@ -119,6 +122,9 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         else if (name == "useRTXDI") next.useRTXDI = value;
         else if (name == "useWRC") next.useWRC = value;
         else if (name == "wrcGroupByMaterial") next.wrcGroupByMaterial = value;
+        else if (name == "wrcStressMode") next.wrcStressMode = value;
+        else if (name == "wrcStressIterations") next.wrcStressIterations = value;
+        else if (name == "wrcStressStats") next.wrcStressStats = value;
         else if (name == "wrcCellScale") next.wrcCellScale = value;
         else if (name == "wrcLodDistance") next.wrcLodDistance = value;
         else if (name == "wrcMaxLod") next.wrcMaxLod = value;
@@ -150,6 +156,8 @@ void RTXGIDDGI::setProperties(const Properties& properties)
     FALCOR_CHECK(next.wrcTableSize >= 64 && next.wrcTableSize <= 1048576 && (next.wrcTableSize & (next.wrcTableSize - 1)) == 0,
         "WRC table size must be a power of two between 64 and 1048576.");
     FALCOR_CHECK(next.wrcMaxAge <= 8, "WRC max age must be 0..8 probe updates.");
+    FALCOR_CHECK(next.wrcStressMode <= 2, "WRC stress mode must be 0 (off), 1 (common), or 2 (per type).");
+    FALCOR_CHECK(next.wrcStressIterations <= 10000, "WRC stress iterations must be 0..10000.");
     FALCOR_CHECK(next.wrcShadeSamples >= 1 && next.wrcShadeSamples <= 8, "WRC shading samples must be 1..8.");
     FALCOR_CHECK(next.wrcCellsLod <= 64 && (next.wrcCellsLod == 0 || (next.wrcCellsLod & (next.wrcCellsLod - 1)) == 0),
         "WRC cell overlay LOD must be 0 or a power of two through 64.");
@@ -162,6 +170,8 @@ void RTXGIDDGI::setProperties(const Properties& properties)
     // Invalidate the old active-list layout, including when probe updates are frozen.
     // Scheduling changes preserve the accumulated DDGI field.
     if (next.wrcGroupByMaterial != mOptions.wrcGroupByMaterial) mWrcResetPending = true;
+    if (next.wrcStressMode != mOptions.wrcStressMode || next.wrcStressIterations != mOptions.wrcStressIterations)
+        mWrcResetPending = true;
     if (next.wrcTableSize != mOptions.wrcTableSize) mWrcReallocate = true;
     if (next.useWRC != mOptions.useWRC || next.wrcCellScale != mOptions.wrcCellScale ||
         next.wrcLodDistance != mOptions.wrcLodDistance || next.wrcMaxLod != mOptions.wrcMaxLod ||
@@ -394,6 +404,9 @@ void RTXGIDDGI::bindWrcResources(const ShaderVar& root, uint32_t shaderBucket)
     cb["gWrcProbeLimit"] = mOptions.wrcProbeLimit;
     cb["gWrcTypeCount"] = mWrcTypeCount;
     cb["gWrcGroupByMaterial"] = uint32_t(mOptions.wrcGroupByMaterial);
+    cb["gWrcStressMode"] = mOptions.wrcStressMode;
+    cb["gWrcStressIterations"] = mOptions.wrcStressIterations;
+    cb["gWrcStressStats"] = uint32_t(mOptions.wrcStressStats);
     cb["gWrcShaderBucket"] = shaderBucket;
     cb["gWrcRayCount"] = mOptions.rays * mOptions.counts.x * mOptions.counts.y * mOptions.counts.z;
 }
@@ -420,6 +433,7 @@ void RTXGIDDGI::bindWrcCompute(RenderContext* context, const ref<ComputePass>& p
     changed |= program->addDefine("OUTPUT_INDIRECT", "0");
     changed |= program->addDefine("HAS_DIRECT_LIGHTING", "0");
     changed |= program->addDefine("is_valid_gViewW", "0");
+    changed |= program->addDefine("WRC_STRESS_ENABLED", mOptions.wrcStressMode && mOptions.wrcStressIterations ? "1" : "0");
     if (changed || !pass->hasVars()) pass->setVars(ProgramVars::create(mpDevice, program.get()));
     auto root = pass->getRootVar();
     mpScene->bindShaderDataForRaytracing(context, root["gScene"], 0);
@@ -757,6 +771,8 @@ Properties RTXGIDDGI::getStats() const
     stats["gridMax"] = mGridMax;
     stats["wrcEnabled"] = mOptions.useWRC;
     stats["wrcGroupByMaterial"] = mOptions.wrcGroupByMaterial;
+    stats["wrcStressMode"] = mOptions.wrcStressMode;
+    stats["wrcStressIterations"] = mOptions.wrcStressIterations;
     stats["showWrcCells"] = mOptions.showWrcCells;
     stats["wrcCellsLod"] = mOptions.wrcCellsLod;
     stats["wrcCellSize"] = mOptions.wrcCellScale * std::min(mSpacing.x, std::min(mSpacing.y, mSpacing.z));
@@ -794,6 +810,10 @@ Properties RTXGIDDGI::getStats() const
     stats["wrcMaxLod"] = wrcCounters[9];
     stats["wrcLodRays"] = wrcCounters[10];
     stats["wrcCrossPrimitiveServedRays"] = wrcCounters[11];
+    stats["wrcWaveTypeSum"] = wrcCounters[12];
+    stats["wrcWaveCount"] = wrcCounters[13];
+    stats["wrcStressChecksum"] = wrcCounters[14];
+    stats["wrcStressEntries"] = wrcCounters[15];
     stats["wrcActiveEntries"] = activeEntries;
     stats["wrcShaderGroups"] = shaderGroups;
     stats["wrcMaterialTypes"] = mWrcTypeCount;
@@ -880,6 +900,13 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
         widgets.text("Cache setting changes reset probe history.");
         if (widgets.checkbox("Group shading by material", options.wrcGroupByMaterial)) p["wrcGroupByMaterial"] = options.wrcGroupByMaterial;
         widgets.tooltip("On: one compute dispatch per material type. Off: shade all active WRC cells in one mixed dispatch. Preserves probe history; rebuilds WRC lists on the next update.");
+        Gui::DropdownList stressModes = {{0, "Off"}, {1, "Common loop"}, {2, "Per-type loops"}};
+        if (widgets.dropdown("Synthetic shading load", stressModes, options.wrcStressMode)) p["wrcStressMode"] = options.wrcStressMode;
+        if (options.wrcStressMode)
+        {
+            if (widgets.var("Stress iterations", options.wrcStressIterations, 0u, 10000u)) p["wrcStressIterations"] = options.wrcStressIterations;
+            widgets.tooltip("Benchmark-only integer work next to material setup. Writes a checksum to unused WRC alpha; does not change lighting.");
+        }
         if (widgets.checkbox("Show WRC cells", options.showWrcCells)) p["showWrcCells"] = options.showWrcCells;
         if (options.showWrcCells)
         {

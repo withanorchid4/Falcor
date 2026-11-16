@@ -91,8 +91,26 @@ void shadeWRC(uint3 dispatchThreadID : SV_DispatchThreadID)
         return;
     }
     DDGIVolumeDescGPU volume = UnpackDDGIVolumeDescGPU(DDGIVolumes[0]);
-    float3 radiance = wrcShadeHit(hit, owner, gWrcShadeSamples, volume);
-    gWrcRadiance[slot] = float4(radiance, 0.f);
+    uint stressChecksum;
+    float3 radiance = wrcShadeHit(hit, owner, gWrcShadeSamples, volume, stressChecksum);
+    // An observable UAV store keeps the synthetic recurrence alive, even when
+    // wave diagnostics are disabled. Only RGB is consumed by the lighting path.
+    gWrcRadiance[slot] = float4(radiance, float(stressChecksum & 0x00ffffffu));
+    if (gWrcStressStats != 0u)
+    {
+        uint types = WaveActiveBitOr(1u << min(hit.shaderBucket, 31u));
+        uint checksum = WaveActiveBitXor(stressChecksum);
+        uint lanes = WaveActiveCountBits(true);
+        if (WaveIsFirstLane())
+        {
+            InterlockedAdd(gWrcCounters[12], countbits(types));
+            InterlockedAdd(gWrcCounters[13], 1u);
+            InterlockedXor(gWrcCounters[14], checksum);
+#if WRC_STRESS_ENABLED
+            InterlockedAdd(gWrcCounters[15], lanes);
+#endif
+        }
+    }
     gWrcKeys[slot] = key;
     gWrcLastUpdate[slot] = gWrcFrame;
     InterlockedAdd(gWrcCounters[2], 1u);
@@ -130,7 +148,12 @@ void gatherWRC(uint3 dispatchThreadID : SV_DispatchThreadID)
     }
     else
     {
-        radiance = wrcShadeHit(hit, rayID, 1u, volume);
+        uint stressChecksum;
+        radiance = wrcShadeHit(hit, rayID, 1u, volume, stressChecksum);
+        // Preserve synthetic work for rare overflow fallback too.
+#if WRC_STRESS_ENABLED
+        InterlockedXor(gWrcCounters[14], stressChecksum);
+#endif
         InterlockedAdd(gWrcCounters[4], 1u);
     }
     uint rayIndex, probeIndex;

@@ -1,0 +1,16 @@
+Parsing command line...done.
+Loading config file...done.
+Creating a window...done.
+Initializing input system...done.
+Creating graphics device...done.
+Initializing texture system...done.
+Initializing the scene...done.
+Initializing graphics...
+	Loading and compiling shaders for DDGIVolume: "Cornell-Box"...done.
+	Creating resources for DDGIVolume: "Cornell-Box"...done.Initializing user interface...done.
+Post initialization...done
+Startup complete in 1907.85 milliseconds
+Main loop...
+Shutting down and cleaning up...
+Shutdown complete in 86.5098 milliseconds
+Done.

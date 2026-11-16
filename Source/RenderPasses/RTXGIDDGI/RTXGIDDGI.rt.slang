@@ -134,6 +134,17 @@ float3 evaluateSafeEnvironment(float3 direction)
 }
 #endif
 
+// Match the SDK test harness: sky radiance enters the volume on probe misses.
+// Falcor uses its directional HDR environment instead of a constant sky color.
+float3 evaluateProbeMiss(float3 direction)
+{
+#if USE_ENV_LIGHT
+    return evaluateSafeEnvironment(direction);
+#else
+    return float3(0.f);
+#endif
+}
+
 bool validSurface(ShadingData sd)
 {
     bool valid = all(isfinite(sd.posW)) && all(isfinite(sd.faceN)) && all(isfinite(sd.frame.N)) &&
@@ -260,6 +271,9 @@ float3 evaluateEmissiveDirect(ShadingData sd, IMaterialInstance material, bool d
 float3 evaluateEnvironmentDirect(ShadingData sd, IMaterialInstance material, bool diffuseOnly, inout SampleGenerator sg)
 {
 #if USE_ENV_LIGHT
+    // Diffuse sky lighting is supplied by DDGI, including at probe hit points.
+    // Keep only the camera's specular environment response in the fallback path.
+    if (diffuseOnly) return float3(0.f);
     EnvMapSample light;
     if (!gEnvMapSampler.sample(sampleNext2D(sg), light)) return float3(0.f);
     if (!isfinite(light.pdf) || !all(isfinite(light.dir)))
@@ -271,6 +285,7 @@ float3 evaluateEnvironmentDirect(ShadingData sd, IMaterialInstance material, boo
     light.Le = evaluateSafeEnvironment(light.dir);
     float3 origin = computeRayOrigin(sd.posW, dot(sd.faceN, light.dir) >= 0.f ? sd.faceN : -sd.faceN);
     if (!traceShadow(origin, light.dir, FLT_MAX)) return float3(0.f);
+    sd.mtl.setActiveLobes((uint)LobeType::SpecularReflection);
     float3 brdfCosine = evaluateBRDFCosine(sd, material, light.dir, diffuseOnly, sg);
     return finiteRadiance(brdfCosine * (light.Le / light.pdf), 1u);
 #else
@@ -280,7 +295,7 @@ float3 evaluateEnvironmentDirect(ShadingData sd, IMaterialInstance material, boo
 
 float3 evaluateDirect(ShadingData sd, IMaterialInstance material, bool diffuseOnly, inout SampleGenerator sg)
 {
-    // One sample from EACH enabled light category, so there is no category PDF.
+    // One sample per light category; diffuse environment lighting comes from DDGI.
     float3 radiance = evaluateAnalyticDirect(sd, material, diffuseOnly, sg);
     radiance += evaluateEmissiveDirect(sd, material, diffuseOnly, sg);
     radiance += evaluateEnvironmentDirect(sd, material, diffuseOnly, sg);
@@ -328,9 +343,7 @@ void traceProbes()
 
     if (payload.hitT < 0.f)
     {
-        // Direct environment and emissive illumination are sampled explicitly
-        // at surfaces. The DDGI field stores only light scattered by geometry.
-        DDGIStoreProbeRayMiss(gRayData, outputCoords, volume, float3(0.f));
+        DDGIStoreProbeRayMiss(gRayData, outputCoords, volume, evaluateProbeMiss(direction));
         return;
     }
     if (payload.backFace != 0)

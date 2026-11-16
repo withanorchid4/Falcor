@@ -1,0 +1,20 @@
+--- a/PathTraceRGS.hlsl
++++ b/PathTraceRGS.hlsl
+@@ -86,7 +86,7 @@
+         float3 diffuse = DirectDiffuseLighting(payload, GetGlobalConst(pt, rayNormalBias), GetGlobalConst(pt, rayViewBias), SceneTLAS, Lights);
+ 
+         // Attenuate the color
+-        color += diffuse * throughput;
++        if (bounceIndex > 0) color += diffuse * throughput; // GI evaluation: exclude direct illumination at the camera hit.
+ 
+         // Increment the seed
+         seed += bounceIndex;
+@@ -124,7 +124,7 @@
+ 
+     // Initialize the random seed
+     uint seed = (LaunchIndex.y * LaunchDimensions.x) + LaunchIndex.x;
+-    seed *= GetGlobalConst(app, frameNumber);
++    seed *= (GetGlobalConst(app, frameNumber) + 104729u); // Independent reference sequence.
+ 
+     // Get the (bindless) resources
+     RWTexture2D<float4> PTOutput = GetRWTex2D(PT_OUTPUT_INDEX);

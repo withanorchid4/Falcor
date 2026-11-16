@@ -1,0 +1,106 @@
+--- main.cpp (before)
++++ main.cpp (capture)
+@@ -26,6 +26,8 @@
+ #include "graphics/Composite.h"
+ 
+ #include <filesystem>
++#include <cstdlib>
++#include <chrono>
+ 
+ #if _WIN32
+ extern "C" { __declspec(dllexport) extern const UINT D3D12SDKVersion = 606; }
+@@ -219,6 +221,22 @@
+     log << "Main loop...\n";
+     std::flush(log);
+ 
++    // GI evaluation: bounded unattended capture, enabled only by environment.
++    const char* evalEnv = std::getenv("GI_EVAL_DIR");
++    const std::string evalDir = evalEnv ? evalEnv : "";
++    auto evalInt = [](const char* name, int fallback) { const char* v = std::getenv(name); return v ? std::atoi(v) : fallback; };
++    const uint32_t evalStart = evalInt("GI_EVAL_START", 2049);
++    const uint32_t evalCount = evalInt("GI_EVAL_COUNT", 32);
++    const uint32_t evalEnd = evalInt("GI_EVAL_END", evalStart + evalCount - 1);
++    std::ofstream evalTiming;
++    if (!evalDir.empty())
++    {
++        std::filesystem::create_directories(evalDir);
++        evalTiming.open(evalDir + "/gpu-timing.csv");
++        evalTiming << "frame";
++        for (auto* stat : perf.gpuTimes) evalTiming << "," << stat->name;
++        evalTiming << std::endl;
++    }
+     // Main loop
+     while(!glfwWindowShouldClose(gfx.window))
+     {
+@@ -353,6 +371,27 @@
+         if (!Graphics::Present(gfx)) continue;
+         CPU_TIMESTAMP_ENDANDRESOLVE(presentStat);
+         CPU_TIMESTAMP_ENDANDRESOLVE(frameStat); // end of frame
++
++        // GI evaluation: Present increments frameNumber; readback is queued after rendering.
++        if (!evalDir.empty())
++        {
++            const uint32_t rendered = gfx.frameNumber - 1;
++            evalTiming << (rendered > 0 ? rendered - 1 : 0);
++            for (auto* stat : perf.gpuTimes) evalTiming << "," << stat->elapsed;
++            evalTiming << "\n";
++            if ((rendered % 256) == 0) { std::ofstream progress(evalDir + "/progress.txt"); progress << rendered; evalTiming.flush(); }
++            const bool capture = (rendered >= evalStart && rendered < evalStart + evalCount);
++            const bool checkpoint = (rendered == 513 || rendered == 1025 || rendered == 2049 || rendered == 4097 || rendered == 8193 || rendered == 16385 || rendered == 32769);
++            if (capture || checkpoint)
++            {
++                ID3D12Resource* texture = config.app.renderMode == ERenderMode::PATH_TRACE ? pt.PTAccumulation : ddgi.output;
++                const std::string file = evalDir + "/frame-" + std::to_string(rendered) + ".raw";
++                if (!Graphics::D3D12::WriteResourceToDisk(gfx, file, texture, D3D12_RESOURCE_STATE_UNORDERED_ACCESS)) break;
++                if (config.app.renderMode == ERenderMode::DDGI && rendered == evalStart)
++                    Graphics::D3D12::WriteResourceToDisk(gfx, evalDir + "/gbuffer-position.raw", gfxResources.rt.GBufferB, D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
++            }
++            if (rendered >= evalEnd) { std::ofstream done(evalDir + "/complete.txt"); done << rendered; break; }
++        }
+ 
+         // Handle window resize events
+         if (Windows::GetWindowEvent() == Windows::EWindowEvent::RESIZE)
+@@ -500,3 +539,4 @@
+     return EXIT_SUCCESS;
+ }
+ 
++
+--- Direct3D12.cpp (before)
++++ Direct3D12.cpp (capture)
+@@ -2007,6 +2007,20 @@
+                 D3D12_RANGE readRange = { 0, static_cast<size_t>(imageSize) };
+                 D3DCHECK(stagingResources[subresourceIndex]->Map(0, &readRange, (void**)&pData));
+ 
++                // GI evaluation: lossless GPU texture readback, before any display conversion.
++                if (file.size() >= 4 && file.substr(file.size() - 4) == ".raw")
++                {
++                    std::ofstream raw(file, std::ios::binary);
++                    uint32_t header[4] = { static_cast<uint32_t>(desc.Width), desc.Height, static_cast<uint32_t>(desc.Format), static_cast<uint32_t>(rowSizeInBytes) };
++                    raw.write(reinterpret_cast<const char*>(header), sizeof(header));
++                    for (UINT row = 0; row < numRows; ++row)
++                        raw.write(reinterpret_cast<const char*>(pData + row * dstRowPitch), rowSizeInBytes);
++                    result &= raw.good();
++                    stagingResources[subresourceIndex]->Unmap(0, nullptr);
++                    SAFE_RELEASE(stagingResources[subresourceIndex]);
++                    continue;
++                }
++
+                 // Convert the resource to RGBA8 UNORM (using WIC)
+                 std::vector<unsigned char> converted(desc.Width * desc.Height * ImageCapture::NumChannels);
+                 D3DCHECK(ImageCapture::ConvertTextureResource(desc, imageSize, dstRowPitch, pData, converted));
+--- Window.cpp (before)
++++ Window.cpp (capture)
+@@ -1,3 +1,4 @@
++#include <cstdlib>
+ /*
+ * Copyright (c) 2019-2023, NVIDIA CORPORATION.  All rights reserved.
+ *
+@@ -49,6 +50,8 @@
+         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);   // don't need an OpenGL context with D3D12/Vulkan
+         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+ 
++        if (std::getenv("GI_EVAL_DIR")) glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
++
+         // Create the window with GLFW
+         window = glfwCreateWindow(config.app.width, config.app.height, config.app.title.c_str(), nullptr, nullptr);
+         if (!window) return false;

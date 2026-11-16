@@ -1,0 +1,101 @@
+{
+  "schema_version": "gi-evaluation-v1",
+  "run_id": "2026-11-16_12-04_NVIDIA-DDGI-vs-PT_CornellBox",
+  "case_id": "cornell-ceiling-indirect",
+  "status": "complete",
+  "target_frame_count": 32,
+  "valid_frame_count": 32,
+  "invalid_frame_count": 0,
+  "mean_hdr_flip": 0.1719056026413226,
+  "linear_rgb_mse": 1.1672659310385942e-05,
+  "gi_gpu_ms_mean": 0.22407546363186542,
+  "timing_sample_count": 2021,
+  "gpu_stage_ms": {
+    "Probe Trace": 0.07173772983671449,
+    "Blend": 0.05502513211281544,
+    "Relocate": 0.006654543295398317,
+    "Classify": 0.009182891637803068,
+    "Lighting": 0.0797577278574963,
+    "GBuffer": 0.05804931420089065,
+    "Frame": 0.28739328253339935
+  },
+  "pt_gpu_ms_per_1spp": 0.5678546303809995,
+  "reference_check": {
+    "spp_each": 32768,
+    "independent_seed_frame_offset": 104729,
+    "mean_hdr_flip": 0.012026934224450274,
+    "linear_rgb_mse": 8.860481235030691e-08,
+    "flip_fraction_of_candidate_error": 0.06996243310082347,
+    "half_spp_vs_full": {
+      "spp": 16384,
+      "mean_hdr_flip": 0.009415473502715623,
+      "linear_rgb_mse": 4.4098376115971995e-08
+    },
+    "reliability": "Independent-reference error is measured and compared with candidate error; finite-sample PT is not an exact solution."
+  },
+  "candidate_steady_check": {
+    "513": {
+      "mean_hdr_flip": 0.19986277483666123,
+      "linear_rgb_mse": 1.7968177449366715e-05,
+      "mean_luminance": 0.026286562109409523
+    },
+    "1025": {
+      "mean_hdr_flip": 0.19169898258409776,
+      "linear_rgb_mse": 1.5787999230335654e-05,
+      "mean_luminance": 0.026606115556126447
+    },
+    "2049": {
+      "mean_hdr_flip": 0.18556025206411847,
+      "linear_rgb_mse": 1.4424394852598107e-05,
+      "mean_luminance": 0.026823324812641776
+    },
+    "4097": {
+      "mean_hdr_flip": 0.18070353098953443,
+      "linear_rgb_mse": 1.3378897171208467e-05,
+      "mean_luminance": 0.026997718737551107
+    },
+    "8193": {
+      "mean_hdr_flip": 0.17702910490617194,
+      "linear_rgb_mse": 1.2665512525132574e-05,
+      "mean_luminance": 0.027141862637268373
+    },
+    "16385": {
+      "mean_hdr_flip": 0.17485820032449792,
+      "linear_rgb_mse": 1.2287006910790231e-05,
+      "mean_luminance": 0.0272171015787948
+    },
+    "32769": {
+      "mean_hdr_flip": 0.17290526086494024,
+      "linear_rgb_mse": 1.190415392127608e-05,
+      "mean_luminance": 0.02731354467523332
+    },
+    "65537": {
+      "mean_hdr_flip": 0.1718966896561615,
+      "linear_rgb_mse": 1.1645157481799593e-05,
+      "mean_luminance": 0.027371942238749333
+    }
+  },
+  "luminance": {
+    "reference": 0.02935429657467968,
+    "candidate_representative": 0.027373371009415212,
+    "relative_difference": -0.0674833260005
+  },
+  "representative": {
+    "capture_index": 31,
+    "render_frame_id": 65568,
+    "mean_hdr_flip": 0.17190554801735186,
+    "linear_rgb_mse": 1.1695595742464941e-05,
+    "comparison": "comparison.png",
+    "heatmap": "flip-heatmap.png",
+    "error": "errors/flip-representative.exr"
+  },
+  "limitations": [
+    "Static Cornell Box, one camera and one ceiling point light only; no dynamic stability conclusion.",
+    "Measurement patch exports linear float textures, suppresses bounce-0 direct contribution in PT, and changes only the second PT random sequence. Official DDGI SDK and DDGI shaders are unchanged.",
+    "PT uses official 20-bounce cap, maxAlbedo=0.9 and throughput termination 0.005; reference is the official finite-path model, not an infinite-bounce physical truth.",
+    "Official DDGI screen albedo is encoded in the GBuffer and decoded; PT uses hit albedo directly. The harness original color-conversion and quantization differences are preserved.",
+    "GI timing is measured over preceding steady-state frames separately from readback-heavy capture frames. Per-capture wall-clock time is unavailable.",
+    "FLIP exposure bounds are selected once from the PT visible-scene bounding rectangle; including the large black background would give a degenerate median. FLIP itself is evaluated on the full image before masking.",
+    "After 65,536 warmup frames, checkpoint HDR-FLIP still changes by about 0.001 over the last doubling. Report is a bounded long-warmup, near-steady snapshot, not proof of exact convergence."
+  ]
+}

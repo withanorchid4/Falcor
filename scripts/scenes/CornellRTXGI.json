@@ -1,0 +1,32 @@
+{
+  "directionalLight": {
+    "enabled": true,
+    "color": [1.0, 1.0, 1.0],
+    "intensity": 1.0,
+    "direction": [0.6, -0.435, -0.816]
+  },
+  "ceilingPointLight": {
+    "enabled": false,
+    "color": [1.0, 1.0, 1.0],
+    "intensity": 1.0,
+    "position": [0.0, 1.9, 0.0]
+  },
+  "camera": {
+    "position": [0.1, 1.0, 4.0],
+    "target": [0.1, 1.0, 0.0],
+    "up": [0.0, 1.0, 0.0],
+    "verticalFovDegrees": 45.0
+  },
+  "display": {
+    "exposureStops": 1.0
+  },
+  "ddgi": {
+    "gridCounts": [9, 9, 9],
+    "gridMin": [-1.2, -0.2, -1.2],
+    "gridMax": [1.2, 2.2, 1.2],
+    "raysPerProbe": 256,
+    "hysteresis": 0.97,
+    "normalBiasWorld": 0.02,
+    "viewBiasWorld": 0.1
+  }
+}

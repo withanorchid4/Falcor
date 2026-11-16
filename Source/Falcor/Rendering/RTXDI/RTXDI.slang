@@ -217,6 +217,15 @@ extension RTXDI
     */
     bool getFinalSample(uint2 pixel, out float3 dir, out float distance, out float3 Li)
     {
+        bool isEnvironment;
+        return getFinalSample(pixel, dir, distance, Li, isEnvironment);
+    }
+
+    /** Also identifies environment samples so callers can delegate diffuse sky lighting to GI.
+    */
+    bool getFinalSample(uint2 pixel, out float3 dir, out float distance, out float3 Li, out bool isEnvironment)
+    {
+        isEnvironment = false;
 #if RTXDI_INSTALLED
         // Get the final sample from RTXDI.
         RAB_Surface surface;
@@ -226,6 +235,7 @@ extension RTXDI
         // Return data.
         dir = lightSample.direction;
         distance = lightSample.distance - gRTXDI.rayEpsilon;
+        isEnvironment = isValid && lightSample.lightType == PolymorphicLightType::Env;
         return isValid;
 #else
         dir = float3(0.f);

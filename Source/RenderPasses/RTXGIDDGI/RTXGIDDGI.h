@@ -54,6 +54,9 @@ private:
         bool useRTXDI = true;
         bool useWRC = false;
         bool wrcGroupByMaterial = true;
+        uint32_t wrcStressMode = 0; // Experiment: 0 off, 1 common loop, 2 distinct loops per type.
+        uint32_t wrcStressIterations = 0;
+        bool wrcStressStats = false; // Wave diagnostics; disable during GPU timing.
         float wrcCellScale = 0.1f;
         float wrcLodDistance = 8.f; // In units of the smallest probe spacing.
         uint32_t wrcMaxLod = 16;

@@ -1,0 +1,61 @@
+{
+  "mode": "pt-default",
+  "captures": [
+    {
+      "tag": "frame-2",
+      "frame": 2,
+      "elapsed_seconds": 12.765496500011068
+    },
+    {
+      "tag": "frame-128",
+      "frame": 128,
+      "elapsed_seconds": 13.531771200010553
+    },
+    {
+      "tag": "frame-512",
+      "frame": 512,
+      "elapsed_seconds": 15.795155900006648
+    }
+  ],
+  "measurements": [],
+  "started_at": 1794831880.8743913,
+  "options": {
+    "samplesPerPixel": 8,
+    "maxSurfaceBounces": 19,
+    "maxDiffuseBounces": 19,
+    "maxSpecularBounces": 19,
+    "maxTransmissionBounces": 0,
+    "useRussianRoulette": false,
+    "useNEE": true,
+    "useMIS": true,
+    "useRTXDI": false,
+    "useReSTIRPT": false,
+    "useNRDDemodulation": false,
+    "colorFormat": "RGBA32F",
+    "tracePassMode": "Default",
+    "fixedSeed": 1
+  },
+  "camera": {
+    "position": [
+      0.10000000149011612,
+      1.0,
+      4.0
+    ],
+    "target": [
+      0.10000000149011612,
+      1.0,
+      0.0
+    ],
+    "up": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "focalLength": 28.970561981201172,
+    "frameHeight": 24.0,
+    "aspectRatio": 1.7777777910232544
+  },
+  "current_frame": 384,
+  "spp": 4096,
+  "completed_at": 1794831897.4660864
+}

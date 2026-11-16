@@ -1,0 +1,11 @@
+--- a/PathTraceRGS.hlsl
++++ b/PathTraceRGS.hlsl
+@@ -86,7 +86,7 @@
+         float3 diffuse = DirectDiffuseLighting(payload, GetGlobalConst(pt, rayNormalBias), GetGlobalConst(pt, rayViewBias), SceneTLAS, Lights);
+ 
+         // Attenuate the color
+-        color += diffuse * throughput;
++        if (bounceIndex > 0) color += diffuse * throughput; // GI evaluation: exclude direct illumination at the camera hit.
+ 
+         // Increment the seed
+         seed += bounceIndex;

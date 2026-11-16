@@ -3,3 +3,7 @@
 # Format slang files as HLSL.
 *.slang gitlab-language=hlsl
 *.slangh gitlab-language=hlsl
+
+# Preserve experiment snapshots and recorded SHA-256 values across platforms.
+docs/2026-11-16_12-04_NVIDIA-DDGI-vs-PT_CornellBox/** -text
+docs/2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox/** -text

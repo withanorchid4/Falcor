@@ -3,6 +3,7 @@
 #ifndef FALCOR_DDGI_WORLD_RADIANCE_CACHE
 #define FALCOR_DDGI_WORLD_RADIANCE_CACHE
 #include "RTXGIDDGI.rt.slang"
+#include "WorldRadianceCacheStress.slang"
 
 cbuffer WrcCB
 {
@@ -19,6 +20,9 @@ cbuffer WrcCB
     uint gWrcShaderBucket;
     uint gWrcRayCount;
     uint gWrcGroupByMaterial;
+    uint gWrcStressMode;
+    uint gWrcStressIterations;
+    uint gWrcStressStats;
 }
 
 // Host strides are exactly 64 and 32 bytes. A fixed uint4 accommodates both
@@ -59,7 +63,8 @@ StructuredBuffer<uint> gWrcTypeMap;
 // 0 eligible rays, 1 occupied entries, 2 shaded entries, 3 served rays,
 // 4 fallback rays, 5 temporal entries, 6 non-finite results, 7 probe steps,
 // 8 exhausted rays, 9 maximum LOD, 10 coarse-LOD rays, 11 cross-geometry rays.
-// Entries 12..15 are reserved.
+// Optional diagnostics: 12 wave type sum, 13 wave count, 14 checksum XOR,
+// 15 stressed entries. These exclude gather fallback invocations.
 RWStructuredBuffer<uint> gWrcCounters;
 
 static const uint kWrcNoOwner = 0xffffffffu;
@@ -128,11 +133,18 @@ void wrcRayIndices(uint linearRayID, DDGIVolumeDescGPU volume, out uint rayIndex
 
 // One sample uses the original ray/probe/frame stream. The baseline diffuse
 // direct estimator and historical DDGI feedback remain unchanged.
-float3 wrcShadeHit(WrcHit hit, uint linearRayID, uint sampleCount, DDGIVolumeDescGPU volume)
+float3 wrcShadeHit(WrcHit hit, uint linearRayID, uint sampleCount, DDGIVolumeDescGPU volume, out uint stressChecksum)
 {
+    stressChecksum = 0u;
     ShadingData sd = loadTriangleSurface(HitInfo(wrcUnpackHit(hit)), hit.direction);
     if (!validSurface(sd)) return float3(0.f);
     let material = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f));
+#if WRC_STRESS_ENABLED
+    // Isolated synthetic proxy for expensive type-specific pattern generation.
+    // It deliberately leaves the real material implementations and RGB intact.
+    uint seed = asuint(sd.posW.x) ^ asuint(sd.posW.y) ^ asuint(sd.posW.z) ^ linearRayID;
+    stressChecksum = wrcStress(seed, gWrcStressMode == 1u ? 0u : hit.shaderBucket % 11u, gWrcStressIterations);
+#endif
     let properties = material.getProperties(sd);
     uint rayIndex, probeIndex;
     wrcRayIndices(linearRayID, volume, rayIndex, probeIndex);

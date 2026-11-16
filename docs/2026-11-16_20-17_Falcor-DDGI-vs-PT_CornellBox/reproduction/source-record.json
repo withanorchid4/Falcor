@@ -1,0 +1,412 @@
+{
+  "git_commit": "ebd92432101982c8f0be25e6b9c51c0175b940e5",
+  "sources": {
+    "shaders\\RenderPasses\\RTXGIDDGI\\ProbeBlending.cs.slang": {
+      "sha256": "2a9625f1c057819db80100ac05003031d8fe7426b9e57145a1127695674689f2",
+      "snapshot": "source\\shaders\\RenderPasses\\RTXGIDDGI\\ProbeBlending.cs.slang"
+    },
+    "shaders\\RenderPasses\\RTXGIDDGI\\ProbeClassification.cs.slang": {
+      "sha256": "64598c659b07a4b623ee012acf466bc3ada600e9fef6b18ad2795bdc0fe0025b",
+      "snapshot": "source\\shaders\\RenderPasses\\RTXGIDDGI\\ProbeClassification.cs.slang"
+    },
+    "shaders\\RenderPasses\\RTXGIDDGI\\ProbeRelocation.cs.slang": {
+      "sha256": "aec000ce960f8385e07f29de0f2d06d58adedc6a4f4a0bbbd55c7a74a79d93a1",
+      "snapshot": "source\\shaders\\RenderPasses\\RTXGIDDGI\\ProbeRelocation.cs.slang"
+    },
+    "shaders\\RenderPasses\\RTXGIDDGI\\RTXGIConfig.slang": {
+      "sha256": "3f87b223ed87d3f7866638100032d144bdc0aea1757367fc9c3f5b71de751a01",
+      "snapshot": "source\\shaders\\RenderPasses\\RTXGIDDGI\\RTXGIConfig.slang"
+    },
+    "shaders\\RenderPasses\\RTXGIDDGI\\RTXGIDDGI.rt.slang": {
+      "sha256": "b704cc6ea1c128b821608b8aa987f5e21126c0bc46d802d8ed9ccae22a5088a2",
+      "snapshot": "source\\shaders\\RenderPasses\\RTXGIDDGI\\RTXGIDDGI.rt.slang"
+    },
+    "shaders\\RenderPasses\\RTXGIDDGI\\SanitizeEnvironment.cs.slang": {
+      "sha256": "f358670d465f22e93ac5bcb9556503a59f6994dc868927ec0f31284adf6839a4",
+      "snapshot": "source\\shaders\\RenderPasses\\RTXGIDDGI\\SanitizeEnvironment.cs.slang"
+    },
+    "shaders\\RenderPasses\\RTXGIDDGI\\WorldRadianceCache.cs.slang": {
+      "sha256": "782a7ca173fe2f7cb1f55c3478444bf97007d184ad9940c609121d2e9694e378",
+      "snapshot": "source\\shaders\\RenderPasses\\RTXGIDDGI\\WorldRadianceCache.cs.slang"
+    },
+    "shaders\\RenderPasses\\RTXGIDDGI\\WorldRadianceCache.rt.slang": {
+      "sha256": "9fcb2173b4e87f882588253d858e62456501cc6c2d461a904af02b8c2545dcde",
+      "snapshot": "source\\shaders\\RenderPasses\\RTXGIDDGI\\WorldRadianceCache.rt.slang"
+    },
+    "shaders\\RenderPasses\\RTXGIDDGI\\WorldRadianceCache.slang": {
+      "sha256": "9fea01e39f014f321245b52533c379b314903664387a483ce725cab6f92fd59e",
+      "snapshot": "source\\shaders\\RenderPasses\\RTXGIDDGI\\WorldRadianceCache.slang"
+    },
+    "shaders\\RenderPasses\\RTXGIDDGI\\WorldRadianceCacheDebug.slang": {
+      "sha256": "1f3ec33719789d95456fb351b6c339db9100264ecbe45f6fcc941e9310c1e8b1",
+      "snapshot": "source\\shaders\\RenderPasses\\RTXGIDDGI\\WorldRadianceCacheDebug.slang"
+    },
+    "shaders\\RenderPasses\\RTXGIDDGI\\WorldRadianceCacheStress.slang": {
+      "sha256": "a72043ea43ff6369298c28de196cdf44f0a782d0cecbebfba929a1360e16cac9",
+      "snapshot": "source\\shaders\\RenderPasses\\RTXGIDDGI\\WorldRadianceCacheStress.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\ColorType.slang": {
+      "sha256": "902492a5a90a1c2b9aa834eefaaf4c4d6a8f0157b46eaa803ec9680b1c04eb79",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\ColorType.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\GeneratePaths.cs.slang": {
+      "sha256": "b525ad6b4cb0d2c808a5bcaa7ef0779d586fc385b00037ded1b1e7e59f471fcc",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\GeneratePaths.cs.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\GuideData.slang": {
+      "sha256": "dee1b6d4fd44321937e87e01c857ea2be4f9a1c89d71147419249ae205fad820",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\GuideData.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\LightTileRISHelper.slang": {
+      "sha256": "950ce9f45d347c6dae655dd15200dc0ac547609a5f4b94b6fa472cbe69929199",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\LightTileRISHelper.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\LoadShadingData.slang": {
+      "sha256": "f2a3ba0ed926dc9b689dfe755cf96961c797ee97aefb11eb0f8ce117dc83ecec",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\LoadShadingData.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\NRDHelpers.slang": {
+      "sha256": "4c001cb90f824e70b5c20f4c48d9f22951f5d80c977c4ef354a39321199be5d4",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\NRDHelpers.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\Params.slang": {
+      "sha256": "4c566667a09cf0a4550427962d13bd0a9c54db570c960414fb89f2c58025989c",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\Params.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\PathState.slang": {
+      "sha256": "9a8d256336c1e4aab1ee0be33d73c4ba9eb826f2173658a64162c9a4f1732c7f",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\PathState.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\PathTracer.slang": {
+      "sha256": "dbc4c07307edc2a20456b1e9880f835024eab3eeffeea122e4d715b739a7a01a",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\PathTracer.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\PathTracerNRD.slang": {
+      "sha256": "5a3a7d3e7a40a03da5f7cce790895337ce4555fad7bf8ba9db036f349ce745f9",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\PathTracerNRD.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\PathTracerUtils.slang": {
+      "sha256": "395cd0ed2666500e776e990527c0658e7cf9d4c82ee22af5f1a435f35dfd5970",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\PathTracerUtils.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\ReflectTypes.cs.slang": {
+      "sha256": "11d2acf0460635f2e1a95c903eb0e6c698e15dac7fb401640cf68e5fc36a3489",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\ReflectTypes.cs.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\ResolvePass.cs.slang": {
+      "sha256": "8ec75d64d98c252722b49ad08eff4a6c3fb0bb82986730341e1a0169462341ee",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\ResolvePass.cs.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\ResolveReSTIRPTPass.cs.slang": {
+      "sha256": "0d679755c5a272885e8b80742e8bea63ce58baf534f062e9a480431974ae7805",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\ResolveReSTIRPTPass.cs.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\ReSTIRPTData.slang": {
+      "sha256": "705799e5d22230414a7d49ca931325ccf1cc5e3c699d2773ab725f18fd66d560",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\ReSTIRPTData.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\StaticParams.slang": {
+      "sha256": "f39a8218bbabcd5e90daa634ac95f25522822dc49e31cbb43577b183662cf4f3",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\StaticParams.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\TracePass.rt.slang": {
+      "sha256": "ed486cfee76b3ad414e271af21113e2bf3a98916f446bc7e4e987ba66e9ff80d",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\TracePass.rt.slang"
+    },
+    "shaders\\RenderPasses\\PathTracer\\TracePassMinimalPayload.rt.slang": {
+      "sha256": "1debbfb50da415e60172af549f40658c18001d7303ce168125b1e4a6ffcbeb41",
+      "snapshot": "source\\shaders\\RenderPasses\\PathTracer\\TracePassMinimalPayload.rt.slang"
+    },
+    "shaders\\Rendering\\Materials\\AnisotropicGGX.slang": {
+      "sha256": "84c50ca8577f998de59639d59a46b9cde8c656310b77622f0d3c8fff1cb68716",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\AnisotropicGGX.slang"
+    },
+    "shaders\\Rendering\\Materials\\BCSDFConfig.slangh": {
+      "sha256": "aa035a0bcb3109ae4c061b2f27cba82ec8a06b1ecfb7d44ab0f680dbc12b7b90",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BCSDFConfig.slangh"
+    },
+    "shaders\\Rendering\\Materials\\BSDFConfig.slangh": {
+      "sha256": "b1fb9faefc6648de2f4c72e09a59bcc3f6c6878a791d5458c633fe8fd456aae5",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFConfig.slangh"
+    },
+    "shaders\\Rendering\\Materials\\BSDFIntegrator.cs.slang": {
+      "sha256": "7eb132b1fad7c076a10808a709c95825dfd876d0f465b6e1b234af3d09637317",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFIntegrator.cs.slang"
+    },
+    "shaders\\Rendering\\Materials\\ClothBRDF.slang": {
+      "sha256": "ac6526ea71b7b94c529a00e7d0f6dd881f27375fa2ce9c13d17c874ad0744830",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\ClothBRDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\ClothMaterial.slang": {
+      "sha256": "533b93b72619239e46e05e9ee4ae5991f194e7c8523e3da1f7fde93994d4327f",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\ClothMaterial.slang"
+    },
+    "shaders\\Rendering\\Materials\\ClothMaterialInstance.slang": {
+      "sha256": "a6efac69748a8d81b0c0b209840dfab1627ab912285e01e4eca736bf3ce14eb5",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\ClothMaterialInstance.slang"
+    },
+    "shaders\\Rendering\\Materials\\Fresnel.slang": {
+      "sha256": "a8133e50a51d26c272e775ae6909b9e4b5e6d3209564e525638cd8a5409168ec",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\Fresnel.slang"
+    },
+    "shaders\\Rendering\\Materials\\HairChiang16.slang": {
+      "sha256": "e797b40dabb8f17bfbda801e5c22c8bba584ce9c339bdd602e809cd105b649a7",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\HairChiang16.slang"
+    },
+    "shaders\\Rendering\\Materials\\HairMaterial.slang": {
+      "sha256": "3bb66d245d7c72b4138ebbba3c4a1faf6e7c5bc33d7e14b3a206a4ca31e514f7",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\HairMaterial.slang"
+    },
+    "shaders\\Rendering\\Materials\\HairMaterialInstance.slang": {
+      "sha256": "fd34d774d38d8263ad34d6ce9ddec5d90676ed5c86266fd8ba80e8576c3744f6",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\HairMaterialInstance.slang"
+    },
+    "shaders\\Rendering\\Materials\\IBSDF.slang": {
+      "sha256": "242e65ed94253b646b250da2668e060042fe5b3e406283e86bb87eb6743bb8ed",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\IBSDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\IMaterial.slang": {
+      "sha256": "b2c7e3f7c1171b400b303b79c110925b137fb67750f76f43a0712713ad54dabc",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\IMaterial.slang"
+    },
+    "shaders\\Rendering\\Materials\\IMaterialInstance.slang": {
+      "sha256": "14ff9bad97668518f3b6424450632f3f92f8231c78005977113634552f09d4db",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\IMaterialInstance.slang"
+    },
+    "shaders\\Rendering\\Materials\\INDF.slang": {
+      "sha256": "45381d8021294ca5b35dd3dea793fe8d58cbc150cc8f495548271549ef2f47dc",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\INDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\InteriorList.slang": {
+      "sha256": "b0433b23c738dcdad4f6ab527898869f7e75b50479337595d89a81f20251ec6d",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\InteriorList.slang"
+    },
+    "shaders\\Rendering\\Materials\\InteriorListHelpers.slang": {
+      "sha256": "d95682384f6d49251ff8b207eb1455f60935f4695cc57ce27d25f240f9fe5465",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\InteriorListHelpers.slang"
+    },
+    "shaders\\Rendering\\Materials\\IsotropicGGX.slang": {
+      "sha256": "f6a2b70a0151a2e9e2caba6913d3c7a21167ac9e927b4686713e2d6ae8508fdd",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\IsotropicGGX.slang"
+    },
+    "shaders\\Rendering\\Materials\\LayeredBSDF.slang": {
+      "sha256": "3c3f15850557239da8d98bf90a93f0a0c9328b4a9b402f91f2aeab0f4670554a",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\LayeredBSDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\LobeType.slang": {
+      "sha256": "662984c8ca3bf15e5ae037ca6f034219756e44a538449f9f96b8894586984579",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\LobeType.slang"
+    },
+    "shaders\\Rendering\\Materials\\MaterialInstanceHints.slang": {
+      "sha256": "fdd5866d3fb79cbad673d744a94a5c79d9bd51429383ebafc62e98366d6a8105",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\MaterialInstanceHints.slang"
+    },
+    "shaders\\Rendering\\Materials\\MERLCommon.slang": {
+      "sha256": "2752f914dee3f163b0080023dfd392bcda692331762e4dde8b5f9e42cf318827",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\MERLCommon.slang"
+    },
+    "shaders\\Rendering\\Materials\\MERLMaterial.slang": {
+      "sha256": "681b4167ddbb3b38aa2413cfa6013831cb4a1ff190003de8bb4872c1b991c6bc",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\MERLMaterial.slang"
+    },
+    "shaders\\Rendering\\Materials\\MERLMaterialInstance.slang": {
+      "sha256": "31ce947f019fa9bc9a358eaad4a63a2f359982e7187f3544e73e80db8dc65cb1",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\MERLMaterialInstance.slang"
+    },
+    "shaders\\Rendering\\Materials\\MERLMixMaterial.slang": {
+      "sha256": "593c2abf1b897b9352c88c6ed733393552098098873a01046b3a990bb8ed5dce",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\MERLMixMaterial.slang"
+    },
+    "shaders\\Rendering\\Materials\\MERLMixMaterialInstance.slang": {
+      "sha256": "3ffcef805c334a6a6c29fff8772bd9863f4f8da61abe759568cc276a1739162a",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\MERLMixMaterialInstance.slang"
+    },
+    "shaders\\Rendering\\Materials\\Microfacet.slang": {
+      "sha256": "15a07aedeb6738ba02ca5881dd434e626881e22ab53f22943553370d16823d23",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\Microfacet.slang"
+    },
+    "shaders\\Rendering\\Materials\\NDF.slang": {
+      "sha256": "def12cb6b92622853786bbc4a03198d50bd183325c3c5ad562abaad61695c2cd",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\NDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\RGLAcquisition.cs.slang": {
+      "sha256": "6abf6ff042792d381d06cc463dc81f0ae49b5a7ee283c084b5c58a813f1be94b",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\RGLAcquisition.cs.slang"
+    },
+    "shaders\\Rendering\\Materials\\RGLCommon.slang": {
+      "sha256": "dca996590709474c4ceae9e89c11a2ac9303c959f77c41551e4085f07a5f03e2",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\RGLCommon.slang"
+    },
+    "shaders\\Rendering\\Materials\\RGLMaterial.slang": {
+      "sha256": "0e20a7522176e46382f49e9d8df70bef4b815ffbf59b1ed0915ef92cef3aa104",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\RGLMaterial.slang"
+    },
+    "shaders\\Rendering\\Materials\\RGLMaterialInstance.slang": {
+      "sha256": "e955e60a3bacc7844d2537ed927ba1710891610c5f7e8611a3b4c0ca0d12a396",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\RGLMaterialInstance.slang"
+    },
+    "shaders\\Rendering\\Materials\\StandardMaterial.slang": {
+      "sha256": "4c447275c496c35245490181ecbe6b0924328fe0c8b82fcb4c0aaabcf3a72491",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\StandardMaterial.slang"
+    },
+    "shaders\\Rendering\\Materials\\StandardMaterialInstance.slang": {
+      "sha256": "886e1c594d6583d83a1f904b74fe1b78ae884837bba6afa467f007bc429a1a64",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\StandardMaterialInstance.slang"
+    },
+    "shaders\\Rendering\\Materials\\TexLODHelpers.slang": {
+      "sha256": "f2d0be83a9c1aeb800835a33ddf0d034e1ab0429b5ec8b5c07a8129c07ad9495",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\TexLODHelpers.slang"
+    },
+    "shaders\\Rendering\\Materials\\TexLODTypes.slang": {
+      "sha256": "3b34d52c39234ffe8c305c2a7528dea95d8ac7cf64752ac5504f56a2dd4e9023",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\TexLODTypes.slang"
+    },
+    "shaders\\Rendering\\Materials\\BSDFs\\BeerBTDF.slang": {
+      "sha256": "cc4be7c9b9db45fbc186b8af9871ef46f0c6e9524b71e5283f6b4746afcb0445",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFs\\BeerBTDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\BSDFs\\DielectricPlateBSDF.slang": {
+      "sha256": "4e83056763506a7cfcad6e176aaed41730b8312769652ac934ddda29642cd95b",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFs\\DielectricPlateBSDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\BSDFs\\DiffuseSpecularBRDF.slang": {
+      "sha256": "88f831a517e72d33624a9c5fc4ca4e8baad141646eda48c461ec7b7be54c3a85",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFs\\DiffuseSpecularBRDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\BSDFs\\DisneyDiffuseBRDF.slang": {
+      "sha256": "a88804cd4229283dd3859879a82e2c3756d22cc76e250b9f3cdd819e7628bd15",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFs\\DisneyDiffuseBRDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\BSDFs\\FrostbiteDiffuseBRDF.slang": {
+      "sha256": "173eec6243959d0a2b2ec36b91560afcc1608184948e31776c271b274664b6c9",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFs\\FrostbiteDiffuseBRDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\BSDFs\\LambertDiffuseBRDF.slang": {
+      "sha256": "6e70e64b438ed6bec6db5e0c2feead44fc2973ee931f54efa2d49fdfd4850413",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFs\\LambertDiffuseBRDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\BSDFs\\LambertDiffuseBTDF.slang": {
+      "sha256": "8208bdfb6b5cf7c58e029acb972ec4ae759ca8b4c0b268ad842eb323e3f61e58",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFs\\LambertDiffuseBTDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\BSDFs\\OrenNayarBRDF.slang": {
+      "sha256": "c656baefa037b94953bdf390b7dc2f27a02dff75b9077d77fd3769c3a204189f",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFs\\OrenNayarBRDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\BSDFs\\SheenBSDF.slang": {
+      "sha256": "a8458c963eb852bbe7b7baa6ed8af0488829051dc40c0fe29c4c0fefb2e98fe8",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFs\\SheenBSDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\BSDFs\\SimpleBTDF.slang": {
+      "sha256": "3adcf97034cb7a8c2e2f252a337e1ba3b8588e1178c019585ea1888993541305",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFs\\SimpleBTDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\BSDFs\\SpecularMicrofacet.slang": {
+      "sha256": "ad3adb15be9dbab13933d09a81c495612c440c97f88ac763557501efe629a3a6",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFs\\SpecularMicrofacet.slang"
+    },
+    "shaders\\Rendering\\Materials\\BSDFs\\StandardBSDF.slang": {
+      "sha256": "c208f4091db1a9b380ca4ee32e9679b93b46d284052c38fa41b3dd1814dcae99",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\BSDFs\\StandardBSDF.slang"
+    },
+    "shaders\\Rendering\\Materials\\PBRT\\PBRTCoatedConductorMaterial.slang": {
+      "sha256": "645b18703f778c9809b6a01c089ad1cfbefe70210bf337cb634c13950035b422",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\PBRT\\PBRTCoatedConductorMaterial.slang"
+    },
+    "shaders\\Rendering\\Materials\\PBRT\\PBRTCoatedConductorMaterialInstance.slang": {
+      "sha256": "80a2f18aa1ef82296ce83ea5e49afbe906bf25486db71ef645797c3fcd1635c6",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\PBRT\\PBRTCoatedConductorMaterialInstance.slang"
+    },
+    "shaders\\Rendering\\Materials\\PBRT\\PBRTCoatedDiffuseMaterial.slang": {
+      "sha256": "201444cefb20237f3e3759f4c4f3cd18b464a074836e1e9241934236bb75c2c7",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\PBRT\\PBRTCoatedDiffuseMaterial.slang"
+    },
+    "shaders\\Rendering\\Materials\\PBRT\\PBRTCoatedDiffuseMaterialInstance.slang": {
+      "sha256": "6701163e4670e7c5c03619b2c0b90b2463f40fa688cdbe782e3155509bdd6d5e",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\PBRT\\PBRTCoatedDiffuseMaterialInstance.slang"
+    },
+    "shaders\\Rendering\\Materials\\PBRT\\PBRTConductorMaterial.slang": {
+      "sha256": "0ab51cd3a347d29cd5d766f620cc60d288683d35c158c23beef2b61fc577630f",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\PBRT\\PBRTConductorMaterial.slang"
+    },
+    "shaders\\Rendering\\Materials\\PBRT\\PBRTConductorMaterialInstance.slang": {
+      "sha256": "66237c2fa7b2034dabd95200c05ef545075d8e9af37f469a574eed951e425ed1",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\PBRT\\PBRTConductorMaterialInstance.slang"
+    },
+    "shaders\\Rendering\\Materials\\PBRT\\PBRTDielectricMaterial.slang": {
+      "sha256": "4f59103b200ab1ecac5b553556e1800f5778f52e1a74dbcbea2af0fed0bc4589",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\PBRT\\PBRTDielectricMaterial.slang"
+    },
+    "shaders\\Rendering\\Materials\\PBRT\\PBRTDielectricMaterialInstance.slang": {
+      "sha256": "209f16d0e4d76fb646adf40c09f003bf2ba25e80b56e4da316fd1fad5018e574",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\PBRT\\PBRTDielectricMaterialInstance.slang"
+    },
+    "shaders\\Rendering\\Materials\\PBRT\\PBRTDiffuseMaterial.slang": {
+      "sha256": "a1fde2046657119d679f9daf48ee9a10c3f2b46e1b84c3b69210c8a8c9612615",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\PBRT\\PBRTDiffuseMaterial.slang"
+    },
+    "shaders\\Rendering\\Materials\\PBRT\\PBRTDiffuseMaterialInstance.slang": {
+      "sha256": "576da46536b4afb735580b91da1d5df47f91043147b24781a28687c6e636bad5",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\PBRT\\PBRTDiffuseMaterialInstance.slang"
+    },
+    "shaders\\Rendering\\Materials\\PBRT\\PBRTDiffuseTransmissionMaterial.slang": {
+      "sha256": "129bc49b99504c1cc6e5a535a6724c6a7b4a45811b0d05e09f5a0d7e8f7ee2ed",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\PBRT\\PBRTDiffuseTransmissionMaterial.slang"
+    },
+    "shaders\\Rendering\\Materials\\PBRT\\PBRTDiffuseTransmissionMaterialInstance.slang": {
+      "sha256": "5626d70af7bda6ff55b56bd4a14670fb2c01445363ad2b0b99c064bf88725ca1",
+      "snapshot": "source\\shaders\\Rendering\\Materials\\PBRT\\PBRTDiffuseTransmissionMaterialInstance.slang"
+    },
+    "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.cpp": {
+      "sha256": "f055c2723fcf2581c65c75c360d4797045fea356b80f85ca5cdc4f9dbd15dcad",
+      "snapshot": "source\\Source\\RenderPasses\\RTXGIDDGI\\RTXGIDDGI.cpp"
+    },
+    "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.h": {
+      "sha256": "72d350b3007a46f037cc25a7d2a0f7063e2b716bfd28a0598732efeb9d745e4f",
+      "snapshot": "source\\Source\\RenderPasses\\RTXGIDDGI\\RTXGIDDGI.h"
+    }
+  },
+  "binaries": {
+    "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\runtime\\Mogwai.exe": {
+      "sha256": "b3429a6f63636a7453d7c0c51b9c25d243b344cb47269f3176913e2f0426ab47",
+      "bytes": 965120
+    },
+    "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\runtime\\Falcor.dll": {
+      "sha256": "3c0f611d27524ee16ff649c4d55d7861732c71fcdaf708b8a4b613691e5c46d1",
+      "bytes": 10600960
+    },
+    "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\runtime\\plugins\\RTXGIDDGI.dll": {
+      "sha256": "70b79fa3223f26e8957365bafa1ed91c8d5b0d6a17c816c28ed6b2fdd57783dd",
+      "bytes": 500224
+    },
+    "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\runtime\\plugins\\RTXGIDDGI.pdb": {
+      "sha256": "66632601da772cc29072ae1bca9a44835a064099eb29c3cce67e9631bd00e622",
+      "bytes": 9981952
+    },
+    "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\runtime\\plugins\\MinimalPathTracer.dll": {
+      "sha256": "6880abad23a5add9bc94a923095744835ea556adb1d204c0bac75ed1ebb50326",
+      "bytes": 371200
+    },
+    "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\runtime\\plugins\\MinimalPathTracer.pdb": {
+      "sha256": "111b858a5c9a8d18f2a72c7fa2c78741a673e62e552e67c9f2c269d6039e5686",
+      "bytes": 8957952
+    },
+    "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\runtime\\plugins\\PathTracer.dll": {
+      "sha256": "e3967610360ae7a8918080801e2c00109f5fdb2e7ccb1b95508372cfb3b7aca7",
+      "bytes": 687104
+    },
+    "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\runtime\\plugins\\PathTracer.pdb": {
+      "sha256": "12146445291113cc6413d3fe9f84de2d1cf96bb985f8116c97530c034d8f9cbb",
+      "bytes": 12038144
+    },
+    "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\runtime\\plugins\\WARDiffPathTracer.dll": {
+      "sha256": "a7e6a3624505370c347e0f90dfc11dbbf6289ee78bfb92640a5833e91fc0d39a",
+      "bytes": 509952
+    },
+    "F:\\build\\gi-evaluation\\2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox\\runtime\\plugins\\WARDiffPathTracer.pdb": {
+      "sha256": "bf801ee191bf784ddf35347f30dfa662c28cc6338981564ff8d16483aa4a1f80",
+      "bytes": 10883072
+    }
+  },
+  "notes": "DDGI/source DLL files unchanged by this experiment. Isolated PT shader patched only to suppress primary direct/emission. Existing dirty tree retained."
+}

@@ -6,7 +6,9 @@ def render_graph_RTXGIDDGI():
     g = RenderGraph("RTXGIDDGI")
     # The same primary visibility supplies RTXDI and NRD's surface guides.
     g.addPass(createPass("GBufferRT", {"samplePattern": "Center", "useAlphaTest": True, "useDOF": False}), "Visibility")
-    g.addPass(createPass("RTXDIPass", {"options": {
+    # The DDGI volume receives sky radiance on misses, as in the SDK sample.
+    # RTXDI retains environment specular/background, but must not add sky diffuse twice.
+    g.addPass(createPass("RTXDIPass", {"excludeEnvDiffuse": True, "options": {
         "mode": "SpatiotemporalResampling",
         "biasCorrection": "RayTraced",
     }}), "DirectLighting")

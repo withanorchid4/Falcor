@@ -1,0 +1,6 @@
+# Use the unchanged NVIDIA RTXGI-DDGI 1.3.7 Cornell model.
+from pathlib import Path
+import runpy
+
+cornell_setup = runpy.run_path(str(Path(__file__).with_name("cornell_rtxgi.py")))
+cornell_setup["build_scene"](sceneBuilder)

@@ -51,6 +51,7 @@ struct FinalShading
     Texture2D<PackedHitInfo> vbuffer;
 
     uint2 frameDim;
+    bool excludeEnvDiffuse;
 
     void execute(const uint2 pixel)
     {
@@ -79,7 +80,8 @@ struct FinalShading
             float3 dir;
             float distance;
             float3 Li;
-            bool valid = gRTXDI.getFinalSample(pixel, dir, distance, Li);
+            bool isEnvironment;
+            bool valid = gRTXDI.getFinalSample(pixel, dir, distance, Li, isEnvironment);
 
             // Check light visibility.
             if (valid)
@@ -100,8 +102,11 @@ struct FinalShading
             {
                 TinyUniformSampleGenerator sg = TinyUniformSampleGenerator(pixel, gRTXDI.frameIndex);
 
-                sd.mtl.setActiveLobes((uint)LobeType::DiffuseReflection);
-                diffuse = mi.eval(sd, dir, sg) * Li;
+                if (!(excludeEnvDiffuse && isEnvironment))
+                {
+                    sd.mtl.setActiveLobes((uint)LobeType::DiffuseReflection);
+                    diffuse = mi.eval(sd, dir, sg) * Li;
+                }
 
                 sd.mtl.setActiveLobes((uint)LobeType::SpecularReflection);
                 specular = mi.eval(sd, dir, sg) * Li;

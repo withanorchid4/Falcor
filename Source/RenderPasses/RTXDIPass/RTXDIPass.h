@@ -84,4 +84,5 @@ private:
     uint2 mFrameDim = {0, 0};
     bool mOptionsChanged = false;
     bool mGBufferAdjustShadingNormals = false;
+    bool mExcludeEnvDiffuse = false; ///< GI owns diffuse sky lighting; retain environment specular and background.
 };

@@ -19,15 +19,37 @@ DDGI 无需手动 Bake，也不读取或写入静态探针缓存。移动相机�
 
 RTXDI 的 diffuse/specular illumination 已去除反射率，分别送入现有 NRD 3.1.0-falcor 的 `RelaxDiffuseSpecular`。`DirectDenoiser` 使用世界空间运动、线性深度、法线和粗糙度做时空降噪；`DirectModulate` 再乘回反射率，加回绕过降噪的自发光与环境背景。DDGI 向 `DirectModulate.output` 加上 `DDGI.indirect`，不会重复叠加自发光、背景，也不对探针间接光做屏幕降噪。`DirectLighting.color` 保留原始直接光，供调试对照。
 
-探针射线仍在命中点独立计算直接光，再加入上一帧 DDGI 的漫反射反馈；屏幕空间 RTXDI reservoir 不用于任意探针命中点。射线直接命中发光面或逃逸到环境时，不把这部分直接照明再次写入探针。这样 `DDGI.indirect` 只表示至少经过一次额外表面散射的漫反射贡献，避免和画面的直接光重复相加。两个 NVIDIA SDK 的原始算法内核均保持不变。
+环境光遵循 RTXGI-DDGI 1.3.7 官方 Test Harness 的分工：探针射线 miss 时写入天空辐射度；命中点计算局部灯光直接照明，再查询上一轮探针辐照度作为漫反射反馈，不再额外采样环境漫反射。Falcor 保留 HDR 环境贴图的方向、旋转与强度，替代官方示例的常量 `skyRadiance`。普通 DDGI 与 WRC 使用同一套 miss 和命中点着色逻辑；屏幕空间 RTXDI reservoir 不用于探针命中点。
+
+`scripts/RTXGIDDGI.py` 为 RTXDIPass 设置 `excludeEnvDiffuse=true`：最终着色时仅剔除环境样本的漫反射贡献，保留环境镜面反射、自发光和背景。该选项默认关闭，其他 RTXDI 渲染图保持原行为。DDGI 的内置直接光回退路径同样只计算环境镜面反射。由此 `DDGI.indirect` 包含天空直接照到表面的漫反射以及多次反弹；关闭 **Enable DDGI** 也会移除这部分天空漫反射。发光面仍由 Falcor 的显式光源采样处理，SDK 原始算法内核保持不变。
+
+```text
+天空 → 探针 miss → 探针辐照度 → 表面漫反射
+局部灯光 → 探针命中点着色 → 探针辐照度 → 表面漫反射
+环境镜面反射、局部直接光、自发光和背景 → RTXDI/回退路径 → 合成
+```
 
 重置后的探针历史权重从 `updatedFrames / (updatedFrames + 1)` 逐渐提高，最大不超过设置的 `hysteresis`；前 32 帧关闭 DDGI SDK 的增亮限幅，之后恢复。这可加快冷启动收敛，同时保留稳定运行时的历史融合。ReSTIR DI 改善直接光采样，NRD 降低采样结果的噪声；本图没有 TAA，轮廓锯齿与降噪造成的细节损失仍可能存在。
 
 在 `DirectDenoiser` 面板关闭 **Enabled**，可对照原始 RTXDI 直接光。关闭后跳过 NRD 计算，仅旁路信号；旁路输出为半精度，因此和 `DirectLighting.color` 会有小量舍入差异。重新启用会清空 NRD 历史，不清空 DDGI 探针。`maxIntensity` 默认设为 `10000`，限制的是去反射率后的信号亮度；极高亮信号仍可能被截断，需要按场景调整。
 
-在 `DDGI` 面板关闭 **Use RTXDI direct light**，可原位对照此前每类光源单次采样的直接光；切换不会清空探针历史。RTXDI 采样参数在 `DirectLighting` 面板调整。这个对照开关只改变合成所用的直接光，连接着的 RTXDI pass 仍会执行，因此不能用它直接测量旧版的独立运行耗时。**Indirect only** 会隐藏所有直接光、自发光和环境背景。
+在 `DDGI` 面板关闭 **Use RTXDI direct light**，可对照每类光源单次采样的回退路径；切换不会清空探针历史。RTXDI 采样参数在 `DirectLighting` 面板调整。这个开关只改变合成所用的直接光，连接着的 RTXDI pass 仍会执行，因此不能用它直接测量回退路径的独立运行耗时。**Indirect only** 只显示 DDGI 提供的漫反射，其中包含天空漫反射；局部直接光、自发光、镜面反射及环境背景被隐藏。
 
 Room 原有环境图含非有限 HDR 像素。DDGI 与 RTXDI 的 Falcor 适配层各维护一份 GPU 副本，将非有限或负的 HDR 通道置零后生成采样分布；各自的实际照明查询与背景查询使用相同的清理数据，并保留场景的环境强度和旋转。这避免个别异常 HDR 像素污染整个采样层级，不会修改场景或磁盘上的原始资产。
+
+## 环境光对齐验证（2026-11-15）
+
+环境光分工专项可用 `python tests/ddgi/run_environment_validation.py --root F:/` 重跑。测试生成单位亮度天空和灰色平面，验证天空进入 DDGI、RTXDI 不重复计算天空漫反射、保留镜面反射与背景，以及普通路径、WRC、回退路径和环境强度变化。输出位于 `build/ddgi-environment-validation/`。
+
+2026-11-15 环境光对齐后，本机 D3D12 Release 验证通过：
+
+| 验证 | 结果文件 | 结果 |
+| --- | --- | --- |
+| 环境光专项 | `build/ddgi-environment-validation/20261115-214745-8392ad5a/results.json` | 普通路径与 WRC 旁路最大误差为 0；天空强度缩至 1/4 后，DDGI 均值比例为 0.2499996；镜面反射、背景和通用 RTXDI 默认行为保留 |
+| DDGI 基础回归 | `build/ddgi-validation/20261115-214209-3e279cfd/results.json` | Cornell/Room、30 张 DDGI HDR、动态光照、冻结恢复、重定位分类和尺寸切换通过 |
+| RTXDI + NRD 回归 | `build/nrd-ddgi-validation/20261115-214600-92bbed88/results.json` | 560 张 HDR 检查通过；同帧合成最大误差约 3.82e-6 |
+
+环境专项验证光照分工及动态响应；探针有限角分辨率、插值和体积边缘仍影响绝对照度，未据此宣称与路径追踪画质一致。下文 2026-10 的结果保留为修改前的历史记录。
 
 ## 初始参数与接口
 

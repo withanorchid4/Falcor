@@ -34,7 +34,7 @@ void traceWRC()
 
     if (payload.hitT < 0.f)
     {
-        DDGIStoreProbeRayMiss(gRayData, outputCoords, volume, float3(0.f));
+        DDGIStoreProbeRayMiss(gRayData, outputCoords, volume, evaluateProbeMiss(direction));
         return;
     }
     if (payload.backFace != 0)

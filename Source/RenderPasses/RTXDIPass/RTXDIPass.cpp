@@ -61,6 +61,7 @@ const Falcor::ChannelList kOutputChannels = {
 
 // Scripting options.
 const char* kOptions = "options";
+const char* kExcludeEnvDiffuse = "excludeEnvDiffuse";
 } // namespace
 
 // What passes does this DLL expose?  Register them here
@@ -80,6 +81,8 @@ void RTXDIPass::parseProperties(const Properties& props)
     {
         if (key == kOptions)
             mOptions = value;
+        else if (key == kExcludeEnvDiffuse)
+            mExcludeEnvDiffuse = value;
         else
             logWarning("Unknown property '{}' in RTXDIPass properties.", key);
     }
@@ -168,6 +171,7 @@ Properties RTXDIPass::getProperties() const
 {
     Properties props;
     props[kOptions] = mOptions;
+    props[kExcludeEnvDiffuse] = mExcludeEnvDiffuse;
     return props;
 }
 
@@ -264,6 +268,7 @@ void RTXDIPass::finalShading(RenderContext* pRenderContext, const ref<Texture>& 
     auto var = rootVar["gFinalShading"];
     var["vbuffer"] = pVBuffer;
     var["frameDim"] = mFrameDim;
+    var["excludeEnvDiffuse"] = mExcludeEnvDiffuse;
 
     // Bind output channels as UAV buffers.
     auto bind = [&](const ChannelDesc& channel)

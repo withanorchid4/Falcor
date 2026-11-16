@@ -39,10 +39,12 @@
 #include "Core/API/Device.h"
 #include "Core/API/RenderContext.h"
 #include "Core/API/IndirectCommands.h"
+#include "Core/Platform/OS.h"
 #include "Utils/StringUtils.h"
 #include "Utils/Math/Common.h"
 #include "Utils/Math/MathHelpers.h"
 #include "Utils/Math/Vector.h"
+#include "Utils/Math/VectorJson.h"
 #include "Utils/Timing/Profiler.h"
 #include "Utils/UI/InputTypes.h"
 #include "Utils/Scripting/ScriptWriter.h"
@@ -52,7 +54,9 @@
 #include <numeric>
 #include <sstream>
 #include <algorithm>
+#include <cctype>
 #include <execution>
+#include <nlohmann/json.hpp>
 
 namespace Falcor
 {
@@ -62,6 +66,105 @@ namespace Falcor
 
     namespace
     {
+        using CameraPresetJson = nlohmann::json;
+
+        std::filesystem::path getCameraPresetFilePath()
+        {
+            return getAppDataDirectory() / "NVIDIA/Falcor/CameraPresets.json";
+        }
+
+        std::filesystem::path getCameraPresetScenePath(const Scene& scene)
+        {
+            const auto importPaths = scene.getImportPaths();
+            return importPaths.empty() ? scene.getPath() : importPaths.front();
+        }
+
+        std::string getCameraPresetKey(const std::filesystem::path& scenePath)
+        {
+            if (scenePath.empty()) return {};
+
+            std::error_code error;
+            auto normalizedPath = std::filesystem::weakly_canonical(scenePath, error);
+            if (error) normalizedPath = std::filesystem::absolute(scenePath, error).lexically_normal();
+            std::string key = normalizedPath.generic_string();
+#if FALCOR_WINDOWS
+            std::transform(key.begin(), key.end(), key.begin(), [](unsigned char c) { return (char)std::tolower(c); });
+#endif
+            return key;
+        }
+
+        bool loadCameraPreset(const std::filesystem::path& scenePath, const ref<Camera>& camera)
+        {
+            const std::string key = getCameraPresetKey(scenePath);
+            if (key.empty() || !camera) return false;
+
+            const auto filePath = getCameraPresetFilePath();
+            std::ifstream file(filePath);
+            if (!file) return false;
+
+            try
+            {
+                CameraPresetJson root = CameraPresetJson::parse(file);
+                const auto it = root.find(key);
+                if (it == root.end()) return false;
+
+                const auto& preset = *it;
+                camera->setPosition(preset.at("position").get<float3>());
+                camera->setTarget(preset.at("target").get<float3>());
+                camera->setUpVector(preset.at("up").get<float3>());
+                camera->setFocalLength(preset.at("focalLength").get<float>());
+                camera->setIsAnimated(false);
+                return true;
+            }
+            catch (const std::exception& e)
+            {
+                logWarning("Failed to load camera preset '{}': {}", filePath, e.what());
+                return false;
+            }
+        }
+
+        bool saveCameraPreset(const std::filesystem::path& scenePath, const ref<Camera>& camera)
+        {
+            const std::string key = getCameraPresetKey(scenePath);
+            if (key.empty() || !camera) return false;
+
+            const auto filePath = getCameraPresetFilePath();
+            CameraPresetJson root = CameraPresetJson::object();
+            {
+                std::ifstream file(filePath);
+                if (file)
+                {
+                    try { root = CameraPresetJson::parse(file); }
+                    catch (const std::exception& e) { logWarning("Resetting invalid camera preset file '{}': {}", filePath, e.what()); }
+                }
+            }
+            if (!root.is_object()) root = CameraPresetJson::object();
+
+            root[key] = {
+                { "position", camera->getPosition() },
+                { "target", camera->getTarget() },
+                { "up", camera->getUpVector() },
+                { "focalLength", camera->getFocalLength() },
+            };
+
+            std::error_code error;
+            std::filesystem::create_directories(filePath.parent_path(), error);
+            if (error)
+            {
+                logWarning("Failed to create camera preset directory '{}': {}", filePath.parent_path(), error.message());
+                return false;
+            }
+
+            std::ofstream file(filePath, std::ios::out | std::ios::trunc);
+            if (!file)
+            {
+                logWarning("Failed to write camera preset file '{}'.", filePath);
+                return false;
+            }
+            file << root.dump(2) << std::endl;
+            return file.good();
+        }
+
         // Large scenes are split into multiple BLAS groups in order to reduce build memory usage.
         // The target is max 0.5GB intermediate memory per BLAS group. Note that this is not a strict limit.
         const size_t kMaxBLASBuildMemory = 1ull << 29;
@@ -1269,6 +1372,10 @@ namespace Falcor
         }
         setCameraController(mCamCtrlType);
         initializeCameras();
+        if (loadCameraPreset(getCameraPresetScenePath(*this), getCamera()))
+        {
+            logInfo("Restored startup camera for scene '{}'.", getCameraPresetScenePath(*this));
+        }
         addViewpoint();
         updateLights(true);
         updateGridVolumes(true);
@@ -2054,6 +2161,19 @@ namespace Falcor
         if (auto cameraGroup = widget.group("Camera"))
         {
             camera->renderUI(cameraGroup);
+            cameraGroup.text("Startup camera is saved per scene in the user settings folder.");
+            if (cameraGroup.button("Save Startup Camera"))
+            {
+                const auto scenePath = getCameraPresetScenePath(*this);
+                if (saveCameraPreset(scenePath, camera))
+                {
+                    if (!mViewpoints.empty())
+                    {
+                        mViewpoints[0] = { mSelectedCamera, camera->getPosition(), camera->getTarget(), camera->getUpVector() };
+                    }
+                    logInfo("Saved startup camera for scene '{}' to '{}'.", scenePath, getCameraPresetFilePath());
+                }
+            }
         }
 
         if (auto renderSettingsGroup = widget.group("Render Settings"))

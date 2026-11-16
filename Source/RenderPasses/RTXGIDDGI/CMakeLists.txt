@@ -7,6 +7,7 @@ target_sources(RTXGIDDGI PRIVATE
     RTXGIDDGI.rt.slang
     WorldRadianceCache.rt.slang
     WorldRadianceCache.slang
+    WorldRadianceCacheStress.slang
     WorldRadianceCache.cs.slang
     WorldRadianceCacheDebug.slang
     RTXGIConfig.slang

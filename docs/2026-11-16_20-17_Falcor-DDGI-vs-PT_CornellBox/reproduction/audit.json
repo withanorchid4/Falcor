@@ -1,0 +1,9 @@
+{
+  "Accumulate": {
+    "default_vs_minimalpayload_max_abs_error": 0.0
+  },
+  "AccumulateAll": {
+    "default_vs_minimalpayload_max_abs_error": 0.0
+  },
+  "lambert_ddgi_vs_native_max_abs_error": 0.0
+}

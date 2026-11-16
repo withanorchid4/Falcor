@@ -1,0 +1,16 @@
+// Shared configuration for the unmodified NVIDIA RTXGI-DDGI shader library.
+// Falcor owns resources, bindings, and scheduling; the SDK supplies DDGI kernels.
+#ifndef FALCOR_RTXGI_DDGI_CONFIG
+#define FALCOR_RTXGI_DDGI_CONFIG
+
+#define HLSL 1
+#define RTXGI_COORDINATE_SYSTEM 2
+#define RTXGI_DDGI_RESOURCE_MANAGEMENT 0
+#define RTXGI_DDGI_BINDLESS_RESOURCES 0
+#define RTXGI_DDGI_SHADER_REFLECTION 1
+#define RTXGI_DDGI_USE_SHADER_CONFIG_FILE 0
+#define RTXGI_DDGI_DEBUG_PROBE_INDEXING 0
+#define RTXGI_DDGI_DEBUG_OCTAHEDRAL_INDEXING 0
+#define RTXGI_DDGI_DEBUG_BORDER_COPY_INDEXING 0
+
+#endif

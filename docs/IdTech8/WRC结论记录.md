@@ -287,3 +287,153 @@ WRC 五个阶段的中位数相加为 **0.126848 ms**，比原路径追踪与就
 总区间包含对应子阶段，不能再与上表重复相加；整个 DDGI pass 也不包含独立的 RTXDI、NRD pass。
 
 数据来源：[同批次汇总](../../build/wrc-room-cells/20261028-011601-5510b09d/results.json) 中的 `configurations.native.gpu` 与 `configurations.cell001.gpu`。WRC 的原始配置和计数见 [正序记录](../../build/wrc-room-cells/20261028-011601-5510b09d/repeat-0/cell001/complete.json) 和 [反序记录](../../build/wrc-room-cells/20261028-011601-5510b09d/repeat-1/cell001/complete.json)。
+
+## 005：放大材质分歧后，分批 dispatch 在什么条件下获益？
+
+日期：2026-10-28。场景为 `materials.pyscene`，包含 11 种材质类型。
+
+**本次实验中，约 97,000 个着色条目、每种材质增加 10,000 轮独立循环时，分批使 WRCShade 从 2.776448 ms 降至 1.513088 ms，减少 45.50%；整个 probe 更新从 3.544832 ms 降至 2.302464 ms，减少 35.05%。** 原规模约 4,100 个条目时，即使增加同样的循环，分批仍较慢。未加合成负载时，四种配置均是混合 dispatch 更快。
+
+### 两种调度策略的实验流程
+
+两个模式都启用 WRC（`useWRC=true`）：先记录射线命中，再通过哈希合并选出每个占用单元的代表点，最后比较这些代表点的两种着色调度方式。
+
+```text
+WRCTrace：追踪 probe 射线，记录命中信息
+    ↓
+WRCBuild：按相同的完整键进行哈希合并，每个占用单元选一个代表点
+    ↓
+组织本帧的活动缓存条目列表
+    ├─ 混合：所有活动条目进入一个列表
+    │         wrcGroupByMaterial=false
+    └─ 分批：按 MaterialType bucket 进入 11 个列表
+              wrcGroupByMaterial=true
+    ↓
+WRCPrepare：根据各列表长度生成间接调度参数
+    ↓
+WRCShade：一次混合 dispatch / 11 次按类型 dispatch
+          对代表点着色，将 radiance 写入对应缓存单元
+    ↓
+WRCGather：各条射线取回所属单元的 radiance，写入 probe ray data
+    ↓
+SDKUpdate：更新探针 irradiance、距离及探针状态
+```
+
+活动列表在 `WRCBuild` 插入新单元时构建。这里的“所有缓存”指本帧需要着色的活动条目；空槽不参与着色。本实验设置 `wrcMaxAge=0`，每个活动单元本帧都重新计算 radiance。射线命中记录与已着色的 radiance 缓存是两个阶段，记录命中时尚未完成代表点着色。
+
+所谓“分 shader”实际按材质类型组织条目，11 次 dispatch 调用同一个 `shadeWRC` compute shader。两个模式使用相同的射线配置、哈希键、合并规则、实际着色算法，以及配对的合成负载模式和循环次数；主要变量是列表组织与 dispatch 方式。两种模式分别执行完整更新流程，代表点选择和列表顺序可以随 GPU 调度变化。
+
+缩小单元后，更多命中会成为独立的活动条目，所以混合模式即使仍然只有一次 dispatch，也要执行更多线程和着色工作。最后的细单元配置同时将 `cell scale` 从 0.1 改为 0.01、最大 LOD 倍率从 16 改为 1；探针数量与每 probe 射线数保持上一组的设置。
+
+### 实际材质分歧的位置
+
+函数名是 `setupMaterialInstance()`。当前调用关系为：
+
+```text
+shadeWRC → wrcShadeHit
+  → gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0))
+    → getMaterial(sd.materialID)
+      → getMaterialType → createDynamicObject<IMaterial>(type, data)
+    → material.setupMaterialInstance(...)   // 各材质类型的接口实现
+  → material.getProperties(sd)              // IMaterialInstance 接口
+  → evaluateDirect(..., diffuseOnly=true) + DDGI irradiance 反馈
+```
+
+证据见 [MaterialFactory.slang](../../Source/Falcor/Scene/Material/MaterialFactory.slang) 的 `getMaterial()`、`getMaterialInstance()` 和 [IMaterial.slang](../../Source/Falcor/Rendering/Materials/IMaterial.slang) 的接口声明。普通 DDGI 和 WRC 都通过这套材质工厂初始化命中点材质。探针直接光采用简化的 diffuse 求值，但材质初始化仍可能按类型和参数走不同代码。
+
+这是 Slang 的动态接口分派。当前分组让一批条目的材质类型相同；11 批仍使用同一个 compute shader，并未针对每种材质单独编译专用版本，也不能消除同类型材质内部的所有参数分支。
+
+### 合成负载与对照
+
+实验限定在 WRC 的材质初始化附近，真实 Standard、Hair、Cloth 等材质实现保持原样。新增 [WorldRadianceCacheStress.slang](../../Source/RenderPasses/RTXGIDDGI/WorldRadianceCacheStress.slang)，按现有材质类型 bucket 选择 11 条不同循环，模拟昂贵的材质类型分支。
+
+| 属性 | 含义 |
+| --- | --- |
+| `wrcStressMode=0` | 关闭合成负载，编译时移除其调用；默认值 |
+| `wrcStressMode=1` | 所有类型执行同一个循环，作为共同代码对照 |
+| `wrcStressMode=2` | 11 个 bucket 各自执行不同顺序的循环 |
+| `wrcStressIterations` | 运行时循环次数，默认 0，上限 10,000 |
+| `wrcStressStats` | wave 类型数与校验值诊断；正式计时关闭 |
+
+每轮包含两次移位、两次 XOR、一次整数乘法和一次加法，后一步依赖前一步结果。各类型改变这些运算的顺序、移位数和常数。这是每轮相同数量的源码级运算，不保证 GPU 机器指令数完全相同。输入来自实际命中位置与 ray ID，结果写入 WRC radiance 未用于光照的 alpha 通道，防止无效代码删除；RGB、随机采样流和 irradiance 计算未添加合成贡献。
+
+独立包装实际 stress helper，以 Slang/DXC `-O3`、`cs_6_5` 编译后，DXIL 保留了类型 switch、11 个循环回边和校验值 UAV 写出。此检查针对该 helper，不是完整 WRC shader 的 GPU ISA 分析。[编译检查记录](../../build/wrc-stress-inspect/compiler-check.json)；[DXIL](../../build/wrc-stress-inspect/inspect.dxil.txt)。运行时也验证了非零校验值、受压条目数与实际着色条目数相等，以及关闭实验后校验与受压计数归零。
+
+### 条目规模与计时方法
+
+RTX 5080，驱动 617.14，D3D12 Release，输出 320×240；RTXDI、NRD、探针重定位与分类保持开启。WRC 跨帧复用关闭，每条目一次实际光照采样。四组统一使用 262,144 个 hash 槽、64 步探测预算，以避免回退着色混入 gather。所有统计快照中回退数均为 0。
+
+| 配置 | Probe 数量 × rays/probe | 总射线预算 | Cell scale / 最大 LOD 倍率 | 平均着色条目，约 |
+| --- | --- | ---: | --- | ---: |
+| 原规模 | 8×6×8 × 256 | 98,304 | 0.1 / 16 | 4,100 |
+| 探针 8 倍 | 16×12×16 × 256 | 786,432 | 0.1 / 16 | 13,200 |
+| 射线预算 16 倍 | 16×12×16 × 512 | 1,572,864 | 0.1 / 16 | 18,300 |
+| 细单元 | 16×12×16 × 512 | 1,572,864 | 0.01 / 1 | 97,000 |
+
+前三组说明，增加射线预算不等于同比增加着色条目，WRC 会合并命中。第四组缩小单元并关闭 LOD 放大，减少合并。它也改变了代表点分布与列表局部性，因此跨配置的差异不能全部归因于条目数量；每行的分批/混合比较使用相同配置。
+
+每种配置运行两个独立进程，使用 ABBA/BAAB 顺序，并反转负载扫描顺序。初始预热 128 帧，每窗口切换后预热 64 帧，再启用 profiler 预热 8 帧，随后渲染 96 帧。Falcor capture 返回 95 条 timestamp 记录，丢弃前 5 条，取剩余 90 条的中位数；下表取每模式四个窗口中位数的中位数。共 8 个正式进程、192 个计时窗口。
+
+计时仍使用第 003 条说明的 Falcor GPU timestamp；`WRCShade` 包含全部 1 次或 11 次着色 dispatch。wave 诊断、统计读回和截图在计时窗口之外，每窗口取四个统计快照。材料类型均为 11，分组后每个有效 wave 只有一种类型；混合模式平均约为 6.5、7.0、7.3、4.4 种。列表顺序及代表点存在调度差异，两个模式的条目数接近但不强制完全相同。
+
+### 着色耗时：混合 / 分批
+
+以下单位均为 ms，负载为 **按类型执行不同循环**，0 表示关闭合成负载。
+
+| 每条目循环次数 | 原规模，约 4,100 条目 | 探针 8 倍，约 13,200 条目 | 射线 16 倍，约 18,300 条目 | 细单元，约 97,000 条目 |
+| ---: | ---: | ---: | ---: | ---: |
+| 0 | 0.025856 / 0.217600 | 0.033024 / 0.245696 | 0.038784 / 0.260224 | 0.094848 / 0.246016 |
+| 64 | 0.029568 / 0.226176 | 0.036608 / 0.255040 | 0.042112 / 0.268352 | 0.104320 / 0.253568 |
+| 512 | 0.080704 / 0.282048 | 0.088960 / 0.310464 | 0.096384 / 0.323968 | 0.210112 / 0.309760 |
+| 2,048 | 0.255872 / 0.473472 | 0.280448 / 0.502272 | 0.301440 / 0.515712 | **0.624768 / 0.504256** |
+| 10,000 | 1.162048 / 1.466688 | 1.272320 / 1.493760 | 1.367104 / 1.507072 | **2.776448 / 1.513088** |
+
+细单元配置中，测试点从 512 增到 2,048 次循环后开始观察到分批获益：着色减少 19.29%，完整 probe 更新从 1.385216 ms 降至 1.293952 ms，减少 6.59%。这只是本次采样点之间的变化，不是通用阈值。
+
+10,000 次循环时，细单元配置的四个窗口中位数范围为：混合 **2.753920–2.794880 ms**，分批 **1.509376–1.514752 ms**，两个运行顺序得到一致的胜负关系。
+
+同为 10,000 轮、但所有类型执行**共同循环**时：
+
+| 配置 | 混合 WRCShade | 分批 WRCShade |
+| --- | ---: | ---: |
+| 原规模 | 0.136256 | 1.438464 |
+| 探针 8 倍 | 0.148736 | 1.465088 |
+| 射线 16 倍 | 0.151680 | 1.477824 |
+| 细单元 | 0.609984 | 1.480960 |
+
+共同循环在四种规模下均是混合更快。昂贵代码本身不足以让分批获益；本实验的反转与类型分歧有关。
+
+### 完整 probe 更新：细单元、10,000 次类型循环
+
+| GPU 阶段（ms） | 混合一次 dispatch | 分类型 11 次 dispatch |
+| --- | ---: | ---: |
+| WRCTrace | 0.167936 | 0.167616 |
+| WRCBuild | 0.144640 | 0.180864 |
+| WRCPrepare | 0.002304 | 0.002048 |
+| WRCShade | 2.776448 | 1.513088 |
+| WRCGather | 0.127488 | 0.124992 |
+| SDKUpdate | 0.311552 | 0.310720 |
+| **ProbeUpdate 总区间** | **3.544832** | **2.302464** |
+
+分组列表构建增加约 0.036224 ms，但着色减少约 1.263360 ms，最终仍有收益。总区间含阶段间清零与屏障；各项独立中位数不保证相加等于总区间。该总区间也不等于整个画面或包括 RTXDI、NRD 的总 GPU 帧时间。
+
+### 结论与适用范围
+
+分批的代价包括额外调度、列表维护以及小批次并行度不足；收益来自同一 wave 不再执行多种材质类型的长分支。本次约 4,100 条目拆成 11 批后，即使每个条目很重，仍然比混合慢；约 97,000 条目配合足够重的类型分支时，收益才超过这些成本。小批次资源利用率的解释来自时序与共同循环对照，本次没有采集硬件 occupancy 或 stall 计数器。
+
+这验证了当前分组方式存在获益条件，也保留了第 001 条的结论：**现有材料的实际 DDGI 着色仍较轻，当前四种规模下关闭合成负载后，分批都更慢。** 此负载模拟类型相关的依赖 ALU 运算，未模拟纹理访问、寄存器压力增长或真实复杂 BSDF；不能把 1.84 倍的合成着色加速当作当前真实材质的加速。
+
+Release 构建成功；8 个正式进程正常退出，8 张最终间接光 HDR 通过有限值、非黑、非负检查。全部快照通过条目/射线守恒、零回退、零跨帧复用、零非有限结果检查。两批运行保存的源码和二进制摘要与最终实验源码相符。默认合成负载关闭，所有 worker 结束前也验证了关闭后的路径；未改全局探针默认值或自动启用材质分组策略。
+
+复现：
+
+```powershell
+python tests/ddgi/run_wrc_stress_benchmark.py --frames 96
+python tests/ddgi/run_wrc_stress_benchmark.py --workloads rays16x --dense --frames 96
+```
+
+界面位于 WRC 设置下的 `Synthetic shading load`，选择 `Per-type loops` 或 `Common loop`，设置 `Stress iterations`，再切换 `Group shading by material`。做同类比较时保持 `Max age=0`，并关注实际着色条目数。
+
+- [前三种规模：完整数据](../../build/wrc-stress/20261028-023020-b6cb3522/results.json)；[运行摘要](../../build/wrc-stress/20261028-023020-b6cb3522/run.json)
+- [细单元：完整数据](../../build/wrc-stress/20261028-023454-4cc619cd/results.json)；[运行摘要](../../build/wrc-stress/20261028-023454-4cc619cd/run.json)
+- [基准驱动脚本](../../tests/ddgi/run_wrc_stress_benchmark.py)；[Mogwai worker](../../tests/ddgi/wrc_stress_benchmark.py)

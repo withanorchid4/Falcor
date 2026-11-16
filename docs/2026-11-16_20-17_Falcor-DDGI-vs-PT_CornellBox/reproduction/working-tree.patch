@@ -1,0 +1,292 @@
+diff --git a/Source/RenderPasses/RTXGIDDGI/CMakeLists.txt b/Source/RenderPasses/RTXGIDDGI/CMakeLists.txt
+index 2a572272..8d5f1a9f 100644
+--- a/Source/RenderPasses/RTXGIDDGI/CMakeLists.txt
++++ b/Source/RenderPasses/RTXGIDDGI/CMakeLists.txt
+@@ -7,6 +7,7 @@ target_sources(RTXGIDDGI PRIVATE
+     RTXGIDDGI.rt.slang
+     WorldRadianceCache.rt.slang
+     WorldRadianceCache.slang
++    WorldRadianceCacheStress.slang
+     WorldRadianceCache.cs.slang
+     WorldRadianceCacheDebug.slang
+     RTXGIConfig.slang
+diff --git a/Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.cpp b/Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.cpp
+index d7648f57..845b8690 100644
+--- a/Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.cpp
++++ b/Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.cpp
+@@ -78,6 +78,9 @@ Properties RTXGIDDGI::getProperties() const
+     p["useRTXDI"] = mOptions.useRTXDI;
+     p["useWRC"] = mOptions.useWRC;
+     p["wrcGroupByMaterial"] = mOptions.wrcGroupByMaterial;
++    p["wrcStressMode"] = mOptions.wrcStressMode;
++    p["wrcStressIterations"] = mOptions.wrcStressIterations;
++    p["wrcStressStats"] = mOptions.wrcStressStats;
+     p["wrcCellScale"] = mOptions.wrcCellScale;
+     p["wrcLodDistance"] = mOptions.wrcLodDistance;
+     p["wrcMaxLod"] = mOptions.wrcMaxLod;
+@@ -119,6 +122,9 @@ void RTXGIDDGI::setProperties(const Properties& properties)
+         else if (name == "useRTXDI") next.useRTXDI = value;
+         else if (name == "useWRC") next.useWRC = value;
+         else if (name == "wrcGroupByMaterial") next.wrcGroupByMaterial = value;
++        else if (name == "wrcStressMode") next.wrcStressMode = value;
++        else if (name == "wrcStressIterations") next.wrcStressIterations = value;
++        else if (name == "wrcStressStats") next.wrcStressStats = value;
+         else if (name == "wrcCellScale") next.wrcCellScale = value;
+         else if (name == "wrcLodDistance") next.wrcLodDistance = value;
+         else if (name == "wrcMaxLod") next.wrcMaxLod = value;
+@@ -150,6 +156,8 @@ void RTXGIDDGI::setProperties(const Properties& properties)
+     FALCOR_CHECK(next.wrcTableSize >= 64 && next.wrcTableSize <= 1048576 && (next.wrcTableSize & (next.wrcTableSize - 1)) == 0,
+         "WRC table size must be a power of two between 64 and 1048576.");
+     FALCOR_CHECK(next.wrcMaxAge <= 8, "WRC max age must be 0..8 probe updates.");
++    FALCOR_CHECK(next.wrcStressMode <= 2, "WRC stress mode must be 0 (off), 1 (common), or 2 (per type).");
++    FALCOR_CHECK(next.wrcStressIterations <= 10000, "WRC stress iterations must be 0..10000.");
+     FALCOR_CHECK(next.wrcShadeSamples >= 1 && next.wrcShadeSamples <= 8, "WRC shading samples must be 1..8.");
+     FALCOR_CHECK(next.wrcCellsLod <= 64 && (next.wrcCellsLod == 0 || (next.wrcCellsLod & (next.wrcCellsLod - 1)) == 0),
+         "WRC cell overlay LOD must be 0 or a power of two through 64.");
+@@ -162,6 +170,8 @@ void RTXGIDDGI::setProperties(const Properties& properties)
+     // Invalidate the old active-list layout, including when probe updates are frozen.
+     // Scheduling changes preserve the accumulated DDGI field.
+     if (next.wrcGroupByMaterial != mOptions.wrcGroupByMaterial) mWrcResetPending = true;
++    if (next.wrcStressMode != mOptions.wrcStressMode || next.wrcStressIterations != mOptions.wrcStressIterations)
++        mWrcResetPending = true;
+     if (next.wrcTableSize != mOptions.wrcTableSize) mWrcReallocate = true;
+     if (next.useWRC != mOptions.useWRC || next.wrcCellScale != mOptions.wrcCellScale ||
+         next.wrcLodDistance != mOptions.wrcLodDistance || next.wrcMaxLod != mOptions.wrcMaxLod ||
+@@ -394,6 +404,9 @@ void RTXGIDDGI::bindWrcResources(const ShaderVar& root, uint32_t shaderBucket)
+     cb["gWrcProbeLimit"] = mOptions.wrcProbeLimit;
+     cb["gWrcTypeCount"] = mWrcTypeCount;
+     cb["gWrcGroupByMaterial"] = uint32_t(mOptions.wrcGroupByMaterial);
++    cb["gWrcStressMode"] = mOptions.wrcStressMode;
++    cb["gWrcStressIterations"] = mOptions.wrcStressIterations;
++    cb["gWrcStressStats"] = uint32_t(mOptions.wrcStressStats);
+     cb["gWrcShaderBucket"] = shaderBucket;
+     cb["gWrcRayCount"] = mOptions.rays * mOptions.counts.x * mOptions.counts.y * mOptions.counts.z;
+ }
+@@ -420,6 +433,7 @@ void RTXGIDDGI::bindWrcCompute(RenderContext* context, const ref<ComputePass>& p
+     changed |= program->addDefine("OUTPUT_INDIRECT", "0");
+     changed |= program->addDefine("HAS_DIRECT_LIGHTING", "0");
+     changed |= program->addDefine("is_valid_gViewW", "0");
++    changed |= program->addDefine("WRC_STRESS_ENABLED", mOptions.wrcStressMode && mOptions.wrcStressIterations ? "1" : "0");
+     if (changed || !pass->hasVars()) pass->setVars(ProgramVars::create(mpDevice, program.get()));
+     auto root = pass->getRootVar();
+     mpScene->bindShaderDataForRaytracing(context, root["gScene"], 0);
+@@ -757,6 +771,8 @@ Properties RTXGIDDGI::getStats() const
+     stats["gridMax"] = mGridMax;
+     stats["wrcEnabled"] = mOptions.useWRC;
+     stats["wrcGroupByMaterial"] = mOptions.wrcGroupByMaterial;
++    stats["wrcStressMode"] = mOptions.wrcStressMode;
++    stats["wrcStressIterations"] = mOptions.wrcStressIterations;
+     stats["showWrcCells"] = mOptions.showWrcCells;
+     stats["wrcCellsLod"] = mOptions.wrcCellsLod;
+     stats["wrcCellSize"] = mOptions.wrcCellScale * std::min(mSpacing.x, std::min(mSpacing.y, mSpacing.z));
+@@ -794,6 +810,10 @@ Properties RTXGIDDGI::getStats() const
+     stats["wrcMaxLod"] = wrcCounters[9];
+     stats["wrcLodRays"] = wrcCounters[10];
+     stats["wrcCrossPrimitiveServedRays"] = wrcCounters[11];
++    stats["wrcWaveTypeSum"] = wrcCounters[12];
++    stats["wrcWaveCount"] = wrcCounters[13];
++    stats["wrcStressChecksum"] = wrcCounters[14];
++    stats["wrcStressEntries"] = wrcCounters[15];
+     stats["wrcActiveEntries"] = activeEntries;
+     stats["wrcShaderGroups"] = shaderGroups;
+     stats["wrcMaterialTypes"] = mWrcTypeCount;
+@@ -880,6 +900,13 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
+         widgets.text("Cache setting changes reset probe history.");
+         if (widgets.checkbox("Group shading by material", options.wrcGroupByMaterial)) p["wrcGroupByMaterial"] = options.wrcGroupByMaterial;
+         widgets.tooltip("On: one compute dispatch per material type. Off: shade all active WRC cells in one mixed dispatch. Preserves probe history; rebuilds WRC lists on the next update.");
++        Gui::DropdownList stressModes = {{0, "Off"}, {1, "Common loop"}, {2, "Per-type loops"}};
++        if (widgets.dropdown("Synthetic shading load", stressModes, options.wrcStressMode)) p["wrcStressMode"] = options.wrcStressMode;
++        if (options.wrcStressMode)
++        {
++            if (widgets.var("Stress iterations", options.wrcStressIterations, 0u, 10000u)) p["wrcStressIterations"] = options.wrcStressIterations;
++            widgets.tooltip("Benchmark-only integer work next to material setup. Writes a checksum to unused WRC alpha; does not change lighting.");
++        }
+         if (widgets.checkbox("Show WRC cells", options.showWrcCells)) p["showWrcCells"] = options.showWrcCells;
+         if (options.showWrcCells)
+         {
+diff --git a/Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.h b/Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.h
+index 104a635d..fe057270 100644
+--- a/Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.h
++++ b/Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.h
+@@ -54,6 +54,9 @@ private:
+         bool useRTXDI = true;
+         bool useWRC = false;
+         bool wrcGroupByMaterial = true;
++        uint32_t wrcStressMode = 0; // Experiment: 0 off, 1 common loop, 2 distinct loops per type.
++        uint32_t wrcStressIterations = 0;
++        bool wrcStressStats = false; // Wave diagnostics; disable during GPU timing.
+         float wrcCellScale = 0.1f;
+         float wrcLodDistance = 8.f; // In units of the smallest probe spacing.
+         uint32_t wrcMaxLod = 16;
+diff --git a/Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.rt.slang b/Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.rt.slang
+index 77803fa4..0803372f 100644
+--- a/Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.rt.slang
++++ b/Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.rt.slang
+@@ -134,6 +134,17 @@ float3 evaluateSafeEnvironment(float3 direction)
+ }
+ #endif
+ 
++// Match the SDK test harness: sky radiance enters the volume on probe misses.
++// Falcor uses its directional HDR environment instead of a constant sky color.
++float3 evaluateProbeMiss(float3 direction)
++{
++#if USE_ENV_LIGHT
++    return evaluateSafeEnvironment(direction);
++#else
++    return float3(0.f);
++#endif
++}
++
+ bool validSurface(ShadingData sd)
+ {
+     bool valid = all(isfinite(sd.posW)) && all(isfinite(sd.faceN)) && all(isfinite(sd.frame.N)) &&
+@@ -260,6 +271,9 @@ float3 evaluateEmissiveDirect(ShadingData sd, IMaterialInstance material, bool d
+ float3 evaluateEnvironmentDirect(ShadingData sd, IMaterialInstance material, bool diffuseOnly, inout SampleGenerator sg)
+ {
+ #if USE_ENV_LIGHT
++    // Diffuse sky lighting is supplied by DDGI, including at probe hit points.
++    // Keep only the camera's specular environment response in the fallback path.
++    if (diffuseOnly) return float3(0.f);
+     EnvMapSample light;
+     if (!gEnvMapSampler.sample(sampleNext2D(sg), light)) return float3(0.f);
+     if (!isfinite(light.pdf) || !all(isfinite(light.dir)))
+@@ -271,6 +285,7 @@ float3 evaluateEnvironmentDirect(ShadingData sd, IMaterialInstance material, boo
+     light.Le = evaluateSafeEnvironment(light.dir);
+     float3 origin = computeRayOrigin(sd.posW, dot(sd.faceN, light.dir) >= 0.f ? sd.faceN : -sd.faceN);
+     if (!traceShadow(origin, light.dir, FLT_MAX)) return float3(0.f);
++    sd.mtl.setActiveLobes((uint)LobeType::SpecularReflection);
+     float3 brdfCosine = evaluateBRDFCosine(sd, material, light.dir, diffuseOnly, sg);
+     return finiteRadiance(brdfCosine * (light.Le / light.pdf), 1u);
+ #else
+@@ -280,7 +295,7 @@ float3 evaluateEnvironmentDirect(ShadingData sd, IMaterialInstance material, boo
+ 
+ float3 evaluateDirect(ShadingData sd, IMaterialInstance material, bool diffuseOnly, inout SampleGenerator sg)
+ {
+-    // One sample from EACH enabled light category, so there is no category PDF.
++    // One sample per light category; diffuse environment lighting comes from DDGI.
+     float3 radiance = evaluateAnalyticDirect(sd, material, diffuseOnly, sg);
+     radiance += evaluateEmissiveDirect(sd, material, diffuseOnly, sg);
+     radiance += evaluateEnvironmentDirect(sd, material, diffuseOnly, sg);
+@@ -328,9 +343,7 @@ void traceProbes()
+ 
+     if (payload.hitT < 0.f)
+     {
+-        // Direct environment and emissive illumination are sampled explicitly
+-        // at surfaces. The DDGI field stores only light scattered by geometry.
+-        DDGIStoreProbeRayMiss(gRayData, outputCoords, volume, float3(0.f));
++        DDGIStoreProbeRayMiss(gRayData, outputCoords, volume, evaluateProbeMiss(direction));
+         return;
+     }
+     if (payload.backFace != 0)
+diff --git a/Source/RenderPasses/RTXGIDDGI/WorldRadianceCache.cs.slang b/Source/RenderPasses/RTXGIDDGI/WorldRadianceCache.cs.slang
+index 8d010810..cce9b050 100644
+--- a/Source/RenderPasses/RTXGIDDGI/WorldRadianceCache.cs.slang
++++ b/Source/RenderPasses/RTXGIDDGI/WorldRadianceCache.cs.slang
+@@ -91,8 +91,26 @@ void shadeWRC(uint3 dispatchThreadID : SV_DispatchThreadID)
+         return;
+     }
+     DDGIVolumeDescGPU volume = UnpackDDGIVolumeDescGPU(DDGIVolumes[0]);
+-    float3 radiance = wrcShadeHit(hit, owner, gWrcShadeSamples, volume);
+-    gWrcRadiance[slot] = float4(radiance, 0.f);
++    uint stressChecksum;
++    float3 radiance = wrcShadeHit(hit, owner, gWrcShadeSamples, volume, stressChecksum);
++    // An observable UAV store keeps the synthetic recurrence alive, even when
++    // wave diagnostics are disabled. Only RGB is consumed by the lighting path.
++    gWrcRadiance[slot] = float4(radiance, float(stressChecksum & 0x00ffffffu));
++    if (gWrcStressStats != 0u)
++    {
++        uint types = WaveActiveBitOr(1u << min(hit.shaderBucket, 31u));
++        uint checksum = WaveActiveBitXor(stressChecksum);
++        uint lanes = WaveActiveCountBits(true);
++        if (WaveIsFirstLane())
++        {
++            InterlockedAdd(gWrcCounters[12], countbits(types));
++            InterlockedAdd(gWrcCounters[13], 1u);
++            InterlockedXor(gWrcCounters[14], checksum);
++#if WRC_STRESS_ENABLED
++            InterlockedAdd(gWrcCounters[15], lanes);
++#endif
++        }
++    }
+     gWrcKeys[slot] = key;
+     gWrcLastUpdate[slot] = gWrcFrame;
+     InterlockedAdd(gWrcCounters[2], 1u);
+@@ -130,7 +148,12 @@ void gatherWRC(uint3 dispatchThreadID : SV_DispatchThreadID)
+     }
+     else
+     {
+-        radiance = wrcShadeHit(hit, rayID, 1u, volume);
++        uint stressChecksum;
++        radiance = wrcShadeHit(hit, rayID, 1u, volume, stressChecksum);
++        // Preserve synthetic work for rare overflow fallback too.
++#if WRC_STRESS_ENABLED
++        InterlockedXor(gWrcCounters[14], stressChecksum);
++#endif
+         InterlockedAdd(gWrcCounters[4], 1u);
+     }
+     uint rayIndex, probeIndex;
+diff --git a/Source/RenderPasses/RTXGIDDGI/WorldRadianceCache.rt.slang b/Source/RenderPasses/RTXGIDDGI/WorldRadianceCache.rt.slang
+index 5292f576..b42f48f1 100644
+--- a/Source/RenderPasses/RTXGIDDGI/WorldRadianceCache.rt.slang
++++ b/Source/RenderPasses/RTXGIDDGI/WorldRadianceCache.rt.slang
+@@ -34,7 +34,7 @@ void traceWRC()
+ 
+     if (payload.hitT < 0.f)
+     {
+-        DDGIStoreProbeRayMiss(gRayData, outputCoords, volume, float3(0.f));
++        DDGIStoreProbeRayMiss(gRayData, outputCoords, volume, evaluateProbeMiss(direction));
+         return;
+     }
+     if (payload.backFace != 0)
+diff --git a/Source/RenderPasses/RTXGIDDGI/WorldRadianceCache.slang b/Source/RenderPasses/RTXGIDDGI/WorldRadianceCache.slang
+index e7b7df5e..babd03d1 100644
+--- a/Source/RenderPasses/RTXGIDDGI/WorldRadianceCache.slang
++++ b/Source/RenderPasses/RTXGIDDGI/WorldRadianceCache.slang
+@@ -3,6 +3,7 @@
+ #ifndef FALCOR_DDGI_WORLD_RADIANCE_CACHE
+ #define FALCOR_DDGI_WORLD_RADIANCE_CACHE
+ #include "RTXGIDDGI.rt.slang"
++#include "WorldRadianceCacheStress.slang"
+ 
+ cbuffer WrcCB
+ {
+@@ -19,6 +20,9 @@ cbuffer WrcCB
+     uint gWrcShaderBucket;
+     uint gWrcRayCount;
+     uint gWrcGroupByMaterial;
++    uint gWrcStressMode;
++    uint gWrcStressIterations;
++    uint gWrcStressStats;
+ }
+ 
+ // Host strides are exactly 64 and 32 bytes. A fixed uint4 accommodates both
+@@ -59,7 +63,8 @@ StructuredBuffer<uint> gWrcTypeMap;
+ // 0 eligible rays, 1 occupied entries, 2 shaded entries, 3 served rays,
+ // 4 fallback rays, 5 temporal entries, 6 non-finite results, 7 probe steps,
+ // 8 exhausted rays, 9 maximum LOD, 10 coarse-LOD rays, 11 cross-geometry rays.
+-// Entries 12..15 are reserved.
++// Optional diagnostics: 12 wave type sum, 13 wave count, 14 checksum XOR,
++// 15 stressed entries. These exclude gather fallback invocations.
+ RWStructuredBuffer<uint> gWrcCounters;
+ 
+ static const uint kWrcNoOwner = 0xffffffffu;
+@@ -128,11 +133,18 @@ void wrcRayIndices(uint linearRayID, DDGIVolumeDescGPU volume, out uint rayIndex
+ 
+ // One sample uses the original ray/probe/frame stream. The baseline diffuse
+ // direct estimator and historical DDGI feedback remain unchanged.
+-float3 wrcShadeHit(WrcHit hit, uint linearRayID, uint sampleCount, DDGIVolumeDescGPU volume)
++float3 wrcShadeHit(WrcHit hit, uint linearRayID, uint sampleCount, DDGIVolumeDescGPU volume, out uint stressChecksum)
+ {
++    stressChecksum = 0u;
+     ShadingData sd = loadTriangleSurface(HitInfo(wrcUnpackHit(hit)), hit.direction);
+     if (!validSurface(sd)) return float3(0.f);
+     let material = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f));
++#if WRC_STRESS_ENABLED
++    // Isolated synthetic proxy for expensive type-specific pattern generation.
++    // It deliberately leaves the real material implementations and RGB intact.
++    uint seed = asuint(sd.posW.x) ^ asuint(sd.posW.y) ^ asuint(sd.posW.z) ^ linearRayID;
++    stressChecksum = wrcStress(seed, gWrcStressMode == 1u ? 0u : hit.shaderBucket % 11u, gWrcStressIterations);
++#endif
+     let properties = material.getProperties(sd);
+     uint rayIndex, probeIndex;
+     wrcRayIndices(linearRayID, volume, rayIndex, probeIndex);

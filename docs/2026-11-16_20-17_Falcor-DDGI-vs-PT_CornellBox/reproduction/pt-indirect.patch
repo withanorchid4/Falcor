@@ -1,0 +1,11 @@
+--- PathTracer.slang
++++ PathTracer.slang (measurement)
+@@ -343,7 +343,7 @@
+         \param[in,out] path Path state.
+         \param[in] radiance Vertex radiance.
+     */
+-    void addToPathContribution(inout PathState path, const float3 radiance) { path.L += path.thp * radiance; }
++    void addToPathContribution(inout PathState path, const float3 radiance) { if (path.getVertexIndex() > 1) path.L += path.thp * radiance; } // GI evaluation: omit primary direct/emission only.
+ 
+     /** Evaluate global light profile for materials that have it enabled.
+      */

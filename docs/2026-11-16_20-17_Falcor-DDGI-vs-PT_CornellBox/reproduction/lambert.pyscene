@@ -1,0 +1,8 @@
+from falcor import *
+import runpy
+runpy.run_path('F:/scripts/scenes/cornell_rtxgi.py')['build_scene'](sceneBuilder)
+for name in ['white','red','green']:
+    old=sceneBuilder.getMaterial(name)
+    replacement=PBRTDiffuseMaterial(name+'-Lambert')
+    replacement.baseColor=old.baseColor
+    sceneBuilder.replaceMaterial(old,replacement)

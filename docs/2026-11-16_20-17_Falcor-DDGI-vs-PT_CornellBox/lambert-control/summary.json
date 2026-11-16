@@ -1,0 +1,81 @@
+{
+  "schema_version": "gi-evaluation-v1",
+  "run_id": "2026-11-16_20-17_Falcor-DDGI-vs-PT_CornellBox",
+  "case_id": "lambert-control",
+  "status": "complete",
+  "target_frame_count": 32,
+  "valid_frame_count": 32,
+  "invalid_frame_count": 0,
+  "mean_hdr_flip": 0.21623150320944784,
+  "linear_rgb_mse": 0.00015354128458479585,
+  "gi_gpu_ms_mean": 0.2257228645909789,
+  "timing_sample_count": 511,
+  "gpu_stage_ms": {
+    "gi": 0.2257228645909789,
+    "probe_update": 0.1607279219972644,
+    "probe_trace": 0.0795719139205033,
+    "sdk_update": 0.08075672819656401,
+    "screen_query": 0.0632104578987493
+  },
+  "reference_check": {
+    "spp_each": 32768,
+    "mean_hdr_flip": 0.024091977498901896,
+    "linear_rgb_mse": 7.194868193713916e-06,
+    "flip_fraction_of_candidate_error": 0.11141751845273784,
+    "half_spp_vs_full": {
+      "mean_hdr_flip": 0.01889266006550643,
+      "linear_rgb_mse": 3.5775298188985385e-06
+    },
+    "reliability": "Finite-sample reference, independent-sequence noise measured; not an exact infinite-bounce solution."
+  },
+  "candidate_steady_check": {
+    "256": {
+      "mean_hdr_flip": 0.21627243444017885,
+      "linear_rgb_mse": 0.00015629241171619557,
+      "mean_luminance": 0.056762100585938814
+    },
+    "1024": {
+      "mean_hdr_flip": 0.21958950057097334,
+      "linear_rgb_mse": 0.0001627915917661154,
+      "mean_luminance": 0.05659304197106741
+    },
+    "4096": {
+      "mean_hdr_flip": 0.2176673227104402,
+      "linear_rgb_mse": 0.0001520945615590992,
+      "mean_luminance": 0.057063930463565525
+    },
+    "8192": {
+      "mean_hdr_flip": 0.21808383056563524,
+      "linear_rgb_mse": 0.00015730075018767376,
+      "mean_luminance": 0.056812654288682374
+    },
+    "16384": {
+      "mean_hdr_flip": 0.2158330957765337,
+      "linear_rgb_mse": 0.000153644094467048,
+      "mean_luminance": 0.05697074622164375
+    }
+  },
+  "luminance": {
+    "reference": 0.06654164906040114,
+    "candidate_mean_32_frames": 0.056956221575385116,
+    "relative_difference": -0.14405154696895384
+  },
+  "representative": {
+    "capture_index": 31,
+    "render_frame_id": 16416,
+    "mean_hdr_flip": 0.21591483015286667,
+    "linear_rgb_mse": 0.00015190200517974168,
+    "comparison": "comparison.png",
+    "heatmap": "flip-heatmap.png",
+    "error": "errors/flip-representative.exr"
+  },
+  "limitations": [
+    "Static Cornell scene and one camera only; not a relocation flicker or moving-camera test.",
+    "20 surface vertices maximum, no RR; finite-path PT rather than infinite-bounce ground truth.",
+    "DDGI uses Lambertian albedo/pi. Native StandardMaterial PT uses Frostbite diffuse + GGX; Lambert control explicitly replaces materials in an isolated scene.",
+    "Official baseline uses a different point-light falloff, packed probe formats, relocation minimum distance, thresholds and warmup budget. Cross-engine comparison is descriptive, not a controlled integration pass/fail test.",
+    "FLIP exposures frozen from the previous official reference for a common viewing range, not refitted to each new scene variant.",
+    "Measured DDGI pass includes probe update, screen query and unavoidable pass overhead; excludes GBuffer, UI, file IO and PT.",
+    "16,384 warmup frames: checkpoint evolution recorded, no claim of exact convergence."
+  ]
+}

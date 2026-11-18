@@ -1,4 +1,5 @@
 #include "RTXGIDDGI.h"
+#include "DDGIReconstruct.h"
 #include "RenderGraph/RenderPassHelpers.h"
 #include "RenderGraph/RenderPassStandardFlags.h"
 #ifdef _MSC_VER
@@ -26,7 +27,14 @@ const ChannelList kInputs = {
 };
 const ChannelList kOutputs = {
     {"color", "gOutputColor", "Direct light, emission, and dynamic DDGI", false, ResourceFormat::RGBA32Float},
-    {"indirect", "gOutputIndirect", "DDGI diffuse contribution before display mapping", true, ResourceFormat::RGBA32Float},
+    {"indirect", "gOutputIndirect", "Probe diffuse or total final-gather contribution", true, ResourceFormat::RGBA32Float},
+    {"gatherDiffuse", "gOutputGatherDiffuse", "Final-gather diffuse reflection", true, ResourceFormat::RGBA32Float},
+    {"gatherSpecular", "gOutputGatherSpecular", "Final-gather specular reflection", true, ResourceFormat::RGBA32Float},
+    {"diffuseRadianceHitDist", "gDiffuseRadianceHitDist", "Final gather NRD diffuseRadianceHitDist", true, ResourceFormat::RGBA32Float},
+    {"specularRadianceHitDist", "gSpecularRadianceHitDist", "Final gather NRD specularRadianceHitDist", true, ResourceFormat::RGBA32Float},
+    {"diffuseReflectance", "gDiffuseReflectance", "Final gather NRD diffuseReflectance", true, ResourceFormat::RGBA32Float},
+    {"specularReflectance", "gSpecularReflectance", "Final gather NRD specularReflectance", true, ResourceFormat::RGBA32Float},
+    {"unfilteredColor", "gUnfilteredColor", "Final gather NRD unfilteredColor", true, ResourceFormat::RGBA32Float},
 };
 const ResourceBindFlags kTextureFlags = ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess;
 
@@ -43,6 +51,7 @@ void registerBindings(pybind11::module& module)
 extern "C" FALCOR_API_EXPORT void registerPlugin(Falcor::PluginRegistry& registry)
 {
     registry.registerClass<RenderPass, RTXGIDDGI>();
+    registry.registerClass<RenderPass, DDGIReconstruct>();
     ScriptBindings::registerBinding(registerBindings);
 }
 
@@ -72,6 +81,10 @@ Properties RTXGIDDGI::getProperties() const
     p["enableRelocation"] = mOptions.relocation;
     p["enableClassification"] = mOptions.classification;
     p["updateEnabled"] = mOptions.update;
+    p["finalGather"] = mOptions.finalGather;
+    p["halfResolutionGather"] = mOptions.halfResolutionGather;
+    p["gatherDiffuse"] = mOptions.gatherDiffuse;
+    p["gatherSpecular"] = mOptions.gatherSpecular;
     p["enableGI"] = mOptions.enableGI;
     p["showProbes"] = mOptions.showProbes;
     p["indirectOnly"] = mOptions.indirectOnly;
@@ -116,6 +129,10 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         else if (name == "enableRelocation") next.relocation = value;
         else if (name == "enableClassification") next.classification = value;
         else if (name == "updateEnabled") next.update = value;
+        else if (name == "finalGather") next.finalGather = value;
+        else if (name == "halfResolutionGather") next.halfResolutionGather = value;
+        else if (name == "gatherDiffuse") next.gatherDiffuse = value;
+        else if (name == "gatherSpecular") next.gatherSpecular = value;
         else if (name == "enableGI") next.enableGI = value;
         else if (name == "showProbes") next.showProbes = value;
         else if (name == "indirectOnly") next.indirectOnly = value;
@@ -179,6 +196,7 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         next.wrcTableSize != mOptions.wrcTableSize || next.wrcMaxAge != mOptions.wrcMaxAge ||
         next.wrcShadeSamples != mOptions.wrcShadeSamples || next.wrcBypassSharing != mOptions.wrcBypassSharing)
         mResetPending = mWrcResetPending = true;
+    if (next.halfResolutionGather != mOptions.halfResolutionGather) requestRecompile();
     mOptions = next;
     mOptionsChanged |= refreshLighting;
 }
@@ -188,6 +206,12 @@ RenderPassReflection RTXGIDDGI::reflect(const CompileData& data)
     RenderPassReflection reflection;
     addRenderPassInputs(reflection, kInputs);
     addRenderPassOutputs(reflection, kOutputs);
+    if (mOptions.halfResolutionGather)
+    {
+        const uint2 size = max(data.defaultTexDims / uint2(2), uint2(1));
+        for (const char* name : {"diffuseRadianceHitDist", "specularRadianceHitDist"})
+            reflection.getField(name)->texture2D(size.x, size.y);
+    }
     reflection.getField("color")->bindFlags(kTextureFlags | ResourceBindFlags::RenderTarget);
     return reflection;
 }
@@ -619,6 +643,13 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     changed |= ray.program->addDefine("OUTPUT_INDIRECT", data.getTexture("indirect") ? "1" : "0");
     changed |= ray.program->addDefine("is_valid_gViewW", data.getTexture("viewW") ? "1" : "0");
     changed |= ray.program->addDefine("HAS_DIRECT_LIGHTING", data.getTexture("directLighting") ? "1" : "0");
+    changed |= ray.program->addDefine("OUTPUT_GATHER_DIFFUSE", data.getTexture("gatherDiffuse") ? "1" : "0");
+    changed |= ray.program->addDefine("OUTPUT_GATHER_SPECULAR", data.getTexture("gatherSpecular") ? "1" : "0");
+    changed |= ray.program->addDefine("OUTPUT_DIFFUSERADIANCEHITDIST", data.getTexture("diffuseRadianceHitDist") ? "1" : "0");
+    changed |= ray.program->addDefine("OUTPUT_SPECULARRADIANCEHITDIST", data.getTexture("specularRadianceHitDist") ? "1" : "0");
+    changed |= ray.program->addDefine("OUTPUT_DIFFUSEREFLECTANCE", data.getTexture("diffuseReflectance") ? "1" : "0");
+    changed |= ray.program->addDefine("OUTPUT_SPECULARREFLECTANCE", data.getTexture("specularReflectance") ? "1" : "0");
+    changed |= ray.program->addDefine("OUTPUT_UNFILTEREDCOLOR", data.getTexture("unfilteredColor") ? "1" : "0");
     if (changed) ray.vars = nullptr;
     if (!ray.vars)
     {
@@ -642,9 +673,20 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     root["gOutputColor"] = data.getTexture("color");
     root["gWrcDebugDepth"] = mpWrcDebugDepth;
     if (data.getTexture("indirect")) root["gOutputIndirect"] = data.getTexture("indirect");
+    if (data.getTexture("gatherDiffuse")) root["gOutputGatherDiffuse"] = data.getTexture("gatherDiffuse");
+    if (data.getTexture("gatherSpecular")) root["gOutputGatherSpecular"] = data.getTexture("gatherSpecular");
+    if (data.getTexture("diffuseRadianceHitDist")) root["gDiffuseRadianceHitDist"] = data.getTexture("diffuseRadianceHitDist");
+    if (data.getTexture("specularRadianceHitDist")) root["gSpecularRadianceHitDist"] = data.getTexture("specularRadianceHitDist");
+    if (data.getTexture("diffuseReflectance")) root["gDiffuseReflectance"] = data.getTexture("diffuseReflectance");
+    if (data.getTexture("specularReflectance")) root["gSpecularReflectance"] = data.getTexture("specularReflectance");
+    if (data.getTexture("unfilteredColor")) root["gUnfilteredColor"] = data.getTexture("unfilteredColor");
     auto cb = root["PerFrameCB"];
     cb["gFrameCount"] = mFrame;
     cb["gFrameDim"] = data.getDefaultTextureDims();
+    cb["gFinalGather"] = mOptions.finalGather;
+    cb["gHalfResolutionGather"] = mOptions.halfResolutionGather;
+    cb["gGatherDiffuse"] = mOptions.gatherDiffuse;
+    cb["gGatherSpecular"] = mOptions.gatherSpecular;
     cb["gEnableGI"] = mOptions.enableGI;
     cb["gIndirectOnly"] = mOptions.indirectOnly;
     cb["gUseRTXDI"] = mOptions.useRTXDI;
@@ -766,7 +808,8 @@ Properties RTXGIDDGI::getStats() const
     stats["totalProbes"] = allocated ? mOptions.counts.x * mOptions.counts.y * mOptions.counts.z : 0u;
     stats["status"] = mStatus;
     stats["supported"] = mSupported;
-    stats["usingRTXDI"] = mHasDirectLighting && mOptions.useRTXDI;
+    stats["usingRTXDI"] = mHasDirectLighting && mOptions.useRTXDI && !mOptions.finalGather;
+    stats["finalGather"] = mOptions.finalGather;
     stats["gridMin"] = mGridMin;
     stats["gridMax"] = mGridMax;
     stats["wrcEnabled"] = mOptions.useWRC;
@@ -880,6 +923,14 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
     if (widgets.checkbox("Update probes", options.update)) p["updateEnabled"] = options.update;
     if (widgets.button("Reset history")) reset();
     if (widgets.checkbox("Enable DDGI", options.enableGI)) p["enableGI"] = options.enableGI;
+    if (widgets.checkbox("Surface final gather", options.finalGather)) p["finalGather"] = options.finalGather;
+    widgets.tooltip("Trace diffuse and specular reflection from primary visibility. Uses internal direct lighting to avoid double-counting environment/emissive hits. No recursive specular or transmission.");
+    if (options.finalGather)
+    {
+        if (widgets.checkbox("Gather diffuse", options.gatherDiffuse)) p["gatherDiffuse"] = options.gatherDiffuse;
+        if (widgets.checkbox("Gather specular", options.gatherSpecular)) p["gatherSpecular"] = options.gatherSpecular;
+        widgets.text("RTXDI input bypassed. Use RTXGIDDGIFinalGather graph for accumulation.");
+    }
     if (widgets.checkbox("Indirect only", options.indirectOnly)) p["indirectOnly"] = options.indirectOnly;
     if (widgets.checkbox("Use world radiance cache", options.useWRC)) p["useWRC"] = options.useWRC;
     widgets.tooltip("Distance-LOD spatial hash with bounded linear probing and GPU-driven active-cell shading. Off uses original DDGI. Switching resets probe history; let both modes converge before comparing.");

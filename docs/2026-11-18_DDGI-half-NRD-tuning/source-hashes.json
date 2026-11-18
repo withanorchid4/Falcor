@@ -1,0 +1,10 @@
+{
+  "Source/RenderPasses/NRDPass/NRDPass.cpp": "7d6787f951881c684b337740c8d16c0fe950d07a740b49a09b7c6a4aa221566e",
+  "Source/RenderPasses/NRDPass/NRDPass.h": "b7bc04c8e05658c377f8a80de97e1b9222a66ca08bc70f6527a2bf13a1242abd",
+  "scripts/DDGIHalfGatherNRD.py": "e4afa97f0315f1ebe434c70895e5b7d82f2f629bd06d4448c6facafb8e6f489f",
+  "scripts/nrd_half_settings.py": "a518e9a90d3d06e73333f6bf966b3a17794e2ede3b0e26f39071f74d6e44034b",
+  "tests/ddgi/nrd_half_tuning.py": "2f1369b30436298a1d518cb340997657125619dea0f7266d152e674b27d27a02",
+  "tests/ddgi/score_nrd_half_tuning.py": "6f215e909cbf852381231e6eda69264b3756696129bf014d30238cfe1d65790e",
+  "tests/ddgi/nrd_half_validation.py": "b4a3194ae8be570cdb5b2ef7457c01f8dcc378b23623f46f67706481966f44ab",
+  "tests/ddgi/score_nrd_half_validation.py": "ea5ac598d169a3de19e402e5941f9d2c340629349e411ace772da49111feb1f5"
+}

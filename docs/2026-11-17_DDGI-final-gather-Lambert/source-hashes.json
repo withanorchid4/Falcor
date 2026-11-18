@@ -1,0 +1,8 @@
+{
+  "Source\\RenderPasses\\RTXGIDDGI\\RTXGIDDGI.rt.slang": "f202d1d76c6006bfa0c8588b3ffa0723b252e949d9ef24b63a8ff6ec66b4a419",
+  "Source\\RenderPasses\\RTXGIDDGI\\RTXGIDDGI.cpp": "db2a096078a6fdf72628b359c5dab7552d045adc6419a2f6d3cdc749d852f8fc",
+  "Source\\RenderPasses\\RTXGIDDGI\\RTXGIDDGI.h": "28c6966c761bdff6975b22f3db34811073038a203dfc0d47261fc09af0e1b989",
+  "tests\\ddgi\\final_gather_compare.py": "181fa27d2ee38b8d1634e98627432e484aafd16f2729907960754250bb358430",
+  "tests\\ddgi\\final_gather_lambert.pyscene": "9810085c628d30c00b005a3a6320248ee60415533055d53b07438c3ce02c1408",
+  "scripts\\RTXGIDDGIFinalGather.py": "dd011eede09f635106e7c417c081d0dc44c9b213e74de8c8d0b7f06a6e05052f"
+}

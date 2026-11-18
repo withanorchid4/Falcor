@@ -100,6 +100,8 @@ private:
     bool mOptionsChanged = true;
     uint64_t mResetHistoryCount = 0;
     bool mWorldSpaceMotion = true;
+    // Fixed offset of input samples from denoising pixel centers, in input pixels.
+    float2 mInputSampleOffset = float2(0.f);
     float mMaxIntensity = 1000.f;
     float mDisocclusionThreshold = 2.f;
     nrd::CommonSettings mCommonSettings = {};

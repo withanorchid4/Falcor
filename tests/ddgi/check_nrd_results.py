@@ -77,7 +77,7 @@ def main():
         stable_tags = [
             "nrd-disabled-first", "nrd-disabled-settled", "nrd-enabled-first", "nrd-enabled-settled",
             "nrd-reset-first", "nrd-reset-settled", "indirect-only", "switch-settled",
-        ] + ["switch-" + graph for graph in ("PathTracer", "PathTracerNRD", "TraditionalProbeGI")]
+        ] + ["switch-" + graph for graph in ("PTReference", "DDGIHalfGather", "TraditionalProbeGI")]
         stable_tags += [f"noise-{index:02d}" for index in (0, 31)]
         for suffix in stable_tags:
             error = close_arrays(read(name + "-" + suffix), frozen, name + " frozen " + suffix,

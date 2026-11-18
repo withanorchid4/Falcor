@@ -1,0 +1,11 @@
+{
+  "Source/Falcor/Rendering/Lights/LightHelpers.slang": "7c04a1eca8cced1de988df68a6c1c51b4bb8c6956b465be0d4d9596d0a2a8d0f",
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.rt.slang": "5c8122ea774bedb1ab9f6dcbfaa81a9aa0aa1b944188d7b75755542d3a7149d0",
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.cpp": "ba5a97daf9cf94e555568904e3376c17281a410a6021b0b9aac47b4e26e7802c",
+  "Source/RenderPasses/RTXGIDDGI/DDGIReconstruct.cpp": "9f931aa834087aac5b92eacb90579e7a71d455fa9fe73cbc9d8d82f0b9fb7511",
+  "Source/RenderPasses/RTXGIDDGI/DDGIReconstruct.cs.slang": "dc9623681c0df009b5527d4777fe2dfe97fb586e199b7d806e5306b1b42007fb",
+  "scripts/DDGIHalfGatherNRD.py": "b15a30e4d72cb72cc684a4af0c0075246f21f9f6652bb873750ebacf3891e88b",
+  "scripts/PTReference.py": "a99f79c1539ec2946eb2de96cc9c5e37f8ad610d151851931a3dd3d8a9899473",
+  "tests/ddgi/three_way_half_gather.py": "0c415ab4705a8994c4df5ed0b859ac4824086bf38df84f0724bb8f8a5cb21afe",
+  "tests/ddgi/score_three_way_half_gather.py": "ca858e1b928537076111d94e2353e78b12b6cfed34cec61cd95931b5570caa67"
+}

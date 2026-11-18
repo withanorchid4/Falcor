@@ -1,0 +1,16 @@
+<!doctype html><html lang="zh"><meta charset="utf-8"><title>关闭 NRD：DDGI 与 FG 静态收敛实验</title>
+<style>body{max-width:1100px;margin:32px auto;padding:0 24px;font:16px/1.7 system-ui;color:#ddd;background:#171a20}img{max-width:100%}td,th{border:1px solid #555;padding:8px 16px}table{border-collapse:collapse}a{color:#8dc7ff}</style>
+<h1>关闭 NRD，使用 Accumulate 的三组对比</h1>
+<p><strong>结论：</strong>当前 NRD 流程的滤波偏差是重要因素。改为长时间累积后，两种 FG 都明显优于原始 DDGI；半分辨率仍有重建损失，但与全分辨率的差距远小于使用 NRD 时。将之前 64 张 NRD 输出平均后，MSE 仍明显高于原始 FG 收敛结果，说明差异不只是瞬时噪点。此结论针对当前接入与参数，不代表 NRD 无法通过调整改善。</p>
+<p>三组均先更新 probe 2560 帧，再重置 Accumulate 并累积 65536 帧。场景、相机、当前 Test Harness 点光源衰减、480×270 输出和未经降噪的 65536 spp PT reference 不变。Probe 始终更新，NRD 完全不在渲染图中。</p>
+<img src="comparison.png"><table><tr><th>方案</th><th>MSE ↓</th><th>HDR-FLIP ↓</th><th>时间方差 ↓</th><th>GPU 帧耗时 ms</th></tr><tr><td>原始 DDGI + Accumulate</td><td>1.186129e-05</td><td>0.12054</td><td>1.746079e-15</td><td>0.2702</td></tr><tr><td>半分辨率 FG + Accumulate</td><td>1.144663e-06</td><td>0.04790</td><td>5.953921e-13</td><td>0.3180</td></tr><tr><td>全分辨率 FG + Accumulate</td><td>9.481761e-07</td><td>0.04736</td><td>2.489571e-12</td><td>0.3192</td></tr></table>
+<p>主表是第 65537～65600 帧累积输出的逐帧指标均值；图像显示第 65536 帧。半分辨率在 240×135 固定代表像素上发射射线，保留原来的深度/法线引导上采样，再累积完整图像。全分辨率在 480×270 发射射线，直接累积原始 DDGI.color。Lambert 场景每个有效采样像素每帧最多一根漫反射 FG 射线。</p>
+<h2>是否已稳定？</h2><table><tr><th>方案</th><th>32768→65536 MSE 变化</th><th>HDR-FLIP 变化</th><th>两阶段图像差异 MSE</th></tr><tr><td>原始 DDGI + Accumulate</td><td>-0.06%</td><td>-0.01%</td><td>6.382404e-11</td></tr><tr><td>半分辨率 FG + Accumulate</td><td>-0.51%</td><td>-0.19%</td><td>3.696208e-09</td></tr><tr><td>全分辨率 FG + Accumulate</td><td>-1.71%</td><td>-0.08%</td><td>1.541757e-08</td></tr></table>
+<p>三组翻倍累积后的 MSE/HDR-FLIP 变化均小于 3%；以末次翻倍的图像差异估计剩余采样影响，均小于相对 PT 误差的 5%。这不是无限采样证明；探针相关性会影响此估计。PT reference 自身的残余噪声估计 MSE 为 2.209029e-08，也低于本次最小误差的 5%。所有阶段指标可见 JSON。</p>
+<h2>与 NRD 对照</h2><table><tr><th>FG 分辨率</th><th>NRD 单帧 MSE 均值</th><th>64 张 NRD 输出平均后的 MSE</th><th>本次 Accumulate MSE</th></tr><tr><td>半分辨率 FG + Accumulate</td><td>1.900586e-05</td><td>1.868071e-05</td><td>1.144663e-06</td></tr><tr><td>全分辨率 FG + Accumulate</td><td>7.935121e-06</td><td>7.414132e-06</td><td>9.481761e-07</td></tr></table>
+<img src="nrd-mean-comparison.png"><p>对 NRD 输出额外取 64 帧平均仅用于诊断平均画面的变化，不属于实时方案。NRD 单帧与长时间累积的差别同时包含残余噪声和滤波偏差；若 NRD 平均图仍与原始 FG 收敛图有系统性差异，说明不能仅用单帧噪点解释。64 帧具有时间相关性，不能将其当作严格无噪声的 NRD 期望。</p>
+<p><strong>时间方差和耗时的解释：</strong>普通累积已经用了约 65536 帧历史，随后 64 帧的方差自然极小，不能据此认为它比 NRD 更适合实时运动。GPU 时间是每帧更新开销（RTX 5070 / D3D12，255 个区间，包含 GBuffer、probe 更新、FG/重建、Accumulate 和色调映射），不代表一帧就能获得展示的收敛画质。普通累积没有重投影，镜头或场景变化时需要清空历史。</p>
+<p>MSE 使用线性 HDR 完整光照、可见表面 mask；HDR-FLIP 沿用相同曝光和 PPD 67；显示 +3 EV / ACES fitted / sRGB。原始 DDGI 也做相同累积，以去除其 probe 更新波动；所以该行不等同于之前未累积的实时 DDGI。</p>
+<pre>build\windows-vs2022\bin\Release\Mogwai.exe --device-type d3d12 --headless --deferred --script tests/ddgi/accumulated_gather_comparison.py --width 480 --height 270 --logfile build/accumulated-gather-comparison.log
+python tests/ddgi/score_accumulated_gather_comparison.py</pre>
+<p>全分辨率交互入口：Run-AccumulatedGather.cmd。图工厂 scripts/DDGIAccumulated.py 支持 ddgi / half / full。原始捕获与计时：build/accumulated-gather-comparison。<a href="summary.json">结果 JSON</a> · <a href="metrics.csv">逐帧指标</a></p></html>

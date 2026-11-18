@@ -47,7 +47,7 @@ def stats(p):
 
 
 def reference(tag):
-    m.setActiveGraph(graphs["PathTracer"])
+    m.setActiveGraph(graphs["PTReference"])
     # Scene lighting edits auto-reset PathTracer's accumulation.
     frames(64)
     capture(tag)
@@ -56,13 +56,13 @@ def reference(tag):
 
 try:
     graphs = runpy.run_path(str(ROOT / "scripts/GIPreview.py"), init_globals={"m": m})["graphs"]
-    assert set(graphs) == {"PathTracer", "PathTracerNRD", "TraditionalProbeGI", "RTXGIDDGI"}
+    assert set(graphs) == {"PTReference", "DDGIHalfGather", "TraditionalProbeGI", "RTXGIDDGI"}
     assert m.activeGraph.name == "RTXGIDDGI"
     graph = graphs["RTXGIDDGI"]
     p = graph.getPass("DDGI")
     for channel in ("DDGI.color", "DDGI.indirect"):
         graph.markOutput(channel)
-    graphs["PathTracer"].markOutput("AccumulatePass.output")
+    graphs["PTReference"].markOutput("Accumulate.output")
     for name, scene_path in (
         ("cornell", "media/test_scenes/cornell_box.pyscene"),
         ("room", "media/test_scenes/grey_and_white_room/grey_and_white_room.pyscene"),
@@ -80,7 +80,7 @@ try:
 
         # Each graph executes against the same live scene and camera. An inactive
         # DDGI pass must preserve history while only the active graph executes.
-        for graph_name in ("PathTracer", "PathTracerNRD", "TraditionalProbeGI"):
+        for graph_name in ("PTReference", "DDGIHalfGather", "TraditionalProbeGI"):
             count = p.updatedFrames
             m.setActiveGraph(graphs[graph_name])
             frames(16)

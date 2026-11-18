@@ -240,8 +240,17 @@ bool samplePointLight(const float3 shadingPosW, const LightData light, out Analy
         falloff = smoothstep(0.f, light.penumbraAngle, deltaAngle);
     }
 
-    // Compute incident radiance at shading point.
-    ls.Li = light.intensity * falloff / distSqr;
+    // Match the RTXGI Test Harness Cornell point light (radius = 4 world units).
+    // Apply this in the shared sampler so PT, DDGI probes and final gather agree.
+    // Spot lights retain their original inverse-square attenuation.
+    float distanceAttenuation = 1.f / distSqr;
+    if (light.cosOpeningAngle <= -1.f)
+    {
+        const float pointLightRadius = 4.f;
+        float window = saturate(1.f - pow(ls.distance / pointLightRadius, 4.f));
+        distanceAttenuation = window * window / max(distSqr, 1.f);
+    }
+    ls.Li = light.intensity * falloff * distanceAttenuation;
 
     // For a point light, the PDF with respect to solid angle is a Dirac function. Set to zero.
     ls.pdf = 0.f;

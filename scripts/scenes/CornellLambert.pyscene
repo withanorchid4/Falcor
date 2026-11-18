@@ -1,0 +1,11 @@
+"""Cornell geometry and configured lights, with pure Lambert surface materials."""
+from falcor import *
+from pathlib import Path
+import runpy
+root=Path(__file__).resolve().parents[2]
+runpy.run_path(str(root/'scripts/scenes/cornell_rtxgi.py'))['build_scene'](sceneBuilder)
+for name in ['white', 'red', 'green']:
+    old=sceneBuilder.getMaterial(name)
+    replacement=PBRTDiffuseMaterial(name+'-Lambert')
+    replacement.baseColor=old.baseColor
+    sceneBuilder.replaceMaterial(old,replacement)

@@ -2,7 +2,7 @@ param(
     [string]$Scene = '',
     [ValidateSet('vulkan', 'd3d12')]
     [string]$Device = 'd3d12',
-    [ValidateSet('PathTracer', 'NRD', 'Probe', 'DDGI')]
+    [ValidateSet('PathTracer', 'DDGIHalf', 'Probe', 'DDGI')]
     [string]$Renderer = 'PathTracer',
     [ValidateSet('manual', 'auto', 'bake', 'load')][string]$Mode = 'manual',
     [ValidateRange(1, 65536)][int]$Samples = 2048,
@@ -35,6 +35,7 @@ if (-not $PSBoundParameters.ContainsKey('Scene')) {
     $sceneBox.DropDownStyle = [System.Windows.Forms.ComboBoxStyle]::DropDownList
     [void]$sceneBox.Items.Add('Room')
     [void]$sceneBox.Items.Add('Cornell')
+    [void]$sceneBox.Items.Add('CornellLambert')
     [void]$sceneBox.Items.Add('Arcade')
     [void]$sceneBox.Items.Add('Bistro')
     $sceneBox.SelectedItem = 'Bistro'
@@ -53,7 +54,7 @@ if (-not $PSBoundParameters.ContainsKey('Scene')) {
     [void]$rendererBox.Items.Add('DDGI')
     [void]$rendererBox.Items.Add('PathTracer')
     [void]$rendererBox.Items.Add('Probe')
-    [void]$rendererBox.Items.Add('NRD')
+    [void]$rendererBox.Items.Add('DDGIHalf')
     $defaultRenderer = 'DDGI'
     if ($PSBoundParameters.ContainsKey('Renderer')) { $defaultRenderer = $Renderer }
     $rendererBox.SelectedItem = $defaultRenderer
@@ -62,7 +63,7 @@ if (-not $PSBoundParameters.ContainsKey('Scene')) {
     $form.Controls.Add($rendererBox)
 
     $note = New-Object System.Windows.Forms.Label
-    $note.Text = 'DDGI and NRD use D3D12.'
+    $note.Text = 'DDGI / DDGIHalf use D3D12.'
     $note.Location = New-Object System.Drawing.Point(110, 98)
     $note.Size = New-Object System.Drawing.Size(250, 22)
     $form.Controls.Add($note)
@@ -88,12 +89,12 @@ if (-not $PSBoundParameters.ContainsKey('Scene')) {
     $Renderer = [string]$rendererBox.SelectedItem
 }
 
-$availableScenes = @('Room', 'Cornell', 'Arcade', 'Bistro')
+$availableScenes = @('Room', 'Cornell', 'CornellLambert', 'Arcade', 'Bistro')
 if ($Scene -notin $availableScenes) {
     throw "Unknown scene '$Scene'. Available scenes: $($availableScenes -join ', ')."
 }
 
-if ($Renderer -in @('NRD', 'DDGI')) {
+if ($Renderer -in @('DDGIHalf', 'DDGI')) {
     if ($PSBoundParameters.ContainsKey('Device') -and $Device -ne 'd3d12') {
         throw "$Renderer requires D3D12 in this integration. Use -Device d3d12 or omit -Device."
     }
@@ -131,6 +132,7 @@ if (-not (Test-Path -LiteralPath $executable)) {
 $scenes = @{
     Room = 'F:\media\test_scenes\grey_and_white_room\grey_and_white_room.pyscene'
     Cornell = 'F:\scripts\scenes\CornellRTXGI.pyscene'
+    CornellLambert = 'F:\scripts\scenes\CornellLambert.pyscene'
     Arcade = 'F:\media\Arcade\Arcade.pyscene'
     Bistro = 'F:\media\ORCA_Bistro\Bistro_v5_2\BistroExterior.pyscene'
 }

@@ -1,0 +1,301 @@
+{
+  "static": {
+    "Raw": {
+      "mse": 0.08210412439316475,
+      "hdr_flip": 0.6399280745536089,
+      "mean_rgb": 0.05854985618498176,
+      "temporal_rgb_variance": 0.07952158131513105
+    },
+    "NRD": {
+      "mse": 0.00016796671402734528,
+      "hdr_flip": 0.1856418284587562,
+      "mean_rgb": 0.05388596549164504,
+      "temporal_rgb_variance": 2.528642324318272e-06
+    }
+  },
+  "motion": [
+    {
+      "frame": 0,
+      "Raw": {
+        "mse": 0.09844316470379073,
+        "hdr_flip": 0.6311067938804626,
+        "mean_rgb": 0.060414720326662064
+      },
+      "NRD": {
+        "mse": 0.00039836104931123306,
+        "hdr_flip": 0.18396970629692078,
+        "mean_rgb": 0.05375555530190468
+      }
+    },
+    {
+      "frame": 1,
+      "Raw": {
+        "mse": 0.08155408205124731,
+        "hdr_flip": 0.624914824962616,
+        "mean_rgb": 0.059596627950668335
+      },
+      "NRD": {
+        "mse": 0.0003970133174288511,
+        "hdr_flip": 0.18423590064048767,
+        "mean_rgb": 0.053980253636837006
+      }
+    },
+    {
+      "frame": 2,
+      "Raw": {
+        "mse": 0.09272136580230843,
+        "hdr_flip": 0.626272439956665,
+        "mean_rgb": 0.05937345698475838
+      },
+      "NRD": {
+        "mse": 0.00039984755592531977,
+        "hdr_flip": 0.18383878469467163,
+        "mean_rgb": 0.054056648164987564
+      }
+    },
+    {
+      "frame": 3,
+      "Raw": {
+        "mse": 0.07626750794513476,
+        "hdr_flip": 0.6276113986968994,
+        "mean_rgb": 0.05832047760486603
+      },
+      "NRD": {
+        "mse": 0.00039810324015629765,
+        "hdr_flip": 0.18442462384700775,
+        "mean_rgb": 0.05399267002940178
+      }
+    },
+    {
+      "frame": 4,
+      "Raw": {
+        "mse": 0.08552574346514429,
+        "hdr_flip": 0.623007595539093,
+        "mean_rgb": 0.06013459712266922
+      },
+      "NRD": {
+        "mse": 0.0003940997561542,
+        "hdr_flip": 0.18290559947490692,
+        "mean_rgb": 0.05434446409344673
+      }
+    },
+    {
+      "frame": 5,
+      "Raw": {
+        "mse": 0.08141701396986546,
+        "hdr_flip": 0.6243464350700378,
+        "mean_rgb": 0.058240264654159546
+      },
+      "NRD": {
+        "mse": 0.0004000256718510071,
+        "hdr_flip": 0.183444082736969,
+        "mean_rgb": 0.05442431569099426
+      }
+    },
+    {
+      "frame": 6,
+      "Raw": {
+        "mse": 0.09491178595825672,
+        "hdr_flip": 0.6243723034858704,
+        "mean_rgb": 0.061417993158102036
+      },
+      "NRD": {
+        "mse": 0.0003994738113246095,
+        "hdr_flip": 0.182399183511734,
+        "mean_rgb": 0.05430096387863159
+      }
+    },
+    {
+      "frame": 7,
+      "Raw": {
+        "mse": 0.10173245685900509,
+        "hdr_flip": 0.622782826423645,
+        "mean_rgb": 0.06092620640993118
+      },
+      "NRD": {
+        "mse": 0.000402569052561293,
+        "hdr_flip": 0.18301379680633545,
+        "mean_rgb": 0.054625604301691055
+      }
+    }
+  ],
+  "timing_ms": {
+    "off": {
+      "DDGI": 0.30096328258514404,
+      "Denoiser": 0.007307086605578661,
+      "Compose": 0.004912377800792456,
+      "sum": 0.31318274699151516,
+      "samples": 127
+    },
+    "on": {
+      "DDGI": 0.3054080009460449,
+      "Denoiser": 0.14564786851406097,
+      "Compose": 0.005662236362695694,
+      "sum": 0.4567181058228016,
+      "samples": 127
+    }
+  },
+  "bypass_checks": {
+    "off": {
+      "relative_l1": 0.0001466132525820285,
+      "max_abs": 0.0106658935546875
+    },
+    "off-after-motion": {
+      "relative_l1": 0.00014983986329752952,
+      "max_abs": 0.010623931884765625
+    },
+    "native-off": {
+      "relative_l1": 0.0001295771508011967,
+      "max_abs": 0.005499362945556641
+    },
+    "legacy": {
+      "relative_l1": 0.0,
+      "max_abs": 0.0
+    }
+  },
+  "capture": {
+    "resolution": [
+      480,
+      270
+    ],
+    "warmup": 2048,
+    "nrd": "RelaxDiffuseSpecular",
+    "static_history_frames": 128,
+    "static_capture_frames": 32,
+    "stage": "complete",
+    "static_resets": 1,
+    "motion_resets": 0,
+    "toggle_reset_count": 1,
+    "lambert_stats": {
+      "updatedFrames": 2400,
+      "totalProbes": 729,
+      "status": "Updating probes with original per-ray shading.",
+      "supported": true,
+      "usingRTXDI": false,
+      "finalGather": true,
+      "gridMin": [
+        -1.2000000476837158,
+        -0.20000000298023224,
+        -1.2000000476837158
+      ],
+      "gridMax": [
+        1.2000000476837158,
+        2.200000047683716,
+        1.2000000476837158
+      ],
+      "wrcEnabled": false,
+      "wrcGroupByMaterial": true,
+      "wrcStressMode": 0,
+      "wrcStressIterations": 0,
+      "showWrcCells": false,
+      "wrcCellsLod": 0,
+      "wrcCellSize": 0.030000001192092896,
+      "wrcTableSize": 65536,
+      "wrcLodDistance": 2.4000000953674316,
+      "wrcProbeLimit": 16,
+      "wrcInvalidations": 0,
+      "wrcAllocatedBytes": 0,
+      "wrcValidRays": 0,
+      "wrcOccupiedEntries": 0,
+      "wrcShadedEntries": 0,
+      "wrcServedRays": 0,
+      "wrcFallbackRays": 0,
+      "wrcTemporalReusedEntries": 0,
+      "wrcNonFiniteResults": 0,
+      "wrcShadeEvaluations": 0,
+      "wrcProbeSteps": 0,
+      "wrcProbeLimitFailures": 0,
+      "wrcMaxLod": 0,
+      "wrcLodRays": 0,
+      "wrcCrossPrimitiveServedRays": 0,
+      "wrcWaveTypeSum": 0,
+      "wrcWaveCount": 0,
+      "wrcStressChecksum": 0,
+      "wrcStressEntries": 0,
+      "wrcActiveEntries": 0,
+      "wrcShaderGroups": 0,
+      "wrcMaterialTypes": 0,
+      "wrcDispatches": 0,
+      "wrcScheduledThreads": 0,
+      "rejectedMaterialSamples": 0,
+      "rejectedDirectSamples": 0,
+      "rejectedHistorySamples": 0,
+      "rejectedRaySamples": 0,
+      "activeProbes": 280,
+      "relocatedProbes": 16,
+      "finite": true,
+      "nonFiniteTexels": 0,
+      "irradianceMax": 1.3562092781066895
+    },
+    "native_stats": {
+      "updatedFrames": 512,
+      "totalProbes": 729,
+      "status": "Probe updates frozen; camera and direct light remain live.",
+      "supported": true,
+      "usingRTXDI": false,
+      "finalGather": true,
+      "gridMin": [
+        -1.2000000476837158,
+        -0.20000000298023224,
+        -1.2000000476837158
+      ],
+      "gridMax": [
+        1.2000000476837158,
+        2.200000047683716,
+        1.2000000476837158
+      ],
+      "wrcEnabled": false,
+      "wrcGroupByMaterial": true,
+      "wrcStressMode": 0,
+      "wrcStressIterations": 0,
+      "showWrcCells": false,
+      "wrcCellsLod": 0,
+      "wrcCellSize": 0.030000001192092896,
+      "wrcTableSize": 65536,
+      "wrcLodDistance": 2.4000000953674316,
+      "wrcProbeLimit": 16,
+      "wrcInvalidations": 0,
+      "wrcAllocatedBytes": 0,
+      "wrcValidRays": 0,
+      "wrcOccupiedEntries": 0,
+      "wrcShadedEntries": 0,
+      "wrcServedRays": 0,
+      "wrcFallbackRays": 0,
+      "wrcTemporalReusedEntries": 0,
+      "wrcNonFiniteResults": 0,
+      "wrcShadeEvaluations": 0,
+      "wrcProbeSteps": 0,
+      "wrcProbeLimitFailures": 0,
+      "wrcMaxLod": 0,
+      "wrcLodRays": 0,
+      "wrcCrossPrimitiveServedRays": 0,
+      "wrcWaveTypeSum": 0,
+      "wrcWaveCount": 0,
+      "wrcStressChecksum": 0,
+      "wrcStressEntries": 0,
+      "wrcActiveEntries": 0,
+      "wrcShaderGroups": 0,
+      "wrcMaterialTypes": 0,
+      "wrcDispatches": 0,
+      "wrcScheduledThreads": 0,
+      "rejectedMaterialSamples": 0,
+      "rejectedDirectSamples": 0,
+      "rejectedHistorySamples": 0,
+      "rejectedRaySamples": 0,
+      "activeProbes": 280,
+      "relocatedProbes": 16,
+      "finite": true,
+      "nonFiniteTexels": 0,
+      "irradianceMax": 1.3563058376312256
+    }
+  },
+  "reference_indirect_mean_rgb": 0.06218564510345459,
+  "flip_parameters": {
+    "ppd": 67.0,
+    "startExposure": 4.001879692077637,
+    "stopExposure": 6.461174011230469,
+    "numExposures": 3,
+    "tonemapper": "ACES"
+  },
+  "mean_change_from_raw": -0.07965674037868997
+}

@@ -1,0 +1,4 @@
+from pathlib import Path
+import runpy
+runpy.run_path(str(Path(__file__).resolve().parents[2]/'scripts/scenes/CornellLambert.pyscene'),
+              init_globals={'sceneBuilder':sceneBuilder})

@@ -64,7 +64,7 @@ def measure(name):
 
 try:
     graphs = runpy.run_path(str(ROOT / "scripts/GIPreview.py"), init_globals={"m": m})["graphs"]
-    assert set(graphs) == {"PathTracer", "PathTracerNRD", "TraditionalProbeGI", "RTXGIDDGI"}
+    assert set(graphs) == {"PTReference", "DDGIHalfGather", "TraditionalProbeGI", "RTXGIDDGI"}
     graph = graphs["RTXGIDDGI"]
     # GIPreview already registered Display.dst as Mogwai's selected output.
     # Keep it marked while adding the linear HDR diagnostic outputs.
@@ -142,7 +142,7 @@ try:
 
         scene = m.scene
         position, target = xyz(scene.camera.position), xyz(scene.camera.target)
-        for other in ("PathTracer", "PathTracerNRD", "TraditionalProbeGI"):
+        for other in ("PTReference", "DDGIHalfGather", "TraditionalProbeGI"):
             m.setActiveGraph(graphs[other])
             frames(4)
             assert p.updatedFrames == count

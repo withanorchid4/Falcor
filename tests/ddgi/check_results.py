@@ -51,7 +51,7 @@ def main():
             # Existing PathTracer/NRD tests document occasional upstream BSDF
             # nonfinite samples. Keep DDGI's finite requirement strict, but
             # report those reference channels instead of attributing them to DDGI.
-            pixels = read(name + "-reference-" + tag, "AccumulatePass.output", require_finite=False)
+            pixels = read(name + "-reference-" + tag, "Accumulate.output", require_finite=False)
             valid = [v for v in pixels if math.isfinite(v)]
             reference_invalid[tag] = len(pixels) - len(valid)
             assert len(valid) > len(pixels) * 0.99, (name, tag, "Unusable PathTracer reference")

@@ -49,6 +49,10 @@ private:
         bool classification = true;
         bool update = true;
         bool enableGI = true;
+        bool finalGather = false;
+        bool halfResolutionGather = false;
+        bool gatherDiffuse = true;
+        bool gatherSpecular = true;
         bool showProbes = false;
         bool indirectOnly = false;
         bool useRTXDI = true;

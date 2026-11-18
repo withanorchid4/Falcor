@@ -61,6 +61,7 @@ const char kResetHistory[] = "resetHistory";
 
 // Common settings.
 const char kWorldSpaceMotion[] = "worldSpaceMotion";
+const char kInputSampleOffset[] = "inputSampleOffset";
 const char kDisocclusionThreshold[] = "disocclusionThreshold";
 
 // Pack radiance settings.
@@ -185,6 +186,12 @@ void NRDPass::setProperties(const Properties& props)
         // Common settings.
         else if (key == kWorldSpaceMotion)
             mWorldSpaceMotion = value;
+        else if (key == kInputSampleOffset)
+        {
+            mInputSampleOffset = value;
+            FALCOR_CHECK(all(isfinite(mInputSampleOffset)) && all(abs(mInputSampleOffset) <= float2(0.5f)),
+                "NRD inputSampleOffset must be finite and within half a denoising pixel.");
+        }
         else if (key == kDisocclusionThreshold)
             mDisocclusionThreshold = value;
 
@@ -331,6 +338,7 @@ Properties NRDPass::getProperties() const
 
     // Common settings.
     props[kWorldSpaceMotion] = mWorldSpaceMotion;
+    props[kInputSampleOffset] = mInputSampleOffset;
     props[kDisocclusionThreshold] = mDisocclusionThreshold;
 
     // Pack radiance settings.
@@ -1153,6 +1161,12 @@ void NRDPass::executeInternal(RenderContext* pRenderContext, const RenderData& r
     // Initialize common settings.
     float4x4 viewMatrix = mpScene->getCamera()->getViewMatrix();
     float4x4 projMatrix = mpScene->getCamera()->getData().projMatNoJitter;
+    // NRD reconstructs positions at input pixel centers. Decimated guides may
+    // instead describe a fixed off-center sample (e.g. full pixel 2*p at half res).
+    // Shift the projection so that those samples map to NRD's pixel centers.
+    // Keep the same adjusted matrix in previous-frame reprojection as well.
+    projMatrix[0] -= (2.f * mInputSampleOffset.x / float(mScreenSize.x)) * projMatrix[3];
+    projMatrix[1] += (2.f * mInputSampleOffset.y / float(mScreenSize.y)) * projMatrix[3];
     // A graph may have been inactive while the scene advanced. Its old history no longer matches one-frame motion vectors.
     if (mFrameIndex > 0 &&
         (mpScene->getCamera()->getPrevViewMatrix() != mPrevViewMatrix || projMatrix != mPrevProjMatrix))

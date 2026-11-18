@@ -27,7 +27,7 @@
 // Falcor scene/material bridge for the unmodified NVIDIA RTXGI-DDGI SDK.
 // Intersection, alpha testing and analytic-light sampling follow MinimalPathTracer.
 // Only triangle meshes are supported by this first integration. Glass is treated
-// as a geometric boundary; there is no specular-indirect or transmission path.
+// as a geometric boundary; optional final gather adds one reflection segment, not transmission.
 // The SDK owns ray directions, encoding, relocation/classification, and querying.
 
 #include "Scene/SceneDefines.slangh"
@@ -35,6 +35,7 @@
 #include "RTXGIConfig.slang"
 #include "RTXGI/rtxgi-sdk/shaders/ddgi/Irradiance.hlsl"
 
+import Rendering.Materials.IsotropicGGX;
 import Scene.Raytracing;
 import Scene.Intersection;
 #ifndef DDGI_INLINE_SHADOW
@@ -56,6 +57,10 @@ cbuffer PerFrameCB
     uint gFrameCount;
     uint2 gFrameDim;
     bool gEnableGI;
+    bool gFinalGather;
+    bool gHalfResolutionGather;
+    bool gGatherDiffuse;
+    bool gGatherSpecular;
     bool gIndirectOnly;
     bool gUseRTXDI;
     bool gShowProbes;
@@ -89,6 +94,29 @@ RWTexture2D<float4> gOutputColor;
 RWTexture2D<float> gWrcDebugDepth;
 #if OUTPUT_INDIRECT
 RWTexture2D<float4> gOutputIndirect;
+#endif
+
+#if OUTPUT_GATHER_DIFFUSE
+RWTexture2D<float4> gOutputGatherDiffuse;
+#endif
+#if OUTPUT_GATHER_SPECULAR
+RWTexture2D<float4> gOutputGatherSpecular;
+#endif
+
+#if OUTPUT_DIFFUSERADIANCEHITDIST
+RWTexture2D<float4> gDiffuseRadianceHitDist;
+#endif
+#if OUTPUT_SPECULARRADIANCEHITDIST
+RWTexture2D<float4> gSpecularRadianceHitDist;
+#endif
+#if OUTPUT_DIFFUSEREFLECTANCE
+RWTexture2D<float4> gDiffuseReflectance;
+#endif
+#if OUTPUT_SPECULARREFLECTANCE
+RWTexture2D<float4> gSpecularReflectance;
+#endif
+#if OUTPUT_UNFILTEREDCOLOR
+RWTexture2D<float4> gUnfilteredColor;
 #endif
 
 // Host binds two ray types: probe=0, visibility=1. The payload is at most
@@ -273,7 +301,7 @@ float3 evaluateEnvironmentDirect(ShadingData sd, IMaterialInstance material, boo
 #if USE_ENV_LIGHT
     // Diffuse sky lighting is supplied by DDGI, including at probe hit points.
     // Keep only the camera's specular environment response in the fallback path.
-    if (diffuseOnly) return float3(0.f);
+    if (diffuseOnly || (material.getLobeTypes(sd) & (uint)LobeType::SpecularReflection) == 0) return float3(0.f);
     EnvMapSample light;
     if (!gEnvMapSampler.sample(sampleNext2D(sg), light)) return float3(0.f);
     if (!isfinite(light.pdf) || !all(isfinite(light.dir)))
@@ -286,7 +314,8 @@ float3 evaluateEnvironmentDirect(ShadingData sd, IMaterialInstance material, boo
     float3 origin = computeRayOrigin(sd.posW, dot(sd.faceN, light.dir) >= 0.f ? sd.faceN : -sd.faceN);
     if (!traceShadow(origin, light.dir, FLT_MAX)) return float3(0.f);
     sd.mtl.setActiveLobes((uint)LobeType::SpecularReflection);
-    float3 brdfCosine = evaluateBRDFCosine(sd, material, light.dir, diffuseOnly, sg);
+    let specularMaterial = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f));
+    float3 brdfCosine = evaluateBRDFCosine(sd, specularMaterial, light.dir, false, sg);
     return finiteRadiance(brdfCosine * (light.Le / light.pdf), 1u);
 #else
     return float3(0.f);
@@ -378,6 +407,52 @@ void traceProbes()
     DDGIStoreProbeRayFrontfaceHit(gRayData, outputCoords, volume, finiteRadiance(radiance, 3u), payload.hitT);
 }
 
+// One camera-side reflection segment followed by DDGI termination.
+// Reconstruct the material AFTER setting the lobe mask: StandardBSDF caches it.
+// Each lobe is sampled independently, so sum the two estimates (do not average).
+float3 gatherReflection(ShadingData primary, uint lobes, DDGIVolumeDescGPU volume, inout SampleGenerator sg, out float hitDistance)
+{
+    hitDistance = 0.f;
+    primary.mtl.setActiveLobes(primary.mtl.getActiveLobes() & lobes);
+    let source = gScene.materials.getMaterialInstance(primary, ExplicitLodTextureSampler(0.f));
+    if ((source.getLobeTypes(primary) & lobes) == 0) return float3(0.f);
+    BSDFSample sample = {};
+    if (!source.sample(primary, sg, sample, true) || !any(sample.weight > 0.f)) return float3(0.f);
+    if ((sample.lobeType & lobes) == 0) return float3(0.f);
+    if (!all(isfinite(sample.wo)) || !all(isfinite(sample.weight)))
+    {
+        rejectNonFinite(0u);
+        return float3(0.f);
+    }
+    if (dot(primary.getOrientedFaceNormal(), sample.wo) <= kMinCosTheta) return float3(0.f);
+    RayDesc ray;
+    ray.Origin = computeRayOrigin(primary.posW, dot(primary.faceN, sample.wo) >= 0.f ? primary.faceN : -primary.faceN);
+    ray.Direction = sample.wo;
+    ray.TMin = 0.f;
+    ray.TMax = FLT_MAX;
+    ProbeRayPayload payload = {};
+    payload.hitT = -1.f;
+    TraceRay(gScene.rtAccel, RAY_FLAG_NONE, 0xff, 0, rayTypeCount, 0, ray, payload);
+    // Linear world-space distance for RELAX; finite FP16 maximum denotes a miss.
+    hitDistance = payload.hitT < 0.f ? 65504.f : min(payload.hitT, 65504.f);
+    float3 radiance = float3(0.f);
+    if (payload.hitT < 0.f)
+    {
+        radiance = evaluateProbeMiss(sample.wo);
+    }
+    else
+    {
+        ShadingData sd = loadTriangleSurface(HitInfo(payload.hit), sample.wo);
+        if (!validSurface(sd)) return float3(0.f);
+        let material = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f));
+        let properties = material.getProperties(sd);
+        radiance = finiteRadiance(properties.emission, 0u) + evaluateDirect(sd, material, false, sg);
+        radiance += finiteRadiance(properties.diffuseReflectionAlbedo, 0u) *
+            queryIrradiance(sd.posW, sd.getOrientedFaceNormal(), sample.wo, volume) / M_PI;
+    }
+    return finiteRadiance(sample.weight * radiance, 3u);
+}
+
 // Diagnostic sphere overlay: active probes are green, inactive probes red.
 // Uses the SDK-relocated positions, and normal scene depth occludes the spheres.
 // Intentionally optional: this O(probeCount) debug path is not a GI benchmark.
@@ -416,15 +491,21 @@ void render()
 {
     uint2 pixel = DispatchRaysIndex().xy;
     if (any(pixel >= gFrameDim)) return;
+    // Fixed representative pixel in each 2x2 block; NRD guides use the same pixel.
+    bool gatherPixel = !gHalfResolutionGather || (all((pixel & 1u) == 0u) && all(pixel / 2u < max(gFrameDim / 2u, uint2(1))));
+    uint2 gatherOutputPixel = gHalfResolutionGather ? pixel / 2u : pixel;
     DDGIVolumeDescGPU volume = UnpackDDGIVolumeDescGPU(DDGIVolumes[0]);
     float3 direction = primaryRayDirection(pixel);
     float3 origin = gScene.camera.getPosition();
     HitInfo hit = HitInfo(gVBuffer[pixel]);
     float3 color = float3(0.f);
     float3 indirect = float3(0.f);
+    float3 gatheredDiffuse = float3(0.f), gatheredSpecular = float3(0.f);
+    float diffuseHitDistance = 0.f, specularHitDistance = 0.f;
+    float3 diffuseReflectance = float3(0.f), specularReflectance = float3(0.f);
     bool useExternalDirect = false;
 #if HAS_DIRECT_LIGHTING
-    useExternalDirect = gUseRTXDI;
+    useExternalDirect = gUseRTXDI && !gFinalGather;
     // RTXDIPass.color already includes surface emission and environment background.
     // Only the camera lighting changes; probe rays keep their own direct-light estimator.
     if (useExternalDirect && !gIndirectOnly) color = finiteRadiance(gDirectLighting[pixel].rgb, 1u);
@@ -436,15 +517,39 @@ void render()
         surfaceDistance = length(sd.posW - origin);
         let material = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f));
         let properties = material.getProperties(sd);
+        // A positive floor prevents unstable demodulation of supported lobes;
+        // absent lobes stay zero so spatial filtering cannot invent a response.
+        uint materialLobes = material.getLobeTypes(sd);
+        if ((materialLobes & (uint)LobeType::DiffuseReflection) != 0)
+            diffuseReflectance = max(finiteRadiance(properties.diffuseReflectionAlbedo, 0u), float3(1e-4f));
+        if ((materialLobes & ((uint)LobeType::SpecularReflection | (uint)LobeType::DeltaReflection)) != 0)
+            specularReflectance = max(approxSpecularIntegralGGX(properties.specularReflectance,
+                properties.roughness * properties.roughness, saturate(dot(properties.guideNormal, sd.V))), float3(1e-4f));
         if (!gIndirectOnly && !useExternalDirect && validSurface(sd))
         {
             SampleGenerator sg = SampleGenerator(pixel, gFrameCount);
-            color = finiteRadiance(properties.emission, 0u) + evaluateDirect(sd, material, false, sg);
+            // Gather rays sample emissive geometry and the environment themselves.
+            // Only analytic lights use primary NEE in this reference estimator;
+            // adding emissive/environment NEE here without MIS would double count.
+            color = finiteRadiance(properties.emission, 0u) + (gFinalGather ?
+                evaluateAnalyticDirect(sd, material, false, sg) : evaluateDirect(sd, material, false, sg));
         }
         if (gEnableGI && validSurface(sd))
         {
-            indirect = finiteRadiance(properties.diffuseReflectionAlbedo, 0u) *
-                queryIrradiance(sd.posW, sd.getOrientedFaceNormal(), direction, volume) * (gIntensity / M_PI);
+            if (gFinalGather)
+            {
+                SampleGenerator sg = SampleGenerator(pixel, gFrameCount);
+                // Decorrelate gather from the primary direct-light estimator.
+                sampleNext2D(sg);
+                if (gGatherDiffuse && gatherPixel)
+                    gatheredDiffuse = gatherReflection(sd, (uint)LobeType::DiffuseReflection, volume, sg, diffuseHitDistance) * gIntensity;
+                if (gGatherSpecular && gatherPixel)
+                    gatheredSpecular = gatherReflection(sd, (uint)LobeType::SpecularReflection | (uint)LobeType::DeltaReflection, volume, sg, specularHitDistance) * gIntensity;
+                indirect = gatheredDiffuse + gatheredSpecular;
+            }
+            else
+                indirect = finiteRadiance(properties.diffuseReflectionAlbedo, 0u) *
+                    queryIrradiance(sd.posW, sd.getOrientedFaceNormal(), direction, volume) * (gIntensity / M_PI);
             indirect = finiteRadiance(indirect, 3u);
             color += indirect;
         }
@@ -455,8 +560,30 @@ void render()
         color = evaluateSafeEnvironment(direction);
     }
 #endif
+#if OUTPUT_GATHER_DIFFUSE
+    gOutputGatherDiffuse[pixel] = float4(gatheredDiffuse, 1.f);
+#endif
+#if OUTPUT_GATHER_SPECULAR
+    gOutputGatherSpecular[pixel] = float4(gatheredSpecular, 1.f);
+#endif
     if (gShowProbes) color = overlayProbes(color, origin, direction, surfaceDistance, volume);
     if (gShowWrcCells) gWrcDebugDepth[pixel] = surfaceDistance;
+#if OUTPUT_DIFFUSERADIANCEHITDIST
+    if (gatherPixel) gDiffuseRadianceHitDist[gatherOutputPixel] = float4(gatheredDiffuse / max(diffuseReflectance, float3(1e-4f)), diffuseHitDistance);
+#endif
+#if OUTPUT_SPECULARRADIANCEHITDIST
+    if (gatherPixel) gSpecularRadianceHitDist[gatherOutputPixel] = float4(gatheredSpecular / max(specularReflectance, float3(1e-4f)), specularHitDistance);
+#endif
+#if OUTPUT_DIFFUSEREFLECTANCE
+    gDiffuseReflectance[pixel] = float4(diffuseReflectance, 1.f);
+#endif
+#if OUTPUT_SPECULARREFLECTANCE
+    gSpecularReflectance[pixel] = float4(specularReflectance, 1.f);
+#endif
+#if OUTPUT_UNFILTEREDCOLOR
+    // Direct/emission/background and legacy probe mode bypass NRD.
+    gUnfilteredColor[pixel] = float4(finiteRadiance(color - gatheredDiffuse - gatheredSpecular, 3u), 1.f);
+#endif
     gOutputColor[pixel] = float4(finiteRadiance(color, 3u), 1.f);
 #if OUTPUT_INDIRECT
     gOutputIndirect[pixel] = float4(indirect, 1.f);

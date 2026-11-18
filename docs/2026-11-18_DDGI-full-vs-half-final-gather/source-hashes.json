@@ -1,0 +1,5 @@
+{
+  "scripts/RTXGIDDGIFinalGather.py": "e901262157d5e9b80e68c77eb3bf7974b89217493af403f8b73ef09ae29138e2",
+  "tests/ddgi/full_gather_nrd_comparison.py": "d40e5604fa13b77b74231948411bbeaf34a73f6769c67bf0f2734437c9182aea",
+  "tests/ddgi/score_full_gather_nrd_comparison.py": "de681ca05dcb974567540ac04561d03481a72849a471b3a184658200c3a54fef"
+}

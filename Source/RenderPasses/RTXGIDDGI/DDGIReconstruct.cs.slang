@@ -22,6 +22,13 @@ void resolve(uint3 tid : SV_DispatchThreadID)
     uint w,h,hw,hh; color.GetDimensions(w,h); diffuse.GetDimensions(hw,hh);
     uint2 p=tid.xy;
     if (any(p>=uint2(w,h))) return;
+    // Full-resolution samples need no spatial reconstruction.
+    if (w == hw && h == hh)
+    {
+        color[p] = float4(direct[p].rgb + diffuse[p].rgb * diffuseReflectance[p].rgb
+            + specular[p].rgb * specularReflectance[p].rgb, 1.f);
+        return;
+    }
     float3 n=normal[p].xyz;
     float z=depth[p].x;
     float3 d=0,s=0; float sum=0;

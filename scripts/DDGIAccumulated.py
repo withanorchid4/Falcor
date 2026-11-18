@@ -1,15 +1,15 @@
 """Static convergence comparison: no NRD, progressive full-image accumulation."""
 from falcor import *
 
-def render_graph_DDGIAccumulated(mode='full'):
+def render_graph_DDGIAccumulated(mode='full', interactive=False):
     if mode not in ['ddgi','half','full']:raise ValueError(mode)
     g=RenderGraph('DDGIAccumulated_'+mode)
     g.addPass(createPass('GBufferRT',{'samplePattern':'Center','useAlphaTest':True,'useDOF':False}),'Visibility')
     g.addPass(createPass('RTXGIDDGI',{'finalGather':mode!='ddgi',
-        'halfResolutionGather':mode=='half','useRTXDI':False}),'DDGI')
+        'halfResolutionGather':mode=='half' or (interactive and mode=='ddgi'),'useRTXDI':False}),'DDGI')
     for c in ['vbuffer','viewW']:g.addEdge('Visibility.'+c,'DDGI.'+c)
     output='DDGI.color'
-    if mode=='half':
+    if mode=='half' or interactive:
         g.addPass(createPass('DDGIReconstruct',{}),'Reconstruct')
         for c in ['diffuse','specular']:
             g.addEdge('DDGI.'+c+'RadianceHitDist','Reconstruct.'+c)
@@ -24,6 +24,6 @@ def render_graph_DDGIAccumulated(mode='full'):
     g.markOutput('Display.dst')
     return g
 
-DDGIAccumulated=render_graph_DDGIAccumulated()
+DDGIAccumulated=render_graph_DDGIAccumulated(interactive=True)
 try:m.addGraph(DDGIAccumulated)
 except NameError:pass

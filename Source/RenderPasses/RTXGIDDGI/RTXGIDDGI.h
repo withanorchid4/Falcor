@@ -79,7 +79,7 @@ private:
         ref<Program> program;
         ref<RtBindingTable> table;
         ref<RtProgramVars> vars;
-    } mTrace, mRender;
+    } mTrace, mRender, mHalfGather;
     RayProgram mWrcTrace;
     ref<ComputePass> mpWrcBuild, mpWrcPrepare, mpWrcShade, mpWrcGather;
     uint32_t mWrcTypeCount = 0;

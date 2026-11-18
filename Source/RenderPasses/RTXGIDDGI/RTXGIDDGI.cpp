@@ -221,6 +221,7 @@ void RTXGIDDGI::setScene(RenderContext* context, const ref<Scene>& scene)
     mpScene = scene;
     mTrace = {};
     mRender = {};
+    mHalfGather = {};
     mWrcTrace = {};
     mpWrcBuild = mpWrcPrepare = mpWrcShade = mpWrcGather = nullptr;
     mWrcReallocate = mWrcResetPending = true;
@@ -289,6 +290,7 @@ void RTXGIDDGI::createPrograms()
 {
     buildRayProgram(mTrace, kRayShader, "traceProbes");
     buildRayProgram(mRender, kRayShader, "render");
+    buildRayProgram(mHalfGather, kRayShader, "gatherHalf");
     // WRC pipelines are compiled lazily and never replace the original traceProbes entry point.
     mWrcTrace = {};
     mpWrcBuild = mpWrcPrepare = mpWrcShade = mpWrcGather = nullptr;
@@ -650,6 +652,8 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     changed |= ray.program->addDefine("OUTPUT_DIFFUSEREFLECTANCE", data.getTexture("diffuseReflectance") ? "1" : "0");
     changed |= ray.program->addDefine("OUTPUT_SPECULARREFLECTANCE", data.getTexture("specularReflectance") ? "1" : "0");
     changed |= ray.program->addDefine("OUTPUT_UNFILTEREDCOLOR", data.getTexture("unfilteredColor") ? "1" : "0");
+    changed |= ray.program->addDefine("SPLIT_HALF_GATHER",
+        mOptions.finalGather && mOptions.halfResolutionGather && !mOptions.showProbes && !mOptions.showWrcCells ? "1" : "0");
     if (changed) ray.vars = nullptr;
     if (!ray.vars)
     {
@@ -793,7 +797,21 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
             mpWrcDebugDepth = mpDevice->createTexture2D(size.x, size.y, ResourceFormat::R32Float, 1, 1, nullptr, kTextureFlags);
     }
     bindRayProgram(mRender, data);
-    mpScene->raytrace(context, mRender.program.get(), mRender.vars, uint3(data.getDefaultTextureDims(), 1));
+    const uint2 frameDim = data.getDefaultTextureDims();
+    const bool splitGather = mOptions.finalGather && mOptions.halfResolutionGather && !mOptions.showProbes && !mOptions.showWrcCells;
+    {
+        FALCOR_PROFILE(context, "PrimaryShading");
+        mpScene->raytrace(context, mRender.program.get(), mRender.vars, uint3(frameDim, 1));
+    }
+    if (splitGather)
+    {
+        FALCOR_PROFILE(context, "HalfGather");
+        // Preserve diagnostic outputs and order the sparse color read-modify-write.
+        for (const auto& output : kOutputs)
+            if (auto texture = data.getTexture(output.name)) context->uavBarrier(texture.get());
+        bindRayProgram(mHalfGather, data);
+        mpScene->raytrace(context, mHalfGather.program.get(), mHalfGather.vars, uint3(max(frameDim / uint2(2), uint2(1)), 1));
+    }
     drawWrcCells(context, data.getTexture("color"));
     mStatus = mOptions.update ? (mOptions.useWRC ? "Updating probes via active WRC cells." : "Updating probes with original per-ray shading.") :
         "Probe updates frozen; camera and direct light remain live.";
@@ -923,13 +941,21 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
     if (widgets.checkbox("Update probes", options.update)) p["updateEnabled"] = options.update;
     if (widgets.button("Reset history")) reset();
     if (widgets.checkbox("Enable DDGI", options.enableGI)) p["enableGI"] = options.enableGI;
-    if (widgets.checkbox("Surface final gather", options.finalGather)) p["finalGather"] = options.finalGather;
-    widgets.tooltip("Trace diffuse and specular reflection from primary visibility. Uses internal direct lighting to avoid double-counting environment/emissive hits. No recursive specular or transmission.");
-    if (options.finalGather)
+    if (auto gather = widgets.group("Final gather", true))
     {
-        if (widgets.checkbox("Gather diffuse", options.gatherDiffuse)) p["gatherDiffuse"] = options.gatherDiffuse;
-        if (widgets.checkbox("Gather specular", options.gatherSpecular)) p["gatherSpecular"] = options.gatherSpecular;
-        widgets.text("RTXDI input bypassed. Use RTXGIDDGIFinalGather graph for accumulation.");
+        if (gather.checkbox("Enabled", options.finalGather)) p["finalGather"] = options.finalGather;
+        gather.tooltip("Trace diffuse and specular reflection from primary visibility. Uses internal direct lighting to avoid double-counting environment/emissive hits. No recursive specular or transmission.");
+        uint32_t gatherResolution = options.halfResolutionGather ? 0u : 1u;
+        const Gui::DropdownList gatherResolutions = {{0, "Half"}, {1, "Full"}};
+        if (gather.dropdown("Resolution", gatherResolutions, gatherResolution))
+            p["halfResolutionGather"] = gatherResolution == 0u;
+        gather.tooltip("Half traces one pixel per 2x2 block and reconstructs full-resolution lighting. Applies when final gather is enabled.");
+        if (options.finalGather)
+        {
+            if (gather.checkbox("Gather diffuse", options.gatherDiffuse)) p["gatherDiffuse"] = options.gatherDiffuse;
+            if (gather.checkbox("Gather specular", options.gatherSpecular)) p["gatherSpecular"] = options.gatherSpecular;
+            gather.text("RTXDI input bypassed. Toggle temporal accumulation in Accumulate > Enabled.");
+        }
     }
     if (widgets.checkbox("Indirect only", options.indirectOnly)) p["indirectOnly"] = options.indirectOnly;
     if (widgets.checkbox("Use world radiance cache", options.useWRC)) p["useWRC"] = options.useWRC;

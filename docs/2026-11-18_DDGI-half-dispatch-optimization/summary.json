@@ -1,0 +1,189 @@
+{
+  "resolution": [
+    1920,
+    1080
+  ],
+  "rounds": 3,
+  "intervals_per_round": 511,
+  "timing": {
+    "baseline": {
+      "ddgi": {
+        "total": {
+          "mean_ms": 0.9317209323247274,
+          "round_means_ms": [
+            0.9316340684890747,
+            0.9316075444221497,
+            0.9319211840629578
+          ]
+        },
+        "/DDGI": {
+          "mean_ms": 0.6218478679656982,
+          "round_means_ms": [
+            0.6217568516731262,
+            0.6217528581619263,
+            0.6220338940620422
+          ]
+        }
+      },
+      "half": {
+        "total": {
+          "mean_ms": 1.4317938089370728,
+          "round_means_ms": [
+            1.4312434196472168,
+            1.4314993619918823,
+            1.4326386451721191
+          ]
+        },
+        "/DDGI": {
+          "mean_ms": 0.9996123512585958,
+          "round_means_ms": [
+            0.999148964881897,
+            0.9993954300880432,
+            1.0002926588058472
+          ]
+        },
+        "/Reconstruct": {
+          "mean_ms": 0.1140504206220309,
+          "round_means_ms": [
+            0.11403071880340576,
+            0.11405075341463089,
+            0.11406978964805603
+          ]
+        }
+      },
+      "full": {
+        "total": {
+          "mean_ms": 1.3698928753534954,
+          "round_means_ms": [
+            1.3690223693847656,
+            1.3688945770263672,
+            1.371761679649353
+          ]
+        },
+        "/DDGI": {
+          "mean_ms": 1.059900124867757,
+          "round_means_ms": [
+            1.0591596364974976,
+            1.0590624809265137,
+            1.0614782571792603
+          ]
+        }
+      }
+    },
+    "split": {
+      "ddgi": {
+        "total": {
+          "mean_ms": 0.9310826659202576,
+          "round_means_ms": [
+            0.930969774723053,
+            0.9309808015823364,
+            0.9312974214553833
+          ]
+        },
+        "/DDGI": {
+          "mean_ms": 0.62126757701238,
+          "round_means_ms": [
+            0.6212127804756165,
+            0.6211697459220886,
+            0.6214202046394348
+          ]
+        },
+        "/DDGI/PrimaryShading": {
+          "mean_ms": 0.40463414788246155,
+          "round_means_ms": [
+            0.4045982360839844,
+            0.40465736389160156,
+            0.4046468436717987
+          ]
+        }
+      },
+      "half": {
+        "total": {
+          "mean_ms": 1.1251519123713176,
+          "round_means_ms": [
+            1.1250197887420654,
+            1.124956727027893,
+            1.1254792213439941
+          ]
+        },
+        "/DDGI": {
+          "mean_ms": 0.7004211743672689,
+          "round_means_ms": [
+            0.7003914713859558,
+            0.7001709938049316,
+            0.7007010579109192
+          ]
+        },
+        "/Reconstruct": {
+          "mean_ms": 0.10784496863683064,
+          "round_means_ms": [
+            0.10784964263439178,
+            0.10783812403678894,
+            0.10784713923931122
+          ]
+        },
+        "/DDGI/PrimaryShading": {
+          "mean_ms": 0.211515282591184,
+          "round_means_ms": [
+            0.2115010917186737,
+            0.2114720344543457,
+            0.21157272160053253
+          ]
+        },
+        "/DDGI/HalfGather": {
+          "mean_ms": 0.27349165081977844,
+          "round_means_ms": [
+            0.2734595835208893,
+            0.2735442519187927,
+            0.2734711170196533
+          ]
+        }
+      },
+      "full": {
+        "total": {
+          "mean_ms": 1.372523029645284,
+          "round_means_ms": [
+            1.3715788125991821,
+            1.3714381456375122,
+            1.3745521306991577
+          ]
+        },
+        "/DDGI": {
+          "mean_ms": 1.0627921024958293,
+          "round_means_ms": [
+            1.0619796514511108,
+            1.0618644952774048,
+            1.0645321607589722
+          ]
+        },
+        "/DDGI/PrimaryShading": {
+          "mean_ms": 0.8469809293746948,
+          "round_means_ms": [
+            0.8462778925895691,
+            0.8463605642318726,
+            0.8483043313026428
+          ]
+        }
+      }
+    }
+  },
+  "image_difference": {
+    "ddgi": {
+      "max_abs": 0.0,
+      "mse": 0.0
+    },
+    "half": {
+      "max_abs": 5.960464477539063e-08,
+      "mse": 1.1649104563581703e-18
+    },
+    "full": {
+      "max_abs": 0.0,
+      "mse": 0.0
+    }
+  },
+  "scene": "Lambert Cornell, ceiling point light; same scene and seeds before/after",
+  "image_check": "1024 warmup frames, then reset and accumulate 32 frames; linear HDR full-image difference",
+  "boundary_check": "481x271: FG on/off, half/full switches, accumulator bypass and history reset passed",
+  "notes": "No ReSTIR, NRD, sampling, or reconstruction filter changes. Debug probe/WRC overlays use the original combined dispatch.",
+  "half_total_reduction": 0.21416624003521723
+}

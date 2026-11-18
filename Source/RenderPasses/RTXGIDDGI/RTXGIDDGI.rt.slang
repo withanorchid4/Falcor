@@ -486,10 +486,9 @@ float3 overlayProbes(float3 color, float3 origin, float3 direction, float sceneD
     return color;
 }
 
-[shader("raygeneration")]
-void render()
+// Two specialized entry points share the same estimator and random seeds.
+void shadePixel(uint2 pixel, bool gatherOnly)
 {
-    uint2 pixel = DispatchRaysIndex().xy;
     if (any(pixel >= gFrameDim)) return;
     // Fixed representative pixel in each 2x2 block; NRD guides use the same pixel.
     bool gatherPixel = !gHalfResolutionGather || (all((pixel & 1u) == 0u) && all(pixel / 2u < max(gFrameDim / 2u, uint2(1))));
@@ -525,7 +524,7 @@ void render()
         if ((materialLobes & ((uint)LobeType::SpecularReflection | (uint)LobeType::DeltaReflection)) != 0)
             specularReflectance = max(approxSpecularIntegralGGX(properties.specularReflectance,
                 properties.roughness * properties.roughness, saturate(dot(properties.guideNormal, sd.V))), float3(1e-4f));
-        if (!gIndirectOnly && !useExternalDirect && validSurface(sd))
+        if (!gatherOnly && !gIndirectOnly && !useExternalDirect && validSurface(sd))
         {
             SampleGenerator sg = SampleGenerator(pixel, gFrameCount);
             // Gather rays sample emissive geometry and the environment themselves.
@@ -534,7 +533,7 @@ void render()
             color = finiteRadiance(properties.emission, 0u) + (gFinalGather ?
                 evaluateAnalyticDirect(sd, material, false, sg) : evaluateDirect(sd, material, false, sg));
         }
-        if (gEnableGI && validSurface(sd))
+        if (gEnableGI && validSurface(sd) && (gatherOnly || !SPLIT_HALF_GATHER))
         {
             if (gFinalGather)
             {
@@ -555,7 +554,7 @@ void render()
         }
     }
 #if USE_ENV_BACKGROUND
-    else if (!gIndirectOnly && !useExternalDirect)
+    else if (!gatherOnly && !gIndirectOnly && !useExternalDirect)
     {
         color = evaluateSafeEnvironment(direction);
     }
@@ -569,25 +568,38 @@ void render()
     if (gShowProbes) color = overlayProbes(color, origin, direction, surfaceDistance, volume);
     if (gShowWrcCells) gWrcDebugDepth[pixel] = surfaceDistance;
 #if OUTPUT_DIFFUSERADIANCEHITDIST
-    if (gatherPixel) gDiffuseRadianceHitDist[gatherOutputPixel] = float4(gatheredDiffuse / max(diffuseReflectance, float3(1e-4f)), diffuseHitDistance);
+    if (gatherPixel && (gatherOnly || !SPLIT_HALF_GATHER)) gDiffuseRadianceHitDist[gatherOutputPixel] = float4(gatheredDiffuse / max(diffuseReflectance, float3(1e-4f)), diffuseHitDistance);
 #endif
 #if OUTPUT_SPECULARRADIANCEHITDIST
-    if (gatherPixel) gSpecularRadianceHitDist[gatherOutputPixel] = float4(gatheredSpecular / max(specularReflectance, float3(1e-4f)), specularHitDistance);
+    if (gatherPixel && (gatherOnly || !SPLIT_HALF_GATHER)) gSpecularRadianceHitDist[gatherOutputPixel] = float4(gatheredSpecular / max(specularReflectance, float3(1e-4f)), specularHitDistance);
 #endif
 #if OUTPUT_DIFFUSEREFLECTANCE
-    gDiffuseReflectance[pixel] = float4(diffuseReflectance, 1.f);
+    if (!gatherOnly) gDiffuseReflectance[pixel] = float4(diffuseReflectance, 1.f);
 #endif
 #if OUTPUT_SPECULARREFLECTANCE
-    gSpecularReflectance[pixel] = float4(specularReflectance, 1.f);
+    if (!gatherOnly) gSpecularReflectance[pixel] = float4(specularReflectance, 1.f);
 #endif
 #if OUTPUT_UNFILTEREDCOLOR
     // Direct/emission/background and legacy probe mode bypass NRD.
-    gUnfilteredColor[pixel] = float4(finiteRadiance(color - gatheredDiffuse - gatheredSpecular, 3u), 1.f);
+    if (!gatherOnly) gUnfilteredColor[pixel] = float4(finiteRadiance(color - gatheredDiffuse - gatheredSpecular, 3u), 1.f);
 #endif
+    if (gatherOnly) color += gOutputColor[pixel].rgb;
     gOutputColor[pixel] = float4(finiteRadiance(color, 3u), 1.f);
 #if OUTPUT_INDIRECT
     gOutputIndirect[pixel] = float4(indirect, 1.f);
 #endif
+}
+
+[shader("raygeneration")]
+void render()
+{
+    shadePixel(DispatchRaysIndex().xy, false);
+}
+
+[shader("raygeneration")]
+void gatherHalf()
+{
+    shadePixel(DispatchRaysIndex().xy * 2u, true);
 }
 
 [shader("miss")]

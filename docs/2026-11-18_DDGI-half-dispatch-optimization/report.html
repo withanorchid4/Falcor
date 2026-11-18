@@ -1,0 +1,8 @@
+<!doctype html><html lang="zh"><meta charset="utf-8"><title>DDGI 半分辨率 dispatch 优化</title>
+<style>body{max-width:1000px;margin:40px auto;padding:0 24px;font:16px/1.8 system-ui;background:#171a20;color:#ddd}td,th{border:1px solid #555;padding:8px 16px}table{border-collapse:collapse}a{color:#8dc7ff}</style>
+<h1>半分辨率 Final Gather：独立追踪 dispatch</h1>
+<p>半分辨率整图 GPU 耗时降低 21.4%。原来的 1920×1080 混合着色 dispatch 拆为全分辨率主表面着色与 960×540 FG 追踪。保留固定代表像素、随机种子、BRDF 采样、DDGI 命中点着色、16-tap 重建和 Accumulate；未加入 ReSTIR 或 NRD。</p>
+<table><tr><th>方案</th><th>修改前 ms</th><th>拆分后 ms</th><th>最大线性 HDR 差值</th></tr><tr><td>ddgi</td><td>0.932</td><td>0.931</td><td>0</td></tr><tr><td>half</td><td>1.432</td><td>1.125</td><td>5.9605e-08</td></tr><tr><td>full</td><td>1.370</td><td>1.373</td><td>0</td></tr></table>
+<p>RTX 5070 / D3D12，1920×1080，Lambert Cornell 顶灯点光源。每轮 511 个 GPU 区间，三轮交替顺序测量。总时间包含 GBuffer、probe 更新、直接光、FG/重建、累积与显示，不代表单帧就获得收敛画质。图像比较为预热 1024 帧后重置并累积 32 帧；半分辨率浮点误差来自拆分后的加减运算顺序，原始 DDGI 与全分辨率逐像素完全一致。没有重新运行 65536 帧收敛实验。</p>
+<p>已通过 481×271 奇数尺寸下 FG 开关、全／半分辨率切换、累积关闭直通和重新开启清空历史测试。调试 probe/WRC 叠加显示保留原来的合并路径。前一轮变慢的四相 dispatch 与 groupshared 重建实验已经回退。</p>
+<p><a href="summary.json">分阶段计时、每轮数据与图像误差</a> · <a href="../2026-11-18_DDGI-1080p-accumulated-comparison/report.html">优化前的高清收敛对比</a></p></html>

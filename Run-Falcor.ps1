@@ -2,7 +2,7 @@ param(
     [string]$Scene = '',
     [ValidateSet('vulkan', 'd3d12')]
     [string]$Device = 'd3d12',
-    [ValidateSet('PathTracer', 'DDGIHalf', 'Probe', 'DDGI')]
+    [ValidateSet('PathTracer', 'Probe', 'DDGI')]
     [string]$Renderer = 'PathTracer',
     [ValidateSet('manual', 'auto', 'bake', 'load')][string]$Mode = 'manual',
     [ValidateRange(1, 65536)][int]$Samples = 2048,
@@ -54,7 +54,6 @@ if (-not $PSBoundParameters.ContainsKey('Scene')) {
     [void]$rendererBox.Items.Add('DDGI')
     [void]$rendererBox.Items.Add('PathTracer')
     [void]$rendererBox.Items.Add('Probe')
-    [void]$rendererBox.Items.Add('DDGIHalf')
     $defaultRenderer = 'DDGI'
     if ($PSBoundParameters.ContainsKey('Renderer')) { $defaultRenderer = $Renderer }
     $rendererBox.SelectedItem = $defaultRenderer
@@ -63,7 +62,7 @@ if (-not $PSBoundParameters.ContainsKey('Scene')) {
     $form.Controls.Add($rendererBox)
 
     $note = New-Object System.Windows.Forms.Label
-    $note.Text = 'DDGI / DDGIHalf use D3D12.'
+    $note.Text = 'DDGI: configure Final gather in-app.'
     $note.Location = New-Object System.Drawing.Point(110, 98)
     $note.Size = New-Object System.Drawing.Size(250, 22)
     $form.Controls.Add($note)
@@ -94,7 +93,7 @@ if ($Scene -notin $availableScenes) {
     throw "Unknown scene '$Scene'. Available scenes: $($availableScenes -join ', ')."
 }
 
-if ($Renderer -in @('DDGIHalf', 'DDGI')) {
+if ($Renderer -eq 'DDGI') {
     if ($PSBoundParameters.ContainsKey('Device') -and $Device -ne 'd3d12') {
         throw "$Renderer requires D3D12 in this integration. Use -Device d3d12 or omit -Device."
     }

@@ -98,6 +98,12 @@ def configure_graph(graph):
         "normalBias": config["normalBiasWorld"] / spacing, "viewBias": config["viewBiasWorld"] / spacing,
         "enableRelocation": True, "enableClassification": True, "useWRC": False,
     })
+    configure_display(graph)
+
+
+def configure_display(graph):
+    """Use the same display transform for every Cornell comparison graph."""
+    settings = load_config()
     # Falcor's ACES operator multiplies by 0.6; the official ACESFilm does not.
     # Cancel that factor so the configured stops have the same pre-curve exposure.
     graph.updatePass("Display", {"autoExposure": False, "useSceneMetadata": False,

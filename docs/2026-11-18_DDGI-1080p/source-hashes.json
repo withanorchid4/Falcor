@@ -1,0 +1,11 @@
+{
+  "Source/RenderPasses/FLIPPass/flip.hlsli": "2d8a49156e977d36ae1cb36233dbc982a94fd05a511aab2337fad0baecdf1413",
+  "tests/ddgi/highres_accumulated_comparison.py": "79a3c7781d21fadb00f54d0eb1edf7faa7183ca92f7b6bcd97a13f2b0e3a398a",
+  "tests/ddgi/score_highres_accumulated_comparison.py": "c7a5aab0088879a4b77974c8b8183ceba091114d988b94606bd1b4b759b9aaed",
+  "scripts/DDGIAccumulated.py": "1af40d0c8cca5896262115e8214d86b06c67a77fe80df8d909b8a1432eadb3ce",
+  "scripts/PTReference.py": "a99f79c1539ec2946eb2de96cc9c5e37f8ad610d151851931a3dd3d8a9899473",
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.cpp": "79464a1be3a58e91346c056ba7df1add4e41ec0236b23b786b6dd15d4717a870",
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.h": "65c7e50366cd09557c50a580bbf7a2b53ca7602c90f028960a486b6e769db8fe",
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.rt.slang": "745d840ca744ebd291b62b85a12bfdbb128775b1cbfcd7f1bf0d2c77e5ad782b",
+  "Source/RenderPasses/RTXGIDDGI/DDGIReconstruct.cs.slang": "0d356227aabb6f4f7b45f0e06d926e7e17fa2410877bb1cd4ba5fe67b4bdf0a7"
+}

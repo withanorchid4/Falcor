@@ -7,7 +7,7 @@ import runpy
 def create_preview_graphs():
     directory = Path(__file__).parent
     graphs = {}
-    for name in ("PTReference", "TraditionalProbeGI", "RTXGIDDGI", "DDGIHalfGather"):
+    for name in ("PTReference", "TraditionalProbeGI", "RTXGIDDGI"):
         graphs[name] = runpy.run_path(str(directory / (name + ".py")))[name]
     return graphs
 
@@ -16,10 +16,10 @@ graphs = create_preview_graphs()
 if os.environ.get("FALCOR_START_SCENE") in ("Cornell", "CornellLambert"):
     cornell_setup = runpy.run_path(str(Path(__file__).parent / "scenes/cornell_rtxgi.py"))
     cornell_setup["configure_graph"](graphs["RTXGIDDGI"])
-    cornell_setup["configure_graph"](graphs["DDGIHalfGather"])
+    for graph in graphs.values():
+        cornell_setup["configure_display"](graph)
 renderer = os.environ.get("FALCOR_START_RENDERER", "PathTracer")
 initial_graph = {
-    "DDGIHalf": "DDGIHalfGather",
     "Probe": "TraditionalProbeGI",
     "DDGI": "RTXGIDDGI",
 }.get(renderer, "PTReference")

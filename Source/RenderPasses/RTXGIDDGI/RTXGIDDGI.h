@@ -41,6 +41,7 @@ private:
         float hysteresis = 0.97f;
         float normalBias = 0.05f;
         float viewBias = 0.05f;
+        float minFrontfaceDistance = 0.10f; // Fraction of the minimum probe spacing, like the bias properties.
         float intensity = 1.f;
         float3 gridMin = float3(-1.f);
         float3 gridMax = float3(1.f);
@@ -49,6 +50,9 @@ private:
         bool classification = true;
         bool update = true;
         bool enableGI = true;
+        bool worldCache = false;
+        uint32_t worldCacheDownsample = 8, worldCacheBounces = 3, worldCacheHistory = 16;
+        float worldCacheDensity = 20.f, worldCacheMaxIntensity = 0.f;
         bool finalGather = false;
         bool halfResolutionGather = false;
         bool jitterHalfGather = false;
@@ -100,6 +104,15 @@ private:
     uint32_t mWrcTypeCount = 0;
     uint32_t getWrcDispatchCount() const { return mOptions.wrcGroupByMaterial ? mWrcTypeCount : 1u; }
 
+    void prepareWorldCache(RenderContext* context);
+    void updateWorldCache(RenderContext* context, const RenderData& data);
+    void bindWorldCache(const ShaderVar& root);
+    void renderWorldCacheUI(Gui::Widgets& widgets);
+    RayProgram mWorldCacheTrace;
+    ref<ComputePass> mpWorldCacheResolve;
+    ref<Buffer> mpWCState, mpWCKeys, mpWCLighting, mpWCAccumulation, mpWCAge, mpWCStats;
+    bool mWorldCacheReset = true;
+    uint32_t mWorldCacheFrames = 0;
     void buildRayProgram(RayProgram& ray, const char* shader, const char* entry);
     void createPrograms();
     void allocateWrcResources();

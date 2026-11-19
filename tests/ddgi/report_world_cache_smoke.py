@@ -1,0 +1,68 @@
+from pathlib import Path
+import json,sys,shutil,html,hashlib
+import numpy as np
+R=Path(__file__).resolve().parents[2]; O=R/'build/worldcache-validation'
+sys.path.insert(0,str(R/'build/final-gather-python'))
+import OpenEXR
+r=json.loads((O/'complete.json').read_text())
+D=R/'docs/2026-11-19_LumenWorldCache迁移验证';D.mkdir(exist_ok=True)
+summary={}
+for scene,v in r.items():
+ s=v['warm_stats']; a=OpenEXR.File(str(O/(scene+'-half.Accumulate.output.0.exr'))).channels()['RGB'].pixels
+ assert np.isfinite(a).all()
+ e=v['timing']['events'];prefix='/onFrameRender/RenderGraphExe::execute()/'
+ summary[scene]={k:s[k] for k in ['cacheLookups','cacheHits','cacheOccupied','cacheInsertionFailures','totalProbes','updatedFrames','worldCacheUpdates','finite','rejectedRaySamples']}
+ summary[scene]['gpu_ms']={k:e[prefix+k+'/gpu_time']['stats']['mean'] for k in ['WorldCache','WorldCache/WorldCacheUpdate','WorldCache/PrimaryShading','WorldCache/HalfGather']}
+ summary[scene]['render_graph_gpu_ms']=e[prefix+'gpu_time']['stats']['mean']
+ summary[scene]['exr_finite']=True
+ shutil.copyfile(O/(scene+'-half.Display.dst.0.png'), D/(scene+'.png'))
+off=OpenEXR.File(str(O/'lights-off.Accumulate.output.0.exr')).channels()['RGB'].pixels
+assert np.isfinite(off).all() and np.max(np.abs(off))==0
+summary['lights_off_max']=0
+summary['settings']={'resolution':[960,540],'warmup':512,'accumulate_frames':1024,'cache_table_entries':1048576,'path_downsample':8,'path_bounces':3,'terminal_bootstrap_rays':1,'cache_history':16,'max_unused':64,'density':20,'minimum_cell_size_world':.025,'radiance_clamp':0,'restir':False,'nrd':False}
+summary['source_hashes']={str(p.relative_to(R)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (R/'Source/RenderPasses/RTXGIDDGI').glob('LumenWorldCache*')}
+(D/'validation.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf-8')
+shutil.copyfile(O/'cornell.json',D/'cornell.json')
+rows=''.join(f'<tr><td>{scene}</td><td>{v["cacheHits"]/v["cacheLookups"]:.2%}</td><td>{v["cacheOccupied"]:,}</td><td>{v["gpu_ms"]["WorldCache/WorldCacheUpdate"]:.3f}</td><td>{v["gpu_ms"]["WorldCache/HalfGather"]:.3f}</td><td>{v["render_graph_gpu_ms"]:.3f}</td></tr>' for scene,v in summary.items() if scene.endswith('Lambert'))
+page='''<!doctype html><meta charset="utf-8"><title>LumenWorldCache 迁移验证</title>
+<style>body{background:#191c22;color:#e5e9ef;font:16px/1.7 system-ui;max-width:1100px;margin:40px auto;padding:0 24px}h1,h2{color:#fff}a{color:#8ccfff}pre{background:#252a33;padding:20px;overflow:auto}table{border-collapse:collapse;width:100%}td,th{padding:10px;border-bottom:1px solid #424850;text-align:left}img{width:100%;height:auto}code{color:#cbdaf8}.note{color:#f1d49c}</style>
+<h1>LumenWorldCache：Falcor 实验性适配</h1>
+<p>2026-11-19。已编译并验证 CornellLambert、SponzaLambert。此记录验证新路径可运行，不是充分收敛的 DDGI / PT 画质或性能对比。</p>
+<h2>源码依据与职责</h2>
+<p>本地源文件位于 D:/Unreal/UnrealEngine/Engine/Source/Runtime/Renderer/Private/Lumen/LumenWorldCache.cpp、.h，以及 Engine/Shaders/Private/Lumen/LumenWorldCache.ush、LumenWorldCacheTracePaths.usf、LumenWorldCacheUpdate.usf。LumenHardwareRayTracingCommon.ush 中 CalculateSurfaceCacheLighting 在启用 WorldCache 时读取它，替换 Surface Cache 的表面出射亮度。</p>
+<p>它与 LumenRadianceCache 不同，也不是本项目之前用来合并 DDGI 探针射线着色的 WorldRadianceCache。新路径不分配或更新 DDGI 探针。</p>
+<h2>组织形式</h2>
+<pre>GBufferRT
+ ├─ WorldCacheUpdate
+ │   ├─ CachePaths：每 8×8 屏幕区域选一个随机 GBuffer 像素
+ │   │   追踪 3 个漫反射更新顶点，最后再追一段用于读取旧缓存
+ │   └─ CacheResolve：合并同一 cell 的样本，时间混合、清空累加器、淘汰旧项
+ ├─ PrimaryShading：直接光、发光表面、背景
+ └─ HalfGather：沿用原来的半分辨率 FG，在命中点查询 WorldCache
+       ↓
+ DDGIReconstruct：沿用深度/法线引导重建
+       ↓
+ AccumulatePass → ToneMapper</pre>
+<p>WorldCache 更新与 FG 查询是独立阶段。为复用 Falcor 的材质、光追绑定和既有 FG，首版仍托管于 RTXGIDDGI 插件；新图和 UI 的 pass 名为 WorldCache。实现分别位于 LumenWorldCache.cpp、LumenWorldCache.slang、LumenWorldCacheTrace.slang、LumenWorldCache.cs.slang。</p>
+<p>缓存键包含世界坐标 cell、距离层级和几何法线六方向分类；表容量 2²⁰，最多探测四个槽位。默认历史长度 16 次有效帧更新，64 帧未更新淘汰。更新顶点采用：</p>
+<pre>L_new(y) = emission(y) + analytic_direct_diffuse(y) + albedo(y) × L_previous(z)
+z ~ cosine hemisphere at y
+L_cache = lerp(L_cache, mean(L_new), 1 / min(history + 1, 16))</pre>
+<p>缓存保存总漫反射出射 radiance；FG 不再重复添加命中点的直接光或再乘一次 albedo/π。发光几何和环境通过延续射线估计，直接光 NEE 只包含解析光源，避免双计。多帧反馈能传播更多次反弹，3 个更新顶点并不意味着最终 GI 只包含三次反弹。</p>
+<h2>与 UE 原实现的差异</h2>
+<ul><li>使用 Falcor 的三角形求交、alpha test、材质和光源；首版针对不透明／alpha-mask 漫反射场景，不实现 UE 完整反射、透射和复杂材质路径。</li>
+<li>保存完整 cell 坐标而非 UE 的打包循环坐标；最小 cell 宽度为 0.025 世界单位。采用同类距离分层，未移植 UE 的跨层历史迁移和随机查询滤波。镜头移动到新 cell 或层级需要重新预热。</li>
+<li>每条更新路径在一个 raygen 调度中顺序追踪，未移植逐 bounce 调度、俄罗斯轮盘、蓝噪声和异步计算。随机数沿用 Falcor SampleGenerator。</li>
+<li>未曝光 HDR 使用 float32 CAS 原子求和；不套用 UE 的固定点和预曝光量化。亮度截断默认关闭，UI 可设置；这与 UE 默认预曝光空间的 40 上限不同。</li>
+<li>同槽位插入竞争时本帧允许失败、以后重试；没有等待锁。缓存未命中返回零，因此启动时与镜头变化后需要预热。</li>
+<li>灯光、材质和几何变化清空缓存，避免残留；不是 UE 的平滑动态更新行为。ReSTIR 和 NRD 均关闭。</li></ul>
+<h2>运行验证</h2>
+<p>960×540 输出、480×270 FG，预热 512 帧，随后 Accumulate 1024 帧。抓图输出在累积前就注册，避免重编译打断累积。以下命中率包括更新路径和 FG 查询，不是仅 FG 的命中率。耗时是该小规模验证的 GPU 平均时间（ms），不能直接与旧 1080p 报告相比。</p>
+<table><tr><th>场景</th><th>查询命中率</th><th>有效 cell</th><th>缓存更新</th><th>Half FG</th><th>完整 Graph</th></tr>'''+rows+'''</table>
+<p>两场景 HDR 均为有限值；探针总数、探针更新数均为零；原 DDGI 路径仍正常更新探针。已检查全／半分辨率、采样偏移、缓存冻结与重置、镜头移动、401×301 尺寸切换及点光源／方向光切换。Sponza 所有灯光关闭后 HDR 全零。脚本：tests/ddgi/world_cache_smoke.py；数据：<a href="validation.json">validation.json</a>。</p>
+<h2>Cornell Lambert</h2><img src="CornellLambert.png" alt="WorldCache Cornell Lambert">
+<h2>Sponza Lambert</h2><img src="SponzaLambert.png" alt="WorldCache Sponza Lambert">
+<p class="note">以上是接入预览，尚未验证对 PT 的收敛误差，也未证明优于 DDGI。缓存空间平均、缺失条目和有限历史仍可能引入偏差。</p>
+<h2>启动</h2><p>Run-Falcor 中选择 WorldCache 和 CornellLambert／SponzaLambert；也可在 Active Graph 选择 LumenWorldCache。默认半分辨率 FG、Accumulate 开启。WorldCache → Final gather 可以切换 Half / Full；Accumulate → Enabled 控制屏幕累积。</p>'''
+(D/'report.html').write_text(page,encoding='utf-8')
+print(json.dumps(summary,ensure_ascii=False,indent=2))

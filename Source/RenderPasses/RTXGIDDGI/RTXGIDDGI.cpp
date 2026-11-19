@@ -71,11 +71,18 @@ RTXGIDDGI::RTXGIDDGI(ref<Device> device, const Properties& properties) : RenderP
 Properties RTXGIDDGI::getProperties() const
 {
     Properties p;
+    p["worldCache"] = mOptions.worldCache;
+    p["worldCacheDownsample"] = mOptions.worldCacheDownsample;
+    p["worldCacheBounces"] = mOptions.worldCacheBounces;
+    p["worldCacheHistory"] = mOptions.worldCacheHistory;
+    p["worldCacheDensity"] = mOptions.worldCacheDensity;
+    p["worldCacheMaxIntensity"] = mOptions.worldCacheMaxIntensity;
     p["gridCounts"] = mOptions.counts;
     p["raysPerProbe"] = mOptions.rays;
     p["hysteresis"] = mOptions.hysteresis;
     p["normalBias"] = mOptions.normalBias;
     p["viewBias"] = mOptions.viewBias;
+    p["minFrontfaceDistance"] = mOptions.minFrontfaceDistance;
     p["intensity"] = mOptions.intensity;
     p["gridMin"] = mOptions.gridMin;
     p["gridMax"] = mOptions.gridMax;
@@ -134,11 +141,18 @@ void RTXGIDDGI::setProperties(const Properties& properties)
     {
         refreshLighting |= name != "showWrcCells" && name != "wrcCellsXRay" &&
                            name != "wrcCellsLod" && name != "wrcCellsOpacity";
-        if (name == "gridCounts") next.counts = value;
+        if (name == "worldCache") next.worldCache = value;
+        else if (name == "worldCacheDownsample") next.worldCacheDownsample = value;
+        else if (name == "worldCacheBounces") next.worldCacheBounces = value;
+        else if (name == "worldCacheHistory") next.worldCacheHistory = value;
+        else if (name == "worldCacheMaxIntensity") next.worldCacheMaxIntensity = value;
+        else if (name == "worldCacheDensity") next.worldCacheDensity = value;
+        else if (name == "gridCounts") next.counts = value;
         else if (name == "raysPerProbe") next.rays = value;
         else if (name == "hysteresis") next.hysteresis = value;
         else if (name == "normalBias") next.normalBias = value;
         else if (name == "viewBias") next.viewBias = value;
+        else if (name == "minFrontfaceDistance") next.minFrontfaceDistance = value;
         else if (name == "intensity") next.intensity = value;
         else if (name == "gridMin") next.gridMin = value;
         else if (name == "gridMax") next.gridMax = value;
@@ -193,6 +207,8 @@ void RTXGIDDGI::setProperties(const Properties& properties)
     FALCOR_CHECK(std::isfinite(next.hysteresis) && next.hysteresis >= 0.f && next.hysteresis < 1.f, "DDGI hysteresis must be in [0,1).");
     FALCOR_CHECK(std::isfinite(next.normalBias) && next.normalBias >= 0.f && next.normalBias <= 1.f, "DDGI normalBias must be in [0,1].");
     FALCOR_CHECK(std::isfinite(next.viewBias) && next.viewBias >= 0.f && next.viewBias <= 1.f, "DDGI viewBias must be in [0,1].");
+    FALCOR_CHECK(std::isfinite(next.minFrontfaceDistance) && next.minFrontfaceDistance >= 0.f && next.minFrontfaceDistance <= 1.f,
+        "DDGI minFrontfaceDistance must be in [0,1] times the minimum probe spacing.");
     FALCOR_CHECK(std::isfinite(next.intensity) && next.intensity >= 0.f, "DDGI intensity must be finite and nonnegative.");
     FALCOR_CHECK(all(isfinite(next.gridMin)) && all(isfinite(next.gridMax)) && all(next.gridMax > next.gridMin), "DDGI gridMax must exceed gridMin.");
     FALCOR_CHECK(std::isfinite(next.wrcCellScale) && next.wrcCellScale >= 0.01f && next.wrcCellScale <= 2.f,
@@ -215,6 +231,7 @@ void RTXGIDDGI::setProperties(const Properties& properties)
     if (any(next.counts != mOptions.counts) || next.rays != mOptions.rays || next.autoBounds != mOptions.autoBounds ||
         any(next.gridMin != mOptions.gridMin) || any(next.gridMax != mOptions.gridMax)) mReallocate = true;
     if (next.relocation != mOptions.relocation || next.classification != mOptions.classification) mResetPending = true;
+    if (next.minFrontfaceDistance != mOptions.minFrontfaceDistance) mResetPending = true;
     if (next.normalBias != mOptions.normalBias || next.viewBias != mOptions.viewBias) mWrcResetPending = true;
     // Invalidate the old active-list layout, including when probe updates are frozen.
     // Scheduling changes preserve the accumulated DDGI field.
@@ -235,6 +252,20 @@ void RTXGIDDGI::setProperties(const Properties& properties)
     FALCOR_CHECK(next.restirHistoryLength >= 1 && next.restirHistoryLength <= 32, "ReSTIR history length must be 1..32 candidates.");
     FALCOR_CHECK(next.restirSpatialPasses >= 1 && next.restirSpatialPasses <= 4, "ReSTIR spatial passes must be 1..4.");
     FALCOR_CHECK(std::isfinite(next.restirIntegrateRadius) && next.restirIntegrateRadius >= 0.f && next.restirIntegrateRadius <= 8.f, "ReSTIR integration radius must be 0..8.");
+    FALCOR_CHECK(next.worldCacheDownsample >= 1 && next.worldCacheDownsample <= 32 &&
+        next.worldCacheBounces >= 1 && next.worldCacheBounces <= 8 &&
+        next.worldCacheHistory >= 1 && next.worldCacheHistory <= 255 &&
+        std::isfinite(next.worldCacheMaxIntensity) && next.worldCacheMaxIntensity >= 0.f &&
+        std::isfinite(next.worldCacheDensity) && next.worldCacheDensity >= 1.f && next.worldCacheDensity <= 63.f,
+        "Invalid WorldCache settings.");
+    if (next.worldCache) { next.finalGather = true; next.restirGather = false; next.showProbes = false; next.useWRC = false; next.showWrcCells = false; }
+    if (next.worldCache != mOptions.worldCache)
+    {
+        mReallocate = mResetPending = mRebuildPrograms = true;
+        requestRecompile();
+    }
+    if (next.worldCacheMaxIntensity != mOptions.worldCacheMaxIntensity || next.worldCacheDensity != mOptions.worldCacheDensity || next.worldCacheBounces != mOptions.worldCacheBounces)
+        mWorldCacheReset = true;
     mRestirResetPending |= refreshLighting;
     mOptions = next;
     mOptionsChanged |= refreshLighting;
@@ -258,6 +289,7 @@ RenderPassReflection RTXGIDDGI::reflect(const CompileData& data)
 void RTXGIDDGI::setScene(RenderContext* context, const ref<Scene>& scene)
 {
     mpScene = scene;
+    mWorldCacheReset = true;
     mpRestirInitial = mpRestirTemporal = mpRestirSpatial = mpRestirHistory = nullptr;
     mRestirHistoryValid = false;
     mRestirResetPending = true;
@@ -299,7 +331,7 @@ void RTXGIDDGI::onSceneUpdates(RenderContext* context, IScene::UpdateFlags flags
         U::LightsMoved | U::LightIntensityChanged | U::LightPropertiesChanged | U::LightCountChanged | U::LightCollectionChanged |
         U::MaterialsChanged | U::EmissiveMaterialsChanged | U::EnvMapChanged | U::EnvMapPropertiesChanged |
         U::RenderSettingsChanged | U::RecompileNeeded;
-    if (is_set(flags, cacheChanges)) mWrcResetPending = true;
+    if (is_set(flags, cacheChanges)) mWrcResetPending = mWorldCacheReset = true;
     // Camera motion is reprojected. Invalidate cached radiance on lighting/geometry/material edits.
     if (is_set(flags, cacheChanges | U::CameraSwitched)) mRestirResetPending = true;
     // Camera::History is reported as CameraPropertiesChanged one frame after a
@@ -344,6 +376,8 @@ void RTXGIDDGI::createPrograms()
     buildRayProgram(mRestirTemporalProgram, kRayShader, "restirTemporal");
     buildRayProgram(mRestirSpatialProgram, kRayShader, "restirSpatial");
     buildRayProgram(mRestirIntegrateProgram, kRayShader, "restirIntegrate");
+    mWorldCacheTrace = {};
+    mpWorldCacheResolve = nullptr;
     // WRC pipelines are compiled lazily and never replace the original traceProbes entry point.
     mWrcTrace = {};
     mpWrcBuild = mpWrcPrepare = mpWrcShade = mpWrcGather = nullptr;
@@ -679,7 +713,7 @@ void RTXGIDDGI::uploadConstants()
     volume.probeBrightnessThreshold = mUpdatedFrames < 32 ? std::numeric_limits<float>::max() : 0.10f;
     volume.probeRandomRayBackfaceThreshold = 0.10f;
     volume.probeFixedRayBackfaceThreshold = 0.25f;
-    volume.probeMinFrontfaceDistance = 0.10f * scale;
+    volume.probeMinFrontfaceDistance = mOptions.minFrontfaceDistance * scale;
     volume.probeRayDataFormat = 6; // SDK F32x4
     volume.probeIrradianceFormat = 6;
     volume.probeRelocationEnabled = mOptions.relocation;
@@ -691,7 +725,8 @@ void RTXGIDDGI::uploadConstants()
 
 void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
 {
-    bool changed = ray.program->addDefine("USE_ANALYTIC_LIGHTS", mpScene->useAnalyticLights() ? "1" : "0");
+    bool changed = ray.program->addDefine("LUMEN_WORLD_CACHE", mOptions.worldCache ? "1" : "0");
+    changed |= ray.program->addDefine("USE_ANALYTIC_LIGHTS", mpScene->useAnalyticLights() ? "1" : "0");
     changed |= ray.program->addDefine("USE_EMISSIVE_LIGHTS", mpScene->useEmissiveLights() ? "1" : "0");
     changed |= ray.program->addDefine("USE_ENV_LIGHT", mpScene->useEnvLight() ? "1" : "0");
     changed |= ray.program->addDefine("USE_ENV_BACKGROUND", mpScene->useEnvBackground() ? "1" : "0");
@@ -717,6 +752,7 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
         mpSampleGenerator->bindShaderData(ray.vars->getRootVar());
     }
     auto root = ray.vars->getRootVar();
+    if (mOptions.worldCache) bindWorldCache(root);
     root["DDGIVolumes"] = mpVolume;
     root["gRayData"] = mpRayData;
     root["gIrradiance"] = mpIrradiance;
@@ -885,10 +921,15 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
         mpEnvMapSampler = std::make_unique<EnvMapSampler>(mpDevice, EnvMap::create(mpDevice, safeTexture));
     }
     if (mRebuildPrograms) createPrograms();
-    if (mReallocate) allocateResources(context);
-    if (mResetPending) clearHistory(context);
-    uploadConstants();
-    if (mOptions.update)
+    if (mOptions.worldCache) prepareWorldCache(context);
+    else
+    {
+        if (mReallocate) allocateResources(context);
+        if (mResetPending) clearHistory(context);
+        uploadConstants();
+    }
+    if (mOptions.worldCache && mOptions.update) updateWorldCache(context, data);
+    if (!mOptions.worldCache && mOptions.update)
     {
         FALCOR_PROFILE(context, "ProbeUpdate");
         if (mOptions.useWRC) traceWithWrc(context, data);
@@ -976,12 +1017,22 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
     drawProbeVisualization(context, data);
     mStatus = mOptions.update ? (mOptions.useWRC ? "Updating probes via active WRC cells." : "Updating probes with original per-ray shading.") :
         "Probe updates frozen; camera and direct light remain live.";
+    if (mOptions.worldCache) mStatus = "WorldCache: independent diffuse surface radiance; no DDGI probe updates.";
     ++mFrame;
 }
 
 Properties RTXGIDDGI::getStats() const
 {
     Properties stats;
+    stats["worldCache"] = mOptions.worldCache;
+    stats["worldCacheUpdates"] = mWorldCacheFrames;
+    if (mOptions.worldCache && mpWCStats)
+    {
+        uint32_t counters[4] = {};
+        mpWCStats->getBlob(counters, 0, sizeof(counters));
+        stats["cacheLookups"] = counters[0]; stats["cacheHits"] = counters[1];
+        stats["cacheInsertionFailures"] = counters[2]; stats["cacheOccupied"] = counters[3];
+    }
     stats["updatedFrames"] = mUpdatedFrames;
     const bool allocated = mpProbeData && !mReallocate && mpScene && mSupported;
     stats["totalProbes"] = allocated ? mOptions.counts.x * mOptions.counts.y * mOptions.counts.z : 0u;
@@ -1087,6 +1138,15 @@ Properties RTXGIDDGI::getStats() const
                 }
             }
         }
+    }
+    if (mOptions.worldCache && mpWCLighting && !mWorldCacheReset)
+    {
+        std::vector<float4> lighting(1u << 20);
+        mpWCLighting->getBlob(lighting.data(), 0, lighting.size() * sizeof(float4));
+        for (const auto& value : lighting) if (!all(isfinite(value))) ++nonFinite;
+    }
+    if (mpDiagnostics)
+    {
         uint32_t diagnostics[4] = {};
         mpDiagnostics->getBlob(diagnostics, 0, sizeof(diagnostics));
         stats["rejectedMaterialSamples"] = diagnostics[0];
@@ -1104,6 +1164,7 @@ Properties RTXGIDDGI::getStats() const
 
 void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
 {
+    if (mOptions.worldCache) { renderWorldCacheUI(widgets); return; }
     widgets.text("NVIDIA RTXGI-DDGI 1.3.7 | dynamic diffuse GI");
     widgets.text(mStatus);
     widgets.text("Probe updates: " + std::to_string(mUpdatedFrames));
@@ -1209,7 +1270,9 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
     if (widgets.var("History weight", options.hysteresis, 0.f, 0.999f, 0.005f)) p["hysteresis"] = options.hysteresis;
     if (widgets.var("Normal bias", options.normalBias, 0.f, 1.f, 0.005f)) p["normalBias"] = options.normalBias;
     if (widgets.var("View bias", options.viewBias, 0.f, 1.f, 0.005f)) p["viewBias"] = options.viewBias;
-    widgets.tooltip("Bias values are fractions of the smallest probe spacing.");
+    if (widgets.var("Relocation min distance", options.minFrontfaceDistance, 0.f, 1.f, 0.005f))
+        p["minFrontfaceDistance"] = options.minFrontfaceDistance;
+    widgets.tooltip("Normal bias, view bias and relocation minimum distance are fractions of the smallest probe spacing.");
     if (widgets.var("GI intensity", options.intensity, 0.f, 10.f, 0.05f)) p["intensity"] = options.intensity;
     if (widgets.checkbox("Fit bounds to scene", options.autoBounds)) p["autoBounds"] = options.autoBounds;
     widgets.tooltip("Enclose the scene bounds with 5% padding on each side, keeping surfaces out of the volume's exterior fade.");

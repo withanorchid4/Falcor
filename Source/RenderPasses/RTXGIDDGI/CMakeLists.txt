@@ -2,6 +2,10 @@ include(${PROJECT_SOURCE_DIR}/cmake/rtxgi-ddgi.cmake)
 
 add_plugin(RTXGIDDGI)
 target_sources(RTXGIDDGI PRIVATE
+    LumenWorldCache.cpp
+    LumenWorldCache.slang
+    LumenWorldCache.cs.slang
+    LumenWorldCacheTrace.slang
     RTXGIDDGI.h
     RTXGIDDGI.cpp
     ProbeVisualization.cpp

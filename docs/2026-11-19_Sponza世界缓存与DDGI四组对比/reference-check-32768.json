@@ -1,0 +1,58 @@
+{
+  "reference": {
+    "spp": 32768,
+    "two_sequences_spp": 16384,
+    "sequence_frame_seed_ranges": [
+      [
+        1,
+        2048
+      ],
+      [
+        100001,
+        102048
+      ]
+    ],
+    "noise_mse_estimate": 1.494415022485796e-06,
+    "doubling_mse": 1.502709587676197e-06,
+    "doubling_hdr_flip": 0.04488900303840637,
+    "relative_rgb_rms_noise": 0.0019036307221228824,
+    "noise_over_min_error": 9.560268444062115e-05,
+    "flip_parameters": {
+      "ppd": 67.0,
+      "startExposure": -3.9752326011657715,
+      "stopExposure": 8.530330657958984,
+      "numExposures": 13,
+      "tonemapper": "ACES"
+    }
+  },
+  "checks": {
+    "gi_converged": true,
+    "pt_noise_below_1percent_method_error": true,
+    "pt_relative_rgb_rms_below_0_5percent": true,
+    "pt_doubling_below_1percent_method_error": true,
+    "pt_reference_scores_stable": false
+  },
+  "metrics": {
+    "worldcache": {
+      "mse": 0.015684724322272914,
+      "hdr_flip": 0.166226327419281,
+      "reference_doubling_mse_change": -3.834552354287091e-05,
+      "reference_doubling_flip_change": -0.01975161058394026,
+      "brightest_10percent_mse_share": 0.9967809155397839
+    },
+    "ddgi": {
+      "mse": 0.015778786096551003,
+      "hdr_flip": 0.6726131439208984,
+      "reference_doubling_mse_change": -3.599605822723895e-05,
+      "reference_doubling_flip_change": 0.0004208397130842645,
+      "brightest_10percent_mse_share": 0.9827433352750838
+    },
+    "half": {
+      "mse": 0.01563151737035143,
+      "hdr_flip": 0.27913179993629456,
+      "reference_doubling_mse_change": -3.669988173415906e-05,
+      "reference_doubling_flip_change": -0.00025905861919084394,
+      "brightest_10percent_mse_share": 0.9992269921245377
+    }
+  }
+}

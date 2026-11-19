@@ -52,6 +52,12 @@ import Rendering.Lights.EmissiveUniformSampler;
 import Rendering.Lights.EmissiveLightSamplerInterface;
 import Rendering.Lights.EnvMapSampler;
 
+#ifndef LUMEN_WORLD_CACHE
+#define LUMEN_WORLD_CACHE 0
+#endif
+#if LUMEN_WORLD_CACHE
+#include "LumenWorldCache.slang"
+#endif
 cbuffer PerFrameCB
 {
     uint gFrameCount;
@@ -460,9 +466,14 @@ float3 gatherReflection(ShadingData primary, uint lobes, DDGIVolumeDescGPU volum
         if (!validSurface(sd)) return float3(0.f);
         let material = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f));
         let properties = material.getProperties(sd);
+#if LUMEN_WORLD_CACHE
+        if (!sd.frontFacing && !sd.mtl.isDoubleSided()) return float3(0.f);
+        radiance = wcLookup(sd.posW, sd.getOrientedFaceNormal());
+#else
         radiance = finiteRadiance(properties.emission, 0u) + evaluateDirect(sd, material, false, sg);
         radiance += finiteRadiance(properties.diffuseReflectionAlbedo, 0u) *
             queryIrradiance(sd.posW, sd.getOrientedFaceNormal(), sample.wo, volume) / M_PI;
+#endif
     }
     return finiteRadiance(sample.weight * radiance, 3u);
 }
@@ -474,7 +485,10 @@ void shadePixel(uint2 pixel, bool gatherOnly)
     // One representative pixel per 2x2 block; reconstruction uses the same phase.
     bool gatherPixel = !gHalfResolutionGather || (all((pixel & 1u) == gGatherOffset) && all(pixel / 2u < max(gFrameDim / 2u, uint2(1))));
     uint2 gatherOutputPixel = gHalfResolutionGather ? pixel / 2u : pixel;
-    DDGIVolumeDescGPU volume = UnpackDDGIVolumeDescGPU(DDGIVolumes[0]);
+    DDGIVolumeDescGPU volume = (DDGIVolumeDescGPU)0;
+#if !LUMEN_WORLD_CACHE
+    volume = UnpackDDGIVolumeDescGPU(DDGIVolumes[0]);
+#endif
     float3 direction = primaryRayDirection(pixel);
     float3 origin = gScene.camera.getPosition();
     HitInfo hit = HitInfo(gVBuffer[pixel]);
@@ -629,3 +643,7 @@ void shadowTriangleAnyHit(inout ShadowRayPayload payload, BuiltInTriangleInterse
 }
 
 #include "ReSTIRGather.slang"
+
+#if LUMEN_WORLD_CACHE
+#include "LumenWorldCacheTrace.slang"
+#endif

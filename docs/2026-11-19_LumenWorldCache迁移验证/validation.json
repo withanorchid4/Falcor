@@ -1,0 +1,66 @@
+{
+  "CornellLambert": {
+    "cacheLookups": 41270,
+    "cacheHits": 41269,
+    "cacheOccupied": 1437,
+    "cacheInsertionFailures": 0,
+    "totalProbes": 0,
+    "updatedFrames": 0,
+    "worldCacheUpdates": 512,
+    "finite": true,
+    "rejectedRaySamples": 0,
+    "gpu_ms": {
+      "WorldCache": 0.16586582362651825,
+      "WorldCache/WorldCacheUpdate": 0.08463118225336075,
+      "WorldCache/PrimaryShading": 0.04762204736471176,
+      "WorldCache/HalfGather": 0.033392880111932755
+    },
+    "render_graph_gpu_ms": 0.26967281103134155,
+    "exr_finite": true
+  },
+  "SponzaLambert": {
+    "cacheLookups": 150785,
+    "cacheHits": 150410,
+    "cacheOccupied": 63139,
+    "cacheInsertionFailures": 0,
+    "totalProbes": 0,
+    "updatedFrames": 0,
+    "worldCacheUpdates": 512,
+    "finite": true,
+    "rejectedRaySamples": 0,
+    "gpu_ms": {
+      "WorldCache": 0.4349621534347534,
+      "WorldCache/WorldCacheUpdate": 0.16572271287441254,
+      "WorldCache/PrimaryShading": 0.15134236216545105,
+      "WorldCache/HalfGather": 0.117637038230896
+    },
+    "render_graph_gpu_ms": 0.6400241851806641,
+    "exr_finite": true
+  },
+  "lights_off_max": 0,
+  "settings": {
+    "resolution": [
+      960,
+      540
+    ],
+    "warmup": 512,
+    "accumulate_frames": 1024,
+    "cache_table_entries": 1048576,
+    "path_downsample": 8,
+    "path_bounces": 3,
+    "terminal_bootstrap_rays": 1,
+    "cache_history": 16,
+    "max_unused": 64,
+    "density": 20,
+    "minimum_cell_size_world": 0.025,
+    "radiance_clamp": 0,
+    "restir": false,
+    "nrd": false
+  },
+  "source_hashes": {
+    "Source\\RenderPasses\\RTXGIDDGI\\LumenWorldCache.cpp": "d8012ec73b0ff7260a2847a73793668a85027fcf13e94b314fbf8183a0502cc5",
+    "Source\\RenderPasses\\RTXGIDDGI\\LumenWorldCache.cs.slang": "a6947ace92ac4e1bbf96ffdf6233a6d011ad6e5b0f990152eb7e138f9acebda3",
+    "Source\\RenderPasses\\RTXGIDDGI\\LumenWorldCache.slang": "9ebf5c01e4957f144f4c0b973cbd58ba86a399c9ac9bd883bd98271b77b863ed",
+    "Source\\RenderPasses\\RTXGIDDGI\\LumenWorldCacheTrace.slang": "286eefa26654719db08cbd32a1ee428ddb16691260124282fc8f81b1daabc756"
+  }
+}

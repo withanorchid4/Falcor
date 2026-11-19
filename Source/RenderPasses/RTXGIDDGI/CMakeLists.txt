@@ -4,9 +4,12 @@ add_plugin(RTXGIDDGI)
 target_sources(RTXGIDDGI PRIVATE
     RTXGIDDGI.h
     RTXGIDDGI.cpp
+    ProbeVisualization.cpp
+    ProbeVisualization.cs.slang
     DDGIReconstruct.cpp
     DDGIReconstruct.h
     DDGIReconstruct.cs.slang
+    ReSTIRGather.slang
     RTXGIDDGI.rt.slang
     WorldRadianceCache.rt.slang
     WorldRadianceCache.slang

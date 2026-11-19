@@ -1,0 +1,6 @@
+{
+  "tests/ddgi/restir_equal_budget.py": "f153dbd3842405346b905b6445781436132a7984771eecccf4a62063be61f6f9",
+  "tests/ddgi/score_restir_equal_budget.py": "535cfd568a191b01631484307f4f76e5d16cdb5cc1c6928feb81da16d58c09b8",
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.cpp": "6aa2892d8041ad0eee95a821244ceba7b1f7329bf62e0195310592cb03b366e4",
+  "Source/RenderPasses/RTXGIDDGI/ReSTIRGather.slang": "bb1678c15584df1207fb51d8252bdb7d78e67cf32e41f753c914d7aa0ee32e81"
+}

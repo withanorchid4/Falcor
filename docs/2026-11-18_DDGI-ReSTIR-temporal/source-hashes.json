@@ -1,0 +1,8 @@
+{
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.h": "0b03f54a3cc89bdb9367fe1ae19c028520a563d4640660de91356674ac5c9701",
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.cpp": "12990da46ec494ddf1f64f10657a0654e43d69b6c235a523a8e30bab02632738",
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.rt.slang": "f51a3dd8c0a3d0a57b1df5c8f0a25cfc6d0e474403979a358493e29cd63a3cee",
+  "tests/ddgi/restir_temporal_smoke.py": "e31407f43a841fa82d1ef6f39dc36ebb1f498b0ca9ff798f0238bd6cb050c0d2",
+  "tests/ddgi/restir_temporal_comparison.py": "6a6509fb758a18e3b936c214edc6a33d77f299c99f28b0779265c822ef51d1da",
+  "tests/ddgi/score_restir_temporal.py": "f93ec0acd4cd2c6892bc9cfc86bfe3eab39972aa38279b7bb1a7b16b4d6bef77"
+}

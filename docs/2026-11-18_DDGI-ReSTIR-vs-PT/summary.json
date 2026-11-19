@@ -1,0 +1,5404 @@
+{
+  "capture": {
+    "resolution": [
+      640,
+      360
+    ],
+    "probe_warmup": 8192,
+    "probe_frozen": true,
+    "full_resolution_integration": false,
+    "jitter": true,
+    "nrd": false,
+    "checkpoints": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64,
+      128,
+      256,
+      512,
+      1024,
+      2048,
+      4096,
+      8192,
+      16384,
+      32768,
+      40960,
+      49152,
+      57344,
+      65536,
+      73728,
+      81920,
+      90112,
+      98304,
+      106496,
+      114688,
+      122880,
+      131072
+    ],
+    "seed_offsets": [
+      0,
+      131072,
+      262144
+    ],
+    "frames": 131072,
+    "pt_spp_per_frame": 8,
+    "pt_spp_per_sequence": 131072,
+    "runs": {
+      "fg-0": {
+        "stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 8192
+      },
+      "spatial-0": {
+        "stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": true,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 18432000,
+          "restirResetCount": 1,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 8192
+      },
+      "restir-0": {
+        "stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": true,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 18432000,
+          "restirResetCount": 1,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 8192
+      },
+      "fg-1": {
+        "stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 139264
+      },
+      "spatial-1": {
+        "stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": true,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 18432000,
+          "restirResetCount": 1,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 139264
+      },
+      "restir-1": {
+        "stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": true,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 18432000,
+          "restirResetCount": 1,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 139264
+      },
+      "fg-2": {
+        "stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 270336
+      },
+      "spatial-2": {
+        "stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": true,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 18432000,
+          "restirResetCount": 1,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 270336
+      },
+      "restir-2": {
+        "stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": true,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 18432000,
+          "restirResetCount": 1,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 211852,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 270336
+      }
+    },
+    "started": 1795011263.307291,
+    "source_hashes": {
+      "Source/RenderPasses/RTXGIDDGI/ReSTIRGather.slang": "0858189f3398395322de087a7883b2fb7ecaa748eea27f0411583f421fb6c174",
+      "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.cpp": "be60ac9ebb44bb84211e85d9e5a86c9ec3541d0602488f079ef843900d2a010a",
+      "scripts/DDGIAccumulated.py": "0c1963a654beca42128e8c5ce1968779b1d00c55545fe61d3f8c8280c16e086f",
+      "scripts/PTReference.py": "a99f79c1539ec2946eb2de96cc9c5e37f8ad610d151851931a3dd3d8a9899473"
+    },
+    "stage": "complete",
+    "elapsed": 754.9120116233826
+  },
+  "reference": {
+    "spp": 262144,
+    "independent_sequences": 2,
+    "estimated_noise_mse": 5.552839548089435e-09,
+    "half_to_full_mse": 5.545138174085575e-09
+  },
+  "flip_parameters": {
+    "ppd": 67.0,
+    "startExposure": 2.8292160034179688,
+    "stopExposure": 24.083297729492188,
+    "numExposures": 22,
+    "tonemapper": "ACES"
+  },
+  "identical_probes_verified": true,
+  "metrics": {
+    "fg": {
+      "checkpoints": {
+        "1": {
+          "mse_mean": 0.0002286021812579111,
+          "mse_min": 0.00022316910946754004,
+          "mse_max": 0.00023873026576176957,
+          "mse_trials": [
+            0.00022316910946754004,
+            0.00022390716854442375,
+            0.00023873026576176957
+          ],
+          "intertrial_variance": 0.0002268872675445921,
+          "mean_image_mse": 7.734400283111593e-05,
+          "residual_squared_error_estimate": 1.709360810037129e-06,
+          "hdr_flip_mean": 0.28612618645032245,
+          "hdr_flip_trials": [
+            0.2865431308746338,
+            0.28342077136039734,
+            0.2884146571159363
+          ],
+          "max_components": [
+            0.3774157762527466,
+            0.3779807388782501,
+            0.39424294233322144
+          ],
+          "numerically_unstable": false
+        },
+        "2": {
+          "mse_mean": 0.00011426400173513725,
+          "mse_min": 0.00011267157228038278,
+          "mse_max": 0.00011512288345749939,
+          "mse_trials": [
+            0.00011512288345749939,
+            0.00011499754946752958,
+            0.00011267157228038278
+          ],
+          "intertrial_variance": 0.00011273271571023465,
+          "mean_image_mse": 3.9108857878910175e-05,
+          "residual_squared_error_estimate": 1.5257331359505322e-06,
+          "max_components": [
+            0.35687416791915894,
+            0.35710757970809937,
+            0.3665270209312439
+          ],
+          "numerically_unstable": false
+        },
+        "4": {
+          "mse_mean": 5.711670809437424e-05,
+          "mse_min": 5.64281224898288e-05,
+          "mse_max": 5.795969632885261e-05,
+          "mse_trials": [
+            5.795969632885261e-05,
+            5.64281224898288e-05,
+            5.69623054644413e-05
+          ],
+          "intertrial_variance": 5.604728732397638e-05,
+          "mean_image_mse": 1.975184992854433e-05,
+          "residual_squared_error_estimate": 1.0638679810041158e-06,
+          "hdr_flip_mean": 0.18145460883776346,
+          "hdr_flip_trials": [
+            0.18203115463256836,
+            0.1803164929151535,
+            0.18201617896556854
+          ],
+          "max_components": [
+            0.33391547203063965,
+            0.3392760753631592,
+            0.3476708233356476
+          ],
+          "numerically_unstable": false
+        },
+        "8": {
+          "mse_mean": 2.9266618559369755e-05,
+          "mse_min": 2.7812236280498206e-05,
+          "mse_max": 3.054508332037095e-05,
+          "mse_trials": [
+            3.054508332037095e-05,
+            2.9442536077240114e-05,
+            2.7812236280498206e-05
+          ],
+          "intertrial_variance": 2.774389741560805e-05,
+          "mean_image_mse": 1.0770686871022396e-05,
+          "residual_squared_error_estimate": 1.5171682262716227e-06,
+          "max_components": [
+            0.33089005947113037,
+            0.3354731500148773,
+            0.34674715995788574
+          ],
+          "numerically_unstable": false
+        },
+        "16": {
+          "mse_mean": 1.5276254938956783e-05,
+          "mse_min": 1.4846921888742602e-05,
+          "mse_max": 1.5665633720780066e-05,
+          "mse_trials": [
+            1.5665633720780066e-05,
+            1.531620920734768e-05,
+            1.4846921888742602e-05
+          ],
+          "intertrial_variance": 1.4013457111387624e-05,
+          "mean_image_mse": 5.933950193851719e-06,
+          "residual_squared_error_estimate": 1.2572449838410885e-06,
+          "hdr_flip_mean": 0.11349373310804367,
+          "hdr_flip_trials": [
+            0.1134096309542656,
+            0.11311109364032745,
+            0.11396047472953796
+          ],
+          "max_components": [
+            0.32354217767715454,
+            0.32049667835235596,
+            0.32809746265411377
+          ],
+          "numerically_unstable": false
+        },
+        "32": {
+          "mse_mean": 8.136024544280961e-06,
+          "mse_min": 8.0596395931314e-06,
+          "mse_max": 8.26735585939578e-06,
+          "mse_trials": [
+            8.26735585939578e-06,
+            8.081078180315706e-06,
+            8.0596395931314e-06
+          ],
+          "intertrial_variance": 7.018371966002914e-06,
+          "mean_image_mse": 3.457109925514391e-06,
+          "residual_squared_error_estimate": 1.1120997639653302e-06,
+          "max_components": [
+            0.3183363378047943,
+            0.316582590341568,
+            0.31880995631217957
+          ],
+          "numerically_unstable": false
+        },
+        "64": {
+          "mse_mean": 4.552639717051263e-06,
+          "mse_min": 4.500881647241356e-06,
+          "mse_max": 4.61362549607959e-06,
+          "mse_trials": [
+            4.61362549607959e-06,
+            4.500881647241356e-06,
+            4.5434120078328405e-06
+          ],
+          "intertrial_variance": 3.5171432257282435e-06,
+          "mean_image_mse": 2.2078775685795167e-06,
+          "residual_squared_error_estimate": 1.0299436537886793e-06,
+          "hdr_flip_mean": 0.07580749193827312,
+          "hdr_flip_trials": [
+            0.07624272257089615,
+            0.07540705054998398,
+            0.07577270269393921
+          ],
+          "max_components": [
+            0.31589576601982117,
+            0.31361907720565796,
+            0.3136345446109772
+          ],
+          "numerically_unstable": false
+        },
+        "128": {
+          "mse_mean": 2.8092602753676745e-06,
+          "mse_min": 2.7878683318756394e-06,
+          "mse_max": 2.8236030848711502e-06,
+          "mse_trials": [
+            2.8163094093562343e-06,
+            2.8236030848711502e-06,
+            2.7878683318756394e-06
+          ],
+          "intertrial_variance": 1.7858964961021699e-06,
+          "mean_image_mse": 1.6186626275754512e-06,
+          "residual_squared_error_estimate": 1.017810955993305e-06,
+          "max_components": [
+            0.3126654326915741,
+            0.3120846748352051,
+            0.30984821915626526
+          ],
+          "numerically_unstable": false
+        },
+        "256": {
+          "mse_mean": 1.9147692078954117e-06,
+          "mse_min": 1.8906521206244334e-06,
+          "mse_max": 1.9432196409652355e-06,
+          "mse_trials": [
+            1.910435862096567e-06,
+            1.9432196409652355e-06,
+            1.8906521206244334e-06
+          ],
+          "intertrial_variance": 8.951322931523813e-07,
+          "mean_image_mse": 1.3180143973600305e-06,
+          "residual_squared_error_estimate": 1.0140841267611472e-06,
+          "hdr_flip_mean": 0.058636742333571114,
+          "hdr_flip_trials": [
+            0.058937568217515945,
+            0.05852314829826355,
+            0.05844951048493385
+          ],
+          "max_components": [
+            0.31240177154541016,
+            0.3112175464630127,
+            0.310546338558197
+          ],
+          "numerically_unstable": false
+        },
+        "512": {
+          "mse_mean": 1.4530931303109729e-06,
+          "mse_min": 1.4381040118143204e-06,
+          "mse_max": 1.4642989942127474e-06,
+          "mse_trials": [
+            1.4642989942127474e-06,
+            1.4381040118143204e-06,
+            1.4568763849058504e-06
+          ],
+          "intertrial_variance": 4.36859356666921e-07,
+          "mean_image_mse": 1.1618535783115542e-06,
+          "residual_squared_error_estimate": 1.0106809532078244e-06,
+          "max_components": [
+            0.3116941750049591,
+            0.3104645311832428,
+            0.3096354901790619
+          ],
+          "numerically_unstable": false
+        },
+        "1024": {
+          "mse_mean": 1.23042903416131e-06,
+          "mse_min": 1.2095135003759455e-06,
+          "mse_max": 1.2495056944689975e-06,
+          "mse_trials": [
+            1.2495056944689975e-06,
+            1.2095135003759455e-06,
+            1.232267907638987e-06
+          ],
+          "intertrial_variance": 2.218786071903907e-07,
+          "mean_image_mse": 1.0825099588861857e-06,
+          "residual_squared_error_estimate": 1.002997583607966e-06,
+          "hdr_flip_mean": 0.051256521294514336,
+          "hdr_flip_trials": [
+            0.051480282098054886,
+            0.0511775016784668,
+            0.05111178010702133
+          ],
+          "max_components": [
+            0.3110984265804291,
+            0.3098767101764679,
+            0.30992186069488525
+          ],
+          "numerically_unstable": false
+        },
+        "2048": {
+          "mse_mean": 1.1209426596997248e-06,
+          "mse_min": 1.1140829942618376e-06,
+          "mse_max": 1.1272644915270676e-06,
+          "mse_trials": [
+            1.1272644915270676e-06,
+            1.1140829942618376e-06,
+            1.1214804933102689e-06
+          ],
+          "intertrial_variance": 1.1118664998704348e-07,
+          "mean_image_mse": 1.04681824440152e-06,
+          "residual_squared_error_estimate": 1.0042031881910828e-06,
+          "max_components": [
+            0.3106158375740051,
+            0.30893775820732117,
+            0.31049299240112305
+          ],
+          "numerically_unstable": false
+        },
+        "4096": {
+          "mse_mean": 1.0619870953644931e-06,
+          "mse_min": 1.0598077705463877e-06,
+          "mse_max": 1.0637139545651892e-06,
+          "mse_trials": [
+            1.0637139545651892e-06,
+            1.0598077705463877e-06,
+            1.0624395609819023e-06
+          ],
+          "intertrial_variance": 5.519773940274205e-08,
+          "mean_image_mse": 1.0251886372278965e-06,
+          "residual_squared_error_estimate": 1.0012365512122262e-06,
+          "hdr_flip_mean": 0.04904739807049433,
+          "hdr_flip_trials": [
+            0.049039896577596664,
+            0.049056198447942734,
+            0.049046099185943604
+          ],
+          "max_components": [
+            0.3098143935203552,
+            0.308822363615036,
+            0.3097657859325409
+          ],
+          "numerically_unstable": false
+        },
+        "8192": {
+          "mse_mean": 1.032451007322946e-06,
+          "mse_min": 1.0286354158433003e-06,
+          "mse_max": 1.0355746492598914e-06,
+          "mse_trials": [
+            1.033142956865646e-06,
+            1.0286354158433003e-06,
+            1.0355746492598914e-06
+          ],
+          "intertrial_variance": 2.7968107114606698e-08,
+          "mean_image_mse": 1.0138055940716695e-06,
+          "residual_squared_error_estimate": 9.989300521520444e-07,
+          "max_components": [
+            0.3096989393234253,
+            0.3090929388999939,
+            0.30970457196235657
+          ],
+          "numerically_unstable": false
+        },
+        "16384": {
+          "mse_mean": 1.0187744514513168e-06,
+          "mse_min": 1.01780632701791e-06,
+          "mse_max": 1.0198659757316125e-06,
+          "mse_trials": [
+            1.01780632701791e-06,
+            1.018651051604428e-06,
+            1.0198659757316125e-06
+          ],
+          "intertrial_variance": 1.415414081336084e-08,
+          "mean_image_mse": 1.009338320957384e-06,
+          "residual_squared_error_estimate": 9.990674344715076e-07,
+          "hdr_flip_mean": 0.04825525482495626,
+          "hdr_flip_trials": [
+            0.04817716404795647,
+            0.048273857682943344,
+            0.048314742743968964
+          ],
+          "max_components": [
+            0.30957096815109253,
+            0.3092578649520874,
+            0.30939435958862305
+          ],
+          "numerically_unstable": false
+        },
+        "32768": {
+          "mse_mean": 1.0107813334027977e-06,
+          "mse_min": 1.0095660718147865e-06,
+          "mse_max": 1.0114934764769268e-06,
+          "mse_trials": [
+            1.0095660718147865e-06,
+            1.0112844519166794e-06,
+            1.0114934764769268e-06
+          ],
+          "intertrial_variance": 6.9228548589308865e-09,
+          "mean_image_mse": 1.0061661353300736e-06,
+          "residual_squared_error_estimate": 9.983056774956737e-07,
+          "hdr_flip_mean": 0.0481060321132342,
+          "hdr_flip_trials": [
+            0.048070475459098816,
+            0.04809403419494629,
+            0.0481535866856575
+          ],
+          "max_components": [
+            0.30967217683792114,
+            0.30928823351860046,
+            0.3094438910484314
+          ],
+          "numerically_unstable": false
+        },
+        "40960": {
+          "mse_mean": 1.0099977154831024e-06,
+          "mse_min": 1.0093685271046269e-06,
+          "mse_max": 1.0107346581757522e-06,
+          "mse_trials": [
+            1.0093685271046269e-06,
+            1.0107346581757522e-06,
+            1.009889961168928e-06
+          ],
+          "intertrial_variance": 5.549056504476339e-09,
+          "mean_image_mse": 1.0062981291583146e-06,
+          "residual_squared_error_estimate": 9.98895604108733e-07,
+          "max_components": [
+            0.30956944823265076,
+            0.3093334138393402,
+            0.309414803981781
+          ],
+          "numerically_unstable": false
+        },
+        "49152": {
+          "mse_mean": 1.0096967422524917e-06,
+          "mse_min": 1.0085857089642655e-06,
+          "mse_max": 1.0107341128413635e-06,
+          "mse_trials": [
+            1.0097704049518463e-06,
+            1.0107341128413635e-06,
+            1.0085857089642655e-06
+          ],
+          "intertrial_variance": 4.669536859167467e-09,
+          "mean_image_mse": 1.0065835471553973e-06,
+          "residual_squared_error_estimate": 9.994741953209186e-07,
+          "max_components": [
+            0.30958086252212524,
+            0.3093409538269043,
+            0.3094029128551483
+          ],
+          "numerically_unstable": false
+        },
+        "57344": {
+          "mse_mean": 1.0096678107951733e-06,
+          "mse_min": 1.0084636542270436e-06,
+          "mse_max": 1.010886897057374e-06,
+          "mse_trials": [
+            1.0096528811011024e-06,
+            1.010886897057374e-06,
+            1.0084636542270436e-06
+          ],
+          "intertrial_variance": 4.028801981956275e-09,
+          "mean_image_mse": 1.0069818544771297e-06,
+          "residual_squared_error_estimate": 1.0000860809350548e-06,
+          "max_components": [
+            0.3095671236515045,
+            0.3093288838863373,
+            0.30938979983329773
+          ],
+          "numerically_unstable": false
+        },
+        "65536": {
+          "mse_mean": 1.0090436913892641e-06,
+          "mse_min": 1.007713177722902e-06,
+          "mse_max": 1.010392453456078e-06,
+          "mse_trials": [
+            1.0090254429888129e-06,
+            1.010392453456078e-06,
+            1.007713177722902e-06
+          ],
+          "intertrial_variance": 3.509411043962783e-09,
+          "mean_image_mse": 1.0067040493405856e-06,
+          "residual_squared_error_estimate": 9.999814061111752e-07,
+          "hdr_flip_mean": 0.04804404700795809,
+          "hdr_flip_trials": [
+            0.048021409660577774,
+            0.04807880148291588,
+            0.04803192988038063
+          ],
+          "max_components": [
+            0.3095930516719818,
+            0.3093445301055908,
+            0.3093755841255188
+          ],
+          "numerically_unstable": false
+        },
+        "73728": {
+          "mse_mean": 1.0087802259675409e-06,
+          "mse_min": 1.0075790532334817e-06,
+          "mse_max": 1.0098382997602095e-06,
+          "mse_trials": [
+            1.0089233249089315e-06,
+            1.0098382997602095e-06,
+            1.0075790532334817e-06
+          ],
+          "intertrial_variance": 3.1376292764910905e-09,
+          "mean_image_mse": 1.0066886630357104e-06,
+          "residual_squared_error_estimate": 1.0000899470621237e-06,
+          "max_components": [
+            0.3095634877681732,
+            0.3093426823616028,
+            0.3093350827693939
+          ],
+          "numerically_unstable": false
+        },
+        "81920": {
+          "mse_mean": 1.0081134476499137e-06,
+          "mse_min": 1.007030685605388e-06,
+          "mse_max": 1.0090601702288079e-06,
+          "mse_trials": [
+            1.0082494871155448e-06,
+            1.0090601702288079e-06,
+            1.007030685605388e-06
+          ],
+          "intertrial_variance": 2.845994325186955e-09,
+          "mean_image_mse": 1.0062159082328836e-06,
+          "residual_squared_error_estimate": 9.997144039097318e-07,
+          "max_components": [
+            0.30953067541122437,
+            0.3093052804470062,
+            0.3093242645263672
+          ],
+          "numerically_unstable": false
+        },
+        "90112": {
+          "mse_mean": 1.0079187037522236e-06,
+          "mse_min": 1.0070967606403037e-06,
+          "mse_max": 1.0084492017634628e-06,
+          "mse_trials": [
+            1.0082101488529043e-06,
+            1.0084492017634628e-06,
+            1.0070967606403037e-06
+          ],
+          "intertrial_variance": 2.574953210067487e-09,
+          "mean_image_mse": 1.0062021449231367e-06,
+          "residual_squared_error_estimate": 9.99790987638358e-07,
+          "max_components": [
+            0.30955177545547485,
+            0.3093445897102356,
+            0.30932003259658813
+          ],
+          "numerically_unstable": false
+        },
+        "98304": {
+          "mse_mean": 1.0079128944056406e-06,
+          "mse_min": 1.0074191736433157e-06,
+          "mse_max": 1.0083748790533398e-06,
+          "mse_trials": [
+            1.0079446305202667e-06,
+            1.0083748790533398e-06,
+            1.0074191736433157e-06
+          ],
+          "intertrial_variance": 2.350085127598782e-09,
+          "mean_image_mse": 1.0063460318009239e-06,
+          "residual_squared_error_estimate": 1.0000098305436347e-06,
+          "max_components": [
+            0.3095592260360718,
+            0.3093682825565338,
+            0.3093298077583313
+          ],
+          "numerically_unstable": false
+        },
+        "106496": {
+          "mse_mean": 1.0074940148537446e-06,
+          "mse_min": 1.006826424628304e-06,
+          "mse_max": 1.0079223791959218e-06,
+          "mse_trials": [
+            1.007733240737008e-06,
+            1.0079223791959218e-06,
+            1.006826424628304e-06
+          ],
+          "intertrial_variance": 2.1790660787951568e-09,
+          "mean_image_mse": 1.0060412420042153e-06,
+          "residual_squared_error_estimate": 9.997620470965275e-07,
+          "max_components": [
+            0.30956512689590454,
+            0.3093898892402649,
+            0.3093545734882355
+          ],
+          "numerically_unstable": false
+        },
+        "114688": {
+          "mse_mean": 1.0071415328036468e-06,
+          "mse_min": 1.00646906141253e-06,
+          "mse_max": 1.0076308236016454e-06,
+          "mse_trials": [
+            1.0076308236016454e-06,
+            1.0073247133967653e-06,
+            1.00646906141253e-06
+          ],
+          "intertrial_variance": 2.024477093218179e-09,
+          "mean_image_mse": 1.0057918121678952e-06,
+          "residual_squared_error_estimate": 9.995641469220662e-07,
+          "max_components": [
+            0.3095518946647644,
+            0.3094278573989868,
+            0.30937033891677856
+          ],
+          "numerically_unstable": false
+        },
+        "122880": {
+          "mse_mean": 1.0072443009307713e-06,
+          "mse_min": 1.0068248678702397e-06,
+          "mse_max": 1.0076033922381288e-06,
+          "mse_trials": [
+            1.0076033922381288e-06,
+            1.0073046426839454e-06,
+            1.0068248678702397e-06
+          ],
+          "intertrial_variance": 1.8983236902331233e-09,
+          "mean_image_mse": 1.0059787516889725e-06,
+          "residual_squared_error_estimate": 9.997931375774718e-07,
+          "max_components": [
+            0.30953356623649597,
+            0.309419184923172,
+            0.3094024062156677
+          ],
+          "numerically_unstable": false
+        },
+        "131072": {
+          "mse_mean": 1.0071899953762398e-06,
+          "mse_min": 1.006736855788831e-06,
+          "mse_max": 1.0075109514378916e-06,
+          "mse_trials": [
+            1.0073221789019972e-06,
+            1.0075109514378916e-06,
+            1.006736855788831e-06
+          ],
+          "intertrial_variance": 1.7893292583996988e-09,
+          "mean_image_mse": 1.0059971148420015e-06,
+          "residual_squared_error_estimate": 9.998478322077787e-07,
+          "hdr_flip_mean": 0.04799658556779226,
+          "hdr_flip_trials": [
+            0.0479799285531044,
+            0.0480184406042099,
+            0.04799138754606247
+          ],
+          "max_components": [
+            0.3095027208328247,
+            0.3094281852245331,
+            0.3094165027141571
+          ],
+          "numerically_unstable": false
+        }
+      },
+      "timings": [
+        {
+          "gpu_ms": 0.1367039978504181,
+          "frames": 511,
+          "stages": {
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 0.08914460986852646,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.024385128170251846,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.024012399837374687,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/gpu_time": 0.06389078497886658,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/raytraceScene/gpu_time": 0.06375803053379059
+          }
+        },
+        {
+          "gpu_ms": 0.13653066754341125,
+          "frames": 511,
+          "stages": {
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 0.08900183439254761,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.02427641488611698,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.02389567159116268,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/gpu_time": 0.06386774033308029,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/raytraceScene/gpu_time": 0.06374850869178772
+          }
+        },
+        {
+          "gpu_ms": 0.13648557662963867,
+          "frames": 511,
+          "stages": {
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 0.08910002559423447,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.024438733235001564,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.024060994386672974,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/gpu_time": 0.06379810720682144,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/raytraceScene/gpu_time": 0.06368588656187057
+          }
+        }
+      ],
+      "gpu_ms_mean": 0.13657341400782266,
+      "temporal_windows": [
+        [
+          {
+            "raw_rgb_temporal_variance": 0.00022930597246183522,
+            "accumulated_rgb_temporal_variance": 1.4135479335986233e-13
+          },
+          {
+            "raw_rgb_temporal_variance": 0.00022799664158955276,
+            "accumulated_rgb_temporal_variance": 1.3437241218143016e-13
+          }
+        ],
+        [
+          {
+            "raw_rgb_temporal_variance": 0.0002286062059841856,
+            "accumulated_rgb_temporal_variance": 1.4267146082583831e-13
+          },
+          {
+            "raw_rgb_temporal_variance": 0.0002291129153800887,
+            "accumulated_rgb_temporal_variance": 1.3496269275333642e-13
+          }
+        ],
+        [
+          {
+            "raw_rgb_temporal_variance": 0.00022732571466737596,
+            "accumulated_rgb_temporal_variance": 1.4164792451412592e-13
+          },
+          {
+            "raw_rgb_temporal_variance": 0.00022863197124248623,
+            "accumulated_rgb_temporal_variance": 1.3602271259033541e-13
+          }
+        ]
+      ],
+      "stability": {
+        "relative_mse_change_last_doubling": -0.0018370820102666663,
+        "relative_mse_change_previous_doubling": -0.0017191077398350796,
+        "mean_image_tail_mse": 5.637478338778036e-10,
+        "mean_image_previous_tail_mse": 1.1703896564575366e-09,
+        "tail_over_pt_error": 0.0005603871279157137,
+        "intertrial_variance_over_mean_error": 0.0005928874718760086,
+        "practically_stable": true
+      }
+    },
+    "spatial": {
+      "checkpoints": {
+        "1": {
+          "mse_mean": 0.00028309874352125527,
+          "mse_min": 0.00027474553703102107,
+          "mse_max": 0.00029192396816284555,
+          "mse_trials": [
+            0.00029192396816284555,
+            0.00028262672536989914,
+            0.00027474553703102107
+          ],
+          "intertrial_variance": 0.00027780693195865035,
+          "mean_image_mse": 9.789412233807635e-05,
+          "residual_squared_error_estimate": 5.286258845644806e-06,
+          "hdr_flip_mean": 0.24951591591040292,
+          "hdr_flip_trials": [
+            0.24985966086387634,
+            0.2478049248456955,
+            0.25088316202163696
+          ],
+          "max_components": [
+            0.7227637767791748,
+            0.9479112029075623,
+            0.7370455861091614
+          ],
+          "numerically_unstable": false
+        },
+        "2": {
+          "mse_mean": 0.00014581039338994466,
+          "mse_min": 0.0001423326708463796,
+          "mse_max": 0.0001496711498823212,
+          "mse_trials": [
+            0.0001423326708463796,
+            0.0001496711498823212,
+            0.00014542735944113316
+          ],
+          "intertrial_variance": 0.0001445710905609664,
+          "mean_image_mse": 4.942966633792282e-05,
+          "residual_squared_error_estimate": 1.2337499780525895e-06,
+          "max_components": [
+            0.5779533386230469,
+            0.8777179718017578,
+            0.9706522226333618
+          ],
+          "numerically_unstable": false
+        },
+        "4": {
+          "mse_mean": 7.017492601520676e-05,
+          "mse_min": 6.636645209215673e-05,
+          "mse_max": 7.656243959054408e-05,
+          "mse_trials": [
+            6.759588636291947e-05,
+            7.656243959054408e-05,
+            6.636645209215673e-05
+          ],
+          "intertrial_variance": 6.88630893879501e-05,
+          "mean_image_mse": 2.426619999240209e-05,
+          "residual_squared_error_estimate": 1.3062840235373027e-06,
+          "hdr_flip_mean": 0.15672299762566885,
+          "hdr_flip_trials": [
+            0.1558646857738495,
+            0.1577446013689041,
+            0.15655970573425293
+          ],
+          "max_components": [
+            0.49667173624038696,
+            0.7106516361236572,
+            0.5351538062095642
+          ],
+          "numerically_unstable": false
+        },
+        "8": {
+          "mse_mean": 3.531381752668492e-05,
+          "mse_min": 3.395112037858004e-05,
+          "mse_max": 3.6579604841251496e-05,
+          "mse_trials": [
+            3.541072736022321e-05,
+            3.6579604841251496e-05,
+            3.395112037858004e-05
+          ],
+          "intertrial_variance": 3.426132862938616e-05,
+          "mean_image_mse": 1.2472931721051518e-05,
+          "residual_squared_error_estimate": 1.0469360050413754e-06,
+          "max_components": [
+            0.40115469694137573,
+            0.36969128251075745,
+            0.41951239109039307
+          ],
+          "numerically_unstable": false
+        },
+        "16": {
+          "mse_mean": 1.7863725588195608e-05,
+          "mse_min": 1.7243133340929153e-05,
+          "mse_max": 1.8293360226911796e-05,
+          "mse_trials": [
+            1.7243133340929153e-05,
+            1.8293360226911796e-05,
+            1.8054683196745877e-05
+          ],
+          "intertrial_variance": 1.7073322765419766e-05,
+          "mean_image_mse": 6.481510402954015e-06,
+          "residual_squared_error_estimate": 7.848499749326699e-07,
+          "hdr_flip_mean": 0.09977967788775761,
+          "hdr_flip_trials": [
+            0.0986219048500061,
+            0.1006922498345375,
+            0.10002487897872925
+          ],
+          "max_components": [
+            0.3378092646598816,
+            0.3247295618057251,
+            0.3440205454826355
+          ],
+          "numerically_unstable": false
+        },
+        "32": {
+          "mse_mean": 9.354927238581022e-06,
+          "mse_min": 9.165348099691939e-06,
+          "mse_max": 9.51668168797963e-06,
+          "mse_trials": [
+            9.165348099691939e-06,
+            9.382751928071497e-06,
+            9.51668168797963e-06
+          ],
+          "intertrial_variance": 8.648088950553418e-06,
+          "mean_image_mse": 3.5895346386338244e-06,
+          "residual_squared_error_estimate": 7.012854822345959e-07,
+          "max_components": [
+            0.3261665105819702,
+            0.32287365198135376,
+            0.3310774564743042
+          ],
+          "numerically_unstable": false
+        },
+        "64": {
+          "mse_mean": 5.153175564574899e-06,
+          "mse_min": 5.112537624184546e-06,
+          "mse_max": 5.193004377588137e-06,
+          "mse_trials": [
+            5.112537624184546e-06,
+            5.193004377588137e-06,
+            5.153984691952015e-06
+          ],
+          "intertrial_variance": 4.267880188218209e-06,
+          "mean_image_mse": 2.3079221210463467e-06,
+          "residual_squared_error_estimate": 8.797425520921876e-07,
+          "hdr_flip_mean": 0.06843832631905873,
+          "hdr_flip_trials": [
+            0.06848853081464767,
+            0.06877689063549042,
+            0.06804955750703812
+          ],
+          "max_components": [
+            0.3187869191169739,
+            0.31543970108032227,
+            0.3239295780658722
+          ],
+          "numerically_unstable": false
+        },
+        "128": {
+          "mse_mean": 3.1582096327788954e-06,
+          "mse_min": 3.0746751441680374e-06,
+          "mse_max": 3.279306983477201e-06,
+          "mse_trials": [
+            3.279306983477201e-06,
+            3.1206467706914477e-06,
+            3.0746751441680374e-06
+          ],
+          "intertrial_variance": 2.2071024289021802e-06,
+          "mean_image_mse": 1.6868080396175632e-06,
+          "residual_squared_error_estimate": 9.455543904354137e-07,
+          "max_components": [
+            0.3171871304512024,
+            0.31771421432495117,
+            0.3174964487552643
+          ],
+          "numerically_unstable": false
+        },
+        "256": {
+          "mse_mean": 2.042852261119116e-06,
+          "mse_min": 1.964444592013809e-06,
+          "mse_max": 2.150781507685452e-06,
+          "mse_trials": [
+            2.150781507685452e-06,
+            2.013330683658087e-06,
+            1.964444592013809e-06
+          ],
+          "intertrial_variance": 1.1362952965823516e-06,
+          "mean_image_mse": 1.285322097927596e-06,
+          "residual_squared_error_estimate": 9.010041595187227e-07,
+          "hdr_flip_mean": 0.05480956162015597,
+          "hdr_flip_trials": [
+            0.055267564952373505,
+            0.05503043904900551,
+            0.0541306808590889
+          ],
+          "max_components": [
+            0.31347617506980896,
+            0.31204184889793396,
+            0.31531384587287903
+          ],
+          "numerically_unstable": false
+        },
+        "512": {
+          "mse_mean": 1.5198335391108756e-06,
+          "mse_min": 1.492065765811527e-06,
+          "mse_max": 1.53812806774026e-06,
+          "mse_trials": [
+            1.52930678378084e-06,
+            1.53812806774026e-06,
+            1.492065765811527e-06
+          ],
+          "intertrial_variance": 5.604448971706124e-07,
+          "mean_image_mse": 1.1462035969304452e-06,
+          "residual_squared_error_estimate": 9.538357916588182e-07,
+          "max_components": [
+            0.3110589385032654,
+            0.31084343791007996,
+            0.31174957752227783
+          ],
+          "numerically_unstable": false
+        },
+        "1024": {
+          "mse_mean": 1.2446843680371635e-06,
+          "mse_min": 1.2209526023547148e-06,
+          "mse_max": 1.2708621404075246e-06,
+          "mse_trials": [
+            1.2209526023547148e-06,
+            1.2708621404075246e-06,
+            1.242238361349251e-06
+          ],
+          "intertrial_variance": 2.71943530202472e-07,
+          "mean_image_mse": 1.0633887051704892e-06,
+          "residual_squared_error_estimate": 9.671880222215756e-07,
+          "hdr_flip_mean": 0.049827867498000465,
+          "hdr_flip_trials": [
+            0.050092604011297226,
+            0.04998156055808067,
+            0.04940943792462349
+          ],
+          "max_components": [
+            0.31016242504119873,
+            0.309774249792099,
+            0.3104146420955658
+          ],
+          "numerically_unstable": false
+        },
+        "2048": {
+          "mse_mean": 1.1187716793851337e-06,
+          "mse_min": 1.1103303404853176e-06,
+          "mse_max": 1.127594088418762e-06,
+          "mse_trials": [
+            1.127594088418762e-06,
+            1.1183906092513213e-06,
+            1.1103303404853176e-06
+          ],
+          "intertrial_variance": 1.3480575326765876e-07,
+          "mean_image_mse": 1.0289011764519866e-06,
+          "residual_squared_error_estimate": 9.784130858146775e-07,
+          "max_components": [
+            0.30948182940483093,
+            0.31011834740638733,
+            0.3097798824310303
+          ],
+          "numerically_unstable": false
+        },
+        "4096": {
+          "mse_mean": 1.0537698755343178e-06,
+          "mse_min": 1.0377943835673633e-06,
+          "mse_max": 1.0627645356169828e-06,
+          "mse_trials": [
+            1.0627645356169828e-06,
+            1.060750707418607e-06,
+            1.0377943835673633e-06
+          ],
+          "intertrial_variance": 6.835940250728e-08,
+          "mean_image_mse": 1.008196970318895e-06,
+          "residual_squared_error_estimate": 9.798576632683788e-07,
+          "hdr_flip_mean": 0.04796727622548739,
+          "hdr_flip_trials": [
+            0.048230402171611786,
+            0.048002634197473526,
+            0.04766879230737686
+          ],
+          "max_components": [
+            0.3092079758644104,
+            0.30990538001060486,
+            0.30975934863090515
+          ],
+          "numerically_unstable": false
+        },
+        "8192": {
+          "mse_mean": 1.0130633520460599e-06,
+          "mse_min": 1.0018562311865584e-06,
+          "mse_max": 1.020897174328198e-06,
+          "mse_trials": [
+            1.020897174328198e-06,
+            1.016436650623423e-06,
+            1.0018562311865584e-06
+          ],
+          "intertrial_variance": 3.368191101294015e-08,
+          "mean_image_mse": 9.906087417824604e-07,
+          "residual_squared_error_estimate": 9.738285985633907e-07,
+          "max_components": [
+            0.30953723192214966,
+            0.3098595142364502,
+            0.30958783626556396
+          ],
+          "numerically_unstable": false
+        },
+        "16384": {
+          "mse_mean": 9.987364893624227e-07,
+          "mse_min": 9.891345521601614e-07,
+          "mse_max": 1.0062423449944915e-06,
+          "mse_trials": [
+            1.000832570932615e-06,
+            1.0062423449944915e-06,
+            9.891345521601614e-07
+          ],
+          "intertrial_variance": 1.6959527190156563e-08,
+          "mean_image_mse": 9.87430120755497e-07,
+          "residual_squared_error_estimate": 9.762241054773551e-07,
+          "hdr_flip_mean": 0.047402710964282356,
+          "hdr_flip_trials": [
+            0.04747066646814346,
+            0.04744771122932434,
+            0.04728975519537926
+          ],
+          "max_components": [
+            0.30973106622695923,
+            0.30979466438293457,
+            0.30931898951530457
+          ],
+          "numerically_unstable": false
+        },
+        "32768": {
+          "mse_mean": 9.843618922557687e-07,
+          "mse_min": 9.804150289789798e-07,
+          "mse_max": 9.906772935221854e-07,
+          "mse_trials": [
+            9.819933542661413e-07,
+            9.906772935221854e-07,
+            9.804150289789798e-07
+          ],
+          "intertrial_variance": 8.780193290480743e-09,
+          "mean_image_mse": 9.785084100102904e-07,
+          "residual_squared_error_estimate": 9.70028839365374e-07,
+          "hdr_flip_mean": 0.047254582246144615,
+          "hdr_flip_trials": [
+            0.04723690077662468,
+            0.04730625078082085,
+            0.04722059518098831
+          ],
+          "max_components": [
+            0.3094403147697449,
+            0.30949053168296814,
+            0.30944615602493286
+          ],
+          "numerically_unstable": false
+        },
+        "40960": {
+          "mse_mean": 9.8095744564066e-07,
+          "mse_min": 9.776262102120525e-07,
+          "mse_max": 9.854475987546316e-07,
+          "mse_trials": [
+            9.797985279552958e-07,
+            9.854475987546316e-07,
+            9.776262102120525e-07
+          ],
+          "intertrial_variance": 7.030774659754306e-09,
+          "mean_image_mse": 9.762700621392614e-07,
+          "residual_squared_error_estimate": 9.683736310379205e-07,
+          "max_components": [
+            0.30938655138015747,
+            0.3095332086086273,
+            0.3093838393688202
+          ],
+          "numerically_unstable": false
+        },
+        "49152": {
+          "mse_mean": 9.810267607792183e-07,
+          "mse_min": 9.775084939060323e-07,
+          "mse_max": 9.85766786259859e-07,
+          "mse_trials": [
+            9.798050021717635e-07,
+            9.85766786259859e-07,
+            9.775084939060323e-07
+          ],
+          "intertrial_variance": 6.008361544990892e-09,
+          "mean_image_mse": 9.770210473299434e-07,
+          "residual_squared_error_estimate": 9.694654206001903e-07,
+          "max_components": [
+            0.3094029426574707,
+            0.3094039559364319,
+            0.30934667587280273
+          ],
+          "numerically_unstable": false
+        },
+        "57344": {
+          "mse_mean": 9.796393890815493e-07,
+          "mse_min": 9.757274694808397e-07,
+          "mse_max": 9.836860460932956e-07,
+          "mse_trials": [
+            9.795046516705125e-07,
+            9.836860460932956e-07,
+            9.757274694808397e-07
+          ],
+          "intertrial_variance": 5.109525749094271e-09,
+          "mean_image_mse": 9.762329706882952e-07,
+          "residual_squared_error_estimate": 9.689769558905077e-07,
+          "max_components": [
+            0.309377521276474,
+            0.3093660771846771,
+            0.3093346953392029
+          ],
+          "numerically_unstable": false
+        },
+        "65536": {
+          "mse_mean": 9.78959275799948e-07,
+          "mse_min": 9.75293750042373e-07,
+          "mse_max": 9.817861026915885e-07,
+          "mse_trials": [
+            9.797979746658822e-07,
+            9.817861026915885e-07,
+            9.75293750042373e-07
+          ],
+          "intertrial_variance": 4.4908039154641455e-09,
+          "mean_image_mse": 9.75965402379469e-07,
+          "residual_squared_error_estimate": 9.689156281928913e-07,
+          "hdr_flip_mean": 0.04718422144651413,
+          "hdr_flip_trials": [
+            0.047176770865917206,
+            0.047196995466947556,
+            0.04717889800667763
+          ],
+          "max_components": [
+            0.30933403968811035,
+            0.3093394339084625,
+            0.30928438901901245
+          ],
+          "numerically_unstable": false
+        },
+        "73728": {
+          "mse_mean": 9.77762534048229e-07,
+          "mse_min": 9.752574395373008e-07,
+          "mse_max": 9.796123225210493e-07,
+          "mse_trials": [
+            9.784178400863365e-07,
+            9.796123225210493e-07,
+            9.752574395373008e-07
+          ],
+          "intertrial_variance": 3.946289753868169e-09,
+          "mean_image_mse": 9.7513182443775e-07,
+          "residual_squared_error_estimate": 9.682635549717044e-07,
+          "max_components": [
+            0.30933627486228943,
+            0.30935904383659363,
+            0.3093007504940033
+          ],
+          "numerically_unstable": false
+        },
+        "81920": {
+          "mse_mean": 9.76941937081806e-07,
+          "mse_min": 9.749226841836858e-07,
+          "mse_max": 9.786920595947155e-07,
+          "mse_trials": [
+            9.772110674670164e-07,
+            9.786920595947155e-07,
+            9.749226841836858e-07
+          ],
+          "intertrial_variance": 3.548391483791036e-09,
+          "mean_image_mse": 9.74576156973378e-07,
+          "residual_squared_error_estimate": 9.678405202640247e-07,
+          "max_components": [
+            0.30933475494384766,
+            0.30935657024383545,
+            0.3092561662197113
+          ],
+          "numerically_unstable": false
+        },
+        "90112": {
+          "mse_mean": 9.772357883459233e-07,
+          "mse_min": 9.753109994640307e-07,
+          "mse_max": 9.790965500715735e-07,
+          "mse_trials": [
+            9.772998155021658e-07,
+            9.790965500715735e-07,
+            9.753109994640307e-07
+          ],
+          "intertrial_variance": 3.2104883677422185e-09,
+          "mean_image_mse": 9.750955034428984e-07,
+          "residual_squared_error_estimate": 9.684725011055615e-07,
+          "max_components": [
+            0.3092794120311737,
+            0.30937889218330383,
+            0.30929091572761536
+          ],
+          "numerically_unstable": false
+        },
+        "98304": {
+          "mse_mean": 9.772972061565973e-07,
+          "mse_min": 9.757489829724388e-07,
+          "mse_max": 9.784979652523033e-07,
+          "mse_trials": [
+            9.776446702450502e-07,
+            9.784979652523033e-07,
+            9.757489829724388e-07
+          ],
+          "intertrial_variance": 2.920907072493183e-09,
+          "mean_image_mse": 9.75349807772852e-07,
+          "residual_squared_error_estimate": 9.688233325339315e-07,
+          "max_components": [
+            0.30925893783569336,
+            0.30937427282333374,
+            0.30928122997283936
+          ],
+          "numerically_unstable": false
+        },
+        "106496": {
+          "mse_mean": 9.765700217569386e-07,
+          "mse_min": 9.758331281481852e-07,
+          "mse_max": 9.775214461375226e-07,
+          "mse_trials": [
+            9.76355490985108e-07,
+            9.775214461375226e-07,
+            9.758331281481852e-07
+          ],
+          "intertrial_variance": 2.6550118560958766e-09,
+          "mean_image_mse": 9.748000126701765e-07,
+          "residual_squared_error_estimate": 9.68362169170055e-07,
+          "max_components": [
+            0.309234619140625,
+            0.30939823389053345,
+            0.3092700242996216
+          ],
+          "numerically_unstable": false
+        },
+        "114688": {
+          "mse_mean": 9.767058747614786e-07,
+          "mse_min": 9.759880255829987e-07,
+          "mse_max": 9.77573791618298e-07,
+          "mse_trials": [
+            9.765558070831392e-07,
+            9.77573791618298e-07,
+            9.759880255829987e-07
+          ],
+          "intertrial_variance": 2.4333325771386704e-09,
+          "mean_image_mse": 9.750836056591629e-07,
+          "residual_squared_error_estimate": 9.687196552520272e-07,
+          "max_components": [
+            0.3092297613620758,
+            0.3093527853488922,
+            0.30928388237953186
+          ],
+          "numerically_unstable": false
+        },
+        "122880": {
+          "mse_mean": 9.767415427617971e-07,
+          "mse_min": 9.758057496727087e-07,
+          "mse_max": 9.772869348613378e-07,
+          "mse_trials": [
+            9.771319437513448e-07,
+            9.772869348613378e-07,
+            9.758057496727087e-07
+          ],
+          "intertrial_variance": 2.277887286192646e-09,
+          "mean_image_mse": 9.752229571624784e-07,
+          "residual_squared_error_estimate": 9.689108218523247e-07,
+          "max_components": [
+            0.309214323759079,
+            0.30934542417526245,
+            0.30930212140083313
+          ],
+          "numerically_unstable": false
+        },
+        "131072": {
+          "mse_mean": 9.768451024943829e-07,
+          "mse_min": 9.757713868701186e-07,
+          "mse_max": 9.779571168009417e-07,
+          "mse_trials": [
+            9.768068038120885e-07,
+            9.779571168009417e-07,
+            9.757713868701186e-07
+          ],
+          "intertrial_variance": 2.1525806711399553e-09,
+          "mean_image_mse": 9.75410050525645e-07,
+          "residual_squared_error_estimate": 9.691396840871755e-07,
+          "hdr_flip_mean": 0.04712496449549993,
+          "hdr_flip_trials": [
+            0.04712871462106705,
+            0.04711415246129036,
+            0.04713202640414238
+          ],
+          "max_components": [
+            0.30924832820892334,
+            0.30933552980422974,
+            0.30928024649620056
+          ],
+          "numerically_unstable": false
+        }
+      },
+      "timings": [
+        {
+          "gpu_ms": 0.24620336294174194,
+          "frames": 511,
+          "stages": {
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 0.1908828169107437,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.027187099680304527,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.026930097490549088,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRInitial/gpu_time": 0.04420333355665207,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRInitial/raytraceScene/gpu_time": 0.044071074575185776,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRTemporal/gpu_time": 0.012945283204317093,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRTemporal/raytraceScene/gpu_time": 0.012827553786337376,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRSpatial/gpu_time": 0.08148665726184845,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRSpatial/raytraceScene/gpu_time": 0.08131080865859985,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRIntegrate/gpu_time": 0.023774435743689537,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRIntegrate/raytraceScene/gpu_time": 0.023642176762223244
+          }
+        },
+        {
+          "gpu_ms": 0.24700593948364258,
+          "frames": 511,
+          "stages": {
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 0.19233916699886322,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.02672118879854679,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.02652931399643421,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRInitial/gpu_time": 0.046739786863327026,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRInitial/raytraceScene/gpu_time": 0.04660602658987045,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRTemporal/gpu_time": 0.012678762897849083,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRTemporal/raytraceScene/gpu_time": 0.012560532428324223,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRSpatial/gpu_time": 0.08208832889795303,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRSpatial/raytraceScene/gpu_time": 0.08187892287969589,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRIntegrate/gpu_time": 0.022730395197868347,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRIntegrate/raytraceScene/gpu_time": 0.022595632821321487
+          }
+        },
+        {
+          "gpu_ms": 0.24757203459739685,
+          "frames": 511,
+          "stages": {
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 0.19282209873199463,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.027611929923295975,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.02726374939084053,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRInitial/gpu_time": 0.04641816020011902,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRInitial/raytraceScene/gpu_time": 0.046303436160087585,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRTemporal/gpu_time": 0.01253698579967022,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRTemporal/raytraceScene/gpu_time": 0.012417753227055073,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRSpatial/gpu_time": 0.08226116746664047,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRSpatial/raytraceScene/gpu_time": 0.08208632469177246,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRIntegrate/gpu_time": 0.022816061973571777,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRIntegrate/raytraceScene/gpu_time": 0.022680798545479774
+          }
+        }
+      ],
+      "gpu_ms_mean": 0.24692711234092712,
+      "temporal_windows": [
+        [
+          {
+            "raw_rgb_temporal_variance": 0.0002756939842328431,
+            "accumulated_rgb_temporal_variance": 1.7183516777745117e-13
+          },
+          {
+            "raw_rgb_temporal_variance": 0.0002719716111277406,
+            "accumulated_rgb_temporal_variance": 1.624211485440953e-13
+          }
+        ],
+        [
+          {
+            "raw_rgb_temporal_variance": 0.0002843445091622635,
+            "accumulated_rgb_temporal_variance": 1.8177258119967597e-13
+          },
+          {
+            "raw_rgb_temporal_variance": 0.00027448050544492784,
+            "accumulated_rgb_temporal_variance": 1.64650991673394e-13
+          }
+        ],
+        [
+          {
+            "raw_rgb_temporal_variance": 0.0002690422425418127,
+            "accumulated_rgb_temporal_variance": 1.7226797238582078e-13
+          },
+          {
+            "raw_rgb_temporal_variance": 0.000274183193991633,
+            "accumulated_rgb_temporal_variance": 1.5967474579942317e-13
+          }
+        ]
+      ],
+      "stability": {
+        "relative_mse_change_last_doubling": -0.002159613129808169,
+        "relative_mse_change_previous_doubling": -0.0054884453556406365,
+        "mean_image_tail_mse": 7.068674233291044e-10,
+        "mean_image_previous_tail_mse": 1.4126764733866978e-09,
+        "tail_over_pt_error": 0.000724687451137269,
+        "intertrial_variance_over_mean_error": 0.0007356156418455114,
+        "practically_stable": true
+      }
+    },
+    "restir": {
+      "checkpoints": {
+        "1": {
+          "mse_mean": 0.00028309874352125527,
+          "mse_min": 0.00027474553703102107,
+          "mse_max": 0.00029192396816284555,
+          "mse_trials": [
+            0.00029192396816284555,
+            0.00028262672536989914,
+            0.00027474553703102107
+          ],
+          "intertrial_variance": 0.00027780693195865035,
+          "mean_image_mse": 9.789412233807635e-05,
+          "residual_squared_error_estimate": 5.286258845644806e-06,
+          "hdr_flip_mean": 0.24951591591040292,
+          "hdr_flip_trials": [
+            0.24985966086387634,
+            0.2478049248456955,
+            0.25088316202163696
+          ],
+          "max_components": [
+            0.7227637767791748,
+            0.9479112029075623,
+            0.7370455861091614
+          ],
+          "numerically_unstable": false
+        },
+        "2": {
+          "mse_mean": 0.0001438626708881619,
+          "mse_min": 0.0001364864130167054,
+          "mse_max": 0.00015704941540087335,
+          "mse_trials": [
+            0.00013805218424690698,
+            0.00015704941540087335,
+            0.0001364864130167054
+          ],
+          "intertrial_variance": 0.00014087087040155308,
+          "mean_image_mse": 4.994875752411089e-05,
+          "residual_squared_error_estimate": 2.9862478840451074e-06,
+          "max_components": [
+            0.5450146198272705,
+            0.9318930506706238,
+            0.5942248106002808
+          ],
+          "numerically_unstable": false
+        },
+        "4": {
+          "mse_mean": 7.458848156742183e-05,
+          "mse_min": 7.058879697486033e-05,
+          "mse_max": 7.776115310018002e-05,
+          "mse_trials": [
+            7.058879697486033e-05,
+            7.776115310018002e-05,
+            7.541549462722513e-05
+          ],
+          "intertrial_variance": 7.322287655863293e-05,
+          "mean_image_mse": 2.5773230565855435e-05,
+          "residual_squared_error_estimate": 1.3600522067630367e-06,
+          "hdr_flip_mean": 0.160676841934522,
+          "hdr_flip_trials": [
+            0.16124413907527924,
+            0.15967878699302673,
+            0.16110759973526
+          ],
+          "max_components": [
+            0.4576122760772705,
+            0.5068832039833069,
+            0.46203669905662537
+          ],
+          "numerically_unstable": false
+        },
+        "8": {
+          "mse_mean": 4.446773087753695e-05,
+          "mse_min": 4.1969532956432924e-05,
+          "mse_max": 4.6827743923976434e-05,
+          "mse_trials": [
+            4.6827743923976434e-05,
+            4.4605915752201504e-05,
+            4.1969532956432924e-05
+          ],
+          "intertrial_variance": 4.339925576732123e-05,
+          "mean_image_mse": 1.553489375914293e-05,
+          "residual_squared_error_estimate": 1.0629223304877624e-06,
+          "max_components": [
+            0.6538242101669312,
+            0.40248650312423706,
+            0.38721561431884766
+          ],
+          "numerically_unstable": false
+        },
+        "16": {
+          "mse_mean": 2.891546191179021e-05,
+          "mse_min": 2.6009103579369234e-05,
+          "mse_max": 3.30443517545635e-05,
+          "mse_trials": [
+            3.30443517545635e-05,
+            2.6009103579369234e-05,
+            2.7692930401437895e-05
+          ],
+          "intertrial_variance": 2.8203373107838774e-05,
+          "mean_image_mse": 1.0113213209575982e-05,
+          "residual_squared_error_estimate": 7.065360007483015e-07,
+          "hdr_flip_mean": 0.11412516236305237,
+          "hdr_flip_trials": [
+            0.11425410956144333,
+            0.11355620622634888,
+            0.1145651713013649
+          ],
+          "max_components": [
+            0.693268895149231,
+            0.37129855155944824,
+            0.4029744863510132
+          ],
+          "numerically_unstable": false
+        },
+        "32": {
+          "mse_mean": 3.110162869488907e-05,
+          "mse_min": 2.3066109882887873e-05,
+          "mse_max": 4.580695936028547e-05,
+          "mse_trials": [
+            4.580695936028547e-05,
+            2.3066109882887873e-05,
+            2.443181684149386e-05
+          ],
+          "intertrial_variance": 3.059075651611631e-05,
+          "mean_image_mse": 1.070779086413538e-05,
+          "residual_squared_error_estimate": 5.053191858818545e-07,
+          "max_components": [
+            0.9289509654045105,
+            0.3751052916049957,
+            0.482322096824646
+          ],
+          "numerically_unstable": false
+        },
+        "64": {
+          "mse_mean": 2.0478954337505657e-05,
+          "mse_min": 1.6481021541618238e-05,
+          "mse_max": 2.646700999490073e-05,
+          "mse_trials": [
+            2.646700999490073e-05,
+            1.8488831475998008e-05,
+            1.6481021541618238e-05
+          ],
+          "intertrial_variance": 1.990274568343331e-05,
+          "mean_image_mse": 7.210457200694568e-06,
+          "residual_squared_error_estimate": 5.706558000020426e-07,
+          "hdr_flip_mean": 0.0983610525727272,
+          "hdr_flip_trials": [
+            0.09707121551036835,
+            0.1017274484038353,
+            0.09628449380397797
+          ],
+          "max_components": [
+            0.5105351805686951,
+            0.33288267254829407,
+            0.42178580164909363
+          ],
+          "numerically_unstable": false
+        },
+        "128": {
+          "mse_mean": 2.249685342605402e-05,
+          "mse_min": 1.4896262250851626e-05,
+          "mse_max": 3.764289144172488e-05,
+          "mse_trials": [
+            3.764289144172488e-05,
+            1.4951406585585556e-05,
+            1.4896262250851626e-05
+          ],
+          "intertrial_variance": 2.210984377290017e-05,
+          "mean_image_mse": 7.756957662204423e-06,
+          "residual_squared_error_estimate": 3.814568983562774e-07,
+          "max_components": [
+            0.8038356304168701,
+            0.4807435870170593,
+            0.5804204940795898
+          ],
+          "numerically_unstable": false
+        },
+        "256": {
+          "mse_mean": 1.1733459025030205e-05,
+          "mse_min": 8.550017633614237e-06,
+          "mse_max": 1.4950679141063701e-05,
+          "mse_trials": [
+            1.4950679141063701e-05,
+            1.1699680300412675e-05,
+            8.550017633614237e-06
+          ],
+          "intertrial_variance": 1.012531440610661e-05,
+          "mean_image_mse": 4.983249439060308e-06,
+          "residual_squared_error_estimate": 1.6025917974766819e-06,
+          "hdr_flip_mean": 0.0771193156639735,
+          "hdr_flip_trials": [
+            0.07854937762022018,
+            0.07980122417211533,
+            0.07300734519958496
+          ],
+          "max_components": [
+            0.4825863540172577,
+            0.3548021614551544,
+            0.3329406678676605
+          ],
+          "numerically_unstable": false
+        },
+        "512": {
+          "mse_mean": 1.1200934082395317e-05,
+          "mse_min": 7.847445038613146e-06,
+          "mse_max": 1.7334438342739965e-05,
+          "mse_trials": [
+            8.42091886583284e-06,
+            7.847445038613146e-06,
+            1.7334438342739965e-05
+          ],
+          "intertrial_variance": 1.0628073999285512e-05,
+          "mean_image_mse": 4.1155513378158045e-06,
+          "residual_squared_error_estimate": 5.673071651725444e-07,
+          "max_components": [
+            0.33549967408180237,
+            0.3154275715351105,
+            0.8890402317047119
+          ],
+          "numerically_unstable": false
+        },
+        "1024": {
+          "mse_mean": 5.249675557357037e-06,
+          "mse_min": 4.355412624066188e-06,
+          "mse_max": 6.319966851178425e-06,
+          "mse_trials": [
+            4.355412624066188e-06,
+            5.073647196826498e-06,
+            6.319966851178425e-06
+          ],
+          "intertrial_variance": 4.014115442969594e-06,
+          "mean_image_mse": 2.573598642282033e-06,
+          "residual_squared_error_estimate": 1.230007321744079e-06,
+          "hdr_flip_mean": 0.06263947486877441,
+          "hdr_flip_trials": [
+            0.06215563416481018,
+            0.06366848200559616,
+            0.0620943084359169
+          ],
+          "max_components": [
+            0.31739553809165955,
+            0.3118601441383362,
+            0.5043671727180481
+          ],
+          "numerically_unstable": false
+        },
+        "2048": {
+          "mse_mean": 3.2670952173865527e-06,
+          "mse_min": 2.7895934160225757e-06,
+          "mse_max": 3.552328046634893e-06,
+          "mse_trials": [
+            2.7895934160225757e-06,
+            3.552328046634893e-06,
+            3.459364189502189e-06
+          ],
+          "intertrial_variance": 1.7582168355277898e-06,
+          "mean_image_mse": 2.094950648707311e-06,
+          "residual_squared_error_estimate": 1.5033255306499584e-06,
+          "max_components": [
+            0.31314530968666077,
+            0.31156492233276367,
+            0.3177669644355774
+          ],
+          "numerically_unstable": false
+        },
+        "4096": {
+          "mse_mean": 2.4388659414271177e-06,
+          "mse_min": 2.186951438113057e-06,
+          "mse_max": 2.777243982782613e-06,
+          "mse_trials": [
+            2.186951438113057e-06,
+            2.352402403385682e-06,
+            2.777243982782613e-06
+          ],
+          "intertrial_variance": 1.136554423665422e-06,
+          "mean_image_mse": 1.6811629587817659e-06,
+          "residual_squared_error_estimate": 1.2967586446785356e-06,
+          "hdr_flip_mean": 0.054987470308939614,
+          "hdr_flip_trials": [
+            0.05603649094700813,
+            0.05545977130532265,
+            0.05346614867448807
+          ],
+          "max_components": [
+            0.3105020523071289,
+            0.3123989403247833,
+            0.31106114387512207
+          ],
+          "numerically_unstable": false
+        },
+        "8192": {
+          "mse_mean": 1.942813935994609e-06,
+          "mse_min": 1.6816101248741166e-06,
+          "mse_max": 2.2380597355412028e-06,
+          "mse_trials": [
+            1.6816101248741166e-06,
+            1.908771947568509e-06,
+            2.2380597355412028e-06
+          ],
+          "intertrial_variance": 7.12055111009528e-07,
+          "mean_image_mse": 1.4681105139526369e-06,
+          "residual_squared_error_estimate": 1.2252059707347047e-06,
+          "max_components": [
+            0.31004828214645386,
+            0.3106808662414551,
+            0.3101673126220703
+          ],
+          "numerically_unstable": false
+        },
+        "16384": {
+          "mse_mean": 1.753613805553172e-06,
+          "mse_min": 1.5072994507215724e-06,
+          "mse_max": 2.1873782039154226e-06,
+          "mse_trials": [
+            1.566163762022521e-06,
+            1.5072994507215724e-06,
+            2.1873782039154226e-06
+          ],
+          "intertrial_variance": 6.646376271205367e-07,
+          "mean_image_mse": 1.3105220370142628e-06,
+          "residual_squared_error_estimate": 1.0834233217593276e-06,
+          "hdr_flip_mean": 0.05148241048057874,
+          "hdr_flip_trials": [
+            0.05197622627019882,
+            0.05173073709011078,
+            0.05074026808142662
+          ],
+          "max_components": [
+            0.3100760579109192,
+            0.3099665641784668,
+            0.3104811906814575
+          ],
+          "numerically_unstable": false
+        },
+        "32768": {
+          "mse_mean": 2.0208997233732188e-06,
+          "mse_min": 1.5885781775636376e-06,
+          "mse_max": 2.8511946638087874e-06,
+          "mse_trials": [
+            1.6229263287472319e-06,
+            2.8511946638087874e-06,
+            1.5885781775636376e-06
+          ],
+          "intertrial_variance": 9.988942085649592e-07,
+          "mean_image_mse": 1.3549702603609085e-06,
+          "residual_squared_error_estimate": 1.0164526846244992e-06,
+          "hdr_flip_mean": 0.05060252050558726,
+          "hdr_flip_trials": [
+            0.0506187304854393,
+            0.05066952481865883,
+            0.05051930621266365
+          ],
+          "max_components": [
+            0.3098510205745697,
+            0.3103664517402649,
+            0.3099764585494995
+          ],
+          "numerically_unstable": false
+        },
+        "40960": {
+          "mse_mean": 1.7850181002092498e-06,
+          "mse_min": 1.485403834042615e-06,
+          "mse_max": 2.333632303639693e-06,
+          "mse_trials": [
+            1.5360181629454415e-06,
+            2.333632303639693e-06,
+            1.485403834042615e-06
+          ],
+          "intertrial_variance": 7.620200720933344e-07,
+          "mean_image_mse": 1.2770044663373484e-06,
+          "residual_squared_error_estimate": 1.0174449360914808e-06,
+          "max_components": [
+            0.3098125159740448,
+            0.3101280629634857,
+            0.30968135595321655
+          ],
+          "numerically_unstable": false
+        },
+        "49152": {
+          "mse_mean": 1.5919558481152415e-06,
+          "mse_min": 1.3405557178706661e-06,
+          "mse_max": 1.9799289514085803e-06,
+          "mse_trials": [
+            1.4553828750664778e-06,
+            1.9799289514085803e-06,
+            1.3405557178706661e-06
+          ],
+          "intertrial_variance": 5.32597974203526e-07,
+          "mean_image_mse": 1.2368903616775807e-06,
+          "residual_squared_error_estimate": 1.0538048640616492e-06,
+          "max_components": [
+            0.3099411129951477,
+            0.30994054675102234,
+            0.30958399176597595
+          ],
+          "numerically_unstable": false
+        },
+        "57344": {
+          "mse_mean": 1.4684639707780802e-06,
+          "mse_min": 1.2741106427460392e-06,
+          "mse_max": 1.7736332404306575e-06,
+          "mse_trials": [
+            1.3576480291575439e-06,
+            1.7736332404306575e-06,
+            1.2741106427460392e-06
+          ],
+          "intertrial_variance": 3.9569177035702786e-07,
+          "mean_image_mse": 1.2046693879346063e-06,
+          "residual_squared_error_estimate": 1.0672192916008408e-06,
+          "max_components": [
+            0.3099014461040497,
+            0.30986303091049194,
+            0.3095448911190033
+          ],
+          "numerically_unstable": false
+        },
+        "65536": {
+          "mse_mean": 1.4049452605163902e-06,
+          "mse_min": 1.2193786994771161e-06,
+          "mse_max": 1.6361368989593395e-06,
+          "mse_trials": [
+            1.3593201831127144e-06,
+            1.6361368989593395e-06,
+            1.2193786994771161e-06
+          ],
+          "intertrial_variance": 3.3018829329032496e-07,
+          "mean_image_mse": 1.1848197626104943e-06,
+          "residual_squared_error_estimate": 1.0692041586322965e-06,
+          "hdr_flip_mean": 0.04987170547246933,
+          "hdr_flip_trials": [
+            0.050112079828977585,
+            0.04988953843712807,
+            0.04961349815130234
+          ],
+          "max_components": [
+            0.309808611869812,
+            0.3097919821739197,
+            0.3094148635864258
+          ],
+          "numerically_unstable": false
+        },
+        "73728": {
+          "mse_mean": 1.36512152047944e-06,
+          "mse_min": 1.2176760682778423e-06,
+          "mse_max": 1.5627028464752664e-06,
+          "mse_trials": [
+            1.3149856466852104e-06,
+            1.5627028464752664e-06,
+            1.2176760682778423e-06
+          ],
+          "intertrial_variance": 3.0145557145741084e-07,
+          "mean_image_mse": 1.1641513070823012e-06,
+          "residual_squared_error_estimate": 1.058113277048408e-06,
+          "max_components": [
+            0.30961695313453674,
+            0.3098227083683014,
+            0.30946433544158936
+          ],
+          "numerically_unstable": false
+        },
+        "81920": {
+          "mse_mean": 1.326895768069548e-06,
+          "mse_min": 1.2243765934998227e-06,
+          "mse_max": 1.4891251696516106e-06,
+          "mse_trials": [
+            1.267185541057211e-06,
+            1.4891251696516106e-06,
+            1.2243765934998227e-06
+          ],
+          "intertrial_variance": 2.737587265156916e-07,
+          "mean_image_mse": 1.1443897223777907e-06,
+          "residual_squared_error_estimate": 1.0475839739911373e-06,
+          "max_components": [
+            0.3095918297767639,
+            0.30970510840415955,
+            0.30928462743759155
+          ],
+          "numerically_unstable": false
+        },
+        "90112": {
+          "mse_mean": 1.2902070424011617e-06,
+          "mse_min": 1.1905088876284839e-06,
+          "mse_max": 1.431873786796541e-06,
+          "mse_trials": [
+            1.2482384527784607e-06,
+            1.431873786796541e-06,
+            1.1905088876284839e-06
+          ],
+          "intertrial_variance": 2.2677238022787274e-07,
+          "mean_image_mse": 1.1390254953454288e-06,
+          "residual_squared_error_estimate": 1.0578818623880484e-06,
+          "max_components": [
+            0.3095133602619171,
+            0.3097825050354004,
+            0.30933108925819397
+          ],
+          "numerically_unstable": false
+        },
+        "98304": {
+          "mse_mean": 1.2689862626426542e-06,
+          "mse_min": 1.1697709447228713e-06,
+          "mse_max": 1.4079713617530166e-06,
+          "mse_trials": [
+            1.2292164814520744e-06,
+            1.4079713617530166e-06,
+            1.1697709447228713e-06
+          ],
+          "intertrial_variance": 1.9039691671944103e-07,
+          "mean_image_mse": 1.1420548448316067e-06,
+          "residual_squared_error_estimate": 1.0730363663770367e-06,
+          "max_components": [
+            0.3094562888145447,
+            0.3097512423992157,
+            0.3093424439430237
+          ],
+          "numerically_unstable": false
+        },
+        "106496": {
+          "mse_mean": 1.2554216913071753e-06,
+          "mse_min": 1.1921218565321595e-06,
+          "mse_max": 1.3641141775889048e-06,
+          "mse_trials": [
+            1.2100290398004614e-06,
+            1.3641141775889048e-06,
+            1.1921218565321595e-06
+          ],
+          "intertrial_variance": 1.824643966620931e-07,
+          "mean_image_mse": 1.133778721953007e-06,
+          "residual_squared_error_estimate": 1.0674044168508864e-06,
+          "max_components": [
+            0.30934014916419983,
+            0.309768944978714,
+            0.30934691429138184
+          ],
+          "numerically_unstable": false
+        },
+        "114688": {
+          "mse_mean": 1.2422493561688436e-06,
+          "mse_min": 1.1662701401178298e-06,
+          "mse_max": 1.35013803796229e-06,
+          "mse_trials": [
+            1.210339890426411e-06,
+            1.35013803796229e-06,
+            1.1662701401178298e-06
+          ],
+          "intertrial_variance": 1.6087042507013874e-07,
+          "mean_image_mse": 1.1350023249147957e-06,
+          "residual_squared_error_estimate": 1.0758260103433266e-06,
+          "max_components": [
+            0.30922186374664307,
+            0.30967792868614197,
+            0.30937260389328003
+          ],
+          "numerically_unstable": false
+        },
+        "122880": {
+          "mse_mean": 4.544401886480113e+55,
+          "mse_min": 1.20198742244149e-06,
+          "mse_max": 1.363320565944034e+56,
+          "mse_trials": [
+            1.20198742244149e-06,
+            1.3248991932239427e-06,
+            1.363320565944034e+56
+          ],
+          "intertrial_variance": 4.5444018864801143e+55,
+          "mean_image_mse": 1.5148006587898726e+55,
+          "residual_squared_error_estimate": null,
+          "max_components": [
+            0.309314489364624,
+            0.3096178472042084,
+            2.472694559036076e+30
+          ],
+          "numerically_unstable": true
+        },
+        "131072": {
+          "mse_mean": 3.994102797513824e+55,
+          "mse_min": 1.1991136344748767e-06,
+          "mse_max": 1.1982308392541472e+56,
+          "mse_trials": [
+            1.1991136344748767e-06,
+            1.302248022173379e-06,
+            1.1982308392541472e+56
+          ],
+          "intertrial_variance": 3.9941027975138247e+55,
+          "mean_image_mse": 1.3313676195342895e+55,
+          "residual_squared_error_estimate": null,
+          "hdr_flip_mean": 0.05156030257542928,
+          "hdr_flip_trials": [
+            0.04980485513806343,
+            0.04971546679735184,
+            0.055160585790872574
+          ],
+          "max_components": [
+            0.3093225061893463,
+            0.30950626730918884,
+            2.3181510735384575e+30
+          ],
+          "numerically_unstable": true
+        }
+      },
+      "timings": [
+        {
+          "gpu_ms": 0.2641368806362152,
+          "frames": 511,
+          "stages": {
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 0.20623479783535004,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.02911035716533661,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.028779711574316025,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRInitial/gpu_time": 0.047285355627536774,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRInitial/raytraceScene/gpu_time": 0.047153595834970474,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRTemporal/gpu_time": 0.03083171881735325,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRTemporal/raytraceScene/gpu_time": 0.030698958784341812,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRSpatial/gpu_time": 0.07382819801568985,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRSpatial/raytraceScene/gpu_time": 0.07364283502101898,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRIntegrate/gpu_time": 0.02401590719819069,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRIntegrate/raytraceScene/gpu_time": 0.02389216423034668
+          }
+        },
+        {
+          "gpu_ms": 0.26088404655456543,
+          "frames": 511,
+          "stages": {
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 0.20431604981422424,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.028400469571352005,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.028116915374994278,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRInitial/gpu_time": 0.0466977059841156,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRInitial/raytraceScene/gpu_time": 0.04657246172428131,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRTemporal/gpu_time": 0.029969533905386925,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRTemporal/raytraceScene/gpu_time": 0.029847295954823494,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRSpatial/gpu_time": 0.07361878454685211,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRSpatial/raytraceScene/gpu_time": 0.07343442738056183,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRIntegrate/gpu_time": 0.024337032809853554,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRIntegrate/raytraceScene/gpu_time": 0.024213291704654694
+          }
+        },
+        {
+          "gpu_ms": 0.26296260952949524,
+          "frames": 511,
+          "stages": {
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 0.20575937628746033,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.027794787660241127,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.027568845078349113,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRInitial/gpu_time": 0.047439154237508774,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRInitial/raytraceScene/gpu_time": 0.04730489104986191,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRTemporal/gpu_time": 0.03053664229810238,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRTemporal/raytraceScene/gpu_time": 0.030416907742619514,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRSpatial/gpu_time": 0.07417386770248413,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRSpatial/raytraceScene/gpu_time": 0.07400403916835785,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRIntegrate/gpu_time": 0.024447249248623848,
+            "/onFrameRender/RenderGraphExe::execute()/DDGI/ReSTIRIntegrate/raytraceScene/gpu_time": 0.02432400733232498
+          }
+        }
+      ],
+      "gpu_ms_mean": 0.2626611789067586,
+      "temporal_windows": [
+        [
+          {
+            "raw_rgb_temporal_variance": 0.0009153536236362938,
+            "accumulated_rgb_temporal_variance": 9.97922090840176e-13
+          },
+          {
+            "raw_rgb_temporal_variance": 0.0008983369350515342,
+            "accumulated_rgb_temporal_variance": 1.072225395086851e-12
+          }
+        ],
+        [
+          {
+            "raw_rgb_temporal_variance": 0.0005103336505720644,
+            "accumulated_rgb_temporal_variance": 6.916433939993592e-13
+          },
+          {
+            "raw_rgb_temporal_variance": 0.0007176780043124808,
+            "accumulated_rgb_temporal_variance": 1.6181944941262789e-12
+          }
+        ],
+        [
+          {
+            "raw_rgb_temporal_variance": 0.0008258524793478067,
+            "accumulated_rgb_temporal_variance": 2.415610250865955e+48
+          },
+          {
+            "raw_rgb_temporal_variance": 0.0005532462235385271,
+            "accumulated_rgb_temporal_variance": 2.131636451874665e+48
+          }
+        ]
+      ],
+      "stability": {
+        "relative_mse_change_last_doubling": 2.842888552145999e+61,
+        "relative_mse_change_previous_doubling": -0.30479219514598077,
+        "mean_image_tail_mse": 1.3313676195342895e+55,
+        "mean_image_previous_tail_mse": 1.0186333096338189e-07,
+        "tail_over_pt_error": 1.0,
+        "intertrial_variance_over_mean_error": 0.9999999847051901,
+        "practically_stable": false
+      },
+      "gpu_ms_nondivergent_trials_mean": 0.2625104635953903,
+      "timing_note": "Trial 2 timing was captured after numerical divergence; use only trials 0 and 1 to describe nondivergent performance."
+    }
+  },
+  "failure_replay": {
+    "capture": {
+      "started": 1795012259.7616765,
+      "seed_offset": 262144,
+      "precision": "Single",
+      "captures": [
+        {
+          "frame": 114944,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 115200,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 115456,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 115712,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 115968,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 116224,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 116480,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 116736,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 116992,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 117248,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 117504,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 117760,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 118016,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 118272,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 0,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 118528,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 2889,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 118784,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 7114,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 119040,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 11483,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 119296,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 15653,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 119552,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 19766,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 119808,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 24079,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 120064,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 28392,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 120320,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 32583,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 120576,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 36844,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 120832,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 41089,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 121088,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 45448,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 121344,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 49714,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 121600,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 53945,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 121856,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 58197,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 122112,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 62452,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 122368,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 66830,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 122624,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 71152,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 122880,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 75446,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        },
+        {
+          "frame": 123136,
+          "stats": {
+            "updatedFrames": 8192,
+            "totalProbes": 729,
+            "status": "Probe updates frozen; camera and direct light remain live.",
+            "supported": true,
+            "usingRTXDI": false,
+            "finalGather": true,
+            "restirGather": true,
+            "restirHistoryLength": 20,
+            "restirFullResolution": false,
+            "restirSpatialPasses": 2,
+            "restirIntegrateSamples": 16,
+            "restirAllocatedBytes": 18432000,
+            "restirResetCount": 1,
+            "gridMin": [
+              -1.2000000476837158,
+              -0.20000000298023224,
+              -1.2000000476837158
+            ],
+            "gridMax": [
+              1.2000000476837158,
+              2.200000047683716,
+              1.2000000476837158
+            ],
+            "wrcEnabled": false,
+            "wrcGroupByMaterial": true,
+            "wrcStressMode": 0,
+            "wrcStressIterations": 0,
+            "showWrcCells": false,
+            "wrcCellsLod": 0,
+            "wrcCellSize": 0.030000001192092896,
+            "wrcTableSize": 65536,
+            "wrcLodDistance": 2.4000000953674316,
+            "wrcProbeLimit": 16,
+            "wrcInvalidations": 0,
+            "wrcAllocatedBytes": 0,
+            "wrcValidRays": 0,
+            "wrcOccupiedEntries": 0,
+            "wrcShadedEntries": 0,
+            "wrcServedRays": 0,
+            "wrcFallbackRays": 0,
+            "wrcTemporalReusedEntries": 0,
+            "wrcNonFiniteResults": 0,
+            "wrcShadeEvaluations": 0,
+            "wrcProbeSteps": 0,
+            "wrcProbeLimitFailures": 0,
+            "wrcMaxLod": 0,
+            "wrcLodRays": 0,
+            "wrcCrossPrimitiveServedRays": 0,
+            "wrcWaveTypeSum": 0,
+            "wrcWaveCount": 0,
+            "wrcStressChecksum": 0,
+            "wrcStressEntries": 0,
+            "wrcActiveEntries": 0,
+            "wrcShaderGroups": 0,
+            "wrcMaterialTypes": 0,
+            "wrcDispatches": 0,
+            "wrcScheduledThreads": 0,
+            "rejectedMaterialSamples": 0,
+            "rejectedDirectSamples": 0,
+            "rejectedHistorySamples": 0,
+            "rejectedRaySamples": 79905,
+            "activeProbes": 280,
+            "relocatedProbes": 16,
+            "finite": true,
+            "nonFiniteTexels": 0,
+            "irradianceMax": 0.6744638085365295
+          }
+        }
+      ],
+      "stage": "complete",
+      "elapsed": 100.0993857383728,
+      "requested_precision": "SingleCompensated",
+      "actual_precision": "Single"
+    },
+    "records": [
+      {
+        "frame": 114688,
+        "raw_max": 1.2120871543884277,
+        "accumulated_max": 0.30937260389328003,
+        "accumulated_mse": 1.1662701401178298e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 114944,
+        "raw_max": 0.5121541023254395,
+        "accumulated_max": 0.30935972929000854,
+        "accumulated_mse": 1.1657437502737365e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 115200,
+        "raw_max": 1.2306979894638062,
+        "accumulated_max": 0.30937549471855164,
+        "accumulated_mse": 1.1651525823234338e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 115456,
+        "raw_max": 1.562852144241333,
+        "accumulated_max": 0.3093918263912201,
+        "accumulated_mse": 1.164947163544153e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 115712,
+        "raw_max": 1.0728970766067505,
+        "accumulated_max": 0.3093889057636261,
+        "accumulated_mse": 1.163601868155871e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 115968,
+        "raw_max": 5.20833158493042,
+        "accumulated_max": 0.30939269065856934,
+        "accumulated_mse": 1.1623886846852385e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 116224,
+        "raw_max": 2.9693856239318848,
+        "accumulated_max": 0.309394896030426,
+        "accumulated_mse": 1.162621907731293e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 116480,
+        "raw_max": 2.033097743988037,
+        "accumulated_max": 0.3093932867050171,
+        "accumulated_mse": 1.1624216214815578e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 116736,
+        "raw_max": 0.9426016807556152,
+        "accumulated_max": 0.3093810975551605,
+        "accumulated_mse": 1.1614034230855396e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 116992,
+        "raw_max": 1.497231364250183,
+        "accumulated_max": 0.3093813359737396,
+        "accumulated_mse": 1.1618036135066232e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 117248,
+        "raw_max": 6.165857315063477,
+        "accumulated_max": 0.3093772530555725,
+        "accumulated_mse": 1.1601648280283119e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 117504,
+        "raw_max": 5.704401016235352,
+        "accumulated_max": 0.3093772828578949,
+        "accumulated_mse": 1.1587460535070234e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 117760,
+        "raw_max": 1.2454595565795898,
+        "accumulated_max": 0.3093734085559845,
+        "accumulated_mse": 1.159650756822738e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 118016,
+        "raw_max": 1.2449864149093628,
+        "accumulated_max": 0.30937665700912476,
+        "accumulated_mse": 1.1605512117356927e-06,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 118272,
+        "raw_max": 1518958542848.0,
+        "accumulated_max": 159432304.0,
+        "accumulated_mse": 521627444150.24713,
+        "raw_pixels_gt_1e6": 80
+      },
+      {
+        "frame": 118528,
+        "raw_max": 1.2128422260284424,
+        "accumulated_max": 2.56348458585768e+30,
+        "accumulated_mse": 1.4652725561086878e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 118784,
+        "raw_max": 2.9372341632843018,
+        "accumulated_max": 2.557959794862041e+30,
+        "accumulated_mse": 1.4589635741617733e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 119040,
+        "raw_max": 1.2270545959472656,
+        "accumulated_max": 2.5524588801513394e+30,
+        "accumulated_mse": 1.4526952769040574e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 119296,
+        "raw_max": 1.8991278409957886,
+        "accumulated_max": 2.5469815394941204e+30,
+        "accumulated_mse": 1.4464671879982849e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 119552,
+        "raw_max": 3.7213635444641113,
+        "accumulated_max": 2.541527470658929e+30,
+        "accumulated_mse": 1.4402790582781277e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 119808,
+        "raw_max": 1.250286340713501,
+        "accumulated_max": 2.53609697587722e+30,
+        "accumulated_mse": 1.43413075883789e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 120064,
+        "raw_max": 1.0444217920303345,
+        "accumulated_max": 2.530689450686084e+30,
+        "accumulated_mse": 1.428021517277674e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 120320,
+        "raw_max": 12.109915733337402,
+        "accumulated_max": 2.5253048950855203e+30,
+        "accumulated_mse": 1.4219511307150692e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 120576,
+        "raw_max": 3.62907075881958,
+        "accumulated_max": 2.5199436113069844e+30,
+        "accumulated_mse": 1.415919777702138e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 120832,
+        "raw_max": 3.4594202041625977,
+        "accumulated_max": 2.5146045415403838e+30,
+        "accumulated_mse": 1.4099263289942121e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 121088,
+        "raw_max": 1.1209461688995361,
+        "accumulated_max": 2.5092882902486285e+30,
+        "accumulated_mse": 1.403970973790916e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 121344,
+        "raw_max": 0.9532937407493591,
+        "accumulated_max": 2.5039945552002635e+30,
+        "accumulated_mse": 1.3980534541463917e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 121600,
+        "raw_max": 0.9357752799987793,
+        "accumulated_max": 2.498723034163834e+30,
+        "accumulated_mse": 1.3921731419872074e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 121856,
+        "raw_max": 2.1216447353363037,
+        "accumulated_max": 2.4934735760236122e+30,
+        "accumulated_mse": 1.3863298000387364e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 122112,
+        "raw_max": 1.5351850986480713,
+        "accumulated_max": 2.4882458785481437e+30,
+        "accumulated_mse": 1.3805229399782495e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 122368,
+        "raw_max": 1.2936891317367554,
+        "accumulated_max": 2.4830403950846105e+30,
+        "accumulated_mse": 1.3747527475250647e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 122624,
+        "raw_max": 0.9056004285812378,
+        "accumulated_max": 2.4778566722858305e+30,
+        "accumulated_mse": 1.369018763842899e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 122880,
+        "raw_max": 1.6663930416107178,
+        "accumulated_max": 2.472694559036076e+30,
+        "accumulated_mse": 1.363320565944034e+56,
+        "raw_pixels_gt_1e6": 0
+      },
+      {
+        "frame": 123136,
+        "raw_max": 1.2453663349151611,
+        "accumulated_max": 2.4675537531038922e+30,
+        "accumulated_mse": 1.3576576278758728e+56,
+        "raw_pixels_gt_1e6": 0
+      }
+    ],
+    "first_captured_raw_failure": {
+      "frame": 118272,
+      "raw_max": 1518958542848.0,
+      "accumulated_max": 159432304.0,
+      "accumulated_mse": 521627444150.24713,
+      "raw_pixels_gt_1e6": 80
+    },
+    "previous_capture": {
+      "frame": 118016,
+      "raw_max": 1.2449864149093628,
+      "accumulated_max": 0.30937665700912476,
+      "accumulated_mse": 1.1605512117356927e-06,
+      "raw_pixels_gt_1e6": 0
+    },
+    "conclusion": "Reproduced in Reconstruct.color before Accumulate. Not caused solely by accumulation or EXR display."
+  },
+  "conclusion": "FG and spatial reuse reached practical stability. Temporal+spatial reuse failed in 1 of 3 sequences; stable bias cannot be claimed."
+}

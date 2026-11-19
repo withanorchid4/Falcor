@@ -1,0 +1,8 @@
+{
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.cpp": "db8ec4e2c2b9f4654aad85a83b7ca8cbe82d8756c8aa823a85a17177c976fb65",
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.rt.slang": "3930ea74c830056c194f0e9ad868e4a13cbb14635ee00de2de4056dda2f8b1c1",
+  "Source/RenderPasses/RTXGIDDGI/DDGIReconstruct.cpp": "1b05357fea82cd86629c5cf21833d74b6bc53b865e3449415c93139be8c03f75",
+  "Source/RenderPasses/RTXGIDDGI/DDGIReconstruct.cs.slang": "d3e6bc4236ca309f522e8cde317b53b0f738907445282143c6ce9bc024488d25",
+  "tests/ddgi/half_gather_jitter_comparison.py": "7bdf2147b7045a08bbfeb7e33905a818a6a2763c03552e41517506b0f568bd39",
+  "tests/ddgi/score_half_gather_jitter.py": "d6292dd2d915a53b880c2a51a7e7cfe810c6547ea881b08d3a5c64063945f05d"
+}

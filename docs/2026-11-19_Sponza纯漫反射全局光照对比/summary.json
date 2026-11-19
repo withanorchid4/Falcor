@@ -1,0 +1,557 @@
+{
+  "metrics": {
+    "ddgi": {
+      "mse": 0.015778479913206828,
+      "hdr_flip": 0.6723649501800537,
+      "accumulated_temporal_variance": 3.6565889917363416e-14,
+      "raw_temporal_variance": 3.751471923290945e-07
+    },
+    "half": {
+      "mse": 0.015631184138137945,
+      "hdr_flip": 0.27928659319877625,
+      "accumulated_temporal_variance": 1.2594993563417754e-11,
+      "raw_temporal_variance": 0.009940332317596367
+    },
+    "full": {
+      "mse": 0.016206099973767096,
+      "hdr_flip": 0.27622106671333313,
+      "accumulated_temporal_variance": 5.467198510266382e-11,
+      "raw_temporal_variance": 0.042747499435954225
+    }
+  },
+  "timing": {
+    "ddgi": {
+      "samples": 511,
+      "gpu_frame_ms": 3.5214598178863525,
+      "passes": {
+        "": 3.5214598178863525,
+        "Visibility": 0.35516268014907837,
+        "DDGI": 2.8068246841430664,
+        "Accumulate": 0.30588144063949585,
+        "Display": 0.053319137543439865
+      },
+      "dispatches": {
+        "ProbeUpdate": 1.5247581005096436,
+        "ProbeUpdate/OriginalTrace": 0.9066648483276367,
+        "ProbeUpdate/OriginalTrace/raytraceScene": 0.90632164478302,
+        "ProbeUpdate/SDKUpdate": 0.6175311207771301,
+        "PrimaryShading": 1.281294584274292,
+        "PrimaryShading/raytraceScene": 1.281160831451416
+      }
+    },
+    "half": {
+      "samples": 511,
+      "gpu_frame_ms": 3.8658359050750732,
+      "passes": {
+        "": 3.8658359050750732,
+        "Visibility": 0.3636166751384735,
+        "DDGI": 2.8962783813476562,
+        "Reconstruct": 0.24629004299640656,
+        "Accumulate": 0.30656927824020386,
+        "Display": 0.05272848531603813
+      },
+      "dispatches": {
+        "ProbeUpdate": 1.5142625570297241,
+        "ProbeUpdate/OriginalTrace": 0.9018614292144775,
+        "ProbeUpdate/OriginalTrace/raytraceScene": 0.9015347957611084,
+        "ProbeUpdate/SDKUpdate": 0.6118389964103699,
+        "PrimaryShading": 0.4123203158378601,
+        "PrimaryShading/raytraceScene": 0.4121830463409424,
+        "HalfGather": 0.9688703417778015,
+        "HalfGather/raytraceScene": 0.9687415957450867
+      }
+    },
+    "full": {
+      "samples": 511,
+      "gpu_frame_ms": 6.045031547546387,
+      "passes": {
+        "": 6.045031547546387,
+        "Visibility": 0.3533446192741394,
+        "DDGI": 5.340917587280273,
+        "Accumulate": 0.2982355058193207,
+        "Display": 0.0522475466132164
+      },
+      "dispatches": {
+        "ProbeUpdate": 1.5160084962844849,
+        "ProbeUpdate/OriginalTrace": 0.9031293988227844,
+        "ProbeUpdate/OriginalTrace/raytraceScene": 0.9027737379074097,
+        "ProbeUpdate/SDKUpdate": 0.6123144030570984,
+        "PrimaryShading": 3.8241379261016846,
+        "PrimaryShading/raytraceScene": 3.8240091800689697
+      }
+    }
+  },
+  "convergence": {
+    "ddgi": {
+      "checkpoint_mse": {
+        "1": 0.01578070559930281,
+        "2": 0.015778038440285032,
+        "4": 0.015776460867251187,
+        "8": 0.01577623793474545,
+        "16": 0.015774873079793677,
+        "32": 0.01577705519331595,
+        "64": 0.015776289149064683,
+        "128": 0.015774033042597668,
+        "256": 0.01577766262110288,
+        "512": 0.015778122040180524,
+        "1024": 0.01577778988311455,
+        "2048": 0.015780012107768544,
+        "4096": 0.01577837000691823,
+        "8192": 0.015778111599634406,
+        "16384": 0.01577808287763959,
+        "32768": 0.015778472695651496,
+        "65536": 0.015778479913206828
+      },
+      "mse_change": 4.574305429994041e-07,
+      "flip_change": -0.00045305823167285375,
+      "tail_difference_mse": 1.4697000763101658e-09,
+      "estimated_tail_over_error": 9.314585970223941e-08,
+      "stable_check": true
+    },
+    "half": {
+      "checkpoint_mse": {
+        "1": 0.025937164732545828,
+        "2": 0.020784344280371778,
+        "4": 0.018175731596663393,
+        "8": 0.016865230252221752,
+        "16": 0.016295805867082493,
+        "32": 0.015968109301762276,
+        "64": 0.01579816575049763,
+        "128": 0.015712872116715088,
+        "256": 0.01567613520378144,
+        "512": 0.01565340420305448,
+        "1024": 0.0156443438727095,
+        "2048": 0.015637962860083426,
+        "4096": 0.0156347044707244,
+        "8192": 0.015632822598142145,
+        "16384": 0.015632531841804225,
+        "32768": 0.01563175697673706,
+        "65536": 0.015631184138137945
+      },
+      "mse_change": -3.6645822985015286e-05,
+      "flip_change": -0.003454247044754055,
+      "tail_difference_mse": 1.56901975921105e-07,
+      "estimated_tail_over_error": 1.0037753668212871e-05,
+      "stable_check": true
+    },
+    "full": {
+      "checkpoint_mse": {
+        "1": 0.061129590922544,
+        "2": 0.038435852202503146,
+        "4": 0.027170494967552885,
+        "8": 0.021649620882212263,
+        "16": 0.018945474572802164,
+        "32": 0.017585652516229115,
+        "64": 0.01689509178766389,
+        "128": 0.016551021110395824,
+        "256": 0.01637748887486478,
+        "512": 0.01629070540060625,
+        "1024": 0.016248181306795017,
+        "2048": 0.016226729930703777,
+        "4096": 0.016216039174966845,
+        "8192": 0.016210661123409124,
+        "16384": 0.016208153734518012,
+        "32768": 0.016206768601588716,
+        "65536": 0.016206099973767096
+      },
+      "mse_change": -4.125608491467592e-05,
+      "flip_change": -0.0037367767344694824,
+      "tail_difference_mse": 6.728271030930947e-07,
+      "estimated_tail_over_error": 4.151690438675583e-05,
+      "stable_check": true
+    }
+  },
+  "checks": {
+    "all_stable_checks_pass": true,
+    "reference_metric_change_below_1percent": true,
+    "reference_noise_below_5percent": true,
+    "reference_doubling_below_5percent": true
+  },
+  "reference_validation": {
+    "doubling_hdr_flip": 0.0581417940557003,
+    "score_changes": {
+      "ddgi": {
+        "previous_reference_hdr_flip": 0.6718071103096008,
+        "relative_change": 0.0008303571991010728
+      },
+      "half": {
+        "previous_reference_hdr_flip": 0.27943041920661926,
+        "relative_change": -0.0005147113483613408
+      },
+      "full": {
+        "previous_reference_hdr_flip": 0.27641576528549194,
+        "relative_change": -0.0007043685513296039
+      }
+    },
+    "brightest_10percent_mse_share": {
+      "ddgi": 0.9827188480447497,
+      "half": 0.9991925411586248,
+      "full": 0.9994741481437068
+    }
+  },
+  "reference_noise_mse_estimate": 2.9949109698396093e-06,
+  "reference_doubling_difference_mse": 2.994910967019554e-06,
+  "flip_parameters": {
+    "ppd": 67.0,
+    "startExposure": -3.9753026962280273,
+    "stopExposure": 8.530488014221191,
+    "numExposures": 13,
+    "tonemapper": "ACES"
+  },
+  "capture": {
+    "resolution": [
+      1920,
+      1080
+    ],
+    "half_resolution": [
+      960,
+      540
+    ],
+    "probe_warmup": 8192,
+    "probe_frozen": false,
+    "jitter": false,
+    "accumulation_frames": 65536,
+    "checkpoints": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64,
+      128,
+      256,
+      512,
+      1024,
+      2048,
+      4096,
+      8192,
+      16384,
+      32768,
+      65536
+    ],
+    "stable_capture_frames": 32,
+    "nrd": false,
+    "pt_spp_per_frame": 8,
+    "pt_total_spp": 16384,
+    "full_resolution_integration": false,
+    "restir": false,
+    "started": 1795057772.5726016,
+    "runs": {
+      "ddgi": {
+        "stats": {
+          "updatedFrames": 73728,
+          "totalProbes": 4608,
+          "status": "Updating probes with original per-ray shading.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": false,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirMaxAge": 0,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirSpatialFeedback": false,
+          "restirTemporalCellMapping": true,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -16.855911254882812,
+            -1.6338911056518555,
+            -10.377751350402832
+          ],
+          "gridMax": [
+            15.88760757446289,
+            12.057817459106445,
+            9.758702278137207
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.12447007745504379,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 9.957606315612793,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 3704,
+          "relocatedProbes": 558,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 1.2706917524337769
+        },
+        "mode": "ddgi",
+        "restir": false,
+        "temporal": false
+      },
+      "half": {
+        "stats": {
+          "updatedFrames": 73728,
+          "totalProbes": 4608,
+          "status": "Updating probes with original per-ray shading.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirMaxAge": 0,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirSpatialFeedback": false,
+          "restirTemporalCellMapping": true,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -16.855911254882812,
+            -1.6338911056518555,
+            -10.377751350402832
+          ],
+          "gridMax": [
+            15.88760757446289,
+            12.057817459106445,
+            9.758702278137207
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.12447007745504379,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 9.957606315612793,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 3704,
+          "relocatedProbes": 558,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 1.2706917524337769
+        },
+        "mode": "half",
+        "restir": false,
+        "temporal": false
+      },
+      "full": {
+        "stats": {
+          "updatedFrames": 73728,
+          "totalProbes": 4608,
+          "status": "Updating probes with original per-ray shading.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirMaxAge": 0,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirSpatialFeedback": false,
+          "restirTemporalCellMapping": true,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -16.855911254882812,
+            -1.6338911056518555,
+            -10.377751350402832
+          ],
+          "gridMax": [
+            15.88760757446289,
+            12.057817459106445,
+            9.758702278137207
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.12447007745504379,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 9.957606315612793,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 3704,
+          "relocatedProbes": 558,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 1.2706917524337769
+        },
+        "mode": "full",
+        "restir": false,
+        "temporal": false
+      }
+    },
+    "source_hashes": {
+      "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.cpp": "960e014d449c4359f553b6541ad1cc4835f999f528ba773a3ef58f53fc9a5bf9",
+      "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.h": "53ec50d9e704f7b1c26c2cb5958fe09dfea4c257af20487d1ec6d6fc00758d7d",
+      "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.rt.slang": "41be66e39a9e2e36035961c90bc71e06f0034800b3ab9865bae13b624270a6ee",
+      "Source/RenderPasses/RTXGIDDGI/ReSTIRGather.slang": "5a93562da34ef674db385046d30aa9b34b85c7528cbf9aad4b9d9a44d5bd9db9",
+      "Source/RenderPasses/RTXGIDDGI/DDGIReconstruct.cs.slang": "de8cd9d326fab38061fbf68f2bb61a05dc9ebb80630447ad9c866eadc7257ebd",
+      "scripts/scenes/Sponza.pyscene": "fad415c42f9544d70fb6e6a897cf30a357b3959887ed8fde420a2efa11f7210a",
+      "scripts/scenes/SponzaLambert.pyscene": "b191db787e6773331b3e1f5094e1eeebc519b5356384da13d233f9d610d572f6",
+      "media/Sponza/Sponza.gltf": "646c10cbc8fab990ca29f363e90e2d65155f3a3569506852eb1434a9465b9501",
+      "scripts/DDGIAccumulated.py": "0c1963a654beca42128e8c5ce1968779b1d00c55545fe61d3f8c8280c16e086f",
+      "scripts/PTReference.py": "a99f79c1539ec2946eb2de96cc9c5e37f8ad610d151851931a3dd3d8a9899473",
+      "tests/ddgi/sponza_lambert_comparison.py": "19997c34de97d13bab89c29a053b5cd473cf9b98f57f58df66bed504af6a7a98"
+    },
+    "stage": "complete",
+    "elapsed_seconds": 1418.5842490196228,
+    "planned_pt_total_spp": 131072,
+    "reference_gate": {
+      "spp": 16384,
+      "reference_mode": "disjoint_halves",
+      "reference_noise_estimate": 2.994910967019554e-06,
+      "reference_noise_over_min_error": 0.00019159847011925233,
+      "relative_rgb_rms_noise": 0.002694886165973999,
+      "method_mse": {
+        "ddgi": 0.015778479913206828,
+        "half": 0.015631184138137945,
+        "full": 0.016206099973767096
+      },
+      "threshold_noise_over_error": 0.01,
+      "threshold_relative_rgb_rms": 0.005,
+      "independent_block_seed_ranges": [
+        [
+          1,
+          1024
+        ],
+        [
+          1025,
+          2048
+        ]
+      ],
+      "note": "Doubling difference and disjoint-block noise are the same statistic, not independent checks.",
+      "passed": true
+    },
+    "reference_mode": "disjoint_halves",
+    "completion_reason": "PT stopped externally after saved checkpoint passed the explicit convergence gate; all three GI runs and timing windows completed."
+  },
+  "scene": {
+    "scene": "SponzaLambert",
+    "pointLight": {
+      "position": [
+        0,
+        4,
+        0
+      ],
+      "intensity": [
+        600,
+        600,
+        600
+      ]
+    },
+    "probeGrid": [
+      24,
+      12,
+      16
+    ],
+    "raysPerProbe": 256,
+    "hysteresis": 0.97,
+    "normalBiasFraction": 0.05,
+    "viewBiasFraction": 0.05,
+    "autoBounds": true,
+    "accumulatePrecision": "SingleCompensated"
+  },
+  "metric_domain": "visible surface mask, linear HDR RGB",
+  "variance_definition": "32 consecutive frames after 65536: raw and progressively accumulated population variance",
+  "display": {
+    "operator": "ACES fitted then sRGB",
+    "exposureStops": -0.9546093666108514,
+    "rule": "PT masked luminance percentile 99 maps to 1 before tone mapping"
+  },
+  "heatmap": "fixed Magma 0..1",
+  "crop_xyxy": [
+    600,
+    200,
+    1100,
+    700
+  ],
+  "hardware": "RTX 5070 / D3D12",
+  "data_directory": "C:\\workspace\\1116GitFalcor\\Falcor\\build\\sponza-lambert-1080p-20261119"
+}

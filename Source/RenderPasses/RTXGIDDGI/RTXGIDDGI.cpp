@@ -23,9 +23,11 @@ const char kWrcDebugShader[] = "RenderPasses/RTXGIDDGI/WorldRadianceCacheDebug.s
 const ChannelList kInputs = {
     {"vbuffer", "gVBuffer", "Camera surface visibility"},
     {"viewW", "gViewW", "Camera view direction", true},
+    {"mvec", "gMotionVectors", "Screen-space motion vectors (optional)", true},
     {"directLighting", "gDirectLighting", "External direct lighting including emission and background (RTXDI)", true},
 };
 const ChannelList kOutputs = {
+    {"restirDebug", "gRestirDebug", "Temporal M, spatial M, integration sample count", true, ResourceFormat::RGBA32Float},
     {"color", "gOutputColor", "Direct light, emission, and dynamic DDGI", false, ResourceFormat::RGBA32Float},
     {"indirect", "gOutputIndirect", "Probe diffuse or total final-gather contribution", true, ResourceFormat::RGBA32Float},
     {"gatherDiffuse", "gOutputGatherDiffuse", "Final-gather diffuse reflection", true, ResourceFormat::RGBA32Float},
@@ -83,6 +85,21 @@ Properties RTXGIDDGI::getProperties() const
     p["updateEnabled"] = mOptions.update;
     p["finalGather"] = mOptions.finalGather;
     p["halfResolutionGather"] = mOptions.halfResolutionGather;
+    p["jitterHalfGather"] = mOptions.jitterHalfGather;
+    p["restirTemporal"] = mOptions.restirTemporal;
+    p["restirSpatial"] = mOptions.restirSpatial;
+    p["restirSpatialFeedback"] = mOptions.restirSpatialFeedback;
+    p["restirTemporalCellMapping"] = mOptions.restirTemporalCellMapping;
+    p["restirBiasCorrection"] = mOptions.restirBiasCorrection;
+    p["restirSpatialSamples"] = mOptions.restirSpatialSamples;
+    p["restirIntegrateSamples"] = mOptions.restirIntegrateSamples;
+    p["restirSpatialRadius"] = mOptions.restirSpatialRadius;
+    p["restirSpatialPasses"] = mOptions.restirSpatialPasses;
+    p["restirIntegrateRadius"] = mOptions.restirIntegrateRadius;
+    p["restirFullResolution"] = mOptions.restirFullResolution;
+    p["restirGather"] = mOptions.restirGather;
+    p["restirHistoryLength"] = mOptions.restirHistoryLength;
+    p["restirMaxAge"] = mOptions.restirMaxAge;
     p["gatherDiffuse"] = mOptions.gatherDiffuse;
     p["gatherSpecular"] = mOptions.gatherSpecular;
     p["enableGI"] = mOptions.enableGI;
@@ -131,6 +148,21 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         else if (name == "updateEnabled") next.update = value;
         else if (name == "finalGather") next.finalGather = value;
         else if (name == "halfResolutionGather") next.halfResolutionGather = value;
+        else if (name == "jitterHalfGather") next.jitterHalfGather = value;
+        else if (name == "restirTemporal") next.restirTemporal = value;
+        else if (name == "restirSpatial") next.restirSpatial = value;
+        else if (name == "restirSpatialFeedback") next.restirSpatialFeedback = value;
+        else if (name == "restirTemporalCellMapping") next.restirTemporalCellMapping = value;
+        else if (name == "restirBiasCorrection") next.restirBiasCorrection = value;
+        else if (name == "restirSpatialSamples") next.restirSpatialSamples = value;
+        else if (name == "restirIntegrateSamples") next.restirIntegrateSamples = value;
+        else if (name == "restirSpatialRadius") next.restirSpatialRadius = value;
+        else if (name == "restirSpatialPasses") next.restirSpatialPasses = value;
+        else if (name == "restirIntegrateRadius") next.restirIntegrateRadius = value;
+        else if (name == "restirFullResolution") next.restirFullResolution = value;
+        else if (name == "restirGather") next.restirGather = value;
+        else if (name == "restirHistoryLength") next.restirHistoryLength = value;
+        else if (name == "restirMaxAge") next.restirMaxAge = value;
         else if (name == "gatherDiffuse") next.gatherDiffuse = value;
         else if (name == "gatherSpecular") next.gatherSpecular = value;
         else if (name == "enableGI") next.enableGI = value;
@@ -196,7 +228,14 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         next.wrcTableSize != mOptions.wrcTableSize || next.wrcMaxAge != mOptions.wrcMaxAge ||
         next.wrcShadeSamples != mOptions.wrcShadeSamples || next.wrcBypassSharing != mOptions.wrcBypassSharing)
         mResetPending = mWrcResetPending = true;
-    if (next.halfResolutionGather != mOptions.halfResolutionGather) requestRecompile();
+    if (next.halfResolutionGather != mOptions.halfResolutionGather || next.restirGather != mOptions.restirGather ||
+        next.finalGather != mOptions.finalGather || next.enableGI != mOptions.enableGI || next.restirFullResolution != mOptions.restirFullResolution) requestRecompile();
+    FALCOR_CHECK(next.restirSpatialSamples <= 16 && next.restirIntegrateSamples >= 1 && next.restirIntegrateSamples <= 16, "ReSTIR sample counts must be within 0..16 (integration >=1).");
+    FALCOR_CHECK(std::isfinite(next.restirSpatialRadius) && next.restirSpatialRadius >= 1.f && next.restirSpatialRadius <= 64.f, "ReSTIR spatial radius must be 1..64.");
+    FALCOR_CHECK(next.restirHistoryLength >= 1 && next.restirHistoryLength <= 32, "ReSTIR history length must be 1..32 candidates.");
+    FALCOR_CHECK(next.restirSpatialPasses >= 1 && next.restirSpatialPasses <= 4, "ReSTIR spatial passes must be 1..4.");
+    FALCOR_CHECK(std::isfinite(next.restirIntegrateRadius) && next.restirIntegrateRadius >= 0.f && next.restirIntegrateRadius <= 8.f, "ReSTIR integration radius must be 0..8.");
+    mRestirResetPending |= refreshLighting;
     mOptions = next;
     mOptionsChanged |= refreshLighting;
 }
@@ -206,9 +245,9 @@ RenderPassReflection RTXGIDDGI::reflect(const CompileData& data)
     RenderPassReflection reflection;
     addRenderPassInputs(reflection, kInputs);
     addRenderPassOutputs(reflection, kOutputs);
-    if (mOptions.halfResolutionGather)
+    if (mOptions.halfResolutionGather && !(restirActive() && mOptions.restirFullResolution))
     {
-        const uint2 size = max(data.defaultTexDims / uint2(2), uint2(1));
+        const uint2 size = restirActive() ? (data.defaultTexDims + uint2(1)) / uint2(2) : max(data.defaultTexDims / uint2(2), uint2(1));
         for (const char* name : {"diffuseRadianceHitDist", "specularRadianceHitDist"})
             reflection.getField(name)->texture2D(size.x, size.y);
     }
@@ -219,6 +258,9 @@ RenderPassReflection RTXGIDDGI::reflect(const CompileData& data)
 void RTXGIDDGI::setScene(RenderContext* context, const ref<Scene>& scene)
 {
     mpScene = scene;
+    mpRestirInitial = mpRestirTemporal = mpRestirSpatial = mpRestirHistory = nullptr;
+    mRestirHistoryValid = false;
+    mRestirResetPending = true;
     mTrace = {};
     mRender = {};
     mHalfGather = {};
@@ -258,6 +300,13 @@ void RTXGIDDGI::onSceneUpdates(RenderContext* context, IScene::UpdateFlags flags
         U::MaterialsChanged | U::EmissiveMaterialsChanged | U::EnvMapChanged | U::EnvMapPropertiesChanged |
         U::RenderSettingsChanged | U::RecompileNeeded;
     if (is_set(flags, cacheChanges)) mWrcResetPending = true;
+    // Camera motion is reprojected. Invalidate cached radiance on lighting/geometry/material edits.
+    if (is_set(flags, cacheChanges | U::CameraSwitched)) mRestirResetPending = true;
+    // Camera::History is reported as CameraPropertiesChanged one frame after a
+    // move. It must not invalidate the history that motion vectors reproject.
+    if (is_set(flags, U::CameraPropertiesChanged) && mpScene &&
+        is_set(mpScene->getCamera()->getChanges(), Camera::Changes::Frustum | Camera::Changes::Aperture | Camera::Changes::FocalDistance))
+        mRestirResetPending = true;
 }
 
 void RTXGIDDGI::buildRayProgram(RayProgram& ray, const char* shader, const char* entry)
@@ -291,6 +340,10 @@ void RTXGIDDGI::createPrograms()
     buildRayProgram(mTrace, kRayShader, "traceProbes");
     buildRayProgram(mRender, kRayShader, "render");
     buildRayProgram(mHalfGather, kRayShader, "gatherHalf");
+    buildRayProgram(mRestirInitialProgram, kRayShader, "restirInitial");
+    buildRayProgram(mRestirTemporalProgram, kRayShader, "restirTemporal");
+    buildRayProgram(mRestirSpatialProgram, kRayShader, "restirSpatial");
+    buildRayProgram(mRestirIntegrateProgram, kRayShader, "restirIntegrate");
     // WRC pipelines are compiled lazily and never replace the original traceProbes entry point.
     mWrcTrace = {};
     mpWrcBuild = mpWrcPrepare = mpWrcShade = mpWrcGather = nullptr;
@@ -653,7 +706,10 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     changed |= ray.program->addDefine("OUTPUT_SPECULARREFLECTANCE", data.getTexture("specularReflectance") ? "1" : "0");
     changed |= ray.program->addDefine("OUTPUT_UNFILTEREDCOLOR", data.getTexture("unfilteredColor") ? "1" : "0");
     changed |= ray.program->addDefine("SPLIT_HALF_GATHER",
-        mOptions.finalGather && mOptions.halfResolutionGather && !mOptions.showProbes && !mOptions.showWrcCells ? "1" : "0");
+        mOptions.finalGather && mOptions.halfResolutionGather && !mOptions.showWrcCells ? "1" : "0");
+    changed |= ray.program->addDefine("OUTPUT_RESTIR_DEBUG", data.getTexture("restirDebug") ? "1" : "0");
+    changed |= ray.program->addDefine("RESTIR_MOTION", data.getTexture("mvec") ? "1" : "0");
+    changed |= ray.program->addDefine("RESTIR_GATHER", restirActive() ? "1" : "0");
     if (changed) ray.vars = nullptr;
     if (!ray.vars)
     {
@@ -671,6 +727,15 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     if (mpEnvMapSampler && mpScene->useEnvLight()) mpEnvMapSampler->bindShaderData(root["gEnvMapSampler"]);
     if (mpEnvMapSampler && (mpScene->useEnvLight() || mpScene->useEnvBackground()))
         root["gSafeEnvironment"] = mpEnvMapSampler->getEnvMap()->getEnvMap();
+    if (restirActive())
+    {
+        root["gReservoirHistory"] = mpRestirHistory;
+        root["gReservoirInput"] = mpRestirInput;
+        root["gReservoirOutput"] = mpRestirOutput;
+        root["gReservoirTemporal"] = mpRestirTemporal;
+        if (data.getTexture("mvec")) root["gMotionVectors"] = data.getTexture("mvec");
+        if (data.getTexture("restirDebug")) root["gRestirDebug"] = data.getTexture("restirDebug");
+    }
     root["gVBuffer"] = data.getTexture("vbuffer");
     root["gViewW"] = data.getTexture("viewW");
     if (data.getTexture("directLighting")) root["gDirectLighting"] = data.getTexture("directLighting");
@@ -689,13 +754,27 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     cb["gFrameDim"] = data.getDefaultTextureDims();
     cb["gFinalGather"] = mOptions.finalGather;
     cb["gHalfResolutionGather"] = mOptions.halfResolutionGather;
+    cb["gGatherOffset"] = mGatherOffset;
+    cb["gRestirHistoryLength"] = mOptions.restirHistoryLength;
+    cb["gRestirMaxAge"] = mOptions.restirMaxAge;
+    cb["gRestirTemporalCellMapping"] = mOptions.restirTemporalCellMapping;
+    cb["gRestirDim"] = mRestirDim;
+    cb["gRestirPreviousViewProj"] = mRestirPreviousViewProj;
+    cb["gRestirPreviousOffset"] = mRestirPreviousOffset;
+    cb["gRestirHistoryValid"] = mRestirHistoryValid && mOptions.restirTemporal;
+    cb["gRestirSpatialSamples"] = mOptions.restirSpatialSamples;
+    cb["gRestirBiasCorrection"] = mOptions.restirBiasCorrection;
+    cb["gRestirIntegrateSamples"] = mOptions.restirIntegrateSamples;
+    cb["gRestirSpatialRadius"] = mOptions.restirSpatialRadius;
+    cb["gRestirSpatialPassIndex"] = mRestirSpatialPassIndex;
+    cb["gRestirIntegrateRadius"] = mOptions.restirIntegrateRadius;
+    cb["gRestirFullResolution"] = mOptions.restirFullResolution;
     cb["gGatherDiffuse"] = mOptions.gatherDiffuse;
     cb["gGatherSpecular"] = mOptions.gatherSpecular;
     cb["gEnableGI"] = mOptions.enableGI;
     cb["gIndirectOnly"] = mOptions.indirectOnly;
     cb["gUseRTXDI"] = mOptions.useRTXDI;
-    cb["gShowProbes"] = mOptions.showProbes;
-    cb["gShowWrcCells"] = mOptions.showWrcCells && mOptions.useWRC && !mOptions.wrcBypassSharing && bool(mpWrcDebugDepth);
+    cb["gShowWrcCells"] = bool(mpWrcDebugDepth) && (mOptions.showProbes || (mOptions.showWrcCells && mOptions.useWRC && !mOptions.wrcBypassSharing));
     cb["gHistoryValid"] = mUpdatedFrames > 0;
     cb["gIntensity"] = mOptions.intensity;
     cb["gProbeRadius"] = std::min(mSpacing.x, std::min(mSpacing.y, mSpacing.z)) * 0.08f;
@@ -739,12 +818,48 @@ void RTXGIDDGI::updateProbes(RenderContext* context)
 
 void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
 {
+    // Quantized Hammersley(i, 8) in a 2x2 block: all four phases occur twice.
+    const uint2 dim = data.getDefaultTextureDims();
+    mGatherOffset = mOptions.finalGather && mOptions.halfResolutionGather && mOptions.jitterHalfGather
+        ? min(uint2((mFrame & 7u) >> 2u, mFrame & 1u), dim - uint2(1)) : uint2(0);
+    data.getDictionary()["RTXGIDDGI.gatherOffset"] = mGatherOffset;
     mHasDirectLighting = data.getTexture("directLighting") != nullptr;
     if (!mpScene || !mSupported)
     {
         for (const auto& output : kOutputs)
             if (auto texture = data.getTexture(output.name)) context->clearTexture(texture.get());
         return;
+    }
+    if (auto debug = data.getTexture("restirDebug")) context->clearTexture(debug.get());
+    if (restirActive())
+    {
+        uint2 reservoirDim = mOptions.halfResolutionGather ? (dim + uint2(1)) / uint2(2) : dim;
+        if (!mpRestirHistory || any(mRestirDim != reservoirDim))
+        {
+            mRestirDim = reservoirDim;
+            const uint32_t count = reservoirDim.x * reservoirDim.y;
+            mpRestirInitial = mpDevice->createStructuredBuffer(96, count, kTextureFlags);
+            mpRestirTemporal = mpDevice->createStructuredBuffer(96, count, kTextureFlags);
+            mpRestirSpatial = mpDevice->createStructuredBuffer(96, count, kTextureFlags);
+            mpRestirHistory = mpDevice->createStructuredBuffer(96, count, kTextureFlags);
+            mRestirResetPending = true;
+        }
+        if (mRestirResetPending || mResetPending || mReallocate || mOptionsChanged)
+        {
+            mRestirHistoryValid = false;
+            mRestirResetPending = false;
+            ++mRestirResetCount;
+        }
+        mpRestirInput = mpRestirInitial;
+        mpRestirOutput = mpRestirInitial;
+    }
+    else
+    {
+        mpRestirInitial = mpRestirTemporal = mpRestirSpatial = mpRestirHistory = nullptr;
+        mpRestirInput = mpRestirOutput = nullptr;
+        mRestirInitialProgram.vars = mRestirTemporalProgram.vars = mRestirSpatialProgram.vars = mRestirIntegrateProgram.vars = nullptr;
+        mRestirHistoryValid = false;
+
     }
     if (mOptionsChanged || mResetPending || mReallocate)
     {
@@ -790,7 +905,7 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
             updateProbes(context);
         }
     }
-    if (mOptions.showWrcCells && mOptions.useWRC && !mOptions.wrcBypassSharing)
+    if (mOptions.showProbes || (mOptions.showWrcCells && mOptions.useWRC && !mOptions.wrcBypassSharing))
     {
         const auto size = data.getDefaultTextureDims();
         if (!mpWrcDebugDepth || mpWrcDebugDepth->getWidth() != size.x || mpWrcDebugDepth->getHeight() != size.y)
@@ -798,7 +913,7 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
     }
     bindRayProgram(mRender, data);
     const uint2 frameDim = data.getDefaultTextureDims();
-    const bool splitGather = mOptions.finalGather && mOptions.halfResolutionGather && !mOptions.showProbes && !mOptions.showWrcCells;
+    const bool splitGather = !restirActive() && mOptions.finalGather && mOptions.halfResolutionGather && !mOptions.showWrcCells;
     {
         FALCOR_PROFILE(context, "PrimaryShading");
         mpScene->raytrace(context, mRender.program.get(), mRender.vars, uint3(frameDim, 1));
@@ -812,7 +927,53 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
         bindRayProgram(mHalfGather, data);
         mpScene->raytrace(context, mHalfGather.program.get(), mHalfGather.vars, uint3(max(frameDim / uint2(2), uint2(1)), 1));
     }
+    if (restirActive())
+    {
+        const auto dispatch = [&](RayProgram& program, const ref<Buffer>& input, const ref<Buffer>& output, uint2 size)
+        {
+            mpRestirInput = input; mpRestirOutput = output;
+            if (input) context->uavBarrier(input.get());
+            bindRayProgram(program, data);
+            mpScene->raytrace(context, program.program.get(), program.vars, uint3(size, 1));
+            if (output) context->uavBarrier(output.get());
+        };
+        { FALCOR_PROFILE(context, "ReSTIRInitial");
+          dispatch(mRestirInitialProgram, mpRestirInitial, mpRestirInitial, mRestirDim); }
+        { FALCOR_PROFILE(context, "ReSTIRTemporal");
+          dispatch(mRestirTemporalProgram, mpRestirInitial, mpRestirTemporal, mRestirDim); }
+        ref<Buffer> integratedReservoirs = mpRestirTemporal;
+        if (mOptions.restirSpatial)
+        {
+            FALCOR_PROFILE(context, "ReSTIRSpatial");
+            for (uint32_t pass = 0; pass < mOptions.restirSpatialPasses; ++pass)
+            {
+                mRestirSpatialPassIndex = pass;
+                // Initial candidates are dead after temporal resampling; reuse
+                // their storage as the second spatial ping-pong buffer.
+                auto destination = (pass & 1u) ? mpRestirInitial : mpRestirSpatial;
+                dispatch(mRestirSpatialProgram, integratedReservoirs, destination, mRestirDim);
+                integratedReservoirs = destination;
+            }
+        }
+        { FALCOR_PROFILE(context, "ReSTIRIntegrate");
+          for (const auto& output : kOutputs)
+              if (auto texture = data.getTexture(output.name)) context->uavBarrier(texture.get());
+          dispatch(mRestirIntegrateProgram, integratedReservoirs, nullptr, mOptions.restirFullResolution ? dim : mRestirDim); }
+        // NVIDIA's separate temporal+spatial pipeline retains the final spatial
+        // result. Keep the temporal-only feedback available for controlled audits.
+        // Swap the owning member (not the local alias), preserving four distinct buffers.
+        if (mOptions.restirSpatialFeedback && mOptions.restirSpatial)
+        {
+            if (integratedReservoirs == mpRestirInitial) std::swap(mpRestirInitial, mpRestirHistory);
+            else std::swap(mpRestirSpatial, mpRestirHistory);
+        }
+        else std::swap(mpRestirTemporal, mpRestirHistory);
+        mRestirPreviousViewProj = mpScene->getCamera()->getViewProjMatrix();
+        mRestirPreviousOffset = mGatherOffset;
+        mRestirHistoryValid = true;
+    }
     drawWrcCells(context, data.getTexture("color"));
+    drawProbeVisualization(context, data);
     mStatus = mOptions.update ? (mOptions.useWRC ? "Updating probes via active WRC cells." : "Updating probes with original per-ray shading.") :
         "Probe updates frozen; camera and direct light remain live.";
     ++mFrame;
@@ -828,6 +989,16 @@ Properties RTXGIDDGI::getStats() const
     stats["supported"] = mSupported;
     stats["usingRTXDI"] = mHasDirectLighting && mOptions.useRTXDI && !mOptions.finalGather;
     stats["finalGather"] = mOptions.finalGather;
+    stats["restirGather"] = mOptions.restirGather;
+    stats["restirHistoryLength"] = mOptions.restirHistoryLength;
+    stats["restirMaxAge"] = mOptions.restirMaxAge;
+    stats["restirFullResolution"] = mOptions.restirFullResolution;
+    stats["restirSpatialPasses"] = mOptions.restirSpatialPasses;
+    stats["restirSpatialFeedback"] = mOptions.restirSpatialFeedback;
+    stats["restirTemporalCellMapping"] = mOptions.restirTemporalCellMapping;
+    stats["restirIntegrateSamples"] = mOptions.restirIntegrateSamples;
+    stats["restirAllocatedBytes"] = restirActive() ? uint64_t(mRestirDim.x) * mRestirDim.y * 96u * 4u : 0ull;
+    stats["restirResetCount"] = mRestirResetCount;
     stats["gridMin"] = mGridMin;
     stats["gridMax"] = mGridMax;
     stats["wrcEnabled"] = mOptions.useWRC;
@@ -950,8 +1121,32 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
         if (gather.dropdown("Resolution", gatherResolutions, gatherResolution))
             p["halfResolutionGather"] = gatherResolution == 0u;
         gather.tooltip("Half traces one pixel per 2x2 block and reconstructs full-resolution lighting. Applies when final gather is enabled.");
+        if (options.halfResolutionGather)
+        {
+            if (gather.checkbox("Jitter sample position", options.jitterHalfGather)) p["jitterHalfGather"] = options.jitterHalfGather;
+            gather.tooltip("Cycle the sampled pixel within each 2x2 block over eight frames. Reconstruction follows the actual sample position. Experimental Accumulate path; leave off for NRD.");
+        }
         if (options.finalGather)
         {
+            if (gather.checkbox("ReSTIR gather (experimental)", options.restirGather)) p["restirGather"] = options.restirGather;
+            gather.tooltip("Uniform hemisphere candidates, reprojected temporal reservoirs and spatial resampling. Full-resolution integration and Accumulate are independent options.");
+            if (options.restirGather)
+            {
+                if (gather.checkbox("Full-resolution integration", options.restirFullResolution)) p["restirFullResolution"] = options.restirFullResolution;
+                gather.tooltip("Off: shade each reservoir at gather resolution, then use the original guided upsampler. On: evaluate multiple reservoir samples at every full-resolution pixel. Independent of temporal/spatial reuse.");
+                if (gather.checkbox("Temporal reuse", options.restirTemporal)) p["restirTemporal"] = options.restirTemporal;
+                if (gather.checkbox("Source visibility correction", options.restirBiasCorrection)) p["restirBiasCorrection"] = options.restirBiasCorrection;
+                if (gather.checkbox("Spatial reuse", options.restirSpatial)) p["restirSpatial"] = options.restirSpatial;
+                if (gather.checkbox("Spatial reservoir feedback", options.restirSpatialFeedback)) p["restirSpatialFeedback"] = options.restirSpatialFeedback;
+                if (gather.var("Spatial passes", options.restirSpatialPasses, 1u, 4u)) p["restirSpatialPasses"] = options.restirSpatialPasses;
+                if (gather.var("Integration radius", options.restirIntegrateRadius, 0.f, 8.f)) p["restirIntegrateRadius"] = options.restirIntegrateRadius;
+                if (gather.var("Spatial samples", options.restirSpatialSamples, 0u, 16u)) p["restirSpatialSamples"] = options.restirSpatialSamples;
+                if (gather.var("Integration samples", options.restirIntegrateSamples, 1u, 16u)) p["restirIntegrateSamples"] = options.restirIntegrateSamples;
+                if (gather.var("Spatial radius", options.restirSpatialRadius, 1.f, 64.f)) p["restirSpatialRadius"] = options.restirSpatialRadius;
+                if (gather.var("Maximum sample age (0 disables)", options.restirMaxAge, 0u, 1024u)) p["restirMaxAge"] = options.restirMaxAge;
+                if (gather.var("Reservoir candidates", options.restirHistoryLength, 1u, 32u)) p["restirHistoryLength"] = options.restirHistoryLength;
+                gather.tooltip("Maximum temporal candidate count. Visibility rays and full-resolution integration add cost; this is not the rays-per-pixel setting.");
+            }
             if (gather.checkbox("Gather diffuse", options.gatherDiffuse)) p["gatherDiffuse"] = options.gatherDiffuse;
             if (gather.checkbox("Gather specular", options.gatherSpecular)) p["gatherSpecular"] = options.gatherSpecular;
             gather.text("RTXDI input bypassed. Toggle temporal accumulation in Accumulate > Enabled.");

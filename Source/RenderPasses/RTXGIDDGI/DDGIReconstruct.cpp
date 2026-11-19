@@ -33,6 +33,7 @@ RenderPassReflection DDGIReconstruct::reflect(const CompileData& data)
 void DDGIReconstruct::execute(RenderContext* context, const RenderData& data)
 {
     auto root=mpPass->getRootVar();
+    root["GatherPhase"]["gGatherOffset"] = data.getDictionary().getValue("RTXGIDDGI.gatherOffset", uint2(0));
     auto bind=[&](const char* name) { root[name]=data.getTexture(name); };
     bind("depth");
     if (mPrepare)

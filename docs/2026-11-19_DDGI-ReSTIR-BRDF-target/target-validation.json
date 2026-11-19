@@ -1,0 +1,32 @@
+[
+  {
+    "capture": "brdf-target.DDGI.restirTargetError.0.exr",
+    "valid_pixels": 84100,
+    "max_relative_error": 0.0
+  },
+  {
+    "capture": "full.DDGI.restirTargetError.0.exr",
+    "valid_pixels": 84100,
+    "max_relative_error": 0.0
+  },
+  {
+    "capture": "half.DDGI.restirTargetError.0.exr",
+    "valid_pixels": 21025,
+    "max_relative_error": 0.0
+  },
+  {
+    "capture": "li-target.DDGI.restirTargetError.0.exr",
+    "valid_pixels": 84100,
+    "max_relative_error": 0.0
+  },
+  {
+    "capture": "light-off.DDGI.restirTargetError.0.exr",
+    "valid_pixels": 84100,
+    "max_relative_error": 0.0
+  },
+  {
+    "capture": "moving.DDGI.restirTargetError.0.exr",
+    "valid_pixels": 84100,
+    "max_relative_error": 0.0
+  }
+]

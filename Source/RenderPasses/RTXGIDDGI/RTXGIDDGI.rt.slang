@@ -59,11 +59,25 @@ cbuffer PerFrameCB
     bool gEnableGI;
     bool gFinalGather;
     bool gHalfResolutionGather;
+    uint2 gGatherOffset;
+    uint gRestirHistoryLength;
+    uint gRestirMaxAge;
+    bool gRestirTemporalCellMapping;
+    uint2 gRestirDim;
+    uint2 gRestirPreviousOffset;
+    float4x4 gRestirPreviousViewProj;
+    bool gRestirHistoryValid;
+    uint gRestirSpatialSamples;
+    bool gRestirBiasCorrection;
+    uint gRestirIntegrateSamples;
+    float gRestirSpatialRadius;
+    uint gRestirSpatialPassIndex;
+    float gRestirIntegrateRadius;
+    bool gRestirFullResolution;
     bool gGatherDiffuse;
     bool gGatherSpecular;
     bool gIndirectOnly;
     bool gUseRTXDI;
-    bool gShowProbes;
     bool gShowWrcCells;
     bool gHistoryValid;
     float gIntensity; // Display scaling only; recursive transport stays physical.
@@ -453,45 +467,12 @@ float3 gatherReflection(ShadingData primary, uint lobes, DDGIVolumeDescGPU volum
     return finiteRadiance(sample.weight * radiance, 3u);
 }
 
-// Diagnostic sphere overlay: active probes are green, inactive probes red.
-// Uses the SDK-relocated positions, and normal scene depth occludes the spheres.
-// Intentionally optional: this O(probeCount) debug path is not a GI benchmark.
-float3 overlayProbes(float3 color, float3 origin, float3 direction, float sceneDistance, DDGIVolumeDescGPU volume)
-{
-    int count = volume.probeCounts.x * volume.probeCounts.y * volume.probeCounts.z;
-    float radius = gProbeRadius;
-    float nearest = sceneDistance;
-    int selected = -1;
-    float3 selectedNormal = float3(0.f);
-    for (int index = 0; index < count; ++index)
-    {
-        int3 coords = DDGIGetProbeCoords(index, volume);
-        float3 center = DDGIGetProbeWorldPosition(coords, volume, gProbeData);
-        float3 offset = origin - center;
-        float b = dot(offset, direction);
-        float discriminant = b * b - dot(offset, offset) + radius * radius;
-        if (discriminant < 0.f) continue;
-        float distance = -b - sqrt(discriminant);
-        if (distance <= 0.f || distance >= nearest) continue;
-        nearest = distance;
-        selected = DDGIGetScrollingProbeIndex(coords, volume);
-        selectedNormal = normalize(origin + direction * distance - center);
-    }
-    if (selected >= 0)
-    {
-        float state = DDGILoadProbeState(selected, gProbeData, volume);
-        float3 tint = state == RTXGI_DDGI_PROBE_STATE_INACTIVE ? float3(0.9f, 0.06f, 0.02f) : float3(0.05f, 0.8f, 0.15f);
-        color = tint * (0.25f + 0.75f * max(0.f, dot(selectedNormal, -direction)));
-    }
-    return color;
-}
-
 // Two specialized entry points share the same estimator and random seeds.
 void shadePixel(uint2 pixel, bool gatherOnly)
 {
     if (any(pixel >= gFrameDim)) return;
-    // Fixed representative pixel in each 2x2 block; NRD guides use the same pixel.
-    bool gatherPixel = !gHalfResolutionGather || (all((pixel & 1u) == 0u) && all(pixel / 2u < max(gFrameDim / 2u, uint2(1))));
+    // One representative pixel per 2x2 block; reconstruction uses the same phase.
+    bool gatherPixel = !gHalfResolutionGather || (all((pixel & 1u) == gGatherOffset) && all(pixel / 2u < max(gFrameDim / 2u, uint2(1))));
     uint2 gatherOutputPixel = gHalfResolutionGather ? pixel / 2u : pixel;
     DDGIVolumeDescGPU volume = UnpackDDGIVolumeDescGPU(DDGIVolumes[0]);
     float3 direction = primaryRayDirection(pixel);
@@ -533,7 +514,7 @@ void shadePixel(uint2 pixel, bool gatherOnly)
             color = finiteRadiance(properties.emission, 0u) + (gFinalGather ?
                 evaluateAnalyticDirect(sd, material, false, sg) : evaluateDirect(sd, material, false, sg));
         }
-        if (gEnableGI && validSurface(sd) && (gatherOnly || !SPLIT_HALF_GATHER))
+        if (!RESTIR_GATHER && gEnableGI && validSurface(sd) && (gatherOnly || !SPLIT_HALF_GATHER))
         {
             if (gFinalGather)
             {
@@ -541,7 +522,10 @@ void shadePixel(uint2 pixel, bool gatherOnly)
                 // Decorrelate gather from the primary direct-light estimator.
                 sampleNext2D(sg);
                 if (gGatherDiffuse && gatherPixel)
-                    gatheredDiffuse = gatherReflection(sd, (uint)LobeType::DiffuseReflection, volume, sg, diffuseHitDistance) * gIntensity;
+                {
+                    gatheredDiffuse = gatherReflection(sd, (uint)LobeType::DiffuseReflection, volume, sg, diffuseHitDistance);
+                    gatheredDiffuse *= gIntensity;
+                }
                 if (gGatherSpecular && gatherPixel)
                     gatheredSpecular = gatherReflection(sd, (uint)LobeType::SpecularReflection | (uint)LobeType::DeltaReflection, volume, sg, specularHitDistance) * gIntensity;
                 indirect = gatheredDiffuse + gatheredSpecular;
@@ -565,8 +549,7 @@ void shadePixel(uint2 pixel, bool gatherOnly)
 #if OUTPUT_GATHER_SPECULAR
     gOutputGatherSpecular[pixel] = float4(gatheredSpecular, 1.f);
 #endif
-    if (gShowProbes) color = overlayProbes(color, origin, direction, surfaceDistance, volume);
-    if (gShowWrcCells) gWrcDebugDepth[pixel] = surfaceDistance;
+    if (gShowWrcCells && !gatherOnly) gWrcDebugDepth[pixel] = surfaceDistance;
 #if OUTPUT_DIFFUSERADIANCEHITDIST
     if (gatherPixel && (gatherOnly || !SPLIT_HALF_GATHER)) gDiffuseRadianceHitDist[gatherOutputPixel] = float4(gatheredDiffuse / max(diffuseReflectance, float3(1e-4f)), diffuseHitDistance);
 #endif
@@ -599,7 +582,7 @@ void render()
 [shader("raygeneration")]
 void gatherHalf()
 {
-    shadePixel(DispatchRaysIndex().xy * 2u, true);
+    shadePixel(DispatchRaysIndex().xy * 2u + gGatherOffset, true);
 }
 
 [shader("miss")]
@@ -644,3 +627,5 @@ void shadowTriangleAnyHit(inout ShadowRayPayload payload, BuiltInTriangleInterse
 {
     if (rejectedByAlphaTest(attributes)) IgnoreHit();
 }
+
+#include "ReSTIRGather.slang"

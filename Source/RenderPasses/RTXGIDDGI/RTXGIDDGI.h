@@ -51,6 +51,21 @@ private:
         bool enableGI = true;
         bool finalGather = false;
         bool halfResolutionGather = false;
+        bool jitterHalfGather = false;
+        bool restirGather = false;
+        bool restirTemporal = true;
+        bool restirSpatial = true;
+        bool restirSpatialFeedback = false; // Feed the final spatial reservoir into next-frame temporal reuse.
+        bool restirTemporalCellMapping = true; // Prefer the reprojected coarse cell before searching neighbors.
+        bool restirBiasCorrection = true;
+        bool restirFullResolution = false;
+        uint32_t restirSpatialSamples = 4;
+        uint32_t restirSpatialPasses = 2;
+        uint32_t restirIntegrateSamples = 16;
+        float restirIntegrateRadius = 3.f;
+        float restirSpatialRadius = 8.f;
+        uint32_t restirMaxAge = 0; // Optional sample-age limit; disabled to preserve the static gather baseline.
+        uint32_t restirHistoryLength = 20; // Effective candidate count, including the fresh candidate.
         bool gatherDiffuse = true;
         bool gatherSpecular = true;
         bool showProbes = false;
@@ -95,6 +110,12 @@ private:
     ref<ComputePass> createWrcCompute(const char* entry);
     void traceWithWrc(RenderContext* context, const RenderData& data);
     void drawWrcCells(RenderContext* context, const ref<Texture>& color);
+    void drawProbeVisualization(RenderContext* context, const RenderData& data);
+    ref<ComputePass> mpProbeVisUpdate, mpProbeVisDraw;
+    ref<Buffer> mpProbeVisBounds, mpProbeVisBlasBuffer, mpProbeVisBlasScratch;
+    ref<Buffer> mpProbeVisInstances, mpProbeVisTlasBuffer, mpProbeVisTlasScratch;
+    ref<RtAccelerationStructure> mpProbeVisBlas, mpProbeVisTlas;
+    uint32_t mProbeVisCount = 0;
     void allocateResources(RenderContext* context);
     void clearHistory(RenderContext* context);
     void uploadConstants();
@@ -120,6 +141,17 @@ private:
     ref<ComputePass> mpBlendIrradiance, mpBlendDistance, mpRelocate, mpClassify;
     float3 mGridMin = float3(0.f), mGridMax = float3(0.f), mSpacing = float3(1.f);
     uint32_t mFrame = 0, mUpdatedFrames = 0;
+    uint2 mGatherOffset = uint2(0);
+    RayProgram mRestirInitialProgram, mRestirTemporalProgram, mRestirSpatialProgram, mRestirIntegrateProgram;
+    ref<Buffer> mpRestirInitial, mpRestirTemporal, mpRestirSpatial, mpRestirHistory;
+    ref<Buffer> mpRestirInput, mpRestirOutput;
+    uint2 mRestirDim = uint2(0), mRestirPreviousOffset = uint2(0);
+    float4x4 mRestirPreviousViewProj = float4x4::identity();
+    uint32_t mRestirSpatialPassIndex = 0;
+    bool mRestirHistoryValid = false;
+    bool restirActive() const { return mOptions.restirGather && mOptions.finalGather && mOptions.enableGI; }
+    bool mRestirResetPending = true;
+    uint64_t mRestirResetCount = 0;
     bool mSupported = true;
     bool mHasDirectLighting = false;
     bool mReallocate = true, mRebuildPrograms = true, mResetPending = true, mOptionsChanged = true;

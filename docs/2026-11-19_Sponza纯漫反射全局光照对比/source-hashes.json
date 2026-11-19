@@ -1,0 +1,13 @@
+{
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.cpp": "960e014d449c4359f553b6541ad1cc4835f999f528ba773a3ef58f53fc9a5bf9",
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.h": "53ec50d9e704f7b1c26c2cb5958fe09dfea4c257af20487d1ec6d6fc00758d7d",
+  "Source/RenderPasses/RTXGIDDGI/RTXGIDDGI.rt.slang": "41be66e39a9e2e36035961c90bc71e06f0034800b3ab9865bae13b624270a6ee",
+  "Source/RenderPasses/RTXGIDDGI/ReSTIRGather.slang": "5a93562da34ef674db385046d30aa9b34b85c7528cbf9aad4b9d9a44d5bd9db9",
+  "Source/RenderPasses/RTXGIDDGI/DDGIReconstruct.cs.slang": "de8cd9d326fab38061fbf68f2bb61a05dc9ebb80630447ad9c866eadc7257ebd",
+  "scripts/scenes/Sponza.pyscene": "fad415c42f9544d70fb6e6a897cf30a357b3959887ed8fde420a2efa11f7210a",
+  "scripts/scenes/SponzaLambert.pyscene": "b191db787e6773331b3e1f5094e1eeebc519b5356384da13d233f9d610d572f6",
+  "media/Sponza/Sponza.gltf": "646c10cbc8fab990ca29f363e90e2d65155f3a3569506852eb1434a9465b9501",
+  "scripts/DDGIAccumulated.py": "0c1963a654beca42128e8c5ce1968779b1d00c55545fe61d3f8c8280c16e086f",
+  "scripts/PTReference.py": "a99f79c1539ec2946eb2de96cc9c5e37f8ad610d151851931a3dd3d8a9899473",
+  "tests/ddgi/sponza_lambert_comparison.py": "19997c34de97d13bab89c29a053b5cd473cf9b98f57f58df66bed504af6a7a98"
+}

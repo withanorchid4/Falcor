@@ -1,0 +1,418 @@
+{
+  "frames": 262144,
+  "seed_offset": 262144,
+  "max_age": 0,
+  "rejectedRaySamples": 0,
+  "capture_count": 102,
+  "max_rgb": 12.109915733337402,
+  "captures": [
+    {
+      "file": "frame-114688.Accumulate.output.0.exr",
+      "max": 0.30937260389328003
+    },
+    {
+      "file": "frame-114688.Reconstruct.color.0.exr",
+      "max": 1.2120871543884277
+    },
+    {
+      "file": "frame-114944.Accumulate.output.0.exr",
+      "max": 0.30935972929000854
+    },
+    {
+      "file": "frame-114944.Reconstruct.color.0.exr",
+      "max": 0.5121541023254395
+    },
+    {
+      "file": "frame-115200.Accumulate.output.0.exr",
+      "max": 0.30937549471855164
+    },
+    {
+      "file": "frame-115200.Reconstruct.color.0.exr",
+      "max": 1.2306979894638062
+    },
+    {
+      "file": "frame-115456.Accumulate.output.0.exr",
+      "max": 0.3093918263912201
+    },
+    {
+      "file": "frame-115456.Reconstruct.color.0.exr",
+      "max": 1.562852144241333
+    },
+    {
+      "file": "frame-115712.Accumulate.output.0.exr",
+      "max": 0.3093889057636261
+    },
+    {
+      "file": "frame-115712.Reconstruct.color.0.exr",
+      "max": 1.0728970766067505
+    },
+    {
+      "file": "frame-115968.Accumulate.output.0.exr",
+      "max": 0.30939269065856934
+    },
+    {
+      "file": "frame-115968.Reconstruct.color.0.exr",
+      "max": 5.20833158493042
+    },
+    {
+      "file": "frame-116224.Accumulate.output.0.exr",
+      "max": 0.309394896030426
+    },
+    {
+      "file": "frame-116224.Reconstruct.color.0.exr",
+      "max": 2.9693856239318848
+    },
+    {
+      "file": "frame-116480.Accumulate.output.0.exr",
+      "max": 0.3093932867050171
+    },
+    {
+      "file": "frame-116480.Reconstruct.color.0.exr",
+      "max": 2.033097743988037
+    },
+    {
+      "file": "frame-116736.Accumulate.output.0.exr",
+      "max": 0.3093810975551605
+    },
+    {
+      "file": "frame-116736.Reconstruct.color.0.exr",
+      "max": 0.9426016807556152
+    },
+    {
+      "file": "frame-116992.Accumulate.output.0.exr",
+      "max": 0.3093813359737396
+    },
+    {
+      "file": "frame-116992.Reconstruct.color.0.exr",
+      "max": 1.497231364250183
+    },
+    {
+      "file": "frame-117248.Accumulate.output.0.exr",
+      "max": 0.3093772530555725
+    },
+    {
+      "file": "frame-117248.Reconstruct.color.0.exr",
+      "max": 6.165857791900635
+    },
+    {
+      "file": "frame-117504.Accumulate.output.0.exr",
+      "max": 0.3093772828578949
+    },
+    {
+      "file": "frame-117504.Reconstruct.color.0.exr",
+      "max": 5.704401016235352
+    },
+    {
+      "file": "frame-117760.Accumulate.output.0.exr",
+      "max": 0.3093734085559845
+    },
+    {
+      "file": "frame-117760.Reconstruct.color.0.exr",
+      "max": 1.2454595565795898
+    },
+    {
+      "file": "frame-118016.Accumulate.output.0.exr",
+      "max": 0.30937665700912476
+    },
+    {
+      "file": "frame-118016.Reconstruct.color.0.exr",
+      "max": 1.2449862957000732
+    },
+    {
+      "file": "frame-118272.Accumulate.output.0.exr",
+      "max": 0.3093763291835785
+    },
+    {
+      "file": "frame-118272.Reconstruct.color.0.exr",
+      "max": 1.034888505935669
+    },
+    {
+      "file": "frame-118528.Accumulate.output.0.exr",
+      "max": 0.3093542754650116
+    },
+    {
+      "file": "frame-118528.Reconstruct.color.0.exr",
+      "max": 1.212842345237732
+    },
+    {
+      "file": "frame-118784.Accumulate.output.0.exr",
+      "max": 0.30934831500053406
+    },
+    {
+      "file": "frame-118784.Reconstruct.color.0.exr",
+      "max": 2.9372341632843018
+    },
+    {
+      "file": "frame-119040.Accumulate.output.0.exr",
+      "max": 0.30936434864997864
+    },
+    {
+      "file": "frame-119040.Reconstruct.color.0.exr",
+      "max": 1.2270545959472656
+    },
+    {
+      "file": "frame-119296.Accumulate.output.0.exr",
+      "max": 0.3093705475330353
+    },
+    {
+      "file": "frame-119296.Reconstruct.color.0.exr",
+      "max": 1.8991278409957886
+    },
+    {
+      "file": "frame-119552.Accumulate.output.0.exr",
+      "max": 0.309356153011322
+    },
+    {
+      "file": "frame-119552.Reconstruct.color.0.exr",
+      "max": 3.7213635444641113
+    },
+    {
+      "file": "frame-119808.Accumulate.output.0.exr",
+      "max": 0.309359073638916
+    },
+    {
+      "file": "frame-119808.Reconstruct.color.0.exr",
+      "max": 1.250286340713501
+    },
+    {
+      "file": "frame-120064.Accumulate.output.0.exr",
+      "max": 0.30935871601104736
+    },
+    {
+      "file": "frame-120064.Reconstruct.color.0.exr",
+      "max": 1.0444217920303345
+    },
+    {
+      "file": "frame-120320.Accumulate.output.0.exr",
+      "max": 0.30936554074287415
+    },
+    {
+      "file": "frame-120320.Reconstruct.color.0.exr",
+      "max": 12.109915733337402
+    },
+    {
+      "file": "frame-120576.Accumulate.output.0.exr",
+      "max": 0.3093559145927429
+    },
+    {
+      "file": "frame-120576.Reconstruct.color.0.exr",
+      "max": 3.62907075881958
+    },
+    {
+      "file": "frame-120832.Accumulate.output.0.exr",
+      "max": 0.30935147404670715
+    },
+    {
+      "file": "frame-120832.Reconstruct.color.0.exr",
+      "max": 3.4594202041625977
+    },
+    {
+      "file": "frame-121088.Accumulate.output.0.exr",
+      "max": 0.3093594014644623
+    },
+    {
+      "file": "frame-121088.Reconstruct.color.0.exr",
+      "max": 1.1209461688995361
+    },
+    {
+      "file": "frame-121344.Accumulate.output.0.exr",
+      "max": 0.3093878924846649
+    },
+    {
+      "file": "frame-121344.Reconstruct.color.0.exr",
+      "max": 0.9532937407493591
+    },
+    {
+      "file": "frame-121600.Accumulate.output.0.exr",
+      "max": 0.3093847632408142
+    },
+    {
+      "file": "frame-121600.Reconstruct.color.0.exr",
+      "max": 0.9357753396034241
+    },
+    {
+      "file": "frame-121856.Accumulate.output.0.exr",
+      "max": 0.309370219707489
+    },
+    {
+      "file": "frame-121856.Reconstruct.color.0.exr",
+      "max": 2.1216447353363037
+    },
+    {
+      "file": "frame-122112.Accumulate.output.0.exr",
+      "max": 0.3093685209751129
+    },
+    {
+      "file": "frame-122112.Reconstruct.color.0.exr",
+      "max": 1.5351850986480713
+    },
+    {
+      "file": "frame-122368.Accumulate.output.0.exr",
+      "max": 0.3093617260456085
+    },
+    {
+      "file": "frame-122368.Reconstruct.color.0.exr",
+      "max": 1.2936891317367554
+    },
+    {
+      "file": "frame-122624.Accumulate.output.0.exr",
+      "max": 0.30935508012771606
+    },
+    {
+      "file": "frame-122624.Reconstruct.color.0.exr",
+      "max": 0.9056004285812378
+    },
+    {
+      "file": "frame-122880.Accumulate.output.0.exr",
+      "max": 0.3093528151512146
+    },
+    {
+      "file": "frame-122880.Reconstruct.color.0.exr",
+      "max": 1.6663930416107178
+    },
+    {
+      "file": "frame-123136.Accumulate.output.0.exr",
+      "max": 0.3093380630016327
+    },
+    {
+      "file": "frame-123136.Reconstruct.color.0.exr",
+      "max": 1.2453663349151611
+    },
+    {
+      "file": "frame-131072.Accumulate.output.0.exr",
+      "max": 0.30936962366104126
+    },
+    {
+      "file": "frame-131072.Reconstruct.color.0.exr",
+      "max": 1.2110313177108765
+    },
+    {
+      "file": "frame-139264.Accumulate.output.0.exr",
+      "max": 0.309327632188797
+    },
+    {
+      "file": "frame-139264.Reconstruct.color.0.exr",
+      "max": 5.177055835723877
+    },
+    {
+      "file": "frame-147456.Accumulate.output.0.exr",
+      "max": 0.3093077838420868
+    },
+    {
+      "file": "frame-147456.Reconstruct.color.0.exr",
+      "max": 2.31866455078125
+    },
+    {
+      "file": "frame-155648.Accumulate.output.0.exr",
+      "max": 0.3093181550502777
+    },
+    {
+      "file": "frame-155648.Reconstruct.color.0.exr",
+      "max": 3.5030810832977295
+    },
+    {
+      "file": "frame-163840.Accumulate.output.0.exr",
+      "max": 0.3092162311077118
+    },
+    {
+      "file": "frame-163840.Reconstruct.color.0.exr",
+      "max": 1.0099657773971558
+    },
+    {
+      "file": "frame-172032.Accumulate.output.0.exr",
+      "max": 0.3091730773448944
+    },
+    {
+      "file": "frame-172032.Reconstruct.color.0.exr",
+      "max": 1.2481205463409424
+    },
+    {
+      "file": "frame-180224.Accumulate.output.0.exr",
+      "max": 0.3090878129005432
+    },
+    {
+      "file": "frame-180224.Reconstruct.color.0.exr",
+      "max": 2.392979383468628
+    },
+    {
+      "file": "frame-188416.Accumulate.output.0.exr",
+      "max": 0.30915161967277527
+    },
+    {
+      "file": "frame-188416.Reconstruct.color.0.exr",
+      "max": 2.4265341758728027
+    },
+    {
+      "file": "frame-196608.Accumulate.output.0.exr",
+      "max": 0.3092431426048279
+    },
+    {
+      "file": "frame-196608.Reconstruct.color.0.exr",
+      "max": 6.596288681030273
+    },
+    {
+      "file": "frame-204800.Accumulate.output.0.exr",
+      "max": 0.30922505259513855
+    },
+    {
+      "file": "frame-204800.Reconstruct.color.0.exr",
+      "max": 6.27367639541626
+    },
+    {
+      "file": "frame-212992.Accumulate.output.0.exr",
+      "max": 0.30923086404800415
+    },
+    {
+      "file": "frame-212992.Reconstruct.color.0.exr",
+      "max": 4.249217510223389
+    },
+    {
+      "file": "frame-221184.Accumulate.output.0.exr",
+      "max": 0.30927008390426636
+    },
+    {
+      "file": "frame-221184.Reconstruct.color.0.exr",
+      "max": 1.7987332344055176
+    },
+    {
+      "file": "frame-229376.Accumulate.output.0.exr",
+      "max": 0.3092767000198364
+    },
+    {
+      "file": "frame-229376.Reconstruct.color.0.exr",
+      "max": 1.4737486839294434
+    },
+    {
+      "file": "frame-237568.Accumulate.output.0.exr",
+      "max": 0.3092559278011322
+    },
+    {
+      "file": "frame-237568.Reconstruct.color.0.exr",
+      "max": 2.441880702972412
+    },
+    {
+      "file": "frame-245760.Accumulate.output.0.exr",
+      "max": 0.30931493639945984
+    },
+    {
+      "file": "frame-245760.Reconstruct.color.0.exr",
+      "max": 1.169246792793274
+    },
+    {
+      "file": "frame-253952.Accumulate.output.0.exr",
+      "max": 0.30932825803756714
+    },
+    {
+      "file": "frame-253952.Reconstruct.color.0.exr",
+      "max": 3.8167169094085693
+    },
+    {
+      "file": "frame-262144.Accumulate.output.0.exr",
+      "max": 0.30930033326148987
+    },
+    {
+      "file": "frame-262144.Reconstruct.color.0.exr",
+      "max": 2.319631576538086
+    }
+  ]
+}

@@ -38,6 +38,8 @@ if (-not $PSBoundParameters.ContainsKey('Scene')) {
     [void]$sceneBox.Items.Add('CornellLambert')
     [void]$sceneBox.Items.Add('Arcade')
     [void]$sceneBox.Items.Add('Bistro')
+    [void]$sceneBox.Items.Add('Sponza')
+    [void]$sceneBox.Items.Add('SponzaLambert')
     $sceneBox.SelectedItem = 'Bistro'
     $sceneBox.Location = New-Object System.Drawing.Point(110, 20)
     $sceneBox.Size = New-Object System.Drawing.Size(240, 28)
@@ -88,7 +90,7 @@ if (-not $PSBoundParameters.ContainsKey('Scene')) {
     $Renderer = [string]$rendererBox.SelectedItem
 }
 
-$availableScenes = @('Room', 'Cornell', 'CornellLambert', 'Arcade', 'Bistro')
+$availableScenes = @('Room', 'Cornell', 'CornellLambert', 'Arcade', 'Bistro', 'Sponza', 'SponzaLambert')
 if ($Scene -notin $availableScenes) {
     throw "Unknown scene '$Scene'. Available scenes: $($availableScenes -join ', ')."
 }
@@ -134,6 +136,8 @@ $scenes = @{
     CornellLambert = 'F:\scripts\scenes\CornellLambert.pyscene'
     Arcade = 'F:\media\Arcade\Arcade.pyscene'
     Bistro = 'F:\media\ORCA_Bistro\Bistro_v5_2\BistroExterior.pyscene'
+    Sponza = 'F:\scripts\scenes\Sponza.pyscene'
+    SponzaLambert = 'F:\scripts\scenes\SponzaLambert.pyscene'
 }
 $env:FALCOR_MEDIA_FOLDERS = 'F:\media'
 $env:FALCOR_SCENE_FOLDER = 'F:\media'

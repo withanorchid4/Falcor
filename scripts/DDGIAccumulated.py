@@ -6,8 +6,9 @@ def render_graph_DDGIAccumulated(mode='full', interactive=False):
     g=RenderGraph('DDGIAccumulated_'+mode)
     g.addPass(createPass('GBufferRT',{'samplePattern':'Center','useAlphaTest':True,'useDOF':False}),'Visibility')
     g.addPass(createPass('RTXGIDDGI',{'finalGather':mode!='ddgi',
-        'halfResolutionGather':mode=='half' or (interactive and mode=='ddgi'),'useRTXDI':False}),'DDGI')
-    for c in ['vbuffer','viewW']:g.addEdge('Visibility.'+c,'DDGI.'+c)
+        'halfResolutionGather':mode=='half' or (interactive and mode=='ddgi'),
+        'restirGather':False,'useRTXDI':False}),'DDGI')
+    for c in ['vbuffer','viewW','mvec']:g.addEdge('Visibility.'+c,'DDGI.'+c)
     output='DDGI.color'
     if mode=='half' or interactive:
         g.addPass(createPass('DDGIReconstruct',{}),'Reconstruct')

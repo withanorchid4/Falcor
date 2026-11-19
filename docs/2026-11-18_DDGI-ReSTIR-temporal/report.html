@@ -1,0 +1,16 @@
+<!doctype html><html lang="zh"><meta charset="utf-8"><title>DDGI Final Gather 时间 reservoir 初版</title>
+<style>body{background:#171a1f;color:#ddd;font:17px/1.7 system-ui;margin:32px auto;max-width:1600px;padding:0 20px}img{width:100%}a{color:#8bd}table{border-collapse:collapse}td,th{border:1px solid #555;padding:8px}code{color:#bdf}</style>
+<h1>DDGI Final Gather：可选时间 reservoir 实验</h1>
+<p>入口：DDGI → Final gather → Enabled → ReSTIR temporal (experimental)。默认关闭；Reservoir candidates 默认 8，范围 1–32。Accumulate 默认仍开，可独立关闭。直接光、镜面 FG、probe 更新和半分辨率重建沿用原实现；不启用 NRD。</p>
+<p><strong>范围：</strong>这是时间重采样的第一步，不是完整 Lumen ReSTIR Gather 或 DDGI Resampling 论文复现。没有邻域空间复用、运动重投影。相机或场景变化会清空 reservoir。固定屏幕像素各自保存历史；半分辨率 jitter 的四种实际像素位置使用各自的历史。</p>
+<p><strong>本次结果：</strong>未累积单帧 MSE（16 帧均值）降低约 71%，GPU 整图从 1.135 ms 增至 1.472 ms。加上 Accumulate 后，32 帧 MSE 约为原方案的 3.02 倍，16384 帧仍高约 4.1%。因此这版减少了单帧噪声，但没有改善累计效率，不建议替换当前默认 FG＋Accumulate。整体平均亮度基本一致；仍须区分有限样本残余误差与系统偏差。</p>
+<h2>实现与 pass 组织</h2><p>Visibility → DDGI（ProbeUpdate → 全分辨率 PrimaryShading → 半分辨率 HalfGather）→ Reconstruct → Accumulate → Display。时间 reservoir 位于 HalfGather 的漫反射路径中；全分辨率时位于 PrimaryShading 内。没有增加独立空间滤波 pass。</p>
+<p>每个实际像素保存 selectedSeed、M、W、lastFrame（16 字节，1080p 约 31.6 MiB；关闭不分配）。每次采样产生 1 条新 FG 路径，并重放最多 1 条历史路径的完整随机数序列，包括次级光源采样；重新求交和着色，避免直接使用过期光照。当前半分辨率最多追踪 2×960×540 条漫反射 FG 路径；还可能有着色中的阴影射线。因此本版主要验证采样正确性，并不承诺加速。</p>
+<p>已有 FG 返回 C=f·cosθ·Li/pdf，令 t=max(luminance(C),10⁻⁶)。新样本权重 t，旧 reservoir 权重 t_old·W_old·min(M_old,M_max−1)。按权重随机选择一条路径，更新 W=Σw/(M·t_selected)，输出 C_selected·W。它在原始随机样本空间中重采样，不能再次乘 cosθ/pdf。完整随机流重放维持次级随机光照与被选择样本的一致性。M 限制的是有效候选数，不是每帧射线数。</p>
+<h2>1080p Lambert Cornell 验证</h2><p>与原先报告相同场景、点光源和显示变换（+3EV/ACES/sRGB）；预热 2560 帧，固定左上采样，jitter 关闭。先旁路 Accumulate 采集 16 帧，再分别累积 16384 帧；PT 复用同场景 65536 spp 未降噪参考。原始 FG 收敛参考为此前的 65536 帧。这里的 reservoir 已预热；短时累积图不代表从空历史启动。16384 帧仅用于初版验证，不等同于之前完整 65536 帧收敛实验。</p>
+<table><tr><th>方案</th><th>16384 帧 MSE</th><th>HDR-FLIP</th><th>未累积单帧 MSE（16 帧均值）</th><th>全图 GPU ms</th><th>HalfGather ms</th></tr><tr><td>Original half FG</td><td>9.728884e-07</td><td>0.046654</td><td>0.0001892706</td><td>1.135</td><td>0.277</td></tr><tr><td>Temporal reservoir / M=8</td><td>1.012432e-06</td><td>0.047319</td><td>5.480316e-05</td><td>1.472</td><td>0.609</td></tr></table>
+<p>长期平均亮度比（时间 reservoir / 原 FG）：1.000000。指标与有限样本误差见 <a href="summary.json">原始结果</a>。单帧方差降低不代表同等时间累计误差一定降低：时间复用使帧间相关，而且本版每次会重追历史路径。</p>
+<h2>Accumulate 关闭：单帧</h2><a href="raw-comparison.png"><img src="raw-comparison.png"></a>
+<h2>Accumulate 32 帧</h2><a href="32-comparison.png"><img src="32-comparison.png"></a>
+<h2>Accumulate 16384 帧与 PT</h2><a href="comparison.png"><img src="comparison.png"></a>
+<p>运行验证：481×271 奇数尺寸、jitter 四相位、全/半分辨率、开关 ReSTIR/FG、镜头移动与累积重置均通过；M=1 与关闭重采样的最大绝对差 4.47e-08（浮点舍入量级）。编译及实际 D3D12 shader 执行通过。当前实验只验证 Lambert Cornell；其他材质与动态场景尚未做画质评估。</p></html>

@@ -1,0 +1,1716 @@
+{
+  "capture": {
+    "resolution": [
+      1920,
+      1080
+    ],
+    "probe_warmup": 8192,
+    "probe_frozen": true,
+    "full_resolution_integration": false,
+    "checkpoints": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64,
+      128,
+      256,
+      512,
+      1024,
+      2048,
+      4096
+    ],
+    "trials": 3,
+    "seed_offsets": [
+      0,
+      4096,
+      8192
+    ],
+    "jitter": true,
+    "runs": {
+      "fg-0": {
+        "warm_stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Updating probes with original per-ray shading.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": false,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "final_stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 8192,
+        "accumulate_reset_before_first_frame": true
+      },
+      "restir-0": {
+        "warm_stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Updating probes with original per-ray shading.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": false,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "final_stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": true,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 165888000,
+          "restirResetCount": 1,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 8192,
+        "accumulate_reset_before_first_frame": true
+      },
+      "fg-1": {
+        "warm_stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Updating probes with original per-ray shading.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": false,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "final_stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 12288,
+        "accumulate_reset_before_first_frame": true
+      },
+      "restir-1": {
+        "warm_stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Updating probes with original per-ray shading.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": false,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "final_stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": true,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 165888000,
+          "restirResetCount": 1,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 12288,
+        "accumulate_reset_before_first_frame": true
+      },
+      "fg-2": {
+        "warm_stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Updating probes with original per-ray shading.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": false,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "final_stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 16384,
+        "accumulate_reset_before_first_frame": true
+      },
+      "restir-2": {
+        "warm_stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Updating probes with original per-ray shading.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": false,
+          "restirGather": false,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 0,
+          "restirResetCount": 0,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "final_stats": {
+          "updatedFrames": 8192,
+          "totalProbes": 729,
+          "status": "Probe updates frozen; camera and direct light remain live.",
+          "supported": true,
+          "usingRTXDI": false,
+          "finalGather": true,
+          "restirGather": true,
+          "restirHistoryLength": 20,
+          "restirFullResolution": false,
+          "restirSpatialPasses": 2,
+          "restirIntegrateSamples": 16,
+          "restirAllocatedBytes": 165888000,
+          "restirResetCount": 1,
+          "gridMin": [
+            -1.2000000476837158,
+            -0.20000000298023224,
+            -1.2000000476837158
+          ],
+          "gridMax": [
+            1.2000000476837158,
+            2.200000047683716,
+            1.2000000476837158
+          ],
+          "wrcEnabled": false,
+          "wrcGroupByMaterial": true,
+          "wrcStressMode": 0,
+          "wrcStressIterations": 0,
+          "showWrcCells": false,
+          "wrcCellsLod": 0,
+          "wrcCellSize": 0.030000001192092896,
+          "wrcTableSize": 65536,
+          "wrcLodDistance": 2.4000000953674316,
+          "wrcProbeLimit": 16,
+          "wrcInvalidations": 0,
+          "wrcAllocatedBytes": 0,
+          "wrcValidRays": 0,
+          "wrcOccupiedEntries": 0,
+          "wrcShadedEntries": 0,
+          "wrcServedRays": 0,
+          "wrcFallbackRays": 0,
+          "wrcTemporalReusedEntries": 0,
+          "wrcNonFiniteResults": 0,
+          "wrcShadeEvaluations": 0,
+          "wrcProbeSteps": 0,
+          "wrcProbeLimitFailures": 0,
+          "wrcMaxLod": 0,
+          "wrcLodRays": 0,
+          "wrcCrossPrimitiveServedRays": 0,
+          "wrcWaveTypeSum": 0,
+          "wrcWaveCount": 0,
+          "wrcStressChecksum": 0,
+          "wrcStressEntries": 0,
+          "wrcActiveEntries": 0,
+          "wrcShaderGroups": 0,
+          "wrcMaterialTypes": 0,
+          "wrcDispatches": 0,
+          "wrcScheduledThreads": 0,
+          "rejectedMaterialSamples": 0,
+          "rejectedDirectSamples": 0,
+          "rejectedHistorySamples": 0,
+          "rejectedRaySamples": 0,
+          "activeProbes": 280,
+          "relocatedProbes": 16,
+          "finite": true,
+          "nonFiniteTexels": 0,
+          "irradianceMax": 0.6744638085365295
+        },
+        "first_frame_index": 16384,
+        "accumulate_reset_before_first_frame": true
+      }
+    },
+    "started": 1794998256.9425297,
+    "stage": "complete",
+    "elapsed": 183.39112901687622
+  },
+  "validation": {
+    "probe_pair_max_abs": 0.0,
+    "probe_4096_to_8192_relative_rms": 0.003150287142795739,
+    "trial_0": {
+      "first_temporal_M": 1,
+      "new_surface_rays_first_frame": 189225
+    },
+    "trial_1": {
+      "first_temporal_M": 1,
+      "new_surface_rays_first_frame": 189225
+    },
+    "trial_2": {
+      "first_temporal_M": 1,
+      "new_surface_rays_first_frame": 189225
+    }
+  },
+  "surface_ray_counts_by_phase": [
+    189225,
+    189225,
+    189225,
+    189225,
+    188790,
+    188790,
+    188790,
+    188790
+  ],
+  "new_fg_ray_budgets": {
+    "1": 189225,
+    "2": 378450,
+    "4": 756900,
+    "8": 1512060,
+    "16": 3024120,
+    "32": 6048240,
+    "64": 12096480,
+    "128": 24192960,
+    "256": 48385920,
+    "512": 96771840,
+    "1024": 193543680,
+    "2048": 387087360,
+    "4096": 774174720
+  },
+  "flip_parameters": {
+    "ppd": 67.0,
+    "startExposure": 2.8239238262176514,
+    "stopExposure": 24.083297729492188,
+    "numExposures": 22,
+    "tonemapper": "ACES"
+  },
+  "metrics": {
+    "fg": {
+      "trials": [
+        {
+          "checkpoints": {
+            "1": {
+              "mse": 0.0001872971819302442,
+              "hdr_flip": 0.28343409299850464
+            },
+            "2": {
+              "mse": 9.48399764669704e-05
+            },
+            "4": {
+              "mse": 4.79535242491145e-05,
+              "hdr_flip": 0.1782533824443817
+            },
+            "8": {
+              "mse": 2.419398136859948e-05
+            },
+            "16": {
+              "mse": 1.2553729356767063e-05,
+              "hdr_flip": 0.11204249411821365
+            },
+            "32": {
+              "mse": 6.8151599304444455e-06
+            },
+            "64": {
+              "mse": 3.907258098981385e-06,
+              "hdr_flip": 0.07522069662809372
+            },
+            "128": {
+              "mse": 2.451736498774734e-06
+            },
+            "256": {
+              "mse": 1.7284203771271288e-06,
+              "hdr_flip": 0.057784900069236755
+            },
+            "512": {
+              "mse": 1.3596129114546394e-06
+            },
+            "1024": {
+              "mse": 1.1694649724911777e-06,
+              "hdr_flip": 0.05065326765179634
+            },
+            "2048": {
+              "mse": 1.07806500297155e-06
+            },
+            "4096": {
+              "mse": 1.0324564518560671e-06,
+              "hdr_flip": 0.04802300035953522
+            }
+          },
+          "gpu_ms": 0.9369248747825623
+        },
+        {
+          "checkpoints": {
+            "1": {
+              "mse": 0.00018782275221664689,
+              "hdr_flip": 0.2837772071361542
+            },
+            "2": {
+              "mse": 9.46863064961158e-05
+            },
+            "4": {
+              "mse": 4.7698316545117995e-05,
+              "hdr_flip": 0.1789749562740326
+            },
+            "8": {
+              "mse": 2.4337397715999685e-05
+            },
+            "16": {
+              "mse": 1.2771833554462752e-05,
+              "hdr_flip": 0.11253345757722855
+            },
+            "32": {
+              "mse": 6.845787224139776e-06
+            },
+            "64": {
+              "mse": 3.91640409769242e-06,
+              "hdr_flip": 0.07562190294265747
+            },
+            "128": {
+              "mse": 2.45348338700434e-06
+            },
+            "256": {
+              "mse": 1.7211754317199198e-06,
+              "hdr_flip": 0.05776477977633476
+            },
+            "512": {
+              "mse": 1.3534490499454215e-06
+            },
+            "1024": {
+              "mse": 1.1693475075251577e-06,
+              "hdr_flip": 0.050520457327365875
+            },
+            "2048": {
+              "mse": 1.0778811213877248e-06
+            },
+            "4096": {
+              "mse": 1.0321519674092126e-06,
+              "hdr_flip": 0.047959815710783005
+            }
+          },
+          "gpu_ms": 0.9370513558387756
+        },
+        {
+          "checkpoints": {
+            "1": {
+              "mse": 0.00018681085531794444,
+              "hdr_flip": 0.28448066115379333
+            },
+            "2": {
+              "mse": 9.40350264042481e-05
+            },
+            "4": {
+              "mse": 4.7272859333619275e-05,
+              "hdr_flip": 0.1792292445898056
+            },
+            "8": {
+              "mse": 2.4274384373857397e-05
+            },
+            "16": {
+              "mse": 1.273972936243368e-05,
+              "hdr_flip": 0.11249998956918716
+            },
+            "32": {
+              "mse": 6.896629239631867e-06
+            },
+            "64": {
+              "mse": 3.932131007151968e-06,
+              "hdr_flip": 0.07550323754549026
+            },
+            "128": {
+              "mse": 2.449624775059373e-06
+            },
+            "256": {
+              "mse": 1.7208028391039743e-06,
+              "hdr_flip": 0.0579797700047493
+            },
+            "512": {
+              "mse": 1.3504374445369027e-06
+            },
+            "1024": {
+              "mse": 1.1660170115695756e-06,
+              "hdr_flip": 0.0507192499935627
+            },
+            "2048": {
+              "mse": 1.0779007334063834e-06
+            },
+            "4096": {
+              "mse": 1.031446838081845e-06,
+              "hdr_flip": 0.048057496547698975
+            }
+          },
+          "gpu_ms": 0.9374087452888489
+        }
+      ],
+      "aggregate": {
+        "1": {
+          "mse": {
+            "mean": 0.00018731026315494518,
+            "min": 0.00018681085531794444,
+            "max": 0.00018782275221664689,
+            "runs": [
+              0.0001872971819302442,
+              0.00018782275221664689,
+              0.00018681085531794444
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.28389732042948407,
+            "min": 0.28343409299850464,
+            "max": 0.28448066115379333,
+            "runs": [
+              0.28343409299850464,
+              0.2837772071361542,
+              0.28448066115379333
+            ]
+          }
+        },
+        "2": {
+          "mse": {
+            "mean": 9.45204364557781e-05,
+            "min": 9.40350264042481e-05,
+            "max": 9.48399764669704e-05,
+            "runs": [
+              9.48399764669704e-05,
+              9.46863064961158e-05,
+              9.40350264042481e-05
+            ]
+          }
+        },
+        "4": {
+          "mse": {
+            "mean": 4.7641566709283925e-05,
+            "min": 4.7272859333619275e-05,
+            "max": 4.79535242491145e-05,
+            "runs": [
+              4.79535242491145e-05,
+              4.7698316545117995e-05,
+              4.7272859333619275e-05
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.1788191944360733,
+            "min": 0.1782533824443817,
+            "max": 0.1792292445898056,
+            "runs": [
+              0.1782533824443817,
+              0.1789749562740326,
+              0.1792292445898056
+            ]
+          }
+        },
+        "8": {
+          "mse": {
+            "mean": 2.426858781948552e-05,
+            "min": 2.419398136859948e-05,
+            "max": 2.4337397715999685e-05,
+            "runs": [
+              2.419398136859948e-05,
+              2.4337397715999685e-05,
+              2.4274384373857397e-05
+            ]
+          }
+        },
+        "16": {
+          "mse": {
+            "mean": 1.2688430757887831e-05,
+            "min": 1.2553729356767063e-05,
+            "max": 1.2771833554462752e-05,
+            "runs": [
+              1.2553729356767063e-05,
+              1.2771833554462752e-05,
+              1.273972936243368e-05
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.11235864708820979,
+            "min": 0.11204249411821365,
+            "max": 0.11253345757722855,
+            "runs": [
+              0.11204249411821365,
+              0.11253345757722855,
+              0.11249998956918716
+            ]
+          }
+        },
+        "32": {
+          "mse": {
+            "mean": 6.852525464738696e-06,
+            "min": 6.8151599304444455e-06,
+            "max": 6.896629239631867e-06,
+            "runs": [
+              6.8151599304444455e-06,
+              6.845787224139776e-06,
+              6.896629239631867e-06
+            ]
+          }
+        },
+        "64": {
+          "mse": {
+            "mean": 3.918597734608591e-06,
+            "min": 3.907258098981385e-06,
+            "max": 3.932131007151968e-06,
+            "runs": [
+              3.907258098981385e-06,
+              3.91640409769242e-06,
+              3.932131007151968e-06
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.07544861237208049,
+            "min": 0.07522069662809372,
+            "max": 0.07562190294265747,
+            "runs": [
+              0.07522069662809372,
+              0.07562190294265747,
+              0.07550323754549026
+            ]
+          }
+        },
+        "128": {
+          "mse": {
+            "mean": 2.4516148869461493e-06,
+            "min": 2.449624775059373e-06,
+            "max": 2.45348338700434e-06,
+            "runs": [
+              2.451736498774734e-06,
+              2.45348338700434e-06,
+              2.449624775059373e-06
+            ]
+          }
+        },
+        "256": {
+          "mse": {
+            "mean": 1.7234662159836742e-06,
+            "min": 1.7208028391039743e-06,
+            "max": 1.7284203771271288e-06,
+            "runs": [
+              1.7284203771271288e-06,
+              1.7211754317199198e-06,
+              1.7208028391039743e-06
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.05784314995010694,
+            "min": 0.05776477977633476,
+            "max": 0.0579797700047493,
+            "runs": [
+              0.057784900069236755,
+              0.05776477977633476,
+              0.0579797700047493
+            ]
+          }
+        },
+        "512": {
+          "mse": {
+            "mean": 1.354499801978988e-06,
+            "min": 1.3504374445369027e-06,
+            "max": 1.3596129114546394e-06,
+            "runs": [
+              1.3596129114546394e-06,
+              1.3534490499454215e-06,
+              1.3504374445369027e-06
+            ]
+          }
+        },
+        "1024": {
+          "mse": {
+            "mean": 1.1682764971953036e-06,
+            "min": 1.1660170115695756e-06,
+            "max": 1.1694649724911777e-06,
+            "runs": [
+              1.1694649724911777e-06,
+              1.1693475075251577e-06,
+              1.1660170115695756e-06
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.050630991657574974,
+            "min": 0.050520457327365875,
+            "max": 0.0507192499935627,
+            "runs": [
+              0.05065326765179634,
+              0.050520457327365875,
+              0.0507192499935627
+            ]
+          }
+        },
+        "2048": {
+          "mse": {
+            "mean": 1.0779489525885528e-06,
+            "min": 1.0778811213877248e-06,
+            "max": 1.07806500297155e-06,
+            "runs": [
+              1.07806500297155e-06,
+              1.0778811213877248e-06,
+              1.0779007334063834e-06
+            ]
+          }
+        },
+        "4096": {
+          "mse": {
+            "mean": 1.0320184191157083e-06,
+            "min": 1.031446838081845e-06,
+            "max": 1.0324564518560671e-06,
+            "runs": [
+              1.0324564518560671e-06,
+              1.0321519674092126e-06,
+              1.031446838081845e-06
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.048013437539339066,
+            "min": 0.047959815710783005,
+            "max": 0.048057496547698975,
+            "runs": [
+              0.04802300035953522,
+              0.047959815710783005,
+              0.048057496547698975
+            ]
+          }
+        }
+      },
+      "gpu_ms_mean": 0.9371283253033956
+    },
+    "restir": {
+      "trials": [
+        {
+          "checkpoints": {
+            "1": {
+              "mse": 0.0001618737617603234,
+              "hdr_flip": 0.23064711689949036
+            },
+            "2": {
+              "mse": 8.159554905739264e-05
+            },
+            "4": {
+              "mse": 4.304447260024101e-05,
+              "hdr_flip": 0.1452808529138565
+            },
+            "8": {
+              "mse": 2.3999259568529697e-05
+            },
+            "16": {
+              "mse": 1.4712537508006951e-05,
+              "hdr_flip": 0.10058940947055817
+            },
+            "32": {
+              "mse": 1.14565585839777e-05
+            },
+            "64": {
+              "mse": 8.436246790340691e-06,
+              "hdr_flip": 0.0836796909570694
+            },
+            "128": {
+              "mse": 6.483756149440853e-06
+            },
+            "256": {
+              "mse": 4.9804724382992815e-06,
+              "hdr_flip": 0.07014703005552292
+            },
+            "512": {
+              "mse": 4.544015055379263e-06
+            },
+            "1024": {
+              "mse": 3.887595194257321e-06,
+              "hdr_flip": 0.06219949945807457
+            },
+            "2048": {
+              "mse": 3.5800826103004905e-06
+            },
+            "4096": {
+              "mse": 3.3951200501504208e-06,
+              "hdr_flip": 0.059013839811086655
+            }
+          },
+          "gpu_ms": 1.6243380308151245
+        },
+        {
+          "checkpoints": {
+            "1": {
+              "mse": 0.00016593613328192878,
+              "hdr_flip": 0.23034271597862244
+            },
+            "2": {
+              "mse": 8.263130278000669e-05
+            },
+            "4": {
+              "mse": 4.224773799423547e-05,
+              "hdr_flip": 0.1452713906764984
+            },
+            "8": {
+              "mse": 2.3074093058860385e-05
+            },
+            "16": {
+              "mse": 1.395823181306522e-05,
+              "hdr_flip": 0.1001838967204094
+            },
+            "32": {
+              "mse": 1.083838904413221e-05
+            },
+            "64": {
+              "mse": 1.7401689656800175e-05,
+              "hdr_flip": 0.08383923768997192
+            },
+            "128": {
+              "mse": 8.45880872500429e-06
+            },
+            "256": {
+              "mse": 5.358434222626871e-06,
+              "hdr_flip": 0.06988733261823654
+            },
+            "512": {
+              "mse": 4.320457485167973e-06
+            },
+            "1024": {
+              "mse": 3.7558851707923694e-06,
+              "hdr_flip": 0.062002819031476974
+            },
+            "2048": {
+              "mse": 3.5204745721747176e-06
+            },
+            "4096": {
+              "mse": 3.3703292545041305e-06,
+              "hdr_flip": 0.05876440554857254
+            }
+          },
+          "gpu_ms": 1.619827389717102
+        },
+        {
+          "checkpoints": {
+            "1": {
+              "mse": 0.00016188767519232327,
+              "hdr_flip": 0.23047684133052826
+            },
+            "2": {
+              "mse": 8.229568173839616e-05
+            },
+            "4": {
+              "mse": 4.268039004364827e-05,
+              "hdr_flip": 0.1447685807943344
+            },
+            "8": {
+              "mse": 2.332589538377737e-05
+            },
+            "16": {
+              "mse": 1.4415098961029136e-05,
+              "hdr_flip": 0.0999637320637703
+            },
+            "32": {
+              "mse": 1.0437526203038338e-05
+            },
+            "64": {
+              "mse": 8.324710612507187e-06,
+              "hdr_flip": 0.0836201086640358
+            },
+            "128": {
+              "mse": 6.563118489057566e-06
+            },
+            "256": {
+              "mse": 5.266713953606726e-06,
+              "hdr_flip": 0.06953482329845428
+            },
+            "512": {
+              "mse": 4.38367091761352e-06
+            },
+            "1024": {
+              "mse": 3.8892986375974e-06,
+              "hdr_flip": 0.061392493546009064
+            },
+            "2048": {
+              "mse": 3.539064950284034e-06
+            },
+            "4096": {
+              "mse": 3.3921109740644337e-06,
+              "hdr_flip": 0.05867940932512283
+            }
+          },
+          "gpu_ms": 1.6180294752120972
+        }
+      ],
+      "aggregate": {
+        "1": {
+          "mse": {
+            "mean": 0.00016323252341152517,
+            "min": 0.0001618737617603234,
+            "max": 0.00016593613328192878,
+            "runs": [
+              0.0001618737617603234,
+              0.00016593613328192878,
+              0.00016188767519232327
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.23048889140288034,
+            "min": 0.23034271597862244,
+            "max": 0.23064711689949036,
+            "runs": [
+              0.23064711689949036,
+              0.23034271597862244,
+              0.23047684133052826
+            ]
+          }
+        },
+        "2": {
+          "mse": {
+            "mean": 8.217417785859851e-05,
+            "min": 8.159554905739264e-05,
+            "max": 8.263130278000669e-05,
+            "runs": [
+              8.159554905739264e-05,
+              8.263130278000669e-05,
+              8.229568173839616e-05
+            ]
+          }
+        },
+        "4": {
+          "mse": {
+            "mean": 4.2657533546041585e-05,
+            "min": 4.224773799423547e-05,
+            "max": 4.304447260024101e-05,
+            "runs": [
+              4.304447260024101e-05,
+              4.224773799423547e-05,
+              4.268039004364827e-05
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.1451069414615631,
+            "min": 0.1447685807943344,
+            "max": 0.1452808529138565,
+            "runs": [
+              0.1452808529138565,
+              0.1452713906764984,
+              0.1447685807943344
+            ]
+          }
+        },
+        "8": {
+          "mse": {
+            "mean": 2.3466416003722486e-05,
+            "min": 2.3074093058860385e-05,
+            "max": 2.3999259568529697e-05,
+            "runs": [
+              2.3999259568529697e-05,
+              2.3074093058860385e-05,
+              2.332589538377737e-05
+            ]
+          }
+        },
+        "16": {
+          "mse": {
+            "mean": 1.436195609403377e-05,
+            "min": 1.395823181306522e-05,
+            "max": 1.4712537508006951e-05,
+            "runs": [
+              1.4712537508006951e-05,
+              1.395823181306522e-05,
+              1.4415098961029136e-05
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.10024567941824596,
+            "min": 0.0999637320637703,
+            "max": 0.10058940947055817,
+            "runs": [
+              0.10058940947055817,
+              0.1001838967204094,
+              0.0999637320637703
+            ]
+          }
+        },
+        "32": {
+          "mse": {
+            "mean": 1.0910824610382751e-05,
+            "min": 1.0437526203038338e-05,
+            "max": 1.14565585839777e-05,
+            "runs": [
+              1.14565585839777e-05,
+              1.083838904413221e-05,
+              1.0437526203038338e-05
+            ]
+          }
+        },
+        "64": {
+          "mse": {
+            "mean": 1.1387549019882684e-05,
+            "min": 8.324710612507187e-06,
+            "max": 1.7401689656800175e-05,
+            "runs": [
+              8.436246790340691e-06,
+              1.7401689656800175e-05,
+              8.324710612507187e-06
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.08371301243702571,
+            "min": 0.0836201086640358,
+            "max": 0.08383923768997192,
+            "runs": [
+              0.0836796909570694,
+              0.08383923768997192,
+              0.0836201086640358
+            ]
+          }
+        },
+        "128": {
+          "mse": {
+            "mean": 7.1685611211675695e-06,
+            "min": 6.483756149440853e-06,
+            "max": 8.45880872500429e-06,
+            "runs": [
+              6.483756149440853e-06,
+              8.45880872500429e-06,
+              6.563118489057566e-06
+            ]
+          }
+        },
+        "256": {
+          "mse": {
+            "mean": 5.201873538177627e-06,
+            "min": 4.9804724382992815e-06,
+            "max": 5.358434222626871e-06,
+            "runs": [
+              4.9804724382992815e-06,
+              5.358434222626871e-06,
+              5.266713953606726e-06
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.06985639532407124,
+            "min": 0.06953482329845428,
+            "max": 0.07014703005552292,
+            "runs": [
+              0.07014703005552292,
+              0.06988733261823654,
+              0.06953482329845428
+            ]
+          }
+        },
+        "512": {
+          "mse": {
+            "mean": 4.416047819386918e-06,
+            "min": 4.320457485167973e-06,
+            "max": 4.544015055379263e-06,
+            "runs": [
+              4.544015055379263e-06,
+              4.320457485167973e-06,
+              4.38367091761352e-06
+            ]
+          }
+        },
+        "1024": {
+          "mse": {
+            "mean": 3.84425966754903e-06,
+            "min": 3.7558851707923694e-06,
+            "max": 3.8892986375974e-06,
+            "runs": [
+              3.887595194257321e-06,
+              3.7558851707923694e-06,
+              3.8892986375974e-06
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.06186493734518687,
+            "min": 0.061392493546009064,
+            "max": 0.06219949945807457,
+            "runs": [
+              0.06219949945807457,
+              0.062002819031476974,
+              0.061392493546009064
+            ]
+          }
+        },
+        "2048": {
+          "mse": {
+            "mean": 3.5465407109197473e-06,
+            "min": 3.5204745721747176e-06,
+            "max": 3.5800826103004905e-06,
+            "runs": [
+              3.5800826103004905e-06,
+              3.5204745721747176e-06,
+              3.539064950284034e-06
+            ]
+          }
+        },
+        "4096": {
+          "mse": {
+            "mean": 3.3858534262396615e-06,
+            "min": 3.3703292545041305e-06,
+            "max": 3.3951200501504208e-06,
+            "runs": [
+              3.3951200501504208e-06,
+              3.3703292545041305e-06,
+              3.3921109740644337e-06
+            ]
+          },
+          "hdr_flip": {
+            "mean": 0.058819218228260674,
+            "min": 0.05867940932512283,
+            "max": 0.059013839811086655,
+            "runs": [
+              0.059013839811086655,
+              0.05876440554857254,
+              0.05867940932512283
+            ]
+          }
+        }
+      },
+      "gpu_ms_mean": 1.6207316319147747
+    }
+  },
+  "notes": "Shadow/visibility rays are extra cost, excluded from the matched fresh-FG-sample budget. No averaging of images across trials.",
+  "mse_ratio_restir_over_fg": {
+    "1": 0.8714553098272964,
+    "2": 0.869380008597867,
+    "4": 0.8953847762048702,
+    "8": 0.96694608595565,
+    "16": 1.1318937990110072,
+    "32": 1.5922340845761174,
+    "64": 2.906026540899873,
+    "128": 2.9240159860903265,
+    "256": 3.018262551325173,
+    "512": 3.2602794130607218,
+    "1024": 3.2905392488661658,
+    "2048": 3.2900822459200834,
+    "4096": 3.280807167318634
+  }
+}

@@ -1,0 +1,28 @@
+"""Classic Khronos/Crytek Sponza, shared by the existing PT and DDGI graphs."""
+from pathlib import Path
+from falcor import Camera, DirectionalLight, PointLight, float3
+
+asset = Path(__file__).resolve().parents[2] / "media/Sponza/Sponza.gltf"
+sceneBuilder.importScene(str(asset))
+
+light = PointLight("Atrium Point")
+light.position = float3(0.0, 4.0, 0.0)
+light.intensity = float3(600.0)
+sceneBuilder.addLight(light)
+
+# Optional sunlight through the open atrium. Toggle Active in Scene Settings.
+sun = DirectionalLight("Atrium Sun")
+sun.direction = float3(0.3, -1.0, 0.2)
+sun.intensity = float3(1.0)
+sun.active = False
+sun.animated = False
+sceneBuilder.addLight(sun)
+
+camera = Camera("Sponza Camera")
+camera.position = float3(-9.0, 1.6, 0.0)
+camera.target = float3(8.0, 2.5, 0.0)
+camera.up = float3(0.0, 1.0, 0.0)
+camera.frameHeight = 24.0
+camera.focalLength = 18.0
+sceneBuilder.addCamera(camera)
+sceneBuilder.selectedCamera = camera

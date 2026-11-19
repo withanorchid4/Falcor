@@ -1,5 +1,11 @@
 # 本地运行
 
+## Sponza
+
+启动器的 Scene 列表可选 `Sponza`；也可运行 `Run-Falcor.cmd -Scene Sponza -Renderer DDGI`，或将 Renderer 改为 `PathTracer`。继续使用现有 Active Graph 和 Final gather 控件。
+
+场景配置位于 `scripts/scenes/Sponza.pyscene`，采用一个中庭点光源；模型及纹理位于 `media/Sponza`（约 50 MiB），来自 Khronos glTF-Sample-Assets 的经典 Crytek Sponza。该资源目录保存了来源版本和原始许可说明。统一入口为此场景设置自动包围盒、24×12×16 DDGI 探针，并统一 PT/DDGI 曝光；未添加新渲染插件。
+
 统一入口为 `Run-Falcor.cmd`：默认使用 D3D12，在一个窗口内加载 PathTracer、PathTracerNRD、TraditionalProbeGI 和 RTXGIDDGI。通过左侧 **Graphs → Active Graph** 下拉框切换算法，不需要换启动文件。
 
 | Active Graph | 默认 Output | 用途 |
@@ -39,6 +45,15 @@
 每条命令会新开一个窗口，通常一次运行一个即可。场景首次加载需要编译着色器。保持相机静止时，路径追踪结果会通过逐帧累积变得更清晰；相机移动后会重新累积。
 
 在默认第一人称相机模式下，W/A/S/D 移动，Q/E 升降，按住鼠标左键拖动调整视角，Shift 加速，Ctrl 减速。操作时将鼠标放在场景画面中，避免输入被 UI 控件占用。
+
+## Sponza Lambert 对照场景
+
+DDGI 的 `Show probes` 使用独立 probe TLAS 和硬件光追显示球体，包含 relocation 位置和场景遮挡；绿色为 active，红色为 inactive。该显示不会关闭半分辨率 FG 的独立 dispatch。更新代码后需重启 Falcor 加载新的插件。
+
+启动 `run-falcor`，场景选择 `SponzaLambert`，即可使用 DDGI 或 PT Reference。也可运行 `./Run-Falcor.ps1 -Scene SponzaLambert -Renderer DDGI`。
+该版本沿用 Sponza 的几何、相机和点光源，将材质替换为 `PBRTDiffuseMaterial`（纯 Lambert，无镜面反射项）；保留颜色／法线贴图、UV 变换、双面设置与 alpha 裁剪。原来的金属／粗糙度贴图不参与着色，原始 `Sponza` 仍可单独选择。
+
+`Sponza` 和 `SponzaLambert` 都包含默认关闭的方向光 `Atrium Sun`。在 `Scene Settings` 的灯光设置中勾选它的 `Active` 即可开启，并可调整方向和强度；取消点光源 `Atrium Point` 的 `Active` 可只使用方向光。默认方向为 `(0.3, -1, 0.2)`（光线传播方向），白光强度为 `1`。
 
 ## 路径和依赖
 

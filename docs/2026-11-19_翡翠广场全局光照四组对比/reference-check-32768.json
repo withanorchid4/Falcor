@@ -1,0 +1,58 @@
+{
+  "reference": {
+    "spp": 32768,
+    "two_sequences_spp": 16384,
+    "sequence_frame_seed_ranges": [
+      [
+        1,
+        2048
+      ],
+      [
+        100001,
+        102048
+      ]
+    ],
+    "noise_mse_estimate": 0.00032155300398835975,
+    "doubling_mse": 0.00032136248391345494,
+    "doubling_hdr_flip": 0.012192913331091404,
+    "relative_rgb_rms_noise": 0.007919997702508993,
+    "noise_over_min_error": 0.0013496416559122355,
+    "flip_parameters": {
+      "ppd": 67.0,
+      "startExposure": -3.283792495727539,
+      "stopExposure": 3.022641897201538,
+      "numExposures": 7,
+      "tonemapper": "ACES"
+    }
+  },
+  "checks": {
+    "gi_converged": false,
+    "pt_noise_below_1percent_method_error": true,
+    "pt_relative_rgb_rms_below_0_5percent": false,
+    "pt_doubling_below_1percent_method_error": true,
+    "pt_reference_scores_stable": true
+  },
+  "metrics": {
+    "ddgi": {
+      "mse": 0.3592886171735785,
+      "hdr_flip": 0.3913566470146179,
+      "reference_doubling_mse_change": -0.0009079086883626575,
+      "reference_doubling_flip_change": -1.865672352141523e-05,
+      "brightest_10percent_mse_share": 0.6038458551470389
+    },
+    "half": {
+      "mse": 0.23825065163020553,
+      "hdr_flip": 0.24818985164165497,
+      "reference_doubling_mse_change": -0.001395034645173876,
+      "reference_doubling_flip_change": -7.498354444390731e-05,
+      "brightest_10percent_mse_share": 0.5591942810527962
+    },
+    "worldcache": {
+      "mse": 0.24269269308386912,
+      "hdr_flip": 0.23566283285617828,
+      "reference_doubling_mse_change": -0.0013491851462884563,
+      "reference_doubling_flip_change": -0.00021411703243778835,
+      "brightest_10percent_mse_share": 0.5626216917341601
+    }
+  }
+}

@@ -1,0 +1,26 @@
+"""Pure diffuse Emerald Square with the same daytime camera and analytic lights.
+
+Preserves base color, normal maps and alpha cutouts. Glass/metal become diffuse;
+surface emission and transmission are removed. The source asset is CC BY-NC-SA
+3.0; see EmeraldSquare.pyscene and the asset's LICENSE.txt for attribution.
+"""
+from pathlib import Path
+import runpy
+from falcor import PBRTDiffuseMaterial, MaterialTextureSlot
+
+runpy.run_path(str(Path(__file__).with_name('EmeraldSquare.pyscene')),
+              init_globals={'sceneBuilder': sceneBuilder})
+sceneBuilder.waitForMaterialTextureLoading()
+for original in list(sceneBuilder.materials):
+    lambert = PBRTDiffuseMaterial(original.name + '-Lambert')
+    lambert.baseColor = original.baseColor
+    lambert.textureTransform = original.textureTransform
+    lambert.doubleSided = original.doubleSided
+    lambert.thinSurface = original.thinSurface
+    for slot in (MaterialTextureSlot.BaseColor, MaterialTextureSlot.Normal):
+        texture = original.getTexture(slot)
+        if texture is not None:
+            lambert.setTexture(slot, texture)
+    lambert.alphaMode = original.alphaMode
+    lambert.alphaThreshold = original.alphaThreshold
+    sceneBuilder.replaceMaterial(original, lambert)

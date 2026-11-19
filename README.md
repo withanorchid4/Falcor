@@ -93,7 +93,18 @@ Falcor ships with the following NVIDIA RTX SDKs:
 
 Note that these SDKs are not under the same license as Falcor, see [LICENSE.md](LICENSE.md) for details.
 
+## Emerald Square 城市 GI 场景
+
+运行 `Run-Falcor.ps1`，Scene 选择 `EmeraldSquare` 或 `EmeraldSquareLambert`，Renderer 选择 `DDGI`。进入后可在 Final gather 中开关 FG、选择半／全分辨率，也可从 Active Graph 切到 `LumenWorldCache` 或 `PTReference`。默认保持 ReSTIR 关闭、Accumulate 开启。
+
+资源来自 [NVIDIA ORCA Emerald Square](https://developer.nvidia.com/orca/nvidia-emerald-square)，作者 Nicholas Hull、Kate Anderson、Nir Benty，许可为 **CC BY-NC-SA 3.0**；植被由 SpeedTree 提供。下载官方 `EmeraldSquare_v4_1.zip`，解压到 `media/ORCA_EmeraldSquare/`，使 `EmeraldSquare_v4_1/EmeraldSquare_Day.pyscene` 位于其下。约 589 MiB 下载、1.44 GiB 解压；资源及纹理不提交到 Git。已验证压缩包 SHA-256：`a63d08531c8a3245b722a2407b57385b191064090487ef3fee3c4e796b41e2f6`。
+
+接入的是官方白天版，保留相机、方向光、点光源和 HDR 天空，关闭相机与灯光动画。Lambert 版替换全部表面为 `PBRTDiffuseMaterial`，保留底色、法线、双面设置与 alpha 裁剪；金属和玻璃转为纯漫反射，取消镜面、透射和表面自发光。因此它是供 GI 对比使用的材质变体，不是原始场景外观的完整复现。各渲染图使用相同固定曝光。
+
+场景导入后约 997 万实例化三角形，范围约 230×113×230 米。初始 DDGI 使用覆盖全城的 **32×16×32** 单体积、每探针 256 条射线，间距约 **7.74×8×7.74 米**。这是能运行的大场景预览配置，并非已调优的质量基准；不会自动提高街道和室内的探针密度。正式比较前需检查探针覆盖、泄漏与收敛，不能沿用 Sponza 的质量结论。
+
 ## Resources
+
 - [Falcor](https://github.com/NVIDIAGameWorks/Falcor): Falcor's GitHub page.
 - [Documentation](./docs/index.md): Additional information and tutorials.
     - [Getting Started](./docs/getting-started.md)

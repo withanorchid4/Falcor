@@ -1,0 +1,17 @@
+"""ORCA Emerald Square daytime; retain the supplied camera, lights and sky.
+
+Asset: https://developer.nvidia.com/orca/nvidia-emerald-square
+Nicholas Hull, Kate Anderson and Nir Benty (NVIDIA), CC BY-NC-SA 3.0.
+Extract EmeraldSquare_v4_1.zip into media/ORCA_EmeraldSquare/.
+"""
+from pathlib import Path
+
+asset = Path(__file__).resolve().parents[2] / "media/ORCA_EmeraldSquare/EmeraldSquare_v4_1/EmeraldSquare_Day.pyscene"
+if not asset.is_file():
+    raise FileNotFoundError("Download Emerald Square from https://developer.nvidia.com/orca/nvidia-emerald-square and extract into media/ORCA_EmeraldSquare/.")
+sceneBuilder.importScene(str(asset))
+for camera in sceneBuilder.cameras:
+    camera.animated = False
+for light in sceneBuilder.lights:
+    light.animated = False
+sceneBuilder.cameraSpeed = 8.0

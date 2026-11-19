@@ -64,6 +64,7 @@ cbuffer PerFrameCB
     uint2 gFrameDim;
     bool gEnableGI;
     bool gFinalGather;
+    bool gAdjustPrimaryShadingNormals;
     bool gHalfResolutionGather;
     uint2 gGatherOffset;
     uint gRestirHistoryLength;
@@ -316,7 +317,14 @@ float3 evaluateEmissiveDirect(ShadingData sd, IMaterialInstance material, bool d
 #endif
 }
 
-float3 evaluateEnvironmentDirect(ShadingData sd, IMaterialInstance material, bool diffuseOnly, inout SampleGenerator sg)
+// Match PathTracer's primary-hit policy, including the GBuffer UI toggle.
+// Probe and secondary hit materials intentionally keep their existing policy.
+uint primaryMaterialHints()
+{
+    return gAdjustPrimaryShadingNormals ? (uint)MaterialInstanceHints::AdjustShadingNormal : 0u;
+}
+
+float3 evaluateEnvironmentDirect(ShadingData sd, IMaterialInstance material, bool diffuseOnly, inout SampleGenerator sg, uint materialHints = 0u)
 {
 #if USE_ENV_LIGHT
     // Diffuse sky lighting is supplied by DDGI, including at probe hit points.
@@ -334,7 +342,7 @@ float3 evaluateEnvironmentDirect(ShadingData sd, IMaterialInstance material, boo
     float3 origin = computeRayOrigin(sd.posW, dot(sd.faceN, light.dir) >= 0.f ? sd.faceN : -sd.faceN);
     if (!traceShadow(origin, light.dir, FLT_MAX)) return float3(0.f);
     sd.mtl.setActiveLobes((uint)LobeType::SpecularReflection);
-    let specularMaterial = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f));
+    let specularMaterial = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f), materialHints);
     float3 brdfCosine = evaluateBRDFCosine(sd, specularMaterial, light.dir, false, sg);
     return finiteRadiance(brdfCosine * (light.Le / light.pdf), 1u);
 #else
@@ -342,12 +350,12 @@ float3 evaluateEnvironmentDirect(ShadingData sd, IMaterialInstance material, boo
 #endif
 }
 
-float3 evaluateDirect(ShadingData sd, IMaterialInstance material, bool diffuseOnly, inout SampleGenerator sg)
+float3 evaluateDirect(ShadingData sd, IMaterialInstance material, bool diffuseOnly, inout SampleGenerator sg, uint materialHints = 0u)
 {
     // One sample per light category; diffuse environment lighting comes from DDGI.
     float3 radiance = evaluateAnalyticDirect(sd, material, diffuseOnly, sg);
     radiance += evaluateEmissiveDirect(sd, material, diffuseOnly, sg);
-    radiance += evaluateEnvironmentDirect(sd, material, diffuseOnly, sg);
+    radiance += evaluateEnvironmentDirect(sd, material, diffuseOnly, sg, materialHints);
     return finiteRadiance(radiance, 1u);
 }
 
@@ -434,7 +442,7 @@ float3 gatherReflection(ShadingData primary, uint lobes, DDGIVolumeDescGPU volum
 {
     hitDistance = 0.f;
     primary.mtl.setActiveLobes(primary.mtl.getActiveLobes() & lobes);
-    let source = gScene.materials.getMaterialInstance(primary, ExplicitLodTextureSampler(0.f));
+    let source = gScene.materials.getMaterialInstance(primary, ExplicitLodTextureSampler(0.f), primaryMaterialHints());
     if ((source.getLobeTypes(primary) & lobes) == 0) return float3(0.f);
     BSDFSample sample = {};
     if (!source.sample(primary, sg, sample, true) || !any(sample.weight > 0.f)) return float3(0.f);
@@ -509,7 +517,7 @@ void shadePixel(uint2 pixel, bool gatherOnly)
     {
         ShadingData sd = loadTriangleSurface(hit, direction);
         surfaceDistance = length(sd.posW - origin);
-        let material = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f));
+        let material = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f), primaryMaterialHints());
         let properties = material.getProperties(sd);
         // A positive floor prevents unstable demodulation of supported lobes;
         // absent lobes stay zero so spatial filtering cannot invent a response.
@@ -526,7 +534,7 @@ void shadePixel(uint2 pixel, bool gatherOnly)
             // Only analytic lights use primary NEE in this reference estimator;
             // adding emissive/environment NEE here without MIS would double count.
             color = finiteRadiance(properties.emission, 0u) + (gFinalGather ?
-                evaluateAnalyticDirect(sd, material, false, sg) : evaluateDirect(sd, material, false, sg));
+                evaluateAnalyticDirect(sd, material, false, sg) : evaluateDirect(sd, material, false, sg, primaryMaterialHints()));
         }
         if (!RESTIR_GATHER && gEnableGI && validSurface(sd) && (gatherOnly || !SPLIT_HALF_GATHER))
         {

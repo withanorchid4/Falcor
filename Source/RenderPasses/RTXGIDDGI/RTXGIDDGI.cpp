@@ -788,6 +788,7 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     auto cb = root["PerFrameCB"];
     cb["gFrameCount"] = mFrame;
     cb["gFrameDim"] = data.getDefaultTextureDims();
+    cb["gAdjustPrimaryShadingNormals"] = data.getDictionary().getValue(kRenderPassGBufferAdjustShadingNormals, false);
     cb["gFinalGather"] = mOptions.finalGather;
     cb["gHalfResolutionGather"] = mOptions.halfResolutionGather;
     cb["gGatherOffset"] = mGatherOffset;

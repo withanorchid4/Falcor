@@ -308,15 +308,15 @@ void restirIntegrate()
     if (h.isValid())
     {
         ShadingData sd=loadTriangleSurface(h,primaryRayDirection(pixel));
-        let material=gScene.materials.getMaterialInstance(sd,ExplicitLodTextureSampler(0.f));
+        let material=gScene.materials.getMaterialInstance(sd,ExplicitLodTextureSampler(0.f),primaryMaterialHints());
         let props=material.getProperties(sd);
         uint lobes=material.getLobeTypes(sd);
         bool sharpSpecular=props.roughness < .2f || (lobes & (uint)LobeType::DeltaReflection)!=0;
         ShadingData diffuseSD=sd, specularSD=sd;
         diffuseSD.mtl.setActiveLobes(sd.mtl.getActiveLobes() & (uint)LobeType::DiffuseReflection);
         specularSD.mtl.setActiveLobes(sd.mtl.getActiveLobes() & (uint)LobeType::SpecularReflection);
-        let dm=gScene.materials.getMaterialInstance(diffuseSD,ExplicitLodTextureSampler(0.f));
-        let sm=gScene.materials.getMaterialInstance(specularSD,ExplicitLodTextureSampler(0.f));
+        let dm=gScene.materials.getMaterialInstance(diffuseSD,ExplicitLodTextureSampler(0.f),primaryMaterialHints());
+        let sm=gScene.materials.getMaterialInstance(specularSD,ExplicitLodTextureSampler(0.f),primaryMaterialHints());
         SampleGenerator sg=SampleGenerator(pixel,gFrameCount ^ 0x20000000u);
         float phase=sampleNext1D(sg)*2.f*M_PI;
         float factor=gHalfResolutionGather ? 2.f : 1.f;

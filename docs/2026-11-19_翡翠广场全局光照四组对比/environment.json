@@ -1,0 +1,17 @@
+{
+  "resolution": [
+    4096,
+    2048
+  ],
+  "rgb_max": 146432.0,
+  "luminance_percentiles": {
+    "50": 0.189287109375,
+    "90": 0.41148671875,
+    "99": 1.1764078125,
+    "99.9": 3.853603993751516,
+    "99.99": 24.059611582432385,
+    "100": 128756.9408
+  },
+  "texel_fraction_luminance_over_100": 4.649162292480469e-05,
+  "note": "Unweighted lat-long texel statistics; not solid-angle integration. FG misses use BSDF sampling without environment NEE/MIS."
+}

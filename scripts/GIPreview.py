@@ -25,6 +25,11 @@ if os.environ.get("FALCOR_START_SCENE") in ("Sponza", "SponzaLambert"):
     for graph in graphs.values():
         graph.updatePass("Display", {"autoExposure": False, "useSceneMetadata": False,
             "operator": "Aces", "filmSpeed": 100.0, "fNumber": 1.0, "shutter": 1.0})
+if os.environ.get("FALCOR_START_SCENE") in ("EmeraldSquare", "EmeraldSquareLambert"):
+    emerald_setup = runpy.run_path(str(Path(__file__).parent / "scenes/emerald_rtxgi.py"))
+    emerald_setup["configure_graph"](graphs["RTXGIDDGI"])
+    for graph in graphs.values():
+        emerald_setup["configure_display"](graph)
 initial_graph = {
     "Probe": "TraditionalProbeGI",
     "DDGI": "RTXGIDDGI",

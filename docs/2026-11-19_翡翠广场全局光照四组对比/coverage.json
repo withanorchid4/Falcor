@@ -1,0 +1,56 @@
+{
+  "source": "GBufferRT world positions at 1920x1080, fixed official camera",
+  "visible_surface_pixels": 1961441,
+  "visible_inside_fraction": 1.0,
+  "visible_bounds": [
+    [
+      -87.70121002197266,
+      -0.20000244677066803,
+      -87.69252014160156
+    ],
+    [
+      27.371192932128906,
+      42.85176086425781,
+      71.20183563232422
+    ]
+  ],
+  "visible_y_below_20_fraction": 0.9325679436699855,
+  "preview_grid": [
+    32,
+    16,
+    32
+  ],
+  "experiment_grid": [
+    32,
+    32,
+    32
+  ],
+  "grid_min": [
+    -120,
+    -6,
+    -120
+  ],
+  "grid_max": [
+    120,
+    114,
+    120
+  ],
+  "experiment_spacing": [
+    7.741935483870968,
+    3.870967741935484,
+    7.741935483870968
+  ],
+  "note": "Bounding-box coverage only; does not certify usable probes, visibility interpolation or secondary-hit coverage.",
+  "coarse_nearest_unrelocated_distance_percentiles": [
+    3.91308245094569,
+    5.350415175676304,
+    5.774501536039987,
+    6.770402385641454
+  ],
+  "experiment_nearest_unrelocated_distance_percentiles": [
+    3.5611960994205423,
+    5.09836347470562,
+    5.460292901797318,
+    5.769693396776023
+  ]
+}

@@ -93,6 +93,30 @@ Falcor ships with the following NVIDIA RTX SDKs:
 
 Note that these SDKs are not under the same license as Falcor, see [LICENSE.md](LICENSE.md) for details.
 
+## 在新机器配置额外场景资源
+
+Sponza 和 EmeraldSquare 的模型、贴图不包含在 Git 中。原版和 Lambert 版共用资源，可在仓库根目录用 **Python 3.9+** 下载（不需要额外 Python 包）：
+
+```powershell
+# 首次配置：安装 VS2022 C++ 工具后，拉取 Packman 依赖并生成工程。
+.\setup_vs2022.bat
+# 默认下载两套场景；会校验文件并跳过完整资源。
+.\Download-SceneAssets.ps1
+# git pull 不会更新 DLL，需要编译启动器使用的 Release 目录。
+& .\tools\.packman\cmake\bin\cmake.exe --build build/windows-vs2022 --config Release
+.\Run-Falcor.ps1
+```
+
+可单独使用 `-Scene Sponza` 或 `-Scene EmeraldSquare`；`-VerifyOnly` 仅检查完整性、不下载。首次下载约 50 MiB + 589 MiB，资源解压后约 1.5 GiB，另保留 EmeraldSquare 压缩包缓存。中断后重跑会跳过已完成且校验通过的文件，未完成的单文件重新下载。缺失或校验不符的资源会被恢复为固定版本，请勿直接修改受管理的模型和贴图。
+
+若 NVIDIA 下载受网络限制，可从 [官方页面](https://developer.nvidia.com/orca/nvidia-emerald-square) 下载压缩包，然后运行：
+
+```powershell
+.\Download-SceneAssets.ps1 -Scene EmeraldSquare -EmeraldArchive 'D:\Downloads\EmeraldSquare_v4_1.zip'
+```
+
+脚本使用 `scripts/scene-assets.json` 固定版本及 SHA-256。Sponza 来自 Khronos glTF-Sample-Assets 的 `f0920f5b32d172a30efe3f9257e965918831e6ea` 版本，保留 Crytek 许可说明与上游 README；EmeraldSquare 保留 NVIDIA 的 CC BY-NC-SA 3.0 许可及署名。资源许可独立于本项目代码许可。下载结果分别放到 `media/Sponza/` 和 `media/ORCA_EmeraldSquare/`。`media` 由 Packman 管理，通常是符号链接，脚本不会替换它。其他内置场景仍由 Packman 依赖提供。
+
 ## Emerald Square 城市 GI 场景
 
 运行 `Run-Falcor.ps1`，Scene 选择 `EmeraldSquare` 或 `EmeraldSquareLambert`，Renderer 选择 `DDGI`。进入后可在 Final gather 中开关 FG、选择半／全分辨率，也可从 Active Graph 切到 `LumenWorldCache` 或 `PTReference`。默认保持 ReSTIR 关闭、Accumulate 开启。

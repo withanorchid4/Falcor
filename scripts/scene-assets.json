@@ -1,0 +1,2254 @@
+{
+  "Sponza": {
+    "directory": "Sponza",
+    "source": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza",
+    "files": [
+      {
+        "path": "10381718147657362067.jpg",
+        "size": 881980,
+        "sha256": "c119be5aae2419a8120fd17691033ca28e0b5546cef7e31d40f6dec1543affee",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/10381718147657362067.jpg"
+      },
+      {
+        "path": "10388182081421875623.jpg",
+        "size": 917202,
+        "sha256": "c915c9cc8be8f198ab1cc3bc68c2f6c694b88432f381a8f27935d480141ae8f5",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/10388182081421875623.jpg"
+      },
+      {
+        "path": "11474523244911310074.jpg",
+        "size": 1079152,
+        "sha256": "23c32277c33d8eac091cd73daf81561ebe3640eede49b037546ed5c244a01347",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/11474523244911310074.jpg"
+      },
+      {
+        "path": "11490520546946913238.jpg",
+        "size": 321375,
+        "sha256": "98e4c4a091fea684cd693f3ae7ebe83e491969b501b4cd6e1fdd6a3cc1fa5cab",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/11490520546946913238.jpg"
+      },
+      {
+        "path": "11872827283454512094.jpg",
+        "size": 668962,
+        "sha256": "da2a0b308b4d6d57ffbcf4bb7509d4afe91156d5d86d0396e83d7cac883a4857",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/11872827283454512094.jpg"
+      },
+      {
+        "path": "11968150294050148237.jpg",
+        "size": 530384,
+        "sha256": "bee42826d56d3ff719c4908c11ef65584fbe19e08273862fde7ec1408e44ba25",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/11968150294050148237.jpg"
+      },
+      {
+        "path": "1219024358953944284.jpg",
+        "size": 329124,
+        "sha256": "9cbd61fcb8047f1c21450eff05207b29d71824edd75483267b5fbc2f7b21378c",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/1219024358953944284.jpg"
+      },
+      {
+        "path": "12501374198249454378.jpg",
+        "size": 418235,
+        "sha256": "fe640b8875c8ff04f4ec427274d2e799b703cff384b9c2dafef63b61d05f34fa",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/12501374198249454378.jpg"
+      },
+      {
+        "path": "13196865903111448057.jpg",
+        "size": 281980,
+        "sha256": "8c26ae9523cfae7a062fd074f74e0ddbb61630772f9a2130489e1d6e4724c38b",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/13196865903111448057.jpg"
+      },
+      {
+        "path": "13824894030729245199.jpg",
+        "size": 313460,
+        "sha256": "9158388312a76ba25a40d3b57978e1ace224882e53198a766494d98f9118aeba",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/13824894030729245199.jpg"
+      },
+      {
+        "path": "13982482287905699490.jpg",
+        "size": 347538,
+        "sha256": "b91209e6ede0b905565bd719d6e27533abc7a5930d031a454f9aae65771fc4b0",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/13982482287905699490.jpg"
+      },
+      {
+        "path": "14118779221266351425.jpg",
+        "size": 1611314,
+        "sha256": "994ba4e063564d75350ceec1381347a620baef75f9ca689e28718a88c3e3bd88",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/14118779221266351425.jpg"
+      },
+      {
+        "path": "14170708867020035030.jpg",
+        "size": 140738,
+        "sha256": "55cbda42c13377a71cb8ee78406309e888f56bc85af9473ca84a6097f2252166",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/14170708867020035030.jpg"
+      },
+      {
+        "path": "14267839433702832875.jpg",
+        "size": 711217,
+        "sha256": "d14f693c5cf7d1e506865488fdb68daadd42bbdcb0c534e2f96ccfd747e46a60",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/14267839433702832875.jpg"
+      },
+      {
+        "path": "14650633544276105767.jpg",
+        "size": 521947,
+        "sha256": "e8b68080eb4c5709536dfb7858d595d51d4bb725003e11b0f383acf76a7e05a3",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/14650633544276105767.jpg"
+      },
+      {
+        "path": "15295713303328085182.jpg",
+        "size": 520162,
+        "sha256": "5bbd0cbf2da7416d5620514ebb0c4837b0ccc841b649cf4070281aa333ff8520",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/15295713303328085182.jpg"
+      },
+      {
+        "path": "15722799267630235092.jpg",
+        "size": 560258,
+        "sha256": "8511ada3c77ed171a21d58362d996b20cfa6c632fe4c95c3a8614e410e623a31",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/15722799267630235092.jpg"
+      },
+      {
+        "path": "16275776544635328252.png",
+        "size": 1077432,
+        "sha256": "d6df943a0dcf535d9dfb009c2833e0c7dc21939cfe3a2c10316c552b3dc3441b",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/16275776544635328252.png"
+      },
+      {
+        "path": "16299174074766089871.jpg",
+        "size": 322693,
+        "sha256": "21d5f7ab6a7d05200b76165771fb3c5f14d006236a9dd27fff9eb92b69de4fa6",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/16299174074766089871.jpg"
+      },
+      {
+        "path": "16885566240357350108.jpg",
+        "size": 12575,
+        "sha256": "5562f0e76ca213d72295e48b8a14a59ee1971f58a47f95e5c022a4e78371c5aa",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/16885566240357350108.jpg"
+      },
+      {
+        "path": "17556969131407844942.jpg",
+        "size": 370061,
+        "sha256": "cb09708202859d08764601acc9c9ea3b5254b2c4fd39dcc6b6055768c77aee9b",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/17556969131407844942.jpg"
+      },
+      {
+        "path": "17876391417123941155.jpg",
+        "size": 1151448,
+        "sha256": "005b774a968c1f6af00e4bf97afd668a6a045126a94f524df722ba19edc77d61",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/17876391417123941155.jpg"
+      },
+      {
+        "path": "2051777328469649772.jpg",
+        "size": 206618,
+        "sha256": "0f25b73991003300bd5e2c8fcbc46ec4e2788a8deb42321f575d5187aee21b85",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/2051777328469649772.jpg"
+      },
+      {
+        "path": "2185409758123873465.jpg",
+        "size": 780166,
+        "sha256": "88861c8c7f10517c1d7942f316aae3b74dc5b8ae2faa2021d9dfe9d2c09fb24f",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/2185409758123873465.jpg"
+      },
+      {
+        "path": "2299742237651021498.jpg",
+        "size": 772672,
+        "sha256": "da92fd0303571290c36b0f655f357fda77015b788613c65b18346480e1bd8324",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/2299742237651021498.jpg"
+      },
+      {
+        "path": "2374361008830720677.jpg",
+        "size": 852079,
+        "sha256": "782c48410db52360083719a48f8d15d29aa5cd4beeb817f1fd195083b2feb60a",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/2374361008830720677.jpg"
+      },
+      {
+        "path": "2411100444841994089.jpg",
+        "size": 399963,
+        "sha256": "12e1f2ea3c2714a6ec455fa8e623a702e33ef95765ebd09f7874a68fa55fd104",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/2411100444841994089.jpg"
+      },
+      {
+        "path": "2775690330959970771.jpg",
+        "size": 785678,
+        "sha256": "751606c94a5fe5bda3bf6709e7f6a74363bd7902bf2353d54e55ef3b50007487",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/2775690330959970771.jpg"
+      },
+      {
+        "path": "2969916736137545357.jpg",
+        "size": 822373,
+        "sha256": "dfa17f2dee2cd2d850585673d19d5cda477a63e21659b346d8730e80edd3b347",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/2969916736137545357.jpg"
+      },
+      {
+        "path": "332936164838540657.jpg",
+        "size": 852079,
+        "sha256": "782c48410db52360083719a48f8d15d29aa5cd4beeb817f1fd195083b2feb60a",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/332936164838540657.jpg"
+      },
+      {
+        "path": "3371964815757888145.jpg",
+        "size": 682743,
+        "sha256": "d939d2e8bf11c2cf375154129f861b982c786b83db79cb9fde1a2b94b46caf62",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/3371964815757888145.jpg"
+      },
+      {
+        "path": "3455394979645218238.jpg",
+        "size": 551432,
+        "sha256": "967005ccfbf4d38f674df41aebb3e58ac1fdcd91f554ead7acfcc132372f8ec6",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/3455394979645218238.jpg"
+      },
+      {
+        "path": "3628158980083700836.jpg",
+        "size": 527788,
+        "sha256": "5a05dc004bbff7e6f89cffab57ae4f4fe2cf04dfbd22b52ec85cf17bf92c8855",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/3628158980083700836.jpg"
+      },
+      {
+        "path": "3827035219084910048.jpg",
+        "size": 608394,
+        "sha256": "1c2fc5ddaefc59763823f58d0450c00d114d89ab3d0ac395fd1316b664a8a56d",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/3827035219084910048.jpg"
+      },
+      {
+        "path": "4477655471536070370.jpg",
+        "size": 211322,
+        "sha256": "f0592537da8edc8476d9903f4ab1839d1a7ab0efa2507d303e8720b57bedf848",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/4477655471536070370.jpg"
+      },
+      {
+        "path": "4601176305987539675.jpg",
+        "size": 1043152,
+        "sha256": "70eaa9efca842696271d2e4e04b1c77c087f8b5350d8d90940b800cc654b269a",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/4601176305987539675.jpg"
+      },
+      {
+        "path": "466164707995436622.jpg",
+        "size": 486634,
+        "sha256": "21bb124f5b5d4d5e9c8d9773cd31dedfc41b30eb302af36e7257cf930152908e",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/466164707995436622.jpg"
+      },
+      {
+        "path": "4675343432951571524.jpg",
+        "size": 764529,
+        "sha256": "9d5fd79619a52db0232edb2287f5f05c0124c304355e3b035a4e48c0871090bf",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/4675343432951571524.jpg"
+      },
+      {
+        "path": "4871783166746854860.jpg",
+        "size": 570081,
+        "sha256": "259b6659cb2681e06ef04becd49298d379f2f25b2cc468acf0c2ade4d190637c",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/4871783166746854860.jpg"
+      },
+      {
+        "path": "4910669866631290573.jpg",
+        "size": 1043152,
+        "sha256": "70eaa9efca842696271d2e4e04b1c77c087f8b5350d8d90940b800cc654b269a",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/4910669866631290573.jpg"
+      },
+      {
+        "path": "4975155472559461469.jpg",
+        "size": 399027,
+        "sha256": "fbdb7bcced57a005b84b4c3bbf744bae6309804cca51dabd9237e03a72fbc505",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/4975155472559461469.jpg"
+      },
+      {
+        "path": "5061699253647017043.png",
+        "size": 2427921,
+        "sha256": "6fbdbf67d3501831ad3a4e2adbf3d27e4c3d13ba1d655e5861c3f39b5f899f65",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/5061699253647017043.png"
+      },
+      {
+        "path": "5792855332885324923.jpg",
+        "size": 564801,
+        "sha256": "9330cf1d51c8f6924b6c9ce09f2dedb21a82e1c7406c37d49ce95beca40bb3be",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/5792855332885324923.jpg"
+      },
+      {
+        "path": "5823059166183034438.jpg",
+        "size": 573157,
+        "sha256": "34b464edddbd2295b0ee23fa7a7a440a19456888c586acdc47032f841b302abd",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/5823059166183034438.jpg"
+      },
+      {
+        "path": "6047387724914829168.jpg",
+        "size": 518310,
+        "sha256": "c39c9f304c2605be791b4c0a58cd0f8eb20de2dd6a4a4af893c4eb112d158353",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/6047387724914829168.jpg"
+      },
+      {
+        "path": "6151467286084645207.jpg",
+        "size": 643517,
+        "sha256": "170f6c637ebd71a101244eb4d80c3dcf7063caf89e42053d3114d8aeca755cdf",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/6151467286084645207.jpg"
+      },
+      {
+        "path": "6593109234861095314.jpg",
+        "size": 1043152,
+        "sha256": "70eaa9efca842696271d2e4e04b1c77c087f8b5350d8d90940b800cc654b269a",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/6593109234861095314.jpg"
+      },
+      {
+        "path": "6667038893015345571.jpg",
+        "size": 703420,
+        "sha256": "34f6408c6b8e8dc3c89d528e014ee3b254c7208c41339cfd15c4ae5151ad7cbe",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/6667038893015345571.jpg"
+      },
+      {
+        "path": "6772804448157695701.jpg",
+        "size": 599959,
+        "sha256": "1ea4f9bc86354d363ea8153df9b7593c3bd3da153c53b9624c1fd8a960cb3ebc",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/6772804448157695701.jpg"
+      },
+      {
+        "path": "7056944414013900257.jpg",
+        "size": 852079,
+        "sha256": "782c48410db52360083719a48f8d15d29aa5cd4beeb817f1fd195083b2feb60a",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/7056944414013900257.jpg"
+      },
+      {
+        "path": "715093869573992647.jpg",
+        "size": 280745,
+        "sha256": "d81efcb42b3a044595ca984cb46d941b159064bddae9a43ed8d9582db68d6b47",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/715093869573992647.jpg"
+      },
+      {
+        "path": "7268504077753552595.jpg",
+        "size": 572245,
+        "sha256": "430758549ba2189d94f06abeaae092bfc0a1d8c22afc56f5caf3f99c5ee7407c",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/7268504077753552595.jpg"
+      },
+      {
+        "path": "7441062115984513793.jpg",
+        "size": 665796,
+        "sha256": "9edc7c1c73661658cd8ed7733728002d45fecd17cb37a962fb654ff1d8c1933d",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/7441062115984513793.jpg"
+      },
+      {
+        "path": "755318871556304029.jpg",
+        "size": 302363,
+        "sha256": "9f849f0510ca0df66ba1cba2380a6a1b481444d9e64b68da6b2ce202b54d9cec",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/755318871556304029.jpg"
+      },
+      {
+        "path": "759203620573749278.jpg",
+        "size": 509411,
+        "sha256": "c76e66915ce3abaf2ce365b314cf1e1a95f77bd4791adebdad01ab5c93658d0a",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/759203620573749278.jpg"
+      },
+      {
+        "path": "7645212358685992005.jpg",
+        "size": 656995,
+        "sha256": "da33886bb34e236f0ed9616ff40e87d87c4ab5ed458858e0d96839fa717978af",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/7645212358685992005.jpg"
+      },
+      {
+        "path": "7815564343179553343.jpg",
+        "size": 623144,
+        "sha256": "8ad0e8a9ca6de602225a527361bc718881de8741bc48927e27259a8803e7fed7",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/7815564343179553343.jpg"
+      },
+      {
+        "path": "8006627369776289000.png",
+        "size": 1225157,
+        "sha256": "75328d1aac87f8539be2456e6a5392cef7c6d08476d75585eafcd334dbeee0c5",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/8006627369776289000.png"
+      },
+      {
+        "path": "8051790464816141987.jpg",
+        "size": 260119,
+        "sha256": "4f06c93f8e9f90be44a2e78847e57acec82bd793f58f7be7f86b088150730b88",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/8051790464816141987.jpg"
+      },
+      {
+        "path": "8114461559286000061.jpg",
+        "size": 193077,
+        "sha256": "06c6480e207ce64f9e7c08df3f7f21638da7da43f77682657f4c823acd8c81a5",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/8114461559286000061.jpg"
+      },
+      {
+        "path": "8481240838833932244.jpg",
+        "size": 531156,
+        "sha256": "1da7664b7b88ae58386a6e6b5eca2829537818061d704f002356d8fc483c1a28",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/8481240838833932244.jpg"
+      },
+      {
+        "path": "8503262930880235456.jpg",
+        "size": 104626,
+        "sha256": "c288a37ed8373d1132644873624b096a72ba81d03cda601e050a5de24ba13c39",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/8503262930880235456.jpg"
+      },
+      {
+        "path": "8747919177698443163.jpg",
+        "size": 872255,
+        "sha256": "8e90e94cadf80528a3df3496035d3c77900eba24d88b1c1d31c9dce77990fc44",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/8747919177698443163.jpg"
+      },
+      {
+        "path": "8750083169368950601.jpg",
+        "size": 362437,
+        "sha256": "73a94a12fb0a9ab4c75e40996c9a2d49ac45ac18a8c8ae81d5ceb1c8ae52d6dc",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/8750083169368950601.jpg"
+      },
+      {
+        "path": "8773302468495022225.jpg",
+        "size": 413837,
+        "sha256": "dc5bf5f3091b548f1dfe40410b1aa1e2e55d82e2d77ba57dbd1f92955a0d8ff8",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/8773302468495022225.jpg"
+      },
+      {
+        "path": "8783994986360286082.jpg",
+        "size": 388462,
+        "sha256": "93d495e33d754c5723c910e322ac94108fc753b65af082a19be5252905aa741b",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/8783994986360286082.jpg"
+      },
+      {
+        "path": "9288698199695299068.jpg",
+        "size": 1044330,
+        "sha256": "7f55814430f289e89c7d675c3db925eee904fbc566ff83f4b49904de53138e98",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/9288698199695299068.jpg"
+      },
+      {
+        "path": "9916269861720640319.jpg",
+        "size": 608687,
+        "sha256": "81b21b9352f1fb9ccfeaf237f8547b985ddbf0cfd7ade7a4a8670b73a72b2cb5",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/9916269861720640319.jpg"
+      },
+      {
+        "path": "Sponza.bin",
+        "size": 9528220,
+        "sha256": "fdbdbfb6a76edeb6626f28a1401bc1536bb1c864131a64e90fbc3df2d2d191bd",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/Sponza.bin"
+      },
+      {
+        "path": "Sponza.gltf",
+        "size": 167176,
+        "sha256": "646c10cbc8fab990ca29f363e90e2d65155f3a3569506852eb1434a9465b9501",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/Sponza.gltf"
+      },
+      {
+        "path": "white.png",
+        "size": 951,
+        "sha256": "e2ab2939dda535ad28779e41c20c98368f630f29c5824a0a5a430f47b3b6da12",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/glTF/white.png"
+      },
+      {
+        "path": "UPSTREAM-README.md",
+        "size": 3469,
+        "sha256": "d28776a66a41837a4ffb04854c7c274e6724911e31ea313e39e706d0f139541f",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/Models/Sponza/README.md"
+      },
+      {
+        "path": "LicenseRef-CRYENGINE-Agreement.txt",
+        "size": 110,
+        "sha256": "c2de7a35707b79c55313b6c619cf408cc7d8ed174c6fa9f357cb2c2e91153cb5",
+        "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/f0920f5b32d172a30efe3f9257e965918831e6ea/LICENSES/LicenseRef-CRYENGINE-Agreement.txt"
+      }
+    ]
+  },
+  "EmeraldSquare": {
+    "directory": "ORCA_EmeraldSquare",
+    "url": "https://developer.nvidia.com/emerald-square",
+    "archive": "EmeraldSquare_v4_1.zip",
+    "sha256": "a63d08531c8a3245b722a2407b57385b191064090487ef3fee3c4e796b41e2f6",
+    "files": [
+      {
+        "path": "EmeraldSquare_v4_1/CHANGELOG.txt",
+        "size": 1536,
+        "sha256": "bee77629c1e1a8a4d2742f3e60624ebee2e48f3380da658a7f3ff208d2e2f28d"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/EmeraldSquare_Day.fbx",
+        "size": 147767216,
+        "sha256": "19e44211a976276b10fa68e5c89930f999ae6a729f0a378cee130a594fb3fda8"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/EmeraldSquare_Day.pyscene",
+        "size": 149,
+        "sha256": "a01067f08ae0f1a634e9e4fe5bb311b2b8199a6813272539cf8fdd20798e6669"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/EmeraldSquare_Dusk.fbx",
+        "size": 147803856,
+        "sha256": "af2c54131a209a67f6b6d1dc17dab5c244dd280388314e54f7830cd361a55cd1"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/EmeraldSquare_Dusk.pyscene",
+        "size": 257,
+        "sha256": "7e96f16739cedf165ed21eeef69b3de7a940f1f9a1fc4a743cdc050a81aca3c8"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/LICENSE.txt",
+        "size": 344,
+        "sha256": "9a337ff1b59fa61e0a2c295d95d32c647de4f39d000e8f0d31702865b99bccf1"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/night_sky.hdr",
+        "size": 22296664,
+        "sha256": "654032059eb4a3952e30f55384e2633edb8dc68f8b42985e78a80cd6aef671ae"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/README.txt",
+        "size": 1398,
+        "sha256": "e6f63185714ee8df3ec74763db910495b5dbc28878e8d35cb570454c6851e9ad"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/symmetrical_garden_4k.hdr",
+        "size": 26545584,
+        "sha256": "d98906a8278473ff2c6436c74f81c5b666f0ae891cfa42836a815e08eacc22c7"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Awning_BlueBlack_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "475ccf66dcd137ff066f6813d5290da2eaca3beef2206e96991be18b34d52d14"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Awning_BlueBlack_Normal.dds",
+        "size": 5592560,
+        "sha256": "1dda6055dd29486358ef52948b764f97d79ee28d56fad4d54974f3061f4231a3"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Awning_BlueBlack_Specular.dds",
+        "size": 2796344,
+        "sha256": "95ceacb891686ed686455bc733597dc823d475b41d590dae8c6ab0127f268ee1"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Awning_Brown_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "daed86d68c22224f3aa6c8a72b8744f36e8dd53743009f8dd3cfb505179f7d64"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Awning_Brown_Normal.dds",
+        "size": 5592560,
+        "sha256": "1dda6055dd29486358ef52948b764f97d79ee28d56fad4d54974f3061f4231a3"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Awning_Brown_Specular.dds",
+        "size": 2796344,
+        "sha256": "95ceacb891686ed686455bc733597dc823d475b41d590dae8c6ab0127f268ee1"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Awning_Green_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "96d401a8d75a1053044b8addeb32311c084c5116f395aa3e9459811b0788516f"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Awning_Green_Normal.dds",
+        "size": 5592560,
+        "sha256": "1dda6055dd29486358ef52948b764f97d79ee28d56fad4d54974f3061f4231a3"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Awning_Green_Specular.dds",
+        "size": 2796344,
+        "sha256": "95ceacb891686ed686455bc733597dc823d475b41d590dae8c6ab0127f268ee1"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Frames_BlueBlack_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "895e8c7d69a7ec80d21fed7c918fbf317dff560eacc262cea581eb7701987ff2"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Frames_BlueBlack_Normal.dds",
+        "size": 5592560,
+        "sha256": "e6227339f27ce023a832b11879483e0324eab0adffd481753c0911183536e1ea"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Frames_BlueBlack_Specular.dds",
+        "size": 2796344,
+        "sha256": "372cc85c52b641d6f3a942d48c714d237d27e432c820c7bef4e00c0ca84e1f13"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Frames_Brown_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "1ee4519ec7f4b5e02026449609916a6772b05da2f2917d9439624eddf7e20500"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Frames_Brown_Normal.dds",
+        "size": 5592560,
+        "sha256": "e6227339f27ce023a832b11879483e0324eab0adffd481753c0911183536e1ea"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Frames_Brown_Specular.dds",
+        "size": 2796344,
+        "sha256": "372cc85c52b641d6f3a942d48c714d237d27e432c820c7bef4e00c0ca84e1f13"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Frames_Green_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "7fe1b4902c09f2ecb09bc8dc1b342c94c673d9936c57233cf3bb6dab00cf2234"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Frames_Green_Normal.dds",
+        "size": 5592560,
+        "sha256": "e6227339f27ce023a832b11879483e0324eab0adffd481753c0911183536e1ea"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Frames_Green_Specular.dds",
+        "size": 2796344,
+        "sha256": "372cc85c52b641d6f3a942d48c714d237d27e432c820c7bef4e00c0ca84e1f13"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Struts_GrayBlue_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "2efe1d464a7f59d5ebd4e2ec92cc86b717831450c814c414383d47c0a7f90023"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Struts_GrayBlue_Normal.dds",
+        "size": 5592560,
+        "sha256": "bbaaf2111bd95e85f72617fc8d306842464fae4e2cf028678bec1029e83843ef"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/511_Struts_GrayBlue_Specular.dds",
+        "size": 2796344,
+        "sha256": "2bda3f714ea60d411f166005cf078871f9e598e4d4878a4bc16699192c54f19d"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/arch_1f_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "3f7cbbb59453c8dbae7125cd3773373232ee294db6dd8a14460cadb678b7f072"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/arch_1f_Normal.dds",
+        "size": 5592560,
+        "sha256": "ec2b8952ad53b8d5be552a26a2292f7346770df6b5b94fbdcb57798a1627264e"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/arch_1f_Specular.dds",
+        "size": 2796344,
+        "sha256": "f47829dee21f034763edfdbaf9aab85a4a7094c9c6066929c5a2183b83efbccd"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Arch_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "2630476bc4ee7bab35a11bd2ce10c55b67c4eebe75a680375556739152addecb"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/arch_midlevel_door_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "68916fc423782a97e4811c7db6cbc1511f68cd3b3e69022a8c6e7dc5c7f31185"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/arch_midlevel_door_Normal.dds",
+        "size": 5592560,
+        "sha256": "7f4158c7ae312475577045decfa682d0b7478e085c073af7ba7c10c34b3b2488"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/arch_midlevel_door_Specular.dds",
+        "size": 2796344,
+        "sha256": "42b890bf09ef6e327f113783a1486d33ea3da25c5ccc60878d0e02a1ab496c84"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Arch_Normal.dds",
+        "size": 5592560,
+        "sha256": "7a8e70c6cba48a870e4f0368f4bd514c9e06f0256f2f17501ce160b752de5571"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Arch_Specular.dds",
+        "size": 2796344,
+        "sha256": "75318811011143257672c3fe05c8d7dab01be0036b115fc8a5561c842583b50c"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Azalea_Leaves_1_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "2d4bd6c6d7bec14ec7e9f9ede2063484df1872356467c285db5d92830d74cbdb"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Azalea_Leaves_1_Normal.dds",
+        "size": 5592560,
+        "sha256": "6285646941220c1696bbfc7afda05870dbc29de8ed6924b81dc5a905a24a19e4"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Azalea_Leaves_1_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Azalea_Leaves_2_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "592ae979ec10f1360815c09da6558de453b781af73240b9f32897a539f640c19"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Azalea_Leaves_2_Normal.dds",
+        "size": 5592560,
+        "sha256": "515438ffdf045d0704505a6c59919d6d108da9ff4927c7e11eda259568cbb0e9"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Azalea_Leaves_2_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Banners1_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "f2813d461cddb0fd5b00b74b7a253561a2fa150c45cdc139ca29d059094c0eb6"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Banners1_Normal.dds",
+        "size": 5592560,
+        "sha256": "4667b89e44e7e49b99a1284fc99f5f7ac742451f9954cfb4e964427b39b4dd4a"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Banners1_Specular.dds",
+        "size": 2796344,
+        "sha256": "afda78699b9a947eb4bcc2c177d247204e723c1b2b398fbc6c91dda8029c0790"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bark_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "477c1a3aa0e4f672c43fa11419f630c109e87478d7f9768f6ba2b8f1d8e0646c"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bark_Normal.dds",
+        "size": 5592560,
+        "sha256": "aed843f3d023dd86ef16eda49439bff73805325f3361ceca5948e67074922d8d"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bark_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bench_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "69f98ba6c223d9bcb7fb20ce7b5a7b913489ae2d67c2b49c8f5397947c01b0c1"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bench_Normal.dds",
+        "size": 5592560,
+        "sha256": "79deefc2cad7726d0d71044e3e36e21b237f9aaec974c2529a87f99da03587e7"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bench_Specular.dds",
+        "size": 2796344,
+        "sha256": "51bf6dd1c441a11348b8357ffd6e049cbcf7ceffaaa781e4f3f13f541579f76b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/BikeRacks_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "e1bf1a303aaf9009d561b15261631fbf39a4d93df17eadb1ed51be96cba72548"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/BikeRacks_Normal.dds",
+        "size": 5592560,
+        "sha256": "199cbb379bbc191a3c0f20193eda1a477e6a7c8ddca0f934b231ea5da696ec5f"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/BikeRacks_Specular.dds",
+        "size": 2796344,
+        "sha256": "e8b6a946ac0459aeb4016ecbc1ce9d504af76485ec370ca0280e150e0923f77f"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Blue_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "c81d8caff84aaed1d244fd69a04e74c7223fdb94b811172905fc9fc4b1757bdf"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Blue_Normal.dds",
+        "size": 5592560,
+        "sha256": "28b714f512ee2ba9933e3c50d3712a80226e0864939eb9ce0b5fbedb690c2483"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Blue_Specular.dds",
+        "size": 2796344,
+        "sha256": "28dbab507399688bbcc3bf26b5a62271936cb2ec7aa18a37f9e84342432fedb5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bollard_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "eaa42c5b97e4d2eec98d7589fc91ff3acef955bcfd253ab24e738374c660bbec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bollard_Normal.dds",
+        "size": 5592560,
+        "sha256": "cc71036f726cd020f9baa4684f81c2f64f19a94a40ae5a0c4bd35e16b289447b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bollard_Specular.dds",
+        "size": 2796344,
+        "sha256": "8818ed9915eebcba330687e674387dd1a12d94e889bbfa47c20c55e35afa49bc"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Boston_Fern_Fiddlehead_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "1bbd3dd57aa78e4d07702e5ff172e64287d0a914a634b8eb9c1c148236ce0b0b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Boston_Fern_Fiddlehead_Normal.dds",
+        "size": 5592560,
+        "sha256": "56809c3b10e3fb20dcb388ead5631aadab155c3e583af809ba84eb9a670931d7"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Boston_Fern_Fiddlehead_Specular.dds",
+        "size": 2796344,
+        "sha256": "7463abbd84248656bfa7674871c3e7f683421b051db3a762a3353fe3cbec207f"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Boston_Fern_Leaflets_1_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "6d83c8afda6d33c85e6ca8f26a5487d6fab1b338825d85586cf686877c1d40da"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Boston_Fern_Leaflets_1_Normal.dds",
+        "size": 5592560,
+        "sha256": "61b0ede060ec424974b6290ed4a76977bbfddd4747fa94ac895376f11a367547"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Boston_Fern_Leaflets_1_Specular.dds",
+        "size": 2796344,
+        "sha256": "9e64c1593ecd6bb3357e908b4baea8f9651430477c6f71a1f3c466b9472405db"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Boston_Fern_Stem_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "fffebe02b43ff9cda7fb61b5fdf90548753e43834e0c3b5080fb8f9481e851ce"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Boston_Fern_Stem_Normal.dds",
+        "size": 5592560,
+        "sha256": "77fc9dd509565126053be1d24c80f5e56e71a6907d26b4e28cbe88c009cf1b2c"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Boston_Fern_Stem_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bus_Body_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "71cc13d25d34b17d0dcebe522956de6d610b11f9cd3361a0b16880a164def2d9"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bus_Body_Normal.dds",
+        "size": 5592560,
+        "sha256": "800326bde3eb5c2de6cc45039819cd052d44e8e51bef638ab7cb5ff4873c334c"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bus_Body_Specular.dds",
+        "size": 496,
+        "sha256": "efb212b85a4a2c579beba6d2554ba7932ec62ef330ee26cbf6f4ce96869065de"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bus_Etc_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "d7c7eec3962ed081356befce16402a260e91e68d1183b0015786fa87e4298dae"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bus_Etc_Emissive.dds",
+        "size": 2796344,
+        "sha256": "4bbd10f0bd5adcd1bf947a5298dfc00851d140a5fd01a7604960c7fb05b8d207"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bus_Etc_Normal.dds",
+        "size": 5592560,
+        "sha256": "6311fdd0a7c49577b9f9003ea5417b5fabb69e9caeeafd2a2c98fa1d2431b7f9"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Bus_Etc_Specular.dds",
+        "size": 2796344,
+        "sha256": "20d06a77c2a69def9e3b7c0ce309e421aa9c1eb065c5d57e655542239887feaa"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Cap_01_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "1c68111b2e4cd53bbc8b481639c484c17889db93ee0288a679c595e3d2fea3e5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Cap_01_Normal.dds",
+        "size": 5592560,
+        "sha256": "1c78462fcdded224694a12d36634234bbce47e81a26e3597ef4a7c2e20a0eff0"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Cap_01_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Cap_02_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "93fdf7409cad4b199054d8262a4fa5c5f6d260de16809b85a9bb998c67df21dd"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Cap_02_Normal.dds",
+        "size": 5592560,
+        "sha256": "f77d6cd4cd9d9b30289569836ef2fc8722ff9164021b58b15e3ecb324cf3921c"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Cap_02_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Cap_03_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "91e84908aa918649fef90baaaa9f63723750a9c75de615721d4b8eeebb4b596f"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Cap_03_Normal.dds",
+        "size": 5592560,
+        "sha256": "96cff4b52cda7f293b90526195c06935cbe00e706e01fb870eda3cab9c1d36bc"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Cap_03_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Cards_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "3cd9a97edb4f3f2dc665063e509f13355bf415e35245ab2015b9569143f9efe8"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Cards_Normal.dds",
+        "size": 5592560,
+        "sha256": "d003d591b4a3dc06c242be42340f3f6288daef256332ddd77d8db9d697dadf57"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Cards_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalboard_Material_3_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "a1ba0a4d22c68331117b4ba10df624aaa34c3629deac8988318670cf0bf91df4"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalboard_Material_3_Normal.dds",
+        "size": 5592560,
+        "sha256": "3334dfa58b27b9960eb0cdf723be4aa72dc425bb811140ce9b947278e0cce0e6"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalboard_Material_3_Specular.dds",
+        "size": 2796344,
+        "sha256": "ececff66e53d666f82d08f3704fc6d5ecd8f0ea9ccb3c113a44f978a34aff46c"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_1_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "067b87bfce27ec26dcbafe9887aa3ae38a4c70e16f5e4ed0c129904fa2f6eb9a"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_1_Normal.dds",
+        "size": 5592560,
+        "sha256": "cebc6d8d31f4812e70ee54216d478273b2de9b179f0e48ee03dd135c2bd93725"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_1_Specular.dds",
+        "size": 2796344,
+        "sha256": "b36cbd880d316aeefd60bcd9b034f1257f518729726d8894a8368b021e15915e"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Material_6_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "43bfeeb29adbf296d11abd72be5a3610a2e1511c91e6336a31204ed13c82ef44"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Material_6_Normal.dds",
+        "size": 5592560,
+        "sha256": "4029983406416bdd496106ccc3128c52cfe4fa5208044b3016534fa68558ea2d"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Material_6_Specular.dds",
+        "size": 2796344,
+        "sha256": "7fc612aba7641ccb8737ef9e899afbf4ff56df208c57bbcd71a19fe78056f5d7"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Sign_2_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "e2103852095eb127b7933500b6afcaff5f52f36ac966d17497ccc6ad49b01c90"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Sign_2_Normal.dds",
+        "size": 5592560,
+        "sha256": "7715aaf009cc87bc07e4a2df7cd4ba7119cd5e6bdc69d168627236e05a9fd9a0"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Sign_2_Specular.dds",
+        "size": 2796344,
+        "sha256": "562c8cedbb5c730d653bbb5f103578487b07f679ec3a5da8afea93a664b75d08"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Sign_4_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "c14d7fa9f978e582ebb47ccffc3b3f7a1eacac0e7dc43090bb5913cd9a336b43"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Sign_4_Normal.dds",
+        "size": 5592560,
+        "sha256": "978fea75c7e8e9db5804768c1647e9a6a2c0db15df1dd3210f3e8208968f8ad7"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Sign_4_Specular.dds",
+        "size": 2796344,
+        "sha256": "82118db23265861ba4db9ecc0c8dac565e315fd2b380656523f1731bb255c816"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Sign_5_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "2b4c91b283b8efd0ef1f235489e5d66f32adbb1372256b0b13528a0852d34fc3"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Sign_5_Normal.dds",
+        "size": 5592560,
+        "sha256": "978fea75c7e8e9db5804768c1647e9a6a2c0db15df1dd3210f3e8208968f8ad7"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Sign_5_Specular.dds",
+        "size": 2796344,
+        "sha256": "31906bd6082e290d0e150244f2a34ce178fde1a89d77fc4c0b9d3014b65b72b7"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Sign_7_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "ac5b0f8ddaa84bde8747d025926f7b2df6da18562d1780081cbcc300cb2de75a"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Sign_7_Normal.dds",
+        "size": 5592560,
+        "sha256": "4029983406416bdd496106ccc3128c52cfe4fa5208044b3016534fa68558ea2d"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Chalkboard_Sign_7_Specular.dds",
+        "size": 2796344,
+        "sha256": "fd2111b355d6b72de204118eeb685e5fec7150d9fd9ed8e22efade4eee867d5e"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/DumpsterBrown_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "bc1702771141722f0e79f3349b79a59d65275684b339c021ced28264cdabdd0f"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/DumpsterBrown_Normal.dds",
+        "size": 5592560,
+        "sha256": "c386eb913b6ad2317819bb9055ae2fc3de4671a9f99d8d96ce8ee57c71988fdd"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/DumpsterBrown_Specular.dds",
+        "size": 2796344,
+        "sha256": "ee96be64dcaa92022102a55a3b8c990d75c743bfcc88cf36a5394de5d82856ef"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Light_2_BaseColor.dds",
+        "size": 496,
+        "sha256": "4cc281acfbad537142b63395c870041847b604228f90f5b24ef75ff46d7a764b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Light_2_Inst_BaseColor.dds",
+        "size": 496,
+        "sha256": "4cc281acfbad537142b63395c870041847b604228f90f5b24ef75ff46d7a764b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Light_2_Inst_Emissive.dds",
+        "size": 496,
+        "sha256": "98b342668d54b2bb000d0eaea4e30b150e7cec3805bd2ade23070d60c276df50"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Light_2_Inst_Normal.dds",
+        "size": 144,
+        "sha256": "4b8431bd4379641037c0214a5707d948951d679462acc59a7a525e30b0aeadb5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Light_2_Inst_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Light_2_Normal.dds",
+        "size": 144,
+        "sha256": "4b8431bd4379641037c0214a5707d948951d679462acc59a7a525e30b0aeadb5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Light_2_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Light_Inst_BaseColor.dds",
+        "size": 496,
+        "sha256": "cd3b8f9df71e9d735132dc3fbc6d096d960ce636811ab90e1b914ee7cb21e834"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Light_Inst_Emissive.dds",
+        "size": 496,
+        "sha256": "bc1e06456a400ec385c26a9693d9923a607cee30528de6cac7de2f82702088da"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Light_Inst_Normal.dds",
+        "size": 144,
+        "sha256": "4b8431bd4379641037c0214a5707d948951d679462acc59a7a525e30b0aeadb5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Light_Inst_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Window_2_Inst_BaseColor.dds",
+        "size": 496,
+        "sha256": "f65a6313360305dfa01b01dba0f428bcb8ee3661e103b6b762fe4041711791ae"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Window_2_Inst_Emissive.dds",
+        "size": 2796344,
+        "sha256": "fb758e38b32611a6011b1c417d9e9de99c2c418cefcd16e522e8d57a178945e1"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Window_2_Inst_Normal.dds",
+        "size": 144,
+        "sha256": "4b8431bd4379641037c0214a5707d948951d679462acc59a7a525e30b0aeadb5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Window_2_Inst_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Window_Inst_BaseColor.dds",
+        "size": 496,
+        "sha256": "f65a6313360305dfa01b01dba0f428bcb8ee3661e103b6b762fe4041711791ae"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Window_Inst_Emissive.dds",
+        "size": 2796344,
+        "sha256": "5070c612f1bbbdf8b298c652270b71f591371e668111b0a89213dc7dc05a7e93"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Window_Inst_Normal.dds",
+        "size": 144,
+        "sha256": "4b8431bd4379641037c0214a5707d948951d679462acc59a7a525e30b0aeadb5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Emissive_Window_Inst_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/EuropeanLindenBark_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "f62fb34b188c480b8037cd39afb1e24e4b4a0b5e82b509a083b0b7ad884c2ed5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/EuropeanLindenBark_Normal.dds",
+        "size": 5592560,
+        "sha256": "a7a8dcf7d23bb999c48a8e8f11e8140c68c171298abb9b1a45c32efae93b01ab"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/EuropeanLindenBark_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/EuropeanLindenLeaf_2_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "458abe5c9e30a8ef6b94f219cca7c16f853f851beb97de25f17972caa46cedc0"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/EuropeanLindenLeaf_2_Normal.dds",
+        "size": 5592560,
+        "sha256": "ccaed46656e7e2a41ac173336e9b66c46ce98453b937e63296de4a5c21927275"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/EuropeanLindenLeaf_2_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/EuropeanLindenLeaf_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "121607d24c61666696566154e9f65b7b096b4027fc2285346781a61c8f4de10a"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/EuropeanLindenLeaf_Normal.dds",
+        "size": 5592560,
+        "sha256": "c805e85d8096564551b267c69917fae240921c12a64475ba68a28e78966fd46a"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/EuropeanLindenLeaf_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Falcor_Awning_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "f32d3927835b114554b01f35b8e4ef08cabdc73e1212c9572b1f30677168f4d3"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Falcor_Awning_Normal.dds",
+        "size": 5592560,
+        "sha256": "bca914c52b71ec3c4ec345897a4509506c9548bb415fbd3501af11bd6f3ac78c"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Falcor_Awning_Specular.dds",
+        "size": 2796344,
+        "sha256": "3c798e48f2b0ca6f7cddc2aa4a59566b1c9bb887308fd97e79321cc1e250a26c"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Floor_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "22c8111e9beb93e72d6f9c01a46347ea5bbc56d995ac807117fc8126876774a5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Floor_Normal.dds",
+        "size": 5592560,
+        "sha256": "469075219b384353c46d99319f4aa027683648dd5057e556d96f07d69405ed6c"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Floor_Specular.dds",
+        "size": 2796344,
+        "sha256": "7851906103c1fceea2338c948b23f1d771f43f4ea3e3d2c621b7be4118adcb6b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/FlowerStem_05_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "cb171c190152e6803c8082ea4cd9bb12fd6b6987270b9f5e3cc05a5fde211691"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/FlowerStem_05_Normal.dds",
+        "size": 5592560,
+        "sha256": "96d41932e4e9fcbaf5d325b867cbce52b7bb6025c9b9d4dc29cd125187a86bae"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/FlowerStem_05_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/foliage_ground_cover_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "3fecc562ba8c76a032f94022b7d90b02f035eb51b0e326eeb54e95008f4c15de"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/foliage_ground_cover_Normal.dds",
+        "size": 5592560,
+        "sha256": "354c877ca508023e9a7e86d3f0704593f03609f7c5b319bca62d23074c61e0f3"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/foliage_ground_cover_Specular.dds",
+        "size": 2796344,
+        "sha256": "f152129d912954cf65875412f49b6bad1f0dadd1cd8d6c1d20d4c52a2142a52c"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/frames_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "12db6744f107e492127bff64e9c158ea0a10a72a33faf3e696e99703ea4ae85b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/frames_Normal.dds",
+        "size": 5592560,
+        "sha256": "fd66c36235357cfe9142c9e3f197334845e0b6f39903f5e2eac42cb06ce9ee6f"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/frames_Specular.dds",
+        "size": 2796344,
+        "sha256": "a0c27bef634295c09796f60f386ddf9c1e28abee5ee3d88e09b5816b343a7fa1"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Frames_Trim_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "602670a9973978e34fc061c8fecb75a6e9a2f4c6d68e39785658ce72cd3c36fd"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Frames_Trim_Normal.dds",
+        "size": 5592560,
+        "sha256": "f03587ffb5856e58c3d98c3c6a50718823dd66fc258b0585d85d930b84107e36"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Frames_Trim_Specular.dds",
+        "size": 2796344,
+        "sha256": "cddbea46d3d70fa2575a54f7a3a43aa4f9cd053bdbb2a4316c4bb77194727011"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Glass_Roof_Awning_Red_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "f406ae1c281d253ff4f4c6e7d35430a247d407153c14bfeba3855a3f3ce9a0b8"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Glass_Roof_Awning_Red_Normal.dds",
+        "size": 5592560,
+        "sha256": "fa68e6484c13e1460a5e2fabfa1cc95b4b353a6ac705ddba06b73d828d09f1d4"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Glass_Roof_Awning_Red_Specular.dds",
+        "size": 2796344,
+        "sha256": "c02625b96caa43bb50a857805f4d08fb88ec0921093542d3b703002e32faa3c8"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Struts_Blue_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "e84aa8e4fb88b7e775e17b49b4e1cd9850f45f1b05a339ae5fd1a9ea92921830"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Struts_Blue_Normal.dds",
+        "size": 5592560,
+        "sha256": "affca4aa19f51dd4cb52e8938d931576971d21581154ccd19f753684280704bd"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Struts_Blue_Specular.dds",
+        "size": 2796344,
+        "sha256": "0b3395ebb56502c70866fad51a74d9b1335387fbc56260a57a54c90a50f4d1ba"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Struts_Green_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "366ceecacb9cc5b8d4ea0efb1e668b9b645c78f37709ef090793ce4be3c773eb"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Struts_Green_Normal.dds",
+        "size": 5592560,
+        "sha256": "affca4aa19f51dd4cb52e8938d931576971d21581154ccd19f753684280704bd"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Struts_Green_Specular.dds",
+        "size": 2796344,
+        "sha256": "0b3395ebb56502c70866fad51a74d9b1335387fbc56260a57a54c90a50f4d1ba"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Struts_Red_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "4333b9ff54051288d51f30163b6cbbe97a7101728f8d9706b81f20c395f603b2"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Struts_Red_Normal.dds",
+        "size": 5592560,
+        "sha256": "affca4aa19f51dd4cb52e8938d931576971d21581154ccd19f753684280704bd"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Generic_2_Struts_Red_Specular.dds",
+        "size": 2796344,
+        "sha256": "0b3395ebb56502c70866fad51a74d9b1335387fbc56260a57a54c90a50f4d1ba"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/glass_BaseColor.dds",
+        "size": 496,
+        "sha256": "66694f280627afcbec4f83957a585461b5e45d565a66f15684116f29493ef384"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/glass_Normal.dds",
+        "size": 5592560,
+        "sha256": "85d18cccfcdd39a35ff125a63ec0e8a71bc8a1255b749aefed6534b4bc4b3bcf"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Glass_Signs_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "19a844049ce5887a5bf31dac8e362679f636d9db683417eb50d5eedde42a9b3d"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Glass_Signs_Normal.dds",
+        "size": 5592560,
+        "sha256": "64be59badbdb620592f8c645cd4ddc3c8b72aeff4e44f346ddc09cb7bb0f51e7"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Glass_Signs_Specular.dds",
+        "size": 2796344,
+        "sha256": "71e4d7a21925299b04bf4af5ec3164be357e8f74d4879622aa395b009f0ea37d"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/glass_Specular.dds",
+        "size": 496,
+        "sha256": "f65a6313360305dfa01b01dba0f428bcb8ee3661e103b6b762fe4041711791ae"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Grass_blades_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "c81c8286d1ea54697b8fa92dfa7b12d02999e21180aa769f5248dfc41e947ffa"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Grass_blades_Normal.dds",
+        "size": 5592560,
+        "sha256": "85d18cccfcdd39a35ff125a63ec0e8a71bc8a1255b749aefed6534b4bc4b3bcf"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Grass_blades_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Grass_Patterned_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "5f93a6ec234eebef68cce5df0c2a9b64156ab631fad2752f3447d7acc816c056"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Grass_Patterned_Normal.dds",
+        "size": 5592560,
+        "sha256": "1679171f669086fe3c95bc7ec3c1cfa134353dc1f2d3a9986817834f284a992e"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Grass_Patterned_Specular.dds",
+        "size": 2796344,
+        "sha256": "29a0c3f2400a987a428114fadf83744f45be5c2392193aa61cd19debbcc88a0e"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Green_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "3c4a9f6a931246a5b3629046d2f9420ddd9726c67c5f9eb19921a74b3821c397"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Green_Normal.dds",
+        "size": 5592560,
+        "sha256": "28b714f512ee2ba9933e3c50d3712a80226e0864939eb9ce0b5fbedb690c2483"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Green_Specular.dds",
+        "size": 2796344,
+        "sha256": "28dbab507399688bbcc3bf26b5a62271936cb2ec7aa18a37f9e84342432fedb5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Hedge_Base_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "b2102ea3da7919cb13f163b561c3dc6142bde94ebed5c98f5e17f74baf18708d"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Hedge_Base_Normal.dds",
+        "size": 5592560,
+        "sha256": "207d6b302ea148d1d14705ad6c482aab607a68866fc2aea31423de3d04c8824d"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Hedge_Base_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Hedge_Leaves_1_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "ed613e959a3335ab70bb24ac57359588dc0e7197ef0758b6dcae975bfc5a8ec7"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Hedge_Leaves_1_Normal.dds",
+        "size": 5592560,
+        "sha256": "76eb08d74216b573205fea445ceaae371cef5b038b2162dcb614b70411fe9c6f"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Hedge_Leaves_1_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Hedge_Leaves_3_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "ed613e959a3335ab70bb24ac57359588dc0e7197ef0758b6dcae975bfc5a8ec7"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Hedge_Leaves_3_Normal.dds",
+        "size": 5592560,
+        "sha256": "fc89da291288489ea89601a3690944b1d3877eb7a962abf3735e14708c944606"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Hedge_Leaves_3_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_arch_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "936e3afe70924afbc7c0346c52c8f8b9e8198f79667348289ee7ca761d39c5b4"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_arch_Normal.dds",
+        "size": 5592560,
+        "sha256": "77234bddea233d4125070788c400d0745a7fa8d1e59be1833b68e6e412c11cec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_arch_Specular.dds",
+        "size": 2796344,
+        "sha256": "5303411f5eaf33a854290604a487941f9da2963297285b6f3128379dc22761cc"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_deco_awnings_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "d5e4abbf75325587b83b74dc6933a8c3a9569874c9a1192a5692275abcff2eac"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_deco_awnings_Normal.dds",
+        "size": 5592560,
+        "sha256": "08e5bb8875e9945fb84ff15720a9de03f9441ca8bb684584cfb6bed12d3ca8e7"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_deco_awnings_Specular.dds",
+        "size": 2796344,
+        "sha256": "f547ec0a931ada074eee079971c442ba7468616dde07a7dcb65e62862ea2d60b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_frames_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "110e4995f66ad1d9779cb1fa0cb09ff2e2d50fbbc812181758e13537e4747c15"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_frames_Normal.dds",
+        "size": 5592560,
+        "sha256": "590da5d68464b41039620d0127a2a854fe5916775a73dda25c11908def6ad501"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_frames_Specular.dds",
+        "size": 2796344,
+        "sha256": "c0f526e0817d7a87d5cd83eaa71f8da2abeb34e2877ae2193aafbc3f96cb52f7"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_moulding_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "cf21e37237b78b1f90310774cfe0537862428764e63024d66ed52ec8f0b3d0d0"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_moulding_Normal.dds",
+        "size": 5592560,
+        "sha256": "8ddd327c31fff6a8bd065843bdf76f4385fa71000f3505986a12f75c93dc6c82"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_moulding_Specular.dds",
+        "size": 2796344,
+        "sha256": "39496e38474465a90c1de58b3ae8f9f53b8437e2e25145f94b64b22567b94186"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_roof_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "8520e00085dc4f078615f00fae8f6917e05942e3992db4db43837862127ad15b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_roof_Normal.dds",
+        "size": 5592560,
+        "sha256": "1bf81c81f85239d57dd92515738b3cc220e91ed9f2068a2ab7951037bbd26305"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_roof_Specular.dds",
+        "size": 2796344,
+        "sha256": "25c26818bf90c2ee7b29625db9b9cec56b5855ab0fc1d9eb0ecd89263aec146f"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_windows_BaseColor.dds",
+        "size": 496,
+        "sha256": "66694f280627afcbec4f83957a585461b5e45d565a66f15684116f29493ef384"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_windows_Normal.dds",
+        "size": 5592560,
+        "sha256": "85d18cccfcdd39a35ff125a63ec0e8a71bc8a1255b749aefed6534b4bc4b3bcf"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/hotel_windows_Specular.dds",
+        "size": 496,
+        "sha256": "f65a6313360305dfa01b01dba0f428bcb8ee3661e103b6b762fe4041711791ae"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Hydrant_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "8c5d30bc324fe914f04abae5680587997d9218f42e43efecfb8e0d08b37f1677"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Hydrant_Normal.dds",
+        "size": 5592560,
+        "sha256": "ded5dfabed359db04eb8ccaa8458f6e00a7049bae59f2b6fd762a6c12a2456eb"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Hydrant_Specular.dds",
+        "size": 2796344,
+        "sha256": "31187bee043d22372a8182594e07caae432b3d480f66096731d28545c8b05558"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/JapaneseMapleBark_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "49f68f9f52872dc1489336d83881e836f13a1e6f018d717e3610f9340bb5caf9"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/JapaneseMapleBark_Normal.dds",
+        "size": 5592560,
+        "sha256": "6db618aaec6500837e629707461b8eeb2da02d29f2e925fd8ef707bde1825ee4"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/JapaneseMapleBark_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/JapaneseMapleLeaf_1_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "1460b12b903dff7268b10b4d0dfa2ef88751eef5af96f40763b9a62dfd3700a6"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/JapaneseMapleLeaf_1_Normal.dds",
+        "size": 5592560,
+        "sha256": "dcc77e5296425950a8fde500f5c5d62a92f46b95b5c14234c8bf71446aaf77fc"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/JapaneseMapleLeaf_1_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/JapaneseMapleLeaf_2_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "1907c4a49a9fafa92c5dffee05004dce75a8642b4cee6cb97a4dcf9831b4cb21"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/JapaneseMapleLeaf_2_Normal.dds",
+        "size": 5592560,
+        "sha256": "21f7a0a884a6f2e3b27fd80ad68df2f87532e77d5f4beb08f0e036719b9200ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/JapaneseMapleLeaf_2_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/KWOW_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "762471966e0f06ebf946fde697c969d2047e749db94a5e3548443761b1c2d375"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/KWOW_Normal.dds",
+        "size": 5592560,
+        "sha256": "c6ca11e6e9708a05f58132e2319570bdafb1f2b83bf9b1ab23c6e062d2cbcc23"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/KWOW_Specular.dds",
+        "size": 2796344,
+        "sha256": "cc72d2d5dd8d165310929cee6f86490a3bdf678e045bb181b6218218207b1dda"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Leasing_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "aa05746fa153449d61096a99bea88278c1ee4bc5fc62552a0f4af021f1483dcb"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Leasing_Normal.dds",
+        "size": 5592560,
+        "sha256": "112cf6b10696f468868cb1d1b1bf709c6fb3455ab633654ecf0ef235924b9547"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Leasing_Specular.dds",
+        "size": 2796344,
+        "sha256": "54d52fa0b131fa19e5122e324214f8cb4824a19140e0725f8451f15f3421711a"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Leaves_2_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "88d7a333bc70c05035a6e9010d7833321a67964f77de8d2f1823206f0dbf6c18"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Leaves_2_Normal.dds",
+        "size": 5592560,
+        "sha256": "2f5ca95bec2dc8f0f533122a473c8f10564ef045c77cfffab0d2f54c2651ef19"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Leaves_2_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Leaves_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "73e140089e1b0e86ea52ad9d3a7743fc37f558f9c4ac7f02a3e3647e1dc4b91f"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Leaves_Normal.dds",
+        "size": 5592560,
+        "sha256": "39e39c609ab999e18fd29e6556d9ab0d77c2f7a44d67fabd49ab20d002b76770"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Leaves_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Metal_Dividers_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "1bbf15085f81b63d41515ea999509c7a390dc1c9fcb3d68a6d9c58990288fd92"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Metal_Dividers_Normal.dds",
+        "size": 5592560,
+        "sha256": "392c95a333896a8004e66ff33e571a4558236bfbddd414ee73e362e9b151f5b1"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Metal_Dividers_Specular.dds",
+        "size": 2796344,
+        "sha256": "f7a760b8564c81f0fb7ddae60839b539d499329e9ced976199cb80fd495bb3d5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/moulding_signs_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "ef37f9f00531428f1b115d5f690279c0afadb0dc2ec256dcb118bf8612feff37"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/moulding_signs_Normal.dds",
+        "size": 5592560,
+        "sha256": "5baf4d06ec4fc181e7ac4d2bc69a74bb57cbd4ee7698400b078555f5e564316b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/moulding_signs_Specular.dds",
+        "size": 2796344,
+        "sha256": "351ca0a6a087dc4a9d613a06c879edef8227d5a47ab20871a8a1ddcc1d6a4d45"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/OpenHouse_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "4754ef31a34644524800a42e617a94fbc9a8ee0533eeaf221d184b091282bde9"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/OpenHouse_Normal.dds",
+        "size": 5592560,
+        "sha256": "44dd5c42a32ec9059ac4e5b86d98df7a515b275dfa249cf41bf44661e597f3e9"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/OpenHouse_Specular.dds",
+        "size": 2796344,
+        "sha256": "77899f6b44a707710965614d8323e535de1a10f333565b921168ddca14f4e2e8"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Open_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "78349f346031532131fcb2307d092d959023e38b4feed0031c43d4dfb3420297"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Open_Normal.dds",
+        "size": 5592560,
+        "sha256": "e2694da5a32509add57f53fa7862b3093f72899b88af65b3a63395f3a24b3d37"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Open_Specular.dds",
+        "size": 2796344,
+        "sha256": "855b63e6dd8a9b3398043323c97ff5ed730ad4ffa89aa17fa0568be3bdbd1b9a"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Painted_Metal_BaseColor.dds",
+        "size": 496,
+        "sha256": "f65a6313360305dfa01b01dba0f428bcb8ee3661e103b6b762fe4041711791ae"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Painted_Metal_Normal.dds",
+        "size": 144,
+        "sha256": "4b8431bd4379641037c0214a5707d948951d679462acc59a7a525e30b0aeadb5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Painted_Metal_Specular.dds",
+        "size": 2796344,
+        "sha256": "1c9bceb1b5264bf1c632e8c9854f37fa067df48c07a900b7ec95b44f587d78cf"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/ParkingMeter_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "62e084e7b3550d429fc289649e4a51c71ec90cca98e8cb8d7d06fd4a83c024bc"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/ParkingMeter_Normal.dds",
+        "size": 5592560,
+        "sha256": "cc79df42482a696aa322135264c2c7482c3f9daf900e03ca778827126a862136"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/ParkingMeter_Specular.dds",
+        "size": 2796344,
+        "sha256": "7073f178352bff442837df1e8a9bcbde4be074436c6446877170033c2d61ba13"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Picnic_Table1_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "9055f9d3fc5d27e2e2494f1e4ccfbf964eefa267686c594e79c476cb462b43c4"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Picnic_Table1_Normal.dds",
+        "size": 5592560,
+        "sha256": "5e2d2f50d5a25742306b23902604251618a07ab6b8b54bd57ecac60eb844a0de"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Picnic_Table1_Specular.dds",
+        "size": 2796344,
+        "sha256": "9b330ce6bdaec46471efa3717585b672bde013cf315c6e24d1cc6a37c3820ea1"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/PineForestFloor_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "4cd3b96491df27e96b69bc85dd299723abcc86d53a5ff9db9516b35e77931acd"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/PineForestFloor_Normal.dds",
+        "size": 5592560,
+        "sha256": "6ca8d12f479daa7ef8ded323459a588d4c313c3340c614dfddd5159567dcd81e"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/PineForestFloor_Specular.dds",
+        "size": 2796344,
+        "sha256": "9ff550ab36691fada467f081db6ca616c67700dd1bd30d243d8a99ce34488cbb"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Pink_Flower_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "7cd2566bd296ca5c3e757fb6ee2339743ed5fd04b971873f86141c2866e31e19"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Pink_Flower_Normal.dds",
+        "size": 5592560,
+        "sha256": "63f67b76a775ab64056b1f9f2acfd9370f386b3d1576494c84d0144e3b99d0e3"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Pink_Flower_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Planter_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "4fc32d92133a7fbfdb1ac9cdd2b67f1c5ea0c36eb232398c408d8f06a0b1c797"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Planter_Normal.dds",
+        "size": 5592560,
+        "sha256": "4aa6439acb88052c34a60668d03d651db55da368099743f2bf5f48f4cbbc5c96"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Planter_Specular.dds",
+        "size": 2796344,
+        "sha256": "d9ab0fcc57c97b50209d8c591a8b9875819701372c19dafb9f7b992bfcfabd82"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/PoleBanner_1_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "3724c4fb5bc521ab6ab271ed1e8c49dc42869db4103aba7957ebfb3636eda5b3"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/PoleBanner_1_Normal.dds",
+        "size": 5592560,
+        "sha256": "4ed971c642d213865fbda620ad1a62b62a6d0f77e6d066ea4857ca9cabffe72a"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/PoleBanner_1_Specular.dds",
+        "size": 2796344,
+        "sha256": "59a6cd422cf53b7c3c87ddd0c3d25dee0e2aa24996daaa14c85f6d3c2a08d35a"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Railing_Black_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "700f352a42f4d83bd3d9933c60e0409a0f4a21509bb5b76ae5bdba322a597cef"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Railing_Black_Normal.dds",
+        "size": 5592560,
+        "sha256": "e1462c2f4e5de55f474d25c580188b83864be0deecb9fac1448c91f119cecb6a"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Railing_Black_Specular.dds",
+        "size": 2796344,
+        "sha256": "f4ca213b78249733c4d6255c3677c5fb0aa6aaad6d33a795442fc14462e0043b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Recycling_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "946b7fd8cdf370e587b62130ab9ff27e3c5aac666b94d0553bb10b0c561a8e62"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Recycling_Normal.dds",
+        "size": 5592560,
+        "sha256": "49fff619f999f7e6de34318a46abffbe6514ed9253b4590a0fea57db925d5a64"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Recycling_Specular.dds",
+        "size": 2796344,
+        "sha256": "46fa83d19b306354403bc1e1d82c4d73042fe90515817bf2f744fdc25b65374b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Red_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "e2e418718e00da3511619e2a286362d2e310ec107282fd59feae7469c950fb9e"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Red_Normal.dds",
+        "size": 5592560,
+        "sha256": "28b714f512ee2ba9933e3c50d3712a80226e0864939eb9ce0b5fbedb690c2483"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Red_Specular.dds",
+        "size": 2796344,
+        "sha256": "28dbab507399688bbcc3bf26b5a62271936cb2ec7aa18a37f9e84342432fedb5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Road_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "fb2e10840257dc9db9acb2def7d61e1c0dde760e9327f2a55df1f3014a672639"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Road_Normal.dds",
+        "size": 5592560,
+        "sha256": "cd1a797dacf2ea6fb18521223895ab03c0fcbe429b40a49a4229dbbeb86a827e"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Road_Specular.dds",
+        "size": 2796344,
+        "sha256": "1fa548e423b035076e08e546aa3b0574fd8b10100ddc73cfbec22cf0a75b6ade"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Roof_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "6efeef7ce8c07ac58005509642cc32c98cb937325e107eee963fe3e7b487ebd4"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Roof_Normal.dds",
+        "size": 5592560,
+        "sha256": "83b1f2d4a0b4acebfbabc4f49937b2c3bf92f1b2e3269d9526ebb8b102bf294e"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Roof_Specular.dds",
+        "size": 2796344,
+        "sha256": "132f36a13b986d4b3a7ce79ac92033ee434c0478ad541780db819eae4bab95bc"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_1F_Concrete_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "a267f29104531bcd8771c124ad3b26c14db842d1ae26bf440bd5e5813ffb30fa"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_1F_Concrete_Normal.dds",
+        "size": 5592560,
+        "sha256": "fd709f6b2621d8b2f71810ca14adb13d966bb67cb8a49ec41acc546636bb30d9"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_1F_Concrete_Specular.dds",
+        "size": 2796344,
+        "sha256": "a2aa0714bcebcf133cf165b8719a174dc45f1d27144851f5a2e91f9db9575631"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_2F_Concrete_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "825b622f1a1dec3f83f4b3f668b890a3180e5499b041fedea63a9d4b90804c96"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_2F_Concrete_Normal.dds",
+        "size": 5592560,
+        "sha256": "f759fa24b814191a82059455b7ac8b52f4c9854ae94a0e840ddc52ec6691077e"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_2F_Concrete_Specular.dds",
+        "size": 2796344,
+        "sha256": "44dd14c999f03bfbf79c405e8de6d97cb4bffeb4c0bf1a712552ffc8f5bdb8da"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_Glass_Sign_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "34159c2454089c9853fda25ad6646ed62bb0f96f40355d32fcd1fda7e43b5d82"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_Glass_Sign_Normal.dds",
+        "size": 5592560,
+        "sha256": "a1bdb4723ddd829c6ad3ce8c7492785e47c7e2e513edd376c975c1ba3d4edaf4"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_Glass_Sign_Specular.dds",
+        "size": 2796344,
+        "sha256": "e231f5f6f1f6c45cfac3bcaa71de4db8de88cb2b96c87b4163be63d1a5626518"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_Trim_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "dbf29bf1f24695df7d7cc73147198a80d29b4f57a76a58a0562c3a3db5ef41d3"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_Trim_Normal.dds",
+        "size": 5592560,
+        "sha256": "1ea89a1e8f5bcb4738d607b77a6cbd390020e827d1ee51fe2d867edf88c01219"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_Trim_Specular.dds",
+        "size": 2796344,
+        "sha256": "8e8bf97f5252e1eece1a2c4acd49ab9dd73c7d702150fe7b1556fc1c70e2a33d"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_Wood_Metal_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "a7d7147a3e43cc41d5aca8257b7228a9118e557bc04586dc58a84434e0a20512"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_Wood_Metal_Normal.dds",
+        "size": 5592560,
+        "sha256": "8cf895e20ca21d157a519eb5ea2f1063a6cd6b1d3ddefe496ada680d566dcbb7"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sheleg_Wood_Metal_Specular.dds",
+        "size": 2796344,
+        "sha256": "a7bc384d4c9e17ed1176e4619efeac6eab3d9935e9b54eac602bbd10cea61fd0"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Signal_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "a3c772a896b16dbf68a13395b89e7d2bd095d7160713043241453bfdfc1cc75c"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Signal_Emissive.dds",
+        "size": 2796344,
+        "sha256": "39557001b16fb464e030b179136797a73aacfc44d9924a9f6cc12f45441474b4"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Signal_Normal.dds",
+        "size": 5592560,
+        "sha256": "18e351a67dc13e984cee722a5dba28eb33cb281c3a38d2c72f12ad03a0678537"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Signal_Specular.dds",
+        "size": 2796344,
+        "sha256": "5b5b056c38bc03ef332470a060d52953d94d440649d97ffbe94b9cf4977e0941"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sign_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "bd44d44568365ce45aa3a1910eb3701b4161c16e086974ab52f47e08410307e1"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sign_Normal.dds",
+        "size": 5592560,
+        "sha256": "7c3a6d27314118ab35bd03315931a97e101e63f1838e65ff67d182e61b641901"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Sign_Specular.dds",
+        "size": 2796344,
+        "sha256": "3783237bca177d48af412d0a76d4152118887ceae8d324ea0f97f126a1f2504e"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/SteelBench_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "d0c6696f4def58309affbbbbcff67c08d2edf36e99f57bb8386a6deb67f4ee07"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/SteelBench_Normal.dds",
+        "size": 5592560,
+        "sha256": "8736887f2fea0750770182271d07f3a378cb755147670da281ded403fd5036df"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/SteelBench_Specular.dds",
+        "size": 2796344,
+        "sha256": "b6b26a37974d30b061a3e6e4b602e0bca7de8eaafccde7b57ab564952c79f0df"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/StreetSigns_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "261972a8f3aee238a2c1f37136046a349e6b42eef7d99368d088b291cc613521"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/StreetSigns_Normal.dds",
+        "size": 5592560,
+        "sha256": "e17d04bc91913c0051a855a88459149ab3cee8b4d03af8cd393154c3f2057fbd"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/StreetSigns_Specular.dds",
+        "size": 2796344,
+        "sha256": "f8568135aef5b92fc6b9bcfa518152469438f5eae445d98c54a7c5f6f00b7388"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Moulding_Big_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "d745903e8316f2dac35fc350afe38525f7737774ff29509f19bcb4238c2a6a6b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Moulding_Big_Normal.dds",
+        "size": 5592560,
+        "sha256": "f2bd9d417b310ac400eec36634912aad0a0031310b07a9c090fff739844f5b82"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Moulding_Big_Specular.dds",
+        "size": 2796344,
+        "sha256": "752b7e7fb132b0734050d78bb1edf024594a0f90bdb92a0998de3ac60f3457d0"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Moulding_Observation_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "1d7bf50ae4651f3d61dd7c94ca3144d78d04a3728cf07d8111e837d985ac21e5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Moulding_Observation_Normal.dds",
+        "size": 5592560,
+        "sha256": "06f222ed981949a31a8fdaeef847d789937b369433f6729eb07fc847d30c3e85"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Moulding_Observation_Specular.dds",
+        "size": 2796344,
+        "sha256": "4da5040059530840935bc7327f8fbdc925403e171174b5cf785862bb8433a410"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Moulding_Roof_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "6c5febaf43ff3161ed423be87c0b62461f2ed9d7d98a0f0fe49aed8a6e107147"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Moulding_Roof_Normal.dds",
+        "size": 5592560,
+        "sha256": "77b7e9dcce6886d1e8962342410e4cf060453a104fd6f41d7b7070592aa24c64"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Moulding_Roof_Specular.dds",
+        "size": 2796344,
+        "sha256": "91863c9cbba0dfd28ad63391f9239f8265530009ccf0ba6ba61f4b75a30e2904"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Observation_Arch_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "7b13dd6d8de678245747d4cda8d96917af500dcdd5f1768e9f7feb85374fb3aa"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Observation_Arch_Normal.dds",
+        "size": 5592560,
+        "sha256": "3a4d46875a04aa9cfc9848d59322826564b81afc5213577cf5199901e20ae00c"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Observation_Arch_Specular.dds",
+        "size": 2796344,
+        "sha256": "f1e2f1feac2fc5d5b7024078807c15b6598caea570d2c87dc5fdb9a5c1127f33"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Railing_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "c7298f1112df83c2877bee1b5920805c588e6e20d45f58991d8201a03c601641"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Railing_Normal.dds",
+        "size": 5592560,
+        "sha256": "4b6bec8abae6ac40f4c53f4b845779597ec5bf5190a68eac26c103807897090f"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Railing_Specular.dds",
+        "size": 2796344,
+        "sha256": "ef56c5986efafd8164984adcc792c5b67da9e96c441b575637300a5df3bc21e0"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Roof_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "ee7b27e71890b40807b350c6e8d94baa02d8542e55ed0b1fda93dfbed9e2c62d"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Roof_Normal.dds",
+        "size": 5592560,
+        "sha256": "31dbae8d04b3371ffd0cc9b86288ccb07ced41d54cf774bb9d062541fca384a8"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Roof_Specular.dds",
+        "size": 2796344,
+        "sha256": "196857efed978d5732ede7071e470801dc7b7f88006d96797b3b7241d9a63ddf"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Top_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "64d2b88b55fbb52ccbcebce0cc7199c26ed4979e3163b363f20921e7d0259183"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Top_Normal.dds",
+        "size": 5592560,
+        "sha256": "26b5debd1cd4a3b9f498ec048969237b9c1838a12c4bb96aacb1fcf8864be6a5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Top_Specular.dds",
+        "size": 2796344,
+        "sha256": "3975767769e51ab7c9dbd890cffe9f8de6647fc335ef350e4bfb7a89a0fafdbe"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Windows_Ball_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "78be8927f77a6fc1c9ac747b9d50a25c6f047d981d16cbf6eed418de96a11290"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Windows_Ball_Normal.dds",
+        "size": 5592560,
+        "sha256": "1398dd8729c48f3b766d5528f3a3e897b93e49b74f03cc3f9cf5ff5af17d4319"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Tower_Windows_Ball_Specular.dds",
+        "size": 2796344,
+        "sha256": "dea58154496d50919eb4134e61ca6f69936f48fa2b5e8f1a17fc82c9d4e3891d"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/trampled_sand_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "63e515c06de2fdd31daedb672019a33e0c0cbca09621991f1f2ef7184ed27da5"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/trampled_sand_Normal.dds",
+        "size": 5592560,
+        "sha256": "e82653768f9b7100ea02ed1655315c66dac7a3f503b8a1fc33bebc449872af22"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/trampled_sand_Specular.dds",
+        "size": 2796344,
+        "sha256": "9bb7153a30ff03f7954dc1702d5fe5aa1d1456155119bebf6000c4ff4a635a40"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Trash_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "0f624ded8c646e5918146b4c64c905969e1aa11de7d0d115e5b482a3bfbe7d58"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Trash_Black_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "1d59fd51ed95edc74dfeec110063bbb50eed520505489ff17676e3dfc969708d"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Trash_Black_Normal.dds",
+        "size": 5592560,
+        "sha256": "c6afd1fa55b8c60a1e4c7f25614a8df8a5cc191ae31ce61315ec9e9c35783c9f"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Trash_Black_Specular.dds",
+        "size": 2796344,
+        "sha256": "3e2396d7b991043a48986a5d191974ed254a05764ac85a1b7a8328a7bef65573"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Trash_Normal.dds",
+        "size": 5592560,
+        "sha256": "c6afd1fa55b8c60a1e4c7f25614a8df8a5cc191ae31ce61315ec9e9c35783c9f"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/Trash_Specular.dds",
+        "size": 2796344,
+        "sha256": "f834565eaa1e47fc2c327f77bde49f31d3549c40796f7949a57a04ca9f1456f1"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/WhiteOakBark_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "dcc345cb618efb9646f877dac18ee8ebfa8c04f4d8e3f69ef93195f6c7155bef"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/WhiteOakBark_Normal.dds",
+        "size": 5592560,
+        "sha256": "2b8252904b338f3a2f5728fb940c55d083c70e0c4591607ad09880e1f490cad6"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/WhiteOakBark_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/White_Oak_Leaves_Hero_1_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "f8d3b82ae670f87622ee2c600196d07c98eac5efbb0fdddbc20b687c4424881b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/White_Oak_Leaves_Hero_1_Normal.dds",
+        "size": 5592560,
+        "sha256": "d25c59f3d33a6be8ea82a4a0483c997a3c440053d99ff020689782a52492bbd6"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/White_Oak_Leaves_Hero_1_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/White_Oak_Leaves_Hero_3_BaseColor.dds",
+        "size": 5592560,
+        "sha256": "f8d3b82ae670f87622ee2c600196d07c98eac5efbb0fdddbc20b687c4424881b"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/White_Oak_Leaves_Hero_3_Normal.dds",
+        "size": 5592560,
+        "sha256": "e8f7b536ef34d3395b6b944dc4d228cf77d7a14647f6a0b16b50fba8cdc0be81"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/White_Oak_Leaves_Hero_3_Specular.dds",
+        "size": 496,
+        "sha256": "9b12472151675ae46afa28d1f7e1b504a5bf8f852c13f31e745e598c1287a7ec"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/WorldGridMaterial_BaseColor.dds",
+        "size": 2796344,
+        "sha256": "f3cea6254611824546207fc64bc7b1309aec9e8333b2305bba9938751607d210"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/WorldGridMaterial_Normal.dds",
+        "size": 5592560,
+        "sha256": "c36c894ea23cf6fe417d22ddc832d5f25da59604439bafa87e857a4742d0e4eb"
+      },
+      {
+        "path": "EmeraldSquare_v4_1/Textures/WorldGridMaterial_Specular.dds",
+        "size": 2796344,
+        "sha256": "d71d2c5451f498adf90dc3e8c7b94bab419b644d0ed83ae7c870db45a3f543b1"
+      }
+    ]
+  }
+}

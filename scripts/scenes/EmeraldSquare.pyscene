@@ -8,7 +8,7 @@ from pathlib import Path
 
 asset = Path(__file__).resolve().parents[2] / "media/ORCA_EmeraldSquare/EmeraldSquare_v4_1/EmeraldSquare_Day.pyscene"
 if not asset.is_file():
-    raise FileNotFoundError("Download Emerald Square from https://developer.nvidia.com/orca/nvidia-emerald-square and extract into media/ORCA_EmeraldSquare/.")
+    raise FileNotFoundError("Emerald Square assets are missing. Run Download-SceneAssets.ps1 -Scene EmeraldSquare from the repository root.")
 sceneBuilder.importScene(str(asset))
 for camera in sceneBuilder.cameras:
     camera.animated = False

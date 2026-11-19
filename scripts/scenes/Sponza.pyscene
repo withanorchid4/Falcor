@@ -3,6 +3,8 @@ from pathlib import Path
 from falcor import Camera, DirectionalLight, PointLight, float3
 
 asset = Path(__file__).resolve().parents[2] / "media/Sponza/Sponza.gltf"
+if not asset.is_file():
+    raise FileNotFoundError("Sponza assets are missing. Run Download-SceneAssets.ps1 -Scene Sponza from the repository root.")
 sceneBuilder.importScene(str(asset))
 
 light = PointLight("Atrium Point")

@@ -75,16 +75,17 @@ private:
         bool showProbes = false;
         bool indirectOnly = false;
         bool useRTXDI = true;
-        bool useWRC = false;
-        bool wrcGroupByMaterial = true;
+        bool useWRC = false; // idTech 8 world radiance cache; DDGI + final gather only.
+        bool wrcScreenCache = true; // Final gather reads the previous frame's gather pixels first.
+        bool wrcGroupByMaterial = false; // Measured slower than one mixed dispatch (docs/IdTech8).
         uint32_t wrcStressMode = 0; // Experiment: 0 off, 1 common loop, 2 distinct loops per type.
         uint32_t wrcStressIterations = 0;
         bool wrcStressStats = false; // Wave diagnostics; disable during GPU timing.
-        float wrcCellScale = 0.1f;
-        float wrcLodDistance = 8.f; // In units of the smallest probe spacing.
-        uint32_t wrcMaxLod = 16;
+        float wrcCellSize = 0.25f;   // Base cell width in world units (idTech 8: 25 cm).
+        float wrcLodDistance = 8.f;  // World units; must stay below 64 cells for 8-bit wrapped keys.
+        uint32_t wrcMaxLod = 64;
         uint32_t wrcProbeLimit = 16;
-        uint32_t wrcTableSize = 65536;
+        uint32_t wrcTableSize = 262144; // Sponza fills ~51k slots per update; keep load below ~25%.
         uint32_t wrcMaxAge = 0;
         uint32_t wrcShadeSamples = 1;
         bool wrcBypassSharing = false; // Validation: split dispatches with original per-ray shading.
@@ -103,6 +104,19 @@ private:
     ref<ComputePass> mpWrcBuild, mpWrcPrepare, mpWrcShade, mpWrcGather;
     uint32_t mWrcTypeCount = 0;
     uint32_t getWrcDispatchCount() const { return mOptions.wrcGroupByMaterial ? mWrcTypeCount : 1u; }
+    // WRC exists only for DDGI + (non-ReSTIR) final gather; setProperties enforces it.
+    bool wrcActive() const { return mOptions.useWRC && mOptions.finalGather && !mOptions.restirGather && !mOptions.worldCache; }
+    bool screenCacheActive() const { return wrcActive() && mOptions.wrcScreenCache && mOptions.enableGI; }
+    void bindWrcLookup(const ShaderVar& root);
+    void prepareScreenCache(const uint2& frameDim);
+    float3 mWrcCamera = float3(0.f); // Camera of the latest WRC update; keys depend on it.
+    ref<Texture> mpScreenCacheColor[2], mpScreenCachePos[2];
+    uint32_t mScreenCacheWrite = 0;
+    bool mScreenCacheValid = false, mScreenCacheHalf = false;
+    float4x4 mScreenCachePrevViewProj = float4x4::identity();
+    float3 mScreenCachePrevCamera = float3(0.f);
+    uint2 mScreenCachePrevOffset = uint2(0);
+    ref<Buffer> mpFgCacheCounters;
 
     void prepareWorldCache(RenderContext* context);
     void updateWorldCache(RenderContext* context, const RenderData& data);

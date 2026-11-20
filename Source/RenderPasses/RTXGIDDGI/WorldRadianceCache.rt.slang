@@ -63,24 +63,23 @@ void traceWRC()
     hit.direction = direction;
     hit.hitT = payload.hitT;
     hit.materialID = gScene.getMaterialID(triangle.instanceID);
-    hit.normalKey = wrcPackNormal(sd.getOrientedFaceNormal());
     uint typeMapCount, typeMapStride;
     gWrcTypeMap.GetDimensions(typeMapCount, typeMapStride);
     uint materialType = uint(gScene.materials.getMaterialType(hit.materialID));
     hit.shaderBucket = materialType < typeMapCount ? gWrcTypeMap[materialType] : kWrcNoOwner;
 
-    float cameraDistance = length(sd.posW - gScene.camera.getPosition());
-    bool validDistance = isfinite(cameraDistance) && isfinite(gWrcLodDistance) && gWrcLodDistance > 0.f;
-    float lodExponent = validDistance ? floor(log2(1.f + cameraDistance / gWrcLodDistance)) : 0.f;
-    hit.lod = min(1u << uint(clamp(lodExponent, 0.f, 6.f)), max(gWrcMaxLod, 1u));
-    float3 cell = floor(sd.posW / (gWrcCellSize * float(hit.lod)));
-    // Unknown shader types or nonrepresentable cells retain the original
-    // per-ray estimator instead of accidentally aliasing a valid cache key.
-    bool quantizable = validDistance && all(isfinite(cell)) && all(abs(cell) < 2147480000.f);
+    // Lumen World Cache key: wrapped cell coordinate, distance level and normal face.
+    uint level;
+    hit.key = wrcKeyOf(sd.posW, sd.getOrientedFaceNormal(), level);
+    hit.level = level;
+    // Cells beyond 2^31 world units cannot be quantized; keep the original
+    // per-ray estimator for them. Unknown shader types do the same.
+    float3 cell = floor(sd.posW / (gWrcCellSize * float(1u << level)));
+    bool quantizable = all(isfinite(cell)) && all(abs(cell) < 2147480000.f);
     hit.cell = quantizable ? int3(cell) : int3(0);
     hit.valid = quantizable && hit.shaderBucket < gWrcTypeCount ? 1u : 2u;
     gWrcHits[linearRayID] = hit;
     InterlockedAdd(gWrcCounters[0], 1u);
-    InterlockedMax(gWrcCounters[9], hit.lod);
-    if (hit.lod > 1u) InterlockedAdd(gWrcCounters[10], 1u);
+    InterlockedMax(gWrcCounters[9], 1u << level);
+    if (level > 0u) InterlockedAdd(gWrcCounters[10], 1u);
 }

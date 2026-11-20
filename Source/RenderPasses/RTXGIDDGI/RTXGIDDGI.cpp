@@ -114,11 +114,12 @@ Properties RTXGIDDGI::getProperties() const
     p["indirectOnly"] = mOptions.indirectOnly;
     p["useRTXDI"] = mOptions.useRTXDI;
     p["useWRC"] = mOptions.useWRC;
+    p["wrcScreenCache"] = mOptions.wrcScreenCache;
     p["wrcGroupByMaterial"] = mOptions.wrcGroupByMaterial;
     p["wrcStressMode"] = mOptions.wrcStressMode;
     p["wrcStressIterations"] = mOptions.wrcStressIterations;
     p["wrcStressStats"] = mOptions.wrcStressStats;
-    p["wrcCellScale"] = mOptions.wrcCellScale;
+    p["wrcCellSize"] = mOptions.wrcCellSize;
     p["wrcLodDistance"] = mOptions.wrcLodDistance;
     p["wrcMaxLod"] = mOptions.wrcMaxLod;
     p["wrcProbeLimit"] = mOptions.wrcProbeLimit;
@@ -184,11 +185,12 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         else if (name == "indirectOnly") next.indirectOnly = value;
         else if (name == "useRTXDI") next.useRTXDI = value;
         else if (name == "useWRC") next.useWRC = value;
+        else if (name == "wrcScreenCache") next.wrcScreenCache = value;
         else if (name == "wrcGroupByMaterial") next.wrcGroupByMaterial = value;
         else if (name == "wrcStressMode") next.wrcStressMode = value;
         else if (name == "wrcStressIterations") next.wrcStressIterations = value;
         else if (name == "wrcStressStats") next.wrcStressStats = value;
-        else if (name == "wrcCellScale") next.wrcCellScale = value;
+        else if (name == "wrcCellSize") next.wrcCellSize = value;
         else if (name == "wrcLodDistance") next.wrcLodDistance = value;
         else if (name == "wrcMaxLod") next.wrcMaxLod = value;
         else if (name == "wrcProbeLimit") next.wrcProbeLimit = value;
@@ -211,10 +213,12 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         "DDGI minFrontfaceDistance must be in [0,1] times the minimum probe spacing.");
     FALCOR_CHECK(std::isfinite(next.intensity) && next.intensity >= 0.f, "DDGI intensity must be finite and nonnegative.");
     FALCOR_CHECK(all(isfinite(next.gridMin)) && all(isfinite(next.gridMax)) && all(next.gridMax > next.gridMin), "DDGI gridMax must exceed gridMin.");
-    FALCOR_CHECK(std::isfinite(next.wrcCellScale) && next.wrcCellScale >= 0.01f && next.wrcCellScale <= 2.f,
-        "WRC cell scale must be 0.01..2 times the smallest probe spacing.");
-    FALCOR_CHECK(std::isfinite(next.wrcLodDistance) && next.wrcLodDistance >= 0.1f && next.wrcLodDistance <= 128.f,
-        "WRC LOD distance must be 0.1..128 times the smallest probe spacing.");
+    FALCOR_CHECK(std::isfinite(next.wrcCellSize) && next.wrcCellSize >= 0.01f && next.wrcCellSize <= 10.f,
+        "WRC cell size must be 0.01..10 world units.");
+    // Keys keep 8 bits of each cell coordinate (Lumen World Cache layout). A level
+    // spans at most 4 * lodDistance / cellSize cells, which must stay below 256.
+    FALCOR_CHECK(std::isfinite(next.wrcLodDistance) && next.wrcLodDistance > 0.f && next.wrcLodDistance < 64.f * next.wrcCellSize,
+        "WRC LOD distance must be positive and below 64 cell sizes (8-bit wrapped cell keys).");
     FALCOR_CHECK(next.wrcMaxLod >= 1 && next.wrcMaxLod <= 64 && (next.wrcMaxLod & (next.wrcMaxLod - 1)) == 0,
         "WRC maximum LOD scale must be a power of two between 1 and 64.");
     FALCOR_CHECK(next.wrcProbeLimit >= 1 && next.wrcProbeLimit <= 64, "WRC linear probe limit must be 1..64.");
@@ -239,7 +243,10 @@ void RTXGIDDGI::setProperties(const Properties& properties)
     if (next.wrcStressMode != mOptions.wrcStressMode || next.wrcStressIterations != mOptions.wrcStressIterations)
         mWrcResetPending = true;
     if (next.wrcTableSize != mOptions.wrcTableSize) mWrcReallocate = true;
-    if (next.useWRC != mOptions.useWRC || next.wrcCellScale != mOptions.wrcCellScale ||
+    // WRC (with its screen-space cache) is only available for DDGI + final gather.
+    // ReSTIR gather and WorldCache use their own caches.
+    if (!next.finalGather || next.restirGather || next.worldCache) next.useWRC = false;
+    if (next.useWRC != mOptions.useWRC || next.wrcCellSize != mOptions.wrcCellSize ||
         next.wrcLodDistance != mOptions.wrcLodDistance || next.wrcMaxLod != mOptions.wrcMaxLod ||
         next.wrcProbeLimit != mOptions.wrcProbeLimit ||
         next.wrcTableSize != mOptions.wrcTableSize || next.wrcMaxAge != mOptions.wrcMaxAge ||
@@ -299,6 +306,7 @@ void RTXGIDDGI::setScene(RenderContext* context, const ref<Scene>& scene)
     mWrcTrace = {};
     mpWrcBuild = mpWrcPrepare = mpWrcShade = mpWrcGather = nullptr;
     mWrcReallocate = mWrcResetPending = true;
+    mScreenCacheValid = false;
     mpEnvMapSampler = nullptr;
     mpSamplerSource = nullptr;
     mReallocate = mRebuildPrograms = mResetPending = true;
@@ -438,6 +446,7 @@ void RTXGIDDGI::clearHistory(RenderContext* context)
     context->clearUAV(mpDiagnostics->getUAV().get(), uint4(0));
     mRandom.seed(1337);
     mWrcResetPending = true;
+    mScreenCacheValid = false; // Previous-frame pixels carry the discarded probe history.
     mResetPending = false;
 }
 
@@ -478,8 +487,11 @@ void RTXGIDDGI::clearWrc(RenderContext* context)
     context->clearUAV(mpWrcLastUpdate->getUAV().get(), uint4(0));
     context->clearUAV(mpWrcRadiance->getUAV().get(), float4(0.f));
     context->clearUAV(mpWrcCounters->getUAV().get(), uint4(0));
+    // Final-gather lookups stop probing at a never-written key (valid == 0).
+    context->clearUAV(mpWrcKeys->getUAV().get(), uint4(0));
     context->uavBarrier(mpWrcLastUpdate.get());
     context->uavBarrier(mpWrcRadiance.get());
+    context->uavBarrier(mpWrcKeys.get());
     mWrcResetPending = false;
     ++mWrcInvalidations;
 }
@@ -509,10 +521,11 @@ void RTXGIDDGI::bindWrcResources(const ShaderVar& root, uint32_t shaderBucket)
     cb["gWrcTableSize"] = mOptions.wrcTableSize;
     cb["gWrcMaxAge"] = mOptions.wrcMaxAge;
     cb["gWrcFrame"] = mUpdatedFrames + 1;
-    cb["gWrcCellSize"] = mOptions.wrcCellScale * std::min(mSpacing.x, std::min(mSpacing.y, mSpacing.z));
+    cb["gWrcCellSize"] = mOptions.wrcCellSize;
     cb["gWrcShadeSamples"] = mOptions.wrcShadeSamples;
     cb["gWrcBypassSharing"] = uint32_t(mOptions.wrcBypassSharing);
-    cb["gWrcLodDistance"] = mOptions.wrcLodDistance * std::min(mSpacing.x, std::min(mSpacing.y, mSpacing.z));
+    cb["gWrcLodDistance"] = mOptions.wrcLodDistance;
+    cb["gWrcCamera"] = mWrcCamera;
     cb["gWrcMaxLod"] = mOptions.wrcMaxLod;
     cb["gWrcProbeLimit"] = mOptions.wrcProbeLimit;
     cb["gWrcTypeCount"] = mWrcTypeCount;
@@ -522,6 +535,40 @@ void RTXGIDDGI::bindWrcResources(const ShaderVar& root, uint32_t shaderBucket)
     cb["gWrcStressStats"] = uint32_t(mOptions.wrcStressStats);
     cb["gWrcShaderBucket"] = shaderBucket;
     cb["gWrcRayCount"] = mOptions.rays * mOptions.counts.x * mOptions.counts.y * mOptions.counts.z;
+}
+
+// Final gather reads the cache written by the latest probe update.
+void RTXGIDDGI::bindWrcLookup(const ShaderVar& root)
+{
+    root["gWrcKeys"] = mpWrcKeys;
+    root["gWrcRadiance"] = mpWrcRadiance;
+    root["gWrcLastUpdate"] = mpWrcLastUpdate;
+    auto cb = root["WrcCB"];
+    cb["gWrcTableSize"] = mpWrcKeys ? mOptions.wrcTableSize : 0u; // 0 disables lookups until allocated.
+    cb["gWrcMaxAge"] = mOptions.wrcMaxAge;
+    cb["gWrcFrame"] = mUpdatedFrames; // Entries of the latest update carry this index.
+    cb["gWrcCellSize"] = mOptions.wrcCellSize;
+    cb["gWrcLodDistance"] = mOptions.wrcLodDistance;
+    cb["gWrcMaxLod"] = mOptions.wrcMaxLod;
+    cb["gWrcProbeLimit"] = mOptions.wrcProbeLimit;
+    cb["gWrcCamera"] = mWrcCamera;
+}
+
+void RTXGIDDGI::prepareScreenCache(const uint2& frameDim)
+{
+    const bool half = mOptions.halfResolutionGather;
+    const uint2 size = half ? max(frameDim / uint2(2), uint2(1)) : frameDim;
+    if (!mpScreenCacheColor[0] || mpScreenCacheColor[0]->getWidth() != size.x || mpScreenCacheColor[0]->getHeight() != size.y ||
+        mScreenCacheHalf != half)
+    {
+        for (uint32_t i = 0; i < 2; ++i)
+        {
+            mpScreenCacheColor[i] = mpDevice->createTexture2D(size.x, size.y, ResourceFormat::RGBA32Float, 1, 1, nullptr, kTextureFlags);
+            mpScreenCachePos[i] = mpDevice->createTexture2D(size.x, size.y, ResourceFormat::RGBA32Float, 1, 1, nullptr, kTextureFlags);
+        }
+        mScreenCacheHalf = half;
+        mScreenCacheValid = false;
+    }
 }
 
 ref<ComputePass> RTXGIDDGI::createWrcCompute(const char* entry)
@@ -579,6 +626,8 @@ void RTXGIDDGI::traceWithWrc(RenderContext* context, const RenderData& data)
     }
     if (mWrcReallocate) allocateWrcResources();
     if (mWrcResetPending) clearWrc(context);
+    // Distance levels are relative to this camera; final gather uses the same one.
+    mWrcCamera = mpScene->getCamera()->getPosition();
     context->clearUAV(mpWrcOwners->getUAV().get(), uint4(0xffffffffu));
     context->clearUAV(mpWrcCounters->getUAV().get(), uint4(0));
     context->clearUAV(mpWrcActiveCounts->getUAV().get(), uint4(0));
@@ -636,7 +685,7 @@ void RTXGIDDGI::traceWithWrc(RenderContext* context, const RenderData& data)
 
 void RTXGIDDGI::drawWrcCells(RenderContext* context, const ref<Texture>& color)
 {
-    if (!mOptions.showWrcCells || !mOptions.useWRC || mOptions.wrcBypassSharing || !mUpdatedFrames ||
+    if (!mOptions.showWrcCells || !wrcActive() || mOptions.wrcBypassSharing || !mUpdatedFrames ||
         mWrcReallocate || mWrcResetPending || !mpWrcKeys || !mpWrcDebugDepth) return;
     FALCOR_PROFILE(context, "WRCCellOverlay");
     if (!mpWrcDebugDraw)
@@ -673,7 +722,7 @@ void RTXGIDDGI::drawWrcCells(RenderContext* context, const ref<Texture>& color)
     auto cb = root["DebugCB"];
     cb["gViewProj"] = mpScene->getCamera()->getViewProjMatrix();
     cb["gCameraPosition"] = mpScene->getCamera()->getPosition();
-    cb["gBaseCellWidth"] = mOptions.wrcCellScale * std::min(mSpacing.x, std::min(mSpacing.y, mSpacing.z));
+    cb["gBaseCellWidth"] = mOptions.wrcCellSize;
     cb["gTableSize"] = mOptions.wrcTableSize;
     cb["gLodFilter"] = mOptions.wrcCellsLod;
     cb["gXRay"] = mOptions.wrcCellsXRay;
@@ -745,6 +794,12 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     changed |= ray.program->addDefine("OUTPUT_RESTIR_DEBUG", data.getTexture("restirDebug") ? "1" : "0");
     changed |= ray.program->addDefine("RESTIR_MOTION", data.getTexture("mvec") ? "1" : "0");
     changed |= ray.program->addDefine("RESTIR_GATHER", restirActive() ? "1" : "0");
+    // Only the camera programs read the final-gather caches; probe/WRC tracers never do.
+    const bool gatherProgram = &ray == &mRender || &ray == &mHalfGather;
+    const bool useWrcLookup = gatherProgram && wrcActive() && mOptions.enableGI;
+    const bool useScreenCache = gatherProgram && screenCacheActive();
+    changed |= ray.program->addDefine("FINAL_GATHER_WRC", useWrcLookup ? "1" : "0");
+    changed |= ray.program->addDefine("FINAL_GATHER_SCREEN_CACHE", useScreenCache ? "1" : "0");
     if (changed) ray.vars = nullptr;
     if (!ray.vars)
     {
@@ -753,6 +808,16 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     }
     auto root = ray.vars->getRootVar();
     if (mOptions.worldCache) bindWorldCache(root);
+    if (useWrcLookup) bindWrcLookup(root);
+    if (useWrcLookup || useScreenCache) root["gFgCacheCounters"] = mpFgCacheCounters;
+    if (useScreenCache)
+    {
+        const uint32_t read = mScreenCacheWrite ^ 1u;
+        root["gScreenCacheColor"] = mpScreenCacheColor[read];
+        root["gScreenCachePos"] = mpScreenCachePos[read];
+        root["gScreenCacheColorOut"] = mpScreenCacheColor[mScreenCacheWrite];
+        root["gScreenCachePosOut"] = mpScreenCachePos[mScreenCacheWrite];
+    }
     root["DDGIVolumes"] = mpVolume;
     root["gRayData"] = mpRayData;
     root["gIrradiance"] = mpIrradiance;
@@ -811,10 +876,17 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     cb["gEnableGI"] = mOptions.enableGI;
     cb["gIndirectOnly"] = mOptions.indirectOnly;
     cb["gUseRTXDI"] = mOptions.useRTXDI;
-    cb["gShowWrcCells"] = bool(mpWrcDebugDepth) && (mOptions.showProbes || (mOptions.showWrcCells && mOptions.useWRC && !mOptions.wrcBypassSharing));
+    cb["gShowWrcCells"] = bool(mpWrcDebugDepth) && (mOptions.showProbes || (mOptions.showWrcCells && wrcActive() && !mOptions.wrcBypassSharing));
     cb["gHistoryValid"] = mUpdatedFrames > 0;
     cb["gIntensity"] = mOptions.intensity;
     cb["gProbeRadius"] = std::min(mSpacing.x, std::min(mSpacing.y, mSpacing.z)) * 0.08f;
+    cb["gScreenCachePrevViewProj"] = mScreenCachePrevViewProj;
+    cb["gScreenCachePrevCamera"] = mScreenCachePrevCamera;
+    cb["gScreenCacheValid"] = useScreenCache && mScreenCacheValid;
+    cb["gScreenCachePrevOffset"] = mScreenCachePrevOffset;
+    // Nearest half-resolution sample is up to ~1.5 gather pixels away; at 1080p and a
+    // 67 degree FOV that is ~0.4% of the camera distance. Allow slanted surfaces.
+    cb["gScreenCacheTolerance"] = 0.02f;
 }
 
 void RTXGIDDGI::updateProbes(RenderContext* context)
@@ -933,7 +1005,7 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
     if (!mOptions.worldCache && mOptions.update)
     {
         FALCOR_PROFILE(context, "ProbeUpdate");
-        if (mOptions.useWRC) traceWithWrc(context, data);
+        if (wrcActive()) traceWithWrc(context, data);
         else
         {
             FALCOR_PROFILE(context, "OriginalTrace");
@@ -947,14 +1019,25 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
             updateProbes(context);
         }
     }
-    if (mOptions.showProbes || (mOptions.showWrcCells && mOptions.useWRC && !mOptions.wrcBypassSharing))
+    if (mOptions.showProbes || (mOptions.showWrcCells && wrcActive() && !mOptions.wrcBypassSharing))
     {
         const auto size = data.getDefaultTextureDims();
         if (!mpWrcDebugDepth || mpWrcDebugDepth->getWidth() != size.x || mpWrcDebugDepth->getHeight() != size.y)
             mpWrcDebugDepth = mpDevice->createTexture2D(size.x, size.y, ResourceFormat::R32Float, 1, 1, nullptr, kTextureFlags);
     }
-    bindRayProgram(mRender, data);
     const uint2 frameDim = data.getDefaultTextureDims();
+    if (wrcActive() && mOptions.enableGI)
+    {
+        if (!mpFgCacheCounters) mpFgCacheCounters = mpDevice->createStructuredBuffer(4, 4, kTextureFlags);
+        context->clearUAV(mpFgCacheCounters->getUAV().get(), uint4(0));
+    }
+    if (screenCacheActive()) prepareScreenCache(frameDim);
+    else
+    {
+        mpScreenCacheColor[0] = mpScreenCacheColor[1] = mpScreenCachePos[0] = mpScreenCachePos[1] = nullptr;
+        mScreenCacheValid = false;
+    }
+    bindRayProgram(mRender, data);
     const bool splitGather = !restirActive() && mOptions.finalGather && mOptions.halfResolutionGather && !mOptions.showWrcCells;
     {
         FALCOR_PROFILE(context, "PrimaryShading");
@@ -968,6 +1051,17 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
             if (auto texture = data.getTexture(output.name)) context->uavBarrier(texture.get());
         bindRayProgram(mHalfGather, data);
         mpScene->raytrace(context, mHalfGather.program.get(), mHalfGather.vars, uint3(max(frameDim / uint2(2), uint2(1)), 1));
+    }
+    if (screenCacheActive())
+    {
+        // This frame's gather samples become next frame's screen-space cache.
+        context->uavBarrier(mpScreenCacheColor[mScreenCacheWrite].get());
+        context->uavBarrier(mpScreenCachePos[mScreenCacheWrite].get());
+        mScreenCacheWrite ^= 1u;
+        mScreenCachePrevViewProj = mpScene->getCamera()->getViewProjMatrix();
+        mScreenCachePrevCamera = mpScene->getCamera()->getPosition();
+        mScreenCachePrevOffset = mGatherOffset;
+        mScreenCacheValid = true;
     }
     if (restirActive())
     {
@@ -1016,7 +1110,7 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
     }
     drawWrcCells(context, data.getTexture("color"));
     drawProbeVisualization(context, data);
-    mStatus = mOptions.update ? (mOptions.useWRC ? "Updating probes via active WRC cells." : "Updating probes with original per-ray shading.") :
+    mStatus = mOptions.update ? (wrcActive() ? "Updating probes via active WRC cells; final gather reads screen/WRC caches." : "Updating probes with original per-ray shading.") :
         "Probe updates frozen; camera and direct light remain live.";
     if (mOptions.worldCache) mStatus = "WorldCache: independent diffuse surface radiance; no DDGI probe updates.";
     ++mFrame;
@@ -1053,21 +1147,29 @@ Properties RTXGIDDGI::getStats() const
     stats["restirResetCount"] = mRestirResetCount;
     stats["gridMin"] = mGridMin;
     stats["gridMax"] = mGridMax;
-    stats["wrcEnabled"] = mOptions.useWRC;
+    stats["wrcEnabled"] = wrcActive();
+    stats["wrcScreenCache"] = screenCacheActive();
     stats["wrcGroupByMaterial"] = mOptions.wrcGroupByMaterial;
     stats["wrcStressMode"] = mOptions.wrcStressMode;
     stats["wrcStressIterations"] = mOptions.wrcStressIterations;
     stats["showWrcCells"] = mOptions.showWrcCells;
     stats["wrcCellsLod"] = mOptions.wrcCellsLod;
-    stats["wrcCellSize"] = mOptions.wrcCellScale * std::min(mSpacing.x, std::min(mSpacing.y, mSpacing.z));
+    stats["wrcCellSize"] = mOptions.wrcCellSize;
     stats["wrcTableSize"] = mOptions.wrcTableSize;
-    stats["wrcLodDistance"] = mOptions.wrcLodDistance * std::min(mSpacing.x, std::min(mSpacing.y, mSpacing.z));
+    stats["wrcLodDistance"] = mOptions.wrcLodDistance;
+    // Final-gather cache use in the latest frame (diffuse gather hits only).
+    uint32_t fgCounters[4] = {};
+    if (wrcActive() && mOptions.enableGI && mpFgCacheCounters) mpFgCacheCounters->getBlob(fgCounters, 0, sizeof(fgCounters));
+    stats["fgGatherHits"] = fgCounters[0];
+    stats["fgScreenCacheHits"] = fgCounters[1];
+    stats["fgWrcHits"] = fgCounters[2];
+    stats["fgShadedHits"] = fgCounters[3];
     stats["wrcProbeLimit"] = mOptions.wrcProbeLimit;
     stats["wrcInvalidations"] = mWrcInvalidations;
     stats["wrcAllocatedBytes"] = mWrcAllocatedBytes;
     uint32_t wrcCounters[16] = {};
     uint32_t activeEntries = 0, shaderGroups = 0, scheduledThreads = 0;
-    if (mOptions.useWRC && mpWrcCounters && !mWrcReallocate && !mWrcResetPending)
+    if (wrcActive() && mpWrcCounters && !mWrcReallocate && !mWrcResetPending)
     {
         mpWrcCounters->getBlob(wrcCounters, 0, sizeof(wrcCounters));
         const uint32_t dispatchCount = getWrcDispatchCount();
@@ -1101,7 +1203,7 @@ Properties RTXGIDDGI::getStats() const
     stats["wrcActiveEntries"] = activeEntries;
     stats["wrcShaderGroups"] = shaderGroups;
     stats["wrcMaterialTypes"] = mWrcTypeCount;
-    stats["wrcDispatches"] = mOptions.useWRC && mpWrcCounters && !mWrcReallocate && !mWrcResetPending ? getWrcDispatchCount() : 0u;
+    stats["wrcDispatches"] = wrcActive() && mpWrcCounters && !mWrcReallocate && !mWrcResetPending ? getWrcDispatchCount() : 0u;
     stats["wrcScheduledThreads"] = scheduledThreads;
     uint32_t active = 0, relocated = 0, nonFinite = 0;
     float maximum = 0.f;
@@ -1212,17 +1314,22 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
             if (gather.checkbox("Gather diffuse", options.gatherDiffuse)) p["gatherDiffuse"] = options.gatherDiffuse;
             if (gather.checkbox("Gather specular", options.gatherSpecular)) p["gatherSpecular"] = options.gatherSpecular;
             gather.text("RTXDI input bypassed. Toggle temporal accumulation in Accumulate > Enabled.");
+            if (!options.restirGather)
+            {
+                if (gather.checkbox("World radiance cache (idTech 8)", options.useWRC)) p["useWRC"] = options.useWRC;
+                gather.tooltip("Probe rays shade one representative per 25 cm cell; diffuse gather hits read the screen-space cache, then the WRC, and shade only on a miss. Switching resets probe history.");
+            }
         }
     }
     if (widgets.checkbox("Indirect only", options.indirectOnly)) p["indirectOnly"] = options.indirectOnly;
-    if (widgets.checkbox("Use world radiance cache", options.useWRC)) p["useWRC"] = options.useWRC;
-    widgets.tooltip("Distance-LOD spatial hash with bounded linear probing and GPU-driven active-cell shading. Off uses original DDGI. Switching resets probe history; let both modes converge before comparing.");
-    if (options.useWRC)
+    if (wrcActive())
     {
-        if (widgets.var("Cell scale", options.wrcCellScale, 0.01f, 2.f, 0.01f)) p["wrcCellScale"] = options.wrcCellScale;
-        widgets.tooltip("Base cell width as a fraction of the smallest probe spacing. Distance LOD scales this width; larger cells share more work but smooth lighting.");
-        if (widgets.var("LOD dist", options.wrcLodDistance, 0.1f, 128.f, 0.1f)) p["wrcLodDistance"] = options.wrcLodDistance;
-        widgets.tooltip("LOD distance in units of the smallest probe spacing. Cell scale doubles at distance, 3x distance, 7x distance, and so on.");
+        if (widgets.checkbox("WRC screen-space cache", options.wrcScreenCache)) p["wrcScreenCache"] = options.wrcScreenCache;
+        widgets.tooltip("Gather hits visible to the previous camera reuse that frame's lit pixel before trying the WRC.");
+        if (widgets.var("Cell size", options.wrcCellSize, 0.01f, 10.f, 0.01f)) p["wrcCellSize"] = options.wrcCellSize;
+        widgets.tooltip("Base cell width in world units (idTech 8 uses 0.25). Distance LOD doubles it per level.");
+        if (widgets.var("LOD dist", options.wrcLodDistance, 0.01f, 64.f * options.wrcCellSize - 0.01f, 0.1f)) p["wrcLodDistance"] = options.wrcLodDistance;
+        widgets.tooltip("World units. Cell width doubles at 1x, 3x, 7x ... this distance. Must stay below 64 cell sizes (8-bit wrapped keys).");
         const Gui::DropdownList lodScales = {{1, "1x"}, {2, "2x"}, {4, "4x"}, {8, "8x"}, {16, "16x"}, {32, "32x"}, {64, "64x"}};
         if (widgets.dropdown("Max LOD", lodScales, options.wrcMaxLod)) p["wrcMaxLod"] = options.wrcMaxLod;
         widgets.tooltip("Maximum cell-width multiplier. 1x disables distance LOD while keeping the active-list cache.");
@@ -1249,7 +1356,7 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
                 {8, "8x"}, {16, "16x"}, {32, "32x"}, {64, "64x"}};
             if (widgets.dropdown("Cell LOD", filters, options.wrcCellsLod)) p["wrcCellsLod"] = options.wrcCellsLod;
             if (widgets.var("Cell opacity", options.wrcCellsOpacity, 0.f, 1.f, 0.05f)) p["wrcCellsOpacity"] = options.wrcCellsOpacity;
-            const float width = options.wrcCellScale * std::min(mSpacing.x, std::min(mSpacing.y, mSpacing.z));
+            const float width = options.wrcCellSize;
             widgets.text("Base cell width: " + std::to_string(width) + " world units");
             if (options.wrcCellsLod) widgets.text("Selected width: " + std::to_string(width * options.wrcCellsLod));
             widgets.text("LOD: 1x cyan, 2x green, 4x yellow, 8x orange");

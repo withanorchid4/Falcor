@@ -1,20 +1,29 @@
 // Shared DDGI world-radiance-cache definitions. The baseline tracer supplies
 // scene/material/light evaluation and the unmodified SDK irradiance query.
+// Cell keys use the Lumen World Cache layout (LumenWorldCache.slang): 8-bit
+// wrapped cell coordinate per axis, 5-bit distance level and 3-bit dominant
+// normal face. Material is deliberately NOT part of the key (idTech 8 style):
+// surfaces of different materials in one cell share the representative result.
 #ifndef FALCOR_DDGI_WORLD_RADIANCE_CACHE
 #define FALCOR_DDGI_WORLD_RADIANCE_CACHE
+#ifndef WRC_FINAL_GATHER_ONLY
+#define WRC_FINAL_GATHER_ONLY 0
+#endif
+#if !WRC_FINAL_GATHER_ONLY
 #include "RTXGIDDGI.rt.slang"
 #include "WorldRadianceCacheStress.slang"
+#endif
 
 cbuffer WrcCB
 {
     uint gWrcTableSize;
     uint gWrcMaxAge;        // Zero refreshes every occupied entry on every update.
     uint gWrcFrame;         // One-based probe update index, not presentation frame.
-    float gWrcCellSize;
+    float gWrcCellSize;     // Base cell width in world units (0.25 m).
     uint gWrcShadeSamples;
     uint gWrcBypassSharing; // Validation: original per-ray shading after tracing.
-    float gWrcLodDistance;
-    uint gWrcMaxLod;
+    float gWrcLodDistance;  // World units; level L covers [d(2^L - 1), d(2^(L+1) - 1)).
+    uint gWrcMaxLod;        // Maximum cell-width multiplier, a power of two.
     uint gWrcProbeLimit;
     uint gWrcTypeCount;
     uint gWrcShaderBucket;
@@ -23,6 +32,8 @@ cbuffer WrcCB
     uint gWrcStressMode;
     uint gWrcStressIterations;
     uint gWrcStressStats;
+    float3 gWrcCamera;      // Camera position used for the distance level, fixed per frame.
+    uint gWrcPadding;
 }
 
 // Host strides are exactly 64 and 32 bytes. A fixed uint4 accommodates both
@@ -32,24 +43,26 @@ struct WrcHit
     uint4 packedHit;
     float3 direction;
     float hitT;
-    int3 cell;
-    uint lod;
+    uint key;       // Packed cell key, see wrcPackKey.
+    uint level;     // Distance level; cell width is gWrcCellSize << level.
     uint materialID;
-    uint normalKey;
     uint valid; // 0: no lighting work; 1: cacheable; 2: per-ray fallback.
+    int3 cell;      // Unwrapped cell coordinate, kept for the debug overlay only.
     uint shaderBucket;
 };
 
+// The debug overlay reads this 32-byte layout (WorldRadianceCacheDebug.slang).
 struct WrcKey
 {
-    int3 cell;
-    uint lod;
-    uint materialID;
-    uint normalKey;
-    uint shaderBucket;
-    uint padding;
+    uint key;
+    uint level;
+    int3 cell;      // Unwrapped cell coordinate at this level, for visualization only.
+    uint valid;
+    uint padding0;
+    uint padding1;
 };
 
+#if !WRC_FINAL_GATHER_ONLY
 RWStructuredBuffer<WrcHit> gWrcHits;
 RWStructuredBuffer<uint> gWrcOwners;
 RWStructuredBuffer<WrcKey> gWrcKeys;
@@ -66,8 +79,16 @@ StructuredBuffer<uint> gWrcTypeMap;
 // Optional diagnostics: 12 wave type sum, 13 wave count, 14 checksum XOR,
 // 15 stressed entries. These exclude gather fallback invocations.
 RWStructuredBuffer<uint> gWrcCounters;
+#else
+// Final gather reads the cache produced by the latest probe update. Entries are
+// resolved through the same probe window; nothing is written.
+StructuredBuffer<WrcKey> gWrcKeys;
+StructuredBuffer<float4> gWrcRadiance;
+StructuredBuffer<uint> gWrcLastUpdate;
+#endif
 
 static const uint kWrcNoOwner = 0xffffffffu;
+static const uint kWrcMaxLevel = 31u; // 5 key bits
 
 uint wrcMix(uint value)
 {
@@ -79,39 +100,89 @@ uint wrcMix(uint value)
     return value;
 }
 
+// Distance level as in idTech 8: lod = exp2(floor(log2(1 + d / LOD_DIST))).
+uint wrcLevel(float3 position)
+{
+    float distance = length(position - gWrcCamera);
+    bool validDistance = isfinite(distance) && isfinite(gWrcLodDistance) && gWrcLodDistance > 0.f;
+    float level = validDistance ? floor(log2(1.f + distance / gWrcLodDistance)) : 0.f;
+    uint maxLevel = min(firstbithigh(max(gWrcMaxLod, 1u)), kWrcMaxLevel);
+    return min(uint(clamp(level, 0.f, float(kWrcMaxLevel))), maxLevel);
+}
+
+// Same face encoding as LumenWorldCache DirToCubeFaceIndex.
+uint wrcFace(float3 n)
+{
+    float3 a = abs(n);
+    uint axis = a.x >= a.y && a.x >= a.z ? 0u : (a.y >= a.z ? 1u : 2u);
+    return axis * 2u + (n[axis] < 0.f ? 1u : 0u);
+}
+
+int3 wrcCell(float3 position, uint level)
+{
+    return int3(floor(position / (gWrcCellSize * float(1u << level))));
+}
+
+// Key layout of LumenWorldCache PackWorldCacheHashKey. Zero is reserved for
+// "no entry" there; here empty slots are tracked by owner, so zero is valid.
+uint wrcPackKey(int3 cell, uint level, uint face)
+{
+    uint3 wrapped = uint3(cell) & 0xffu;
+    return wrapped.x | (wrapped.y << 8) | (wrapped.z << 16) | (level << 24) | (face << 29);
+}
+
+uint wrcKeyOf(float3 position, float3 normal, out uint level)
+{
+    level = wrcLevel(position);
+    return wrcPackKey(wrcCell(position, level), level, wrcFace(normal));
+}
+
+uint wrcSlot(uint key)
+{
+    return wrcMix(key) % gWrcTableSize;
+}
+
+// Resolve a world-space point through the occupied slots of the latest update.
+// Returns false on a miss or a stale/unshaded slot.
+bool wrcLookup(float3 position, float3 normal, out float3 radiance)
+{
+    radiance = float3(0.f);
+    if (gWrcTableSize == 0u) return false;
+    uint level;
+    uint key = wrcKeyOf(position, normal, level);
+    uint firstSlot = wrcSlot(key);
+    uint limit = min(gWrcProbeLimit, gWrcTableSize);
+    for (uint probe = 0u; probe < limit; ++probe)
+    {
+        uint slot = (firstSlot + probe) % gWrcTableSize;
+        WrcKey stored = gWrcKeys[slot];
+        if (stored.valid == 0u) return false; // Never written since the last reset.
+        if (stored.key == key && stored.level == level)
+        {
+            // Only entries shaded by the latest update (or reused within max age).
+            uint lastUpdate = gWrcLastUpdate[slot];
+            if (lastUpdate == 0u || gWrcFrame < lastUpdate || gWrcFrame - lastUpdate > gWrcMaxAge) return false;
+            radiance = gWrcRadiance[slot].rgb;
+            return all(isfinite(radiance));
+        }
+    }
+    return false;
+}
+
+#if !WRC_FINAL_GATHER_ONLY
 WrcKey wrcKey(WrcHit hit)
 {
     WrcKey key = {};
+    key.key = hit.key;
+    key.level = hit.level;
     key.cell = hit.cell;
-    key.lod = hit.lod;
-    key.materialID = hit.materialID;
-    key.normalKey = hit.normalKey;
-    key.shaderBucket = hit.shaderBucket;
+    key.valid = 1u;
     return key;
 }
 
 bool wrcSameKey(WrcKey a, WrcKey b)
 {
-    return all(a.cell == b.cell) && a.lod == b.lod && a.materialID == b.materialID &&
-        a.normalKey == b.normalKey && a.shaderBucket == b.shaderBucket;
-}
-
-uint wrcSlot(WrcKey key)
-{
-    // Nested LOD/position hashing follows the spatial cache layout. Material
-    // and oriented geometric normal prevent unrelated surfaces sharing a cell.
-    uint hash = wrcMix(key.lod + wrcMix(asuint(key.cell.z) +
-        wrcMix(asuint(key.cell.y) + wrcMix(asuint(key.cell.x)))));
-    hash = wrcMix(hash ^ key.materialID);
-    hash = wrcMix(hash ^ key.normalKey);
-    hash = wrcMix(hash ^ key.shaderBucket);
-    return hash % gWrcTableSize;
-}
-
-uint wrcPackNormal(float3 normal)
-{
-    uint3 encoded = uint3(saturate(normalize(normal) * 0.5f + 0.5f) * 31.f + 0.5f);
-    return encoded.x | (encoded.y << 5) | (encoded.z << 10);
+    return a.key == b.key && a.level == b.level;
 }
 
 PackedHitInfo wrcUnpackHit(WrcHit hit)
@@ -163,4 +234,5 @@ float3 wrcShadeHit(WrcHit hit, uint linearRayID, uint sampleCount, DDGIVolumeDes
     if (!all(isfinite(radiance))) InterlockedAdd(gWrcCounters[6], 1u);
     return finiteRadiance(radiance, 3u);
 }
+#endif // !WRC_FINAL_GATHER_ONLY
 #endif

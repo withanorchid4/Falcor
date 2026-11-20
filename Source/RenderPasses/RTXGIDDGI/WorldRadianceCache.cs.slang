@@ -12,7 +12,7 @@ void buildWRC(uint3 dispatchThreadID : SV_DispatchThreadID)
     WrcHit hit = gWrcHits[rayID];
     if (hit.valid != 1u || gWrcBypassSharing != 0u) return;
     WrcKey key = wrcKey(hit);
-    uint firstSlot = wrcSlot(key);
+    uint firstSlot = wrcSlot(key.key);
     uint limit = min(gWrcProbeLimit, gWrcTableSize);
     uint steps = 0u;
     for (uint probe = 0u; probe < limit; ++probe)

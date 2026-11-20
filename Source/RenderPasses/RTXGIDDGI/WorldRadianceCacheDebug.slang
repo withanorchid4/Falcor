@@ -3,9 +3,11 @@
 // Matches the 32-byte WrcKey layout in WorldRadianceCache.slang.
 struct DebugKey
 {
+    uint key;
+    uint level;
     int3 cell;
-    uint lod;
-    uint4 materialNormalBucketPadding;
+    uint valid;
+    uint2 padding;
 };
 StructuredBuffer<DebugKey> gKeys;
 StructuredBuffer<uint> gActiveSlots;
@@ -60,7 +62,8 @@ VertexOut vsMain(uint vertexID : SV_VertexID, uint instanceID : SV_InstanceID)
     uint slot = gActiveSlots[gBucket * gTableSize + instanceID];
     if (slot >= gTableSize) return result;
     DebugKey key = gKeys[slot];
-    if (key.lod == 0u || (gLodFilter != 0u && key.lod != gLodFilter)) return result;
+    uint lod = 1u << min(key.level, 31u);
+    if (key.valid == 0u || (gLodFilter != 0u && lod != gLodFilter)) return result;
     uint edge = vertexID / 2u;
     uint axis = edge / 4u;
     uint side = edge % 4u;
@@ -68,10 +71,10 @@ VertexOut vsMain(uint vertexID : SV_VertexID, uint instanceID : SV_InstanceID)
     corner[axis] = float(vertexID % 2u);
     corner[(axis + 1u) % 3u] = float(side & 1u);
     corner[(axis + 2u) % 3u] = float((side >> 1u) & 1u);
-    result.width = gBaseCellWidth * float(key.lod);
+    result.width = gBaseCellWidth * float(lod);
     result.world = (float3(key.cell) + corner) * result.width;
     result.position = mul(gViewProj, float4(result.world, 1.f));
-    result.color = lodColor(key.lod);
+    result.color = lodColor(lod);
     return result;
 }
 

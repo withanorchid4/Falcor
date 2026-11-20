@@ -55,9 +55,32 @@ import Rendering.Lights.EnvMapSampler;
 #ifndef LUMEN_WORLD_CACHE
 #define LUMEN_WORLD_CACHE 0
 #endif
+// The WRC compute library includes this file without the camera-pass defines.
+#ifndef RESTIR_GATHER
+#define RESTIR_GATHER 0
+#endif
+#ifndef SPLIT_HALF_GATHER
+#define SPLIT_HALF_GATHER 0
+#endif
 #if LUMEN_WORLD_CACHE
 #include "LumenWorldCache.slang"
 #endif
+// idTech 8 style final-gather caches (DDGI + final gather only). The host sets
+// these defines; WRC shader libraries include this file with both off.
+#ifndef FINAL_GATHER_WRC
+#define FINAL_GATHER_WRC 0
+#endif
+#ifndef FINAL_GATHER_SCREEN_CACHE
+#define FINAL_GATHER_SCREEN_CACHE 0
+#endif
+#if FINAL_GATHER_WRC && !defined(FALCOR_DDGI_WORLD_RADIANCE_CACHE)
+#define WRC_FINAL_GATHER_ONLY 1
+#include "WorldRadianceCache.slang"
+#define FG_USE_WRC 1
+#else
+#define FG_USE_WRC 0
+#endif
+#define FG_USE_CACHES (FG_USE_WRC || FINAL_GATHER_SCREEN_CACHE)
 cbuffer PerFrameCB
 {
     uint gFrameCount;
@@ -89,7 +112,24 @@ cbuffer PerFrameCB
     bool gHistoryValid;
     float gIntensity; // Display scaling only; recursive transport stays physical.
     float gProbeRadius; // World-space radius of the optional diagnostic spheres.
+    // Screen-space radiance cache: previous frame's lit gather pixels.
+    float4x4 gScreenCachePrevViewProj;
+    float3 gScreenCachePrevCamera;
+    bool gScreenCacheValid;     // False after resets, resizes and mode changes.
+    uint2 gScreenCachePrevOffset;
+    float gScreenCacheTolerance; // Relative position tolerance (fraction of camera distance).
 }
+
+#if FINAL_GATHER_SCREEN_CACHE
+Texture2D<float4> gScreenCacheColor;    // rgb: outgoing radiance toward the previous camera
+Texture2D<float4> gScreenCachePos;      // xyz: world position, w: 1 if valid
+RWTexture2D<float4> gScreenCacheColorOut;
+RWTexture2D<float4> gScreenCachePosOut;
+#endif
+#if FG_USE_CACHES
+// 0 gather hits, 1 screen-cache hits, 2 WRC hits, 3 shaded fallbacks.
+RWStructuredBuffer<uint> gFgCacheCounters;
+#endif
 
 StructuredBuffer<DDGIVolumeDescGPUPacked> DDGIVolumes;
 RWTexture2DArray<float4> gRayData;
@@ -435,9 +475,41 @@ void traceProbes()
     DDGIStoreProbeRayFrontfaceHit(gRayData, outputCoords, volume, finiteRadiance(radiance, 3u), payload.hitT);
 }
 
+#if FINAL_GATHER_SCREEN_CACHE
+// Screen-space radiance cache: reproject a gather hit into the previous frame's
+// gather samples. Valid only if the previous camera saw this same surface point
+// from the same side; the stored color is that pixel's full outgoing radiance
+// (direct + emission + gathered indirect), which is view-independent for Lambert.
+bool screenCacheLookup(ShadingData sd, out float3 radiance)
+{
+    radiance = float3(0.f);
+    if (!gScreenCacheValid) return false;
+    float3 toCamera = gScreenCachePrevCamera - sd.posW;
+    float cameraDistance = length(toCamera);
+    if (!(cameraDistance > 0.f) || dot(sd.getOrientedFaceNormal(), toCamera) <= 0.f) return false;
+    float4 clip = mul(gScreenCachePrevViewProj, float4(sd.posW, 1.f));
+    if (!(clip.w > 0.f)) return false;
+    float2 uv = clip.xy / clip.w * float2(0.5f, -0.5f) + 0.5f;
+    if (any(uv < 0.f) || any(uv >= 1.f)) return false;
+    uint width, height;
+    gScreenCachePos.GetDimensions(width, height);
+    float2 pixel = uv * float2(gFrameDim);
+    // Nearest gather sample; half-resolution samples sit at 2q + offset.
+    int2 texel = gHalfResolutionGather ? int2(floor((pixel - float2(gScreenCachePrevOffset) + 0.5f) * 0.5f)) : int2(pixel);
+    texel = clamp(texel, int2(0), int2(width, height) - 1);
+    float4 cachedPosition = gScreenCachePos[texel];
+    // The visible surface must be this hit point, not an occluder or a neighbor.
+    if (cachedPosition.w <= 0.f || length(cachedPosition.xyz - sd.posW) > gScreenCacheTolerance * cameraDistance) return false;
+    radiance = gScreenCacheColor[texel].rgb;
+    return all(isfinite(radiance));
+}
+#endif
+
 // One camera-side reflection segment followed by DDGI termination.
 // Reconstruct the material AFTER setting the lobe mask: StandardBSDF caches it.
 // Each lobe is sampled independently, so sum the two estimates (do not average).
+// With the idTech 8 caches enabled, a diffuse gather hit first reads the
+// screen-space cache, then the world radiance cache, and only shades on a miss.
 float3 gatherReflection(ShadingData primary, uint lobes, DDGIVolumeDescGPU volume, inout SampleGenerator sg, out float hitDistance)
 {
     hitDistance = 0.f;
@@ -472,15 +544,45 @@ float3 gatherReflection(ShadingData primary, uint lobes, DDGIVolumeDescGPU volum
     {
         ShadingData sd = loadTriangleSurface(HitInfo(payload.hit), sample.wo);
         if (!validSurface(sd)) return float3(0.f);
-        let material = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f));
-        let properties = material.getProperties(sd);
 #if LUMEN_WORLD_CACHE
         if (!sd.frontFacing && !sd.mtl.isDoubleSided()) return float3(0.f);
         radiance = wcLookup(sd.posW, sd.getOrientedFaceNormal());
 #else
-        radiance = finiteRadiance(properties.emission, 0u) + evaluateDirect(sd, material, false, sg);
-        radiance += finiteRadiance(properties.diffuseReflectionAlbedo, 0u) *
-            queryIrradiance(sd.posW, sd.getOrientedFaceNormal(), sample.wo, volume) / M_PI;
+        bool cached = false;
+#if FG_USE_CACHES
+        // Caches hold diffuse outgoing radiance; glossy lobes keep exact shading.
+        uint cacheSource = 3u;
+        if ((sample.lobeType & (uint)LobeType::DiffuseReflection) != 0 && (sd.frontFacing || sd.mtl.isDoubleSided()))
+        {
+#if FINAL_GATHER_SCREEN_CACHE
+            if (screenCacheLookup(sd, radiance)) { cached = true; cacheSource = 1u; }
+#endif
+#if FG_USE_WRC
+            if (!cached && wrcLookup(sd.posW, sd.getOrientedFaceNormal(), radiance))
+            {
+                cached = true;
+                cacheSource = 2u;
+                // WRC entries follow the DDGI probe estimator, which excludes the
+                // hit's own emission. Add it here, as the shading fallback does.
+                if (sd.mtl.isEmissive())
+                {
+                    let material = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f));
+                    radiance += finiteRadiance(material.getProperties(sd).emission, 0u);
+                }
+            }
+#endif
+        }
+        InterlockedAdd(gFgCacheCounters[0], 1u);
+        InterlockedAdd(gFgCacheCounters[cacheSource], 1u);
+#endif
+        if (!cached)
+        {
+            let material = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f));
+            let properties = material.getProperties(sd);
+            radiance = finiteRadiance(properties.emission, 0u) + evaluateDirect(sd, material, false, sg);
+            radiance += finiteRadiance(properties.diffuseReflectionAlbedo, 0u) *
+                queryIrradiance(sd.posW, sd.getOrientedFaceNormal(), sample.wo, volume) / M_PI;
+        }
 #endif
     }
     return finiteRadiance(sample.weight * radiance, 3u);
@@ -513,10 +615,12 @@ void shadePixel(uint2 pixel, bool gatherOnly)
     if (useExternalDirect && !gIndirectOnly) color = finiteRadiance(gDirectLighting[pixel].rgb, 1u);
 #endif
     float surfaceDistance = FLT_MAX;
+    float3 surfacePosition = float3(0.f);
     if (hit.isValid())
     {
         ShadingData sd = loadTriangleSurface(hit, direction);
         surfaceDistance = length(sd.posW - origin);
+        surfacePosition = sd.posW;
         let material = gScene.materials.getMaterialInstance(sd, ExplicitLodTextureSampler(0.f), primaryMaterialHints());
         let properties = material.getProperties(sd);
         // A positive floor prevents unstable demodulation of supported lobes;
@@ -590,6 +694,16 @@ void shadePixel(uint2 pixel, bool gatherOnly)
 #endif
     if (gatherOnly) color += gOutputColor[pixel].rgb;
     gOutputColor[pixel] = float4(finiteRadiance(color, 3u), 1.f);
+#if FINAL_GATHER_SCREEN_CACHE
+    // Store this gather pixel's outgoing radiance for next frame's gather rays.
+    // With split half-resolution gather, only the second pass has the full sum.
+    if (gatherPixel && (gatherOnly || !SPLIT_HALF_GATHER))
+    {
+        bool valid = hit.isValid() && !gIndirectOnly && surfaceDistance < FLT_MAX;
+        gScreenCacheColorOut[gatherOutputPixel] = float4(valid ? finiteRadiance(color, 3u) : float3(0.f), 1.f);
+        gScreenCachePosOut[gatherOutputPixel] = float4(surfacePosition, valid ? 1.f : 0.f);
+    }
+#endif
 #if OUTPUT_INDIRECT
     gOutputIndirect[pixel] = float4(indirect, 1.f);
 #endif

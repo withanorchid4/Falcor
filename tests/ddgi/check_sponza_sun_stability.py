@@ -1,6 +1,7 @@
 from pathlib import Path
 import sys,json,time
 R=Path(__file__).resolve().parents[2];D=R/'build/sponza-sun50-20261120'
+if len(sys.argv)>3:D=Path(sys.argv[3])
 sys.path.insert(0,str(R/'build/final-gather-python'))
 import numpy as np,OpenEXR
 name=sys.argv[1];n=int(sys.argv[2])

@@ -52,6 +52,12 @@ import Rendering.Lights.EmissiveUniformSampler;
 import Rendering.Lights.EmissiveLightSamplerInterface;
 import Rendering.Lights.EnvMapSampler;
 
+#ifndef SHARC_CACHE
+#define SHARC_CACHE 0
+#endif
+#if SHARC_CACHE
+#include "SharcCache.slang"
+#endif
 #ifndef LUMEN_WORLD_CACHE
 #define LUMEN_WORLD_CACHE 0
 #endif
@@ -507,6 +513,10 @@ bool screenCacheLookup(ShadingData sd, out float3 radiance)
 }
 #endif
 
+#if SHARC_CACHE
+#include "SharcTrace.slang"
+#endif
+
 // One camera-side reflection segment followed by DDGI termination.
 // Reconstruct the material AFTER setting the lobe mask: StandardBSDF caches it.
 // Each lobe is sampled independently, so sum the two estimates (do not average).
@@ -546,7 +556,9 @@ float3 gatherReflection(ShadingData primary, uint lobes, DDGIVolumeDescGPU volum
     {
         ShadingData sd = loadTriangleSurface(HitInfo(payload.hit), sample.wo);
         if (!validSurface(sd)) return float3(0.f);
-#if LUMEN_WORLD_CACHE
+#if SHARC_CACHE
+        radiance = sharcQueryPath(sd, payload.hitT, sample.weight, sg);
+#elif LUMEN_WORLD_CACHE
         if (!sd.frontFacing && !sd.mtl.isDoubleSided()) return float3(0.f);
         radiance = wcLookup(sd.posW, sd.getOrientedFaceNormal());
 #else
@@ -598,7 +610,7 @@ void shadePixel(uint2 pixel, bool gatherOnly)
     bool gatherPixel = !gHalfResolutionGather || (all((pixel & 1u) == gGatherOffset) && all(pixel / 2u < max(gFrameDim / 2u, uint2(1))));
     uint2 gatherOutputPixel = gHalfResolutionGather ? pixel / 2u : pixel;
     DDGIVolumeDescGPU volume = (DDGIVolumeDescGPU)0;
-#if !LUMEN_WORLD_CACHE
+#if !LUMEN_WORLD_CACHE && !SHARC_CACHE
     volume = UnpackDDGIVolumeDescGPU(DDGIVolumes[0]);
 #endif
     float3 direction = primaryRayDirection(pixel);

@@ -11,6 +11,7 @@
 
 # Packman folders.
 /external/packman/
+/external/sharc/
 /tools/.packman/
 
 # IDE folders.

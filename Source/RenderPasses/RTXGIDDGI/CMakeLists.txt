@@ -1,7 +1,12 @@
 include(${PROJECT_SOURCE_DIR}/cmake/rtxgi-ddgi.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/sharc.cmake)
 
 add_plugin(RTXGIDDGI)
 target_sources(RTXGIDDGI PRIVATE
+    SharcCache.cpp
+    SharcCache.slang
+    SharcCache.cs.slang
+    SharcTrace.slang
     LumenWorldCache.cpp
     LumenWorldCache.slang
     LumenWorldCache.cs.slang
@@ -35,6 +40,8 @@ target_sources(RTXGIDDGI PRIVATE ${FALCOR_RTXGI_DDGI_DIR}/rtxgi-sdk/src/Math.cpp
 # Preserve the SDK's directory layout: its HLSL includes shared C++/HLSL headers
 # through relative paths. Do not rewrite or vendor the third-party sources.
 add_custom_target(RTXGIDDGIShaders
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${FALCOR_SHARC_DIR}/include" "${FALCOR_SHADER_OUTPUT_DIRECTORY}/SHARC"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${FALCOR_SHARC_DIR}/License.md" "${FALCOR_OUTPUT_DIRECTORY}/SHARC-License.md"
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${FALCOR_RTXGI_DDGI_DIR}/rtxgi-sdk/shaders"
         "${FALCOR_SHADER_OUTPUT_DIRECTORY}/RTXGI/rtxgi-sdk/shaders"

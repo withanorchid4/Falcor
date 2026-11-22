@@ -54,6 +54,8 @@ private:
         bool update = true;
         bool enableGI = true;
         bool worldCache = false;
+        bool sharc = false; // Independent SHaRC backend within the shared world-cache/FG host.
+        float sharcSceneScale = 20.f;
         uint32_t worldCacheDownsample = 8, worldCacheBounces = 3, worldCacheHistory = 16;
         float worldCacheDensity = 20.f, worldCacheMaxIntensity = 0.f;
         bool finalGather = false;
@@ -123,6 +125,11 @@ private:
     ref<Buffer> mpFgCacheCounters;
 
     void prepareWorldCache(RenderContext* context);
+    void prepareSharc(RenderContext* context);
+    void bindSharc(const ShaderVar& root);
+    void updateSharc(RenderContext* context, const RenderData& data);
+    ref<Buffer> mpSharcHash, mpSharcAccum, mpSharcResolved, mpSharcStats;
+    float3 mSharcPreviousCamera = float3(0.f);
     void updateWorldCache(RenderContext* context, const RenderData& data);
     void bindWorldCache(const ShaderVar& root);
     void renderWorldCacheUI(Gui::Widgets& widgets);

@@ -93,6 +93,18 @@ Falcor ships with the following NVIDIA RTX SDKs:
 
 Note that these SDKs are not under the same license as Falcor, see [LICENSE.md](LICENSE.md) for details.
 
+## SHaRC 与 SponzaLambert 默认灯光
+
+`Run-Falcor.ps1` 的 Renderer 可选择 `SHaRC`，运行后也可在 Active Graph 切换 `SHaRC` / `LumenWorldCache` / DDGI / PTReference。SHaRC 是独立缓存路径，不更新 DDGI 探针；默认使用半分辨率 FG 和 Accumulate。通过切换 Active Graph 可回到原有算法。
+
+接入 NVIDIA 官方 SHaRC 1.8.3（固定提交 `4e21b585`），CMake 下载 SDK 并部署着色器及许可证；SDK 源码不改动。更新工程后重新编译 Release 的 RTXGIDDGI。当前仅验证 Windows D3D12、Lambert 漫反射场景，不代表完整镜面/透射 GI 集成。
+
+SHaRC 的 pass 属性 `sharc=True` 选择该后端，`sharcSceneScale` 控制格子密度。其余设置以 NVIDIA RTXGI Pathtracer 示例 `04372d7f` 为基准：5×5 更新下采样、2²² 缓存项、8 个路径顶点（包括相机首个命中）、20 帧历史、60 帧过期、材质去调制开启、64 位哈希原子操作。`worldCacheDownsample/Bounces/History` 只控制 WorldCache，不再影响 SHaRC。主路径为低分辨率相机路径更新 → 官方 Resolve → 半分辨率 FG 查询 → 重建 → Accumulate。更新不再使用自定义末端 bootstrap；查询保留官方的对角线距离/roughness footprint 判断、俄罗斯轮盘及 throughput 阈值。相机、材质、射线和输出使用 Falcor 接口，当前按 Lambert 场景适配，并非整个 NVIDIA 示例渲染器的逐位移植。
+
+与 WorldCache 对比时，SHaRC 使用 `sceneScale=density`、`levelBias=1-log2(0.025*density)`，对应同样的最小边长 0.025 和随距离变化的二倍分级。默认 density=20，两边相同距离的格子尺寸相同；法线分桶和缓存融合仍使用各自算法。
+
+SponzaLambert 默认关闭 `Atrium Point`，开启强度 RGB=(50,50,50) 的 `Atrium Sun`，方向沿用 (0.3,-1,0.2)。原版 Sponza 默认配置保持不变。比较脚本为 `tests/ddgi/sponza_sharc_comparison.py`，报告生成脚本为 `tests/ddgi/report_sponza_sharc.py`。
+
 ## DDGI 探针分批更新
 
 DDGI 面板的 `Batch probe updates` 默认关闭，关闭时每帧更新全部探针。开启后可用 `Probes per frame` 设置每帧探针上限，默认 1024；Python 属性为 `batchProbeUpdates`、`probesPerFrame`。预算包含非活跃探针，后者被选中时只发固定的分类/重定位射线。

@@ -82,18 +82,27 @@ void RTXGIDDGI::updateWorldCache(RenderContext* context, const RenderData& data)
 
 void RTXGIDDGI::renderWorldCacheUI(Gui::Widgets& widgets)
 {
-    widgets.text("WorldCache | experimental Falcor adaptation");
+    widgets.text(mOptions.sharc ? "SHaRC | NVIDIA SDK 1.8.3" : "WorldCache | experimental Falcor adaptation");
     widgets.text("Independent diffuse surface cache; no DDGI probes.");
     widgets.text("Cache updates: " + std::to_string(mWorldCacheFrames));
     auto o = mOptions;
     Properties p;
     if (widgets.checkbox("Update cache", o.update)) p["updateEnabled"] = o.update;
     if (widgets.button("Reset cache")) reset();
-    if (widgets.var("Cell density", o.worldCacheDensity, 1.f, 63.f)) p["worldCacheDensity"] = o.worldCacheDensity;
-    if (widgets.var("Path downsample", o.worldCacheDownsample, 1u, 32u)) p["worldCacheDownsample"] = o.worldCacheDownsample;
-    if (widgets.var("Cache path bounces", o.worldCacheBounces, 1u, 8u)) p["worldCacheBounces"] = o.worldCacheBounces;
-    if (widgets.var("Cache history", o.worldCacheHistory, 1u, 255u)) p["worldCacheHistory"] = o.worldCacheHistory;
-    if (widgets.var("Radiance clamp (0 = off)", o.worldCacheMaxIntensity, 0.f, 10000.f)) p["worldCacheMaxIntensity"] = o.worldCacheMaxIntensity;
+    if (o.sharc)
+    {
+        if (widgets.var("Cell density", o.sharcSceneScale, 1.f, 63.f)) p["sharcSceneScale"] = o.sharcSceneScale;
+        widgets.text("Official defaults: downscale 5, max vertices 8, history 20.");
+        widgets.text("4M entries, stale age 60, material demodulation on.");
+    }
+    else
+    {
+        if (widgets.var("Cell density", o.worldCacheDensity, 1.f, 63.f)) p["worldCacheDensity"] = o.worldCacheDensity;
+        if (widgets.var("Path downsample", o.worldCacheDownsample, 1u, 32u)) p["worldCacheDownsample"] = o.worldCacheDownsample;
+        if (widgets.var("Cache path bounces", o.worldCacheBounces, 1u, 8u)) p["worldCacheBounces"] = o.worldCacheBounces;
+        if (widgets.var("Cache history", o.worldCacheHistory, 1u, 255u)) p["worldCacheHistory"] = o.worldCacheHistory;
+        if (widgets.var("Radiance clamp (0 = off)", o.worldCacheMaxIntensity, 0.f, 10000.f)) p["worldCacheMaxIntensity"] = o.worldCacheMaxIntensity;
+    }
     if (auto gather = widgets.group("Final gather", true))
     {
         uint32_t resolution = o.halfResolutionGather ? 0u : 1u;

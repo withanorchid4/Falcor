@@ -2,7 +2,7 @@ param(
     [string]$Scene = '',
     [ValidateSet('vulkan', 'd3d12')]
     [string]$Device = 'd3d12',
-    [ValidateSet('PathTracer', 'Probe', 'DDGI', 'WorldCache')]
+    [ValidateSet('PathTracer', 'Probe', 'DDGI', 'WorldCache', 'SHaRC')]
     [string]$Renderer = 'PathTracer',
     [ValidateSet('manual', 'auto', 'bake', 'load')][string]$Mode = 'manual',
     [ValidateRange(1, 65536)][int]$Samples = 2048,
@@ -57,6 +57,7 @@ if (-not $PSBoundParameters.ContainsKey('Scene')) {
     $rendererBox.DropDownStyle = [System.Windows.Forms.ComboBoxStyle]::DropDownList
     [void]$rendererBox.Items.Add('DDGI')
     [void]$rendererBox.Items.Add('WorldCache')
+    [void]$rendererBox.Items.Add('SHaRC')
     [void]$rendererBox.Items.Add('PathTracer')
     [void]$rendererBox.Items.Add('Probe')
     $defaultRenderer = 'DDGI'
@@ -98,7 +99,7 @@ if ($Scene -notin $availableScenes) {
     throw "Unknown scene '$Scene'. Available scenes: $($availableScenes -join ', ')."
 }
 
-if ($Renderer -in @('DDGI', 'WorldCache')) {
+if ($Renderer -in @('DDGI', 'WorldCache', 'SHaRC')) {
     if ($PSBoundParameters.ContainsKey('Device') -and $Device -ne 'd3d12') {
         throw "$Renderer requires D3D12 in this integration. Use -Device d3d12 or omit -Device."
     }

@@ -4,8 +4,12 @@ import runpy
 from falcor import PBRTDiffuseMaterial, MaterialTextureSlot
 
 # Share geometry, lighting and camera with the original scene.
-runpy.run_path(str(Path(__file__).with_name('Sponza.pyscene')),
+shared = runpy.run_path(str(Path(__file__).with_name('Sponza.pyscene')),
                init_globals={'sceneBuilder': sceneBuilder})
+# Stable default for subsequent GI comparisons; keep original Sponza unchanged.
+shared['light'].active = False
+shared['sun'].active = True
+shared['sun'].intensity = shared['float3'](50.0)
 # Imported textures are loaded asynchronously; bind them before copying slots.
 sceneBuilder.waitForMaterialTextureLoading()
 

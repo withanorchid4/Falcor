@@ -72,6 +72,8 @@ Properties RTXGIDDGI::getProperties() const
 {
     Properties p;
     p["worldCache"] = mOptions.worldCache;
+    p["sharc"] = mOptions.sharc;
+    p["sharcSceneScale"] = mOptions.sharcSceneScale;
     p["primaryShadingNormalCorrection"] = mOptions.primaryShadingNormalCorrection;
     p["worldCacheDownsample"] = mOptions.worldCacheDownsample;
     p["worldCacheBounces"] = mOptions.worldCacheBounces;
@@ -147,6 +149,8 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         refreshLighting |= name != "showWrcCells" && name != "wrcCellsXRay" &&
                            name != "wrcCellsLod" && name != "wrcCellsOpacity";
         if (name == "worldCache") next.worldCache = value;
+        else if (name == "sharc") next.sharc = value;
+        else if (name == "sharcSceneScale") next.sharcSceneScale = value;
         else if (name == "primaryShadingNormalCorrection") next.primaryShadingNormalCorrection = value;
         else if (name == "worldCacheDownsample") next.worldCacheDownsample = value;
         else if (name == "worldCacheBounces") next.worldCacheBounces = value;
@@ -275,8 +279,11 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         std::isfinite(next.worldCacheMaxIntensity) && next.worldCacheMaxIntensity >= 0.f &&
         std::isfinite(next.worldCacheDensity) && next.worldCacheDensity >= 1.f && next.worldCacheDensity <= 63.f,
         "Invalid WorldCache settings.");
+    FALCOR_CHECK(std::isfinite(next.sharcSceneScale) && next.sharcSceneScale >= 1.f && next.sharcSceneScale <= 63.f, "Invalid SHaRC scale.");
+    if (next.sharc) next.worldCache = true;
+    if (next.sharcSceneScale != mOptions.sharcSceneScale) mWorldCacheReset = true;
     if (next.worldCache) { next.finalGather = true; next.restirGather = false; next.showProbes = false; next.useWRC = false; next.showWrcCells = false; }
-    if (next.worldCache != mOptions.worldCache)
+    if (next.worldCache != mOptions.worldCache || next.sharc != mOptions.sharc)
     {
         mReallocate = mResetPending = mRebuildPrograms = true;
         requestRecompile();
@@ -362,6 +369,7 @@ void RTXGIDDGI::onSceneUpdates(RenderContext* context, IScene::UpdateFlags flags
 void RTXGIDDGI::buildRayProgram(RayProgram& ray, const char* shader, const char* entry)
 {
     ProgramDesc desc;
+    if (mOptions.sharc) desc.setShaderModel(ShaderModel::SM6_6);
     desc.addShaderModules(mpScene->getShaderModules());
     desc.addShaderLibrary(shader);
     desc.setMaxPayloadSize(32);
@@ -789,7 +797,10 @@ void RTXGIDDGI::uploadConstants()
 
 void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
 {
-    bool changed = ray.program->addDefine("LUMEN_WORLD_CACHE", mOptions.worldCache ? "1" : "0");
+    bool changed = ray.program->addDefine("LUMEN_WORLD_CACHE", mOptions.worldCache && !mOptions.sharc ? "1" : "0");
+    changed |= ray.program->addDefine("SHARC_CACHE", mOptions.sharc ? "1" : "0");
+    changed |= ray.program->addDefine("SHARC_UPDATE", mOptions.sharc && &ray == &mWorldCacheTrace ? "1" : "0");
+    changed |= ray.program->addDefine("SHARC_QUERY", mOptions.sharc && &ray != &mWorldCacheTrace ? "1" : "0");
     changed |= ray.program->addDefine("USE_ANALYTIC_LIGHTS", mpScene->useAnalyticLights() ? "1" : "0");
     changed |= ray.program->addDefine("USE_EMISSIVE_LIGHTS", mpScene->useEmissiveLights() ? "1" : "0");
     changed |= ray.program->addDefine("USE_ENV_LIGHT", mpScene->useEnvLight() ? "1" : "0");
@@ -822,7 +833,8 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
         mpSampleGenerator->bindShaderData(ray.vars->getRootVar());
     }
     auto root = ray.vars->getRootVar();
-    if (mOptions.worldCache) bindWorldCache(root);
+    if (mOptions.sharc) bindSharc(root);
+    else if (mOptions.worldCache) bindWorldCache(root);
     if (useWrcLookup) bindWrcLookup(root);
     if (useWrcLookup || useScreenCache) root["gFgCacheCounters"] = mpFgCacheCounters;
     if (useScreenCache)
@@ -1020,7 +1032,8 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
         mpEnvMapSampler = std::make_unique<EnvMapSampler>(mpDevice, EnvMap::create(mpDevice, safeTexture));
     }
     if (mRebuildPrograms) createPrograms();
-    if (mOptions.worldCache) prepareWorldCache(context);
+    if (mOptions.sharc) prepareSharc(context);
+    else if (mOptions.worldCache) prepareWorldCache(context);
     else
     {
         if (mReallocate) allocateResources(context);
@@ -1029,7 +1042,8 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
         mProbeBatchCount = mOptions.batchProbeUpdates ? std::min(mOptions.probesPerFrame, mOptions.wrapProbeBatches ? total : total - mProbeCursor) : total;
         uploadConstants();
     }
-    if (mOptions.worldCache && mOptions.update) updateWorldCache(context, data);
+    if (mOptions.sharc && mOptions.update) updateSharc(context, data);
+    else if (mOptions.worldCache && mOptions.update) updateWorldCache(context, data);
     if (!mOptions.worldCache && mOptions.update)
     {
         FALCOR_PROFILE(context, "ProbeUpdate");
@@ -1141,6 +1155,7 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
     mStatus = mOptions.update ? (wrcActive() ? "Updating probes via active WRC cells; final gather reads screen/WRC caches." : "Updating probes with original per-ray shading.") :
         "Probe updates frozen; camera and direct light remain live.";
     if (mOptions.worldCache) mStatus = "WorldCache: independent diffuse surface radiance; no DDGI probe updates.";
+    if (mOptions.sharc) mStatus = "NVIDIA SHaRC: update, resolve and half/full FG query; no DDGI probes.";
     ++mFrame;
 }
 
@@ -1148,8 +1163,21 @@ Properties RTXGIDDGI::getStats() const
 {
     Properties stats;
     stats["worldCache"] = mOptions.worldCache;
+    stats["sharc"] = mOptions.sharc;
+    if (mOptions.sharc && mpSharcStats)
+    {
+        uint32_t c[4] = {}; mpSharcStats->getBlob(c,0,sizeof(c));
+        stats["sharcQueries"] = c[0]; stats["sharcHits"] = c[1];
+        stats["sharcOccupied"] = c[2]; stats["sharcNonFinite"] = c[3];
+        stats["sharcEntries"] = 1u << 22;
+        stats["sharcDownsample"] = 5u;
+        stats["sharcMaxVertices"] = 8u;
+        stats["sharcHistory"] = 20u;
+        stats["sharcStaleAge"] = 60u;
+        stats["sharcMaterialDemodulation"] = true;
+    }
     stats["worldCacheUpdates"] = mWorldCacheFrames;
-    if (mOptions.worldCache && mpWCStats)
+    if (mOptions.worldCache && !mOptions.sharc && mpWCStats)
     {
         uint32_t counters[4] = {};
         mpWCStats->getBlob(counters, 0, sizeof(counters));
@@ -1276,7 +1304,7 @@ Properties RTXGIDDGI::getStats() const
             }
         }
     }
-    if (mOptions.worldCache && mpWCLighting && !mWorldCacheReset)
+    if (mOptions.worldCache && !mOptions.sharc && mpWCLighting && !mWorldCacheReset)
     {
         std::vector<float4> lighting(1u << 20);
         mpWCLighting->getBlob(lighting.data(), 0, lighting.size() * sizeof(float4));
@@ -1293,6 +1321,12 @@ Properties RTXGIDDGI::getStats() const
     }
     stats["activeProbes"] = active;
     stats["relocatedProbes"] = relocated;
+    if (mOptions.sharc && mpSharcStats)
+    {
+        uint32_t counters[4] = {};
+        mpSharcStats->getBlob(counters, 0, sizeof(counters));
+        nonFinite += counters[3];
+    }
     stats["finite"] = nonFinite == 0;
     stats["nonFiniteTexels"] = nonFinite;
     stats["irradianceMax"] = maximum;

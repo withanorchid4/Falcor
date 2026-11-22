@@ -1,0 +1,4 @@
+<p><strong>本视角结果：</strong>SHaRC 的 MSE 比 WorldCache 低约 28.9%，HDR-FLIP 低约 9.3%；完整渲染图 GPU 耗时增加约 11.0%（0.212 ms）。这仅代表此静态 SponzaLambert 方向光视角，不能外推到所有场景或动态响应。</p>
+<p>统一提亮的柱脚局部图显示，两边都保留了接触暗化；WorldCache 的阴影地面整体较 PT 偏亮，SHaRC 更接近 PT 的地面亮度和柱脚周围的暗化，但仍有局部色调及亮度残差。不能将这次差异全部归因于法线分桶或哈希表，也不能据单张图断言完全没有漏光。</p>
+<p>分项 GPU 耗时：缓存更新＋Resolve，WorldCache 为 0.248 ms，SHaRC 为 0.179 ms；半分辨率 FG，WorldCache 为 0.300 ms，SHaRC 为 0.582 ms。SHaRC 更新更快，但查询、短射线保护和缺失回退使 FG 更贵，最终总耗时略高。测量设备 NVIDIA GeForce RTX 5070，驱动 621.01。</p>
+<p>验证已完成：Release 插件构建、128 帧 SHaRC 冒烟测试、SHaRC ↔ WorldCache 运行时切换、默认灯光启用状态检查、1080p 两组稳定累积与 512 帧 GPU 计时。缓存读写有有效命中，没有检测到缓存非有限值，导出的 HDR 图像也全部为有限值。窗口交互与 Vulkan 未单独测试。</p>

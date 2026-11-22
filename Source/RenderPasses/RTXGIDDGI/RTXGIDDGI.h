@@ -38,6 +38,9 @@ private:
     {
         uint3 counts = uint3(8, 6, 8);
         uint32_t rays = 256;
+        bool batchProbeUpdates = false;
+        bool wrapProbeBatches = false; // Fill the frame budget across the end of the probe grid.
+        uint32_t probesPerFrame = 1024;
         float hysteresis = 0.97f;
         float normalBias = 0.05f;
         float viewBias = 0.05f;
@@ -54,6 +57,7 @@ private:
         uint32_t worldCacheDownsample = 8, worldCacheBounces = 3, worldCacheHistory = 16;
         float worldCacheDensity = 20.f, worldCacheMaxIntensity = 0.f;
         bool finalGather = false;
+        bool primaryShadingNormalCorrection = true; // Diagnostic A/B override; still honors the GBuffer policy.
         bool halfResolutionGather = false;
         bool jitterHalfGather = false;
         bool restirGather = false;
@@ -168,6 +172,9 @@ private:
     ref<ComputePass> mpBlendIrradiance, mpBlendDistance, mpRelocate, mpClassify;
     float3 mGridMin = float3(0.f), mGridMax = float3(0.f), mSpacing = float3(1.f);
     uint32_t mFrame = 0, mUpdatedFrames = 0;
+    uint32_t mProbeCursor = 0, mProbeBatchCount = 0, mProbeSweeps = 0;
+    uint32_t mLastProbeBatchStart = 0, mLastProbeBatchCount = 0;
+    uint64_t mProbeUpdatesTotal = 0;
     uint2 mGatherOffset = uint2(0);
     RayProgram mRestirInitialProgram, mRestirTemporalProgram, mRestirSpatialProgram, mRestirIntegrateProgram;
     ref<Buffer> mpRestirInitial, mpRestirTemporal, mpRestirSpatial, mpRestirHistory;

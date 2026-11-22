@@ -8,8 +8,8 @@ void traceWRC()
     DDGIVolumeDescGPU volume = UnpackDDGIVolumeDescGPU(DDGIVolumes[0]);
     uint3 launch = DispatchRaysIndex();
     int rayIndex = int(launch.x);
-    int logicalProbeIndex = int(launch.z) * DDGIGetProbesPerPlane(volume.probeCounts) + int(launch.y);
     int probeCount = volume.probeCounts.x * volume.probeCounts.y * volume.probeCounts.z;
+    int logicalProbeIndex = int((gProbeBatchStart + launch.y) % uint(probeCount));
     if (rayIndex >= volume.probeNumRays || logicalProbeIndex >= probeCount) return;
     uint linearRayID = uint(logicalProbeIndex * volume.probeNumRays + rayIndex);
     if (linearRayID >= gWrcRayCount) return;

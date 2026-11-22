@@ -85,6 +85,8 @@ cbuffer PerFrameCB
 {
     uint gFrameCount;
     uint2 gFrameDim;
+    uint gProbeBatchStart;
+    uint gProbeBatchCount;
     bool gEnableGI;
     bool gFinalGather;
     bool gAdjustPrimaryShadingNormals;
@@ -416,8 +418,8 @@ void traceProbes()
     DDGIVolumeDescGPU volume = UnpackDDGIVolumeDescGPU(DDGIVolumes[0]);
     uint3 launch = DispatchRaysIndex();
     int rayIndex = int(launch.x);
-    int probeIndex = int(launch.z) * DDGIGetProbesPerPlane(volume.probeCounts) + int(launch.y);
     int probeCount = volume.probeCounts.x * volume.probeCounts.y * volume.probeCounts.z;
+    int probeIndex = int((gProbeBatchStart + launch.y) % uint(probeCount));
     if (rayIndex >= volume.probeNumRays || probeIndex >= probeCount) return;
     int3 probeCoords = DDGIGetProbeCoords(probeIndex, volume);
     probeIndex = DDGIGetScrollingProbeIndex(probeCoords, volume);

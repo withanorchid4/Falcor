@@ -47,7 +47,11 @@ add_custom_target(RTXGIDDGIShaders
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${FALCOR_RTXGI_DDGI_DIR}/License.txt"
         "${FALCOR_OUTPUT_DIRECTORY}/RTXGI-DDGI-License.txt"
-    COMMENT "Deploying NVIDIA RTXGI-DDGI shaders and license"
+    COMMAND ${CMAKE_COMMAND}
+        "-DSDK=${FALCOR_RTXGI_DDGI_DIR}"
+        "-DOUTPUT=${FALCOR_SHADER_OUTPUT_DIRECTORY}/RTXGI/rtxgi-sdk/shaders/ddgi"
+        -P "${PROJECT_SOURCE_DIR}/cmake/ddgi-probe-batch.cmake"
+    COMMENT "Deploying NVIDIA RTXGI-DDGI shaders and batch-update adaptations"
     VERBATIM
 )
 set_target_properties(RTXGIDDGIShaders PROPERTIES FOLDER "Misc")

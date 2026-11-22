@@ -93,6 +93,18 @@ Falcor ships with the following NVIDIA RTX SDKs:
 
 Note that these SDKs are not under the same license as Falcor, see [LICENSE.md](LICENSE.md) for details.
 
+## DDGI 探针分批更新
+
+DDGI 面板的 `Batch probe updates` 默认关闭，关闭时每帧更新全部探针。开启后可用 `Probes per frame` 设置每帧探针上限，默认 1024；Python 属性为 `batchProbeUpdates`、`probesPerFrame`。预算包含非活跃探针，后者被选中时只发固定的分类/重定位射线。
+
+实现参考 NVIDIA 官方 UE4 插件的 round-robin 策略，追踪、混合、重定位和分类使用同一批次，其他探针保留历史。为按更新轮数处理初始化权重，一轮末尾不跨界：Sponza 的 10648 个探针按 10 批 1024 加 1 批 408 更新，11 帧覆盖一轮。更改开关或预算会清空历史；关闭 `Update probes` 则暂停轮换。保持相同 hysteresis 会使分批模式对光照变化响应更慢。
+
+该选项适用于 DDGI（含 FG/WRC），不影响独立 LumenWorldCache。构建时 `cmake/ddgi-probe-batch.cmake` 在输出目录生成 SDK 着色器的批次检查版本，不修改下载的 NVIDIA SDK。更新源码后须重新编译 Release。测试脚本为 `tests/ddgi/probe_batch_smoke.py` 和 `tests/ddgi/sponza_probe_batch_comparison.py`。
+
+做固定射线预算实验时，可设置 Python 属性 `wrapProbeBatches=True`：在网格末尾回绕并补足本帧预算，不留短尾批。默认仍为 False；切换时清空探针历史。`tests/ddgi/probe_wrap_smoke.py` 验证回绕，`tests/ddgi/sponza_seven_accumulated.py` 比较全量、800 和 1274 probes/frame 的原生 DDGI 与半分辨率 FG，并加入 WorldCache 对照。图像从空缓存起连续 Accumulate，通过连续两次累积翻倍的颜色和指标稳定性检查后结束。
+
+诊断属性 `primaryShadingNormalCorrection` 默认 True，遵循 GBuffer 的法线修正策略。设为 False 仅禁用 DDGI/FG 主命中材质求值的修正，不改变 GBuffer 法线或次级命中。`tests/ddgi/sponza_primary_normal_ab.py` 用于隔离验证该策略，不应将关闭组当作正常质量基线。
+
 ## 在新机器配置额外场景资源
 
 Sponza 和 EmeraldSquare 的模型、贴图不包含在 Git 中。原版和 Lambert 版共用资源，可在仓库根目录用 **Python 3.9+** 下载（不需要额外 Python 包）：

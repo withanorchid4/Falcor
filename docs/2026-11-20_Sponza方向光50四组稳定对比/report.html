@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><title>Sponza 方向光 50 四组稳定对比</title><style>body{background:#171a1f;color:#eee;font:17px/1.7 sans-serif;max-width:1600px;margin:32px auto;padding:0 20px}img{max-width:100%}td,th{border:1px solid #555;padding:9px}table{border-collapse:collapse}a{color:#9cf}</style>
+<h1>SponzaLambert：方向光强度 50</h1><p>保持原相机位置 (-9,1.6,0)、看向 (8,2.5,0)。关闭 Atrium Point，开启 Atrium Sun，RGB intensity=(50,50,50)，方向沿场景原值 (0.3,-1,0.2)。没有新增环境光或 AO。</p>
+<p>四组均为 1920×1080，使用 Accumulate 的 SingleCompensated 累积，静态镜头。DDGI 使用官方 22³ 布局、256 rays/probe、每帧全量更新；两条 FG 均为 960×540，每粗像素每帧一根漫反射射线。WorldCache 参数与上一轮相同：8×8 更新起点下采样、3 跳、history 16、density 20。主命中法线修正开启。ReSTIR、NRD、RTXDI、额外 WRC 复用关闭。</p>
+<p>三条 GI 各预热 8192 帧后清空画面历史并累积。PT 为重新渲染的方向光参考，8 spp/帧、最大 31 次表面/漫反射反弹、NEE+MIS、关闭 RR，不降噪。没有复用点光源 PT。最终图均通过一次累积翻倍检查（GI 至少累积 2048 帧）：线性 RGB RMS 变化/自身 RGB RMS &lt;0.1%，统一显示映射后平均绝对变化 &lt;0.25/255、99 百分位 &lt;2/255。该判据表示静态画面实用稳定，不保证每个像素零噪声。</p>
+<p>原图统一曝光 -2.3268 EV、ACES fitted＋sRGB。局部图仅统一额外提亮 2 EV，不单独调整某个算法；亮部会更容易饱和，局部图用于观察阴影区。GBuffer 法线逐像素一致，确认相机与可见几何一致。</p>
+<a href="comparison-4k.png"><img src="comparison.png"></a><p>1080p 单图：<a href="ddgi.png">原生 DDGI</a> · <a href="half.png">DDGI＋半 FG</a> · <a href="worldcache.png">WorldCache＋半 FG</a> · <a href="pt.png">PT Reference</a></p>
+<h2>画面检查</h2><ul>
+<li><strong>原生 DDGI：</strong>柱脚附近的地面暗化较弱，布帘上方小拱的内侧明暗过渡偏平，间接光遮蔽细节少于 PT；同时走廊阴影地面整体偏暗。整体偏暗和局部接触遮蔽不足可以同时发生，不能只比较平均亮度。</li>
+<li><strong>DDGI＋半分辨率 FG：</strong>柱脚周围暗化、小拱内侧的遮蔽形状明显恢复，接近 PT。仍存在局部亮度及颜色差异，半分辨率重建也不是逐像素 PT 的精确替代。此次图像不足以把每处残差单独归因于重建或缓存。</li>
+<li><strong>WorldCache＋半分辨率 FG：</strong>同样恢复了柱脚和拱内遮蔽，但局部阴影地面、左侧红布帘比 PT 偏亮。属于可见亮度偏差；仅凭截图不能确定是漏光、缓存插值还是多跳估计偏差，需要单独诊断。</li>
+<li>四组右侧日照区域的主要硬阴影位置相符。这里讨论的接触细节主要是阴影区的间接光遮蔽，不是完全没有直接光阴影。以上观察基于相同曝光的原图与统一增加 2 EV 的局部图。</li>
+</ul>
+<p>本次 DDGI＋FG 的线性 MSE 最低，WorldCache＋FG 的 HDR-FLIP 最低；两个指标对亮暗区域的权重不同，不能据此声称某条路径在每个位置都更准确。</p>
+<p>流程说明：最初要求连续两次翻倍均稳定，导致 PT 额外运行较久。在 65536 spp 已通过全部数值阈值后，采用已保存的该参考图，停止继续等待第二次翻倍。GI 改为至少累积 2048 帧并通过一次翻倍检查，阈值不变；原生 DDGI 最终 2048 帧，两条 FG 最终各 16384 帧。所有图像都未经 NRD 降噪。</p>
+<h2>柱脚与地面（统一＋2 EV）</h2><img src="column-floor.png"><h2>拱廊阴影区（统一＋2 EV）</h2><img src="arches.png">
+<h2>稳定性与参考误差</h2><table><tr><th>方案</th><th>累积帧数</th><th>累计 spp / FG 粗像素样本数</th><th>尾段相对 RGB RMS</th><th>显示平均变化 /255</th><th>显示 P99 变化 /255</th><th>MSE 对 PT</th><th>HDR-FLIP 对 PT</th></tr><tr><td>原生 DDGI</td><td>2048</td><td>2048</td><td>0.023%</td><td>0.0149</td><td>0.1641</td><td>0.0005379164647027007</td><td>0.4104345142841339</td></tr><tr><td>DDGI＋半分辨率 FG</td><td>16384</td><td>16384</td><td>0.083%</td><td>0.0582</td><td>0.5645</td><td>7.404326136129056e-05</td><td>0.1743319034576416</td></tr><tr><td>WorldCache＋半分辨率 FG</td><td>16384</td><td>16384</td><td>0.075%</td><td>0.0535</td><td>0.5095</td><td>0.0001058650400300598</td><td>0.14169809222221375</td></tr><tr><td>PT Reference（未经降噪）</td><td>8192</td><td>65536</td><td>0.092%</td><td>0.0692</td><td>0.6194</td><td>—</td><td>—</td></tr></table><p>原生 DDGI 不从像素发射 FG，表中其样本数只表示累积帧数。MSE 使用可见表面 mask 内线性 HDR RGB；HDR-FLIP 使用共同曝光范围、ACES、PPD 67。<a href="summary.json">完整配置和数据</a>。</p>

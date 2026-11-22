@@ -8,6 +8,10 @@ void buildWRC(uint3 dispatchThreadID : SV_DispatchThreadID)
 {
     uint rayID = dispatchThreadID.x + dispatchThreadID.y * (65535u * 64u);
     if (rayID >= gWrcRayCount) return;
+    uint batchProbe = rayID / uint(UnpackDDGIVolumeDescGPU(DDGIVolumes[0]).probeNumRays);
+    uint3 batchCounts = uint3(UnpackDDGIVolumeDescGPU(DDGIVolumes[0]).probeCounts);
+    uint batchTotal = batchCounts.x * batchCounts.y * batchCounts.z;
+    if ((batchProbe + batchTotal - gProbeBatchStart) % batchTotal >= gProbeBatchCount) return;
     gWrcRaySlots[rayID] = kWrcNoOwner;
     WrcHit hit = gWrcHits[rayID];
     if (hit.valid != 1u || gWrcBypassSharing != 0u) return;
@@ -121,6 +125,10 @@ void gatherWRC(uint3 dispatchThreadID : SV_DispatchThreadID)
 {
     uint rayID = dispatchThreadID.x + dispatchThreadID.y * (65535u * 64u);
     if (rayID >= gWrcRayCount) return;
+    uint batchProbe = rayID / uint(UnpackDDGIVolumeDescGPU(DDGIVolumes[0]).probeNumRays);
+    uint3 batchCounts = uint3(UnpackDDGIVolumeDescGPU(DDGIVolumes[0]).probeCounts);
+    uint batchTotal = batchCounts.x * batchCounts.y * batchCounts.z;
+    if ((batchProbe + batchTotal - gProbeBatchStart) % batchTotal >= gProbeBatchCount) return;
     WrcHit hit = gWrcHits[rayID];
     if (hit.valid == 0u) return;
     DDGIVolumeDescGPU volume = UnpackDDGIVolumeDescGPU(DDGIVolumes[0]);

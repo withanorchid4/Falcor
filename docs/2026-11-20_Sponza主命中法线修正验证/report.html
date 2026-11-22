@@ -1,0 +1,9 @@
+<!doctype html><meta charset="utf-8"><title>Sponza 主命中法线修正验证</title><style>body{background:#171a1f;color:#eee;max-width:1500px;margin:32px auto;font:17px/1.7 sans-serif}img{max-width:100%}td,th{border:1px solid #555;padding:10px}table{border-collapse:collapse}a{color:#9cf}</style>
+<h1>Sponza DDGI＋半分辨率 FG：主命中法线修正 A/B</h1>
+<p><strong>验证结论：本场景 DDGI＋FG 新旧 MSE 的巨大差异可由主命中法线修正开关复现。开启组与上一轮新实验图像完全相同；关闭组恢复旧实验的 MSE 水平，且与旧 EXR 的图像差异很小。这里验证的是 DDGI＋FG，不是 WorldCache 的独立 A/B。</strong></p>
+<p>仅切换 RTXGIDDGI.primaryShadingNormalCorrection。两组 GBuffer.adjustShadingNormals 都为 true；已逐像素验证 GBuffer 法线完全相同，重建输入保持一致。关闭组在主命中材质实例中不传 AdjustShadingNormal，复现旧版 DDGI/FG 的策略。探针和次级命中材质策略不变，PT reference 不变。</p>
+<p>1920×1080，SponzaLambert，相同固定相机、点光源、官方 22³ 探针、全量更新、256 rays/probe、hysteresis 0.97。两组各新建图与场景，运行同样数量的帧、相同采样序列起点，预热 8192 帧后 Accumulate 累积 32768 帧；半分辨率 FG 固定左上采样。WRC、ReSTIR、NRD、RTXDI 关闭。参考为之前同一张 131072 spp PT，MSE 使用相同可见表面 mask，HDR-FLIP 使用相同曝光范围、ACES、PPD 67。</p>
+<table><tr><th>法线修正</th><th>MSE 对 PT</th><th>HDR-FLIP</th><th>与旧版 65536 帧图像的 MSE</th><th>16384→32768 MSE 变化</th></tr><tr><td>on</td><td>7.52902151e-05</td><td>0.306326</td><td>0.0155536</td><td>-0.462%</td></tr><tr><td>off</td><td>0.0156536207</td><td>0.319176</td><td>1.56463e-07</td><td>-0.005%</td></tr></table>
+<p>关/开 MSE 比值：207.91 倍。旧版 DDGI＋FG 的 MSE 重新计算为 0.0156530636。关闭组与旧图仍可能有随机采样、累积帧数和其他版本改动导致的小差别；本次开关之间只改变上述一项。</p>
+<img src="comparison.png"><p><a href="off.png">关闭原图</a> · <a href="on.png">开启原图</a> · <a href="pt.png">PT 原图</a> · <a href="summary.json">完整数据</a></p>
+<p>复现：tests/ddgi/sponza_primary_normal_ab.py；评分：tests/ddgi/score_sponza_primary_normal_ab.py。诊断属性默认 true，保持原有修正行为；没有改变 PT，也没有关闭法线贴图。</p>

@@ -1,2 +1,4 @@
 #include "RTXGIConfig.slang"
-#include "RTXGI/rtxgi-sdk/shaders/ddgi/ProbeClassificationCS.hlsl"
+
+// Generated SDK adaptation: skip unselected probes before any shared-memory barrier.
+#include "RTXGI/rtxgi-sdk/shaders/ddgi/BatchProbeClassificationCS.hlsl"

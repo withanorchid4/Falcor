@@ -72,6 +72,7 @@ Properties RTXGIDDGI::getProperties() const
 {
     Properties p;
     p["worldCache"] = mOptions.worldCache;
+    p["primaryShadingNormalCorrection"] = mOptions.primaryShadingNormalCorrection;
     p["worldCacheDownsample"] = mOptions.worldCacheDownsample;
     p["worldCacheBounces"] = mOptions.worldCacheBounces;
     p["worldCacheHistory"] = mOptions.worldCacheHistory;
@@ -79,6 +80,9 @@ Properties RTXGIDDGI::getProperties() const
     p["worldCacheMaxIntensity"] = mOptions.worldCacheMaxIntensity;
     p["gridCounts"] = mOptions.counts;
     p["raysPerProbe"] = mOptions.rays;
+    p["batchProbeUpdates"] = mOptions.batchProbeUpdates;
+    p["wrapProbeBatches"] = mOptions.wrapProbeBatches;
+    p["probesPerFrame"] = mOptions.probesPerFrame;
     p["hysteresis"] = mOptions.hysteresis;
     p["normalBias"] = mOptions.normalBias;
     p["viewBias"] = mOptions.viewBias;
@@ -143,6 +147,7 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         refreshLighting |= name != "showWrcCells" && name != "wrcCellsXRay" &&
                            name != "wrcCellsLod" && name != "wrcCellsOpacity";
         if (name == "worldCache") next.worldCache = value;
+        else if (name == "primaryShadingNormalCorrection") next.primaryShadingNormalCorrection = value;
         else if (name == "worldCacheDownsample") next.worldCacheDownsample = value;
         else if (name == "worldCacheBounces") next.worldCacheBounces = value;
         else if (name == "worldCacheHistory") next.worldCacheHistory = value;
@@ -150,6 +155,9 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         else if (name == "worldCacheDensity") next.worldCacheDensity = value;
         else if (name == "gridCounts") next.counts = value;
         else if (name == "raysPerProbe") next.rays = value;
+        else if (name == "batchProbeUpdates") next.batchProbeUpdates = value;
+        else if (name == "wrapProbeBatches") next.wrapProbeBatches = value;
+        else if (name == "probesPerFrame") next.probesPerFrame = value;
         else if (name == "hysteresis") next.hysteresis = value;
         else if (name == "normalBias") next.normalBias = value;
         else if (name == "viewBias") next.viewBias = value;
@@ -205,6 +213,8 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         else FALCOR_THROW("Unknown RTXGIDDGI property '{}'.", name);
     }
     FALCOR_CHECK(all(next.counts >= uint3(2)) && all(next.counts <= uint3(32)), "DDGI gridCounts must be 2..32 per axis.");
+    FALCOR_CHECK(next.probesPerFrame >= 1 && next.probesPerFrame <= 32768, "Probe budget must be 1..32768.");
+    if (next.batchProbeUpdates != mOptions.batchProbeUpdates || next.probesPerFrame != mOptions.probesPerFrame || next.wrapProbeBatches != mOptions.wrapProbeBatches) mResetPending = true;
     FALCOR_CHECK(next.rays >= 64 && next.rays <= 512, "DDGI raysPerProbe must be 64..512 (32 rays are reserved for probe placement).");
     FALCOR_CHECK(std::isfinite(next.hysteresis) && next.hysteresis >= 0.f && next.hysteresis < 1.f, "DDGI hysteresis must be in [0,1).");
     FALCOR_CHECK(std::isfinite(next.normalBias) && next.normalBias >= 0.f && next.normalBias <= 1.f, "DDGI normalBias must be in [0,1].");
@@ -443,6 +453,9 @@ void RTXGIDDGI::clearHistory(RenderContext* context)
         context->clearUAV(texture->getUAV().get(), float4(0.f));
     // SDK classification ACTIVE == 0; offsets start at zero.
     mUpdatedFrames = 0;
+    mProbeCursor = mProbeBatchCount = mProbeSweeps = 0;
+    mLastProbeBatchStart = mLastProbeBatchCount = 0;
+    mProbeUpdatesTotal = 0;
     context->clearUAV(mpDiagnostics->getUAV().get(), uint4(0));
     mRandom.seed(1337);
     mWrcResetPending = true;
@@ -518,6 +531,8 @@ void RTXGIDDGI::bindWrcResources(const ShaderVar& root, uint32_t shaderBucket)
     root["gWrcDispatchArgs"] = ref<Buffer>();
     root["gWrcTypeMap"] = mpWrcTypeMap;
     auto cb = root["WrcCB"];
+    root["PerFrameCB"]["gProbeBatchStart"] = mProbeCursor;
+    root["PerFrameCB"]["gProbeBatchCount"] = mProbeBatchCount;
     cb["gWrcTableSize"] = mOptions.wrcTableSize;
     cb["gWrcMaxAge"] = mOptions.wrcMaxAge;
     cb["gWrcFrame"] = mUpdatedFrames + 1;
@@ -634,7 +649,7 @@ void RTXGIDDGI::traceWithWrc(RenderContext* context, const RenderData& data)
     context->uavBarrier(mpWrcOwners.get());
     context->uavBarrier(mpWrcCounters.get());
     context->uavBarrier(mpWrcActiveCounts.get());
-    const uint3 dimensions(mOptions.rays, mOptions.counts.x * mOptions.counts.z, mOptions.counts.y);
+    const uint3 dimensions(mOptions.rays, mProbeBatchCount, 1);
     const uint32_t rayCount = mOptions.rays * mOptions.counts.x * mOptions.counts.y * mOptions.counts.z;
     // Match the linear indexing in buildWRC/gatherWRC without exceeding D3D12's
     // 65535 thread groups per dimension at the largest supported probe grid.
@@ -752,14 +767,14 @@ void RTXGIDDGI::uploadConstants()
     volume.probeNumIrradianceInteriorTexels = 6;
     volume.probeNumDistanceInteriorTexels = 14;
     // Bootstrap an empty volume without applying a long steady-state history.
-    volume.probeHysteresis = std::min(mOptions.hysteresis, float(mUpdatedFrames) / float(mUpdatedFrames + 1u));
+    volume.probeHysteresis = std::min(mOptions.hysteresis, float(mProbeSweeps) / float(mProbeSweeps + 1u));
     volume.probeMaxRayDistance = std::max(length(mGridMax - mGridMin) * 2.f, 1.f);
     volume.probeNormalBias = mOptions.normalBias * scale;
     volume.probeViewBias = mOptions.viewBias * scale;
     volume.probeDistanceExponent = 50.f;
     volume.probeIrradianceEncodingGamma = 5.f;
     volume.probeIrradianceThreshold = 0.25f;
-    volume.probeBrightnessThreshold = mUpdatedFrames < 32 ? std::numeric_limits<float>::max() : 0.10f;
+    volume.probeBrightnessThreshold = mProbeSweeps < 32 ? std::numeric_limits<float>::max() : 0.10f;
     volume.probeRandomRayBackfaceThreshold = 0.10f;
     volume.probeFixedRayBackfaceThreshold = 0.25f;
     volume.probeMinFrontfaceDistance = mOptions.minFrontfaceDistance * scale;
@@ -852,8 +867,11 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     if (data.getTexture("unfilteredColor")) root["gUnfilteredColor"] = data.getTexture("unfilteredColor");
     auto cb = root["PerFrameCB"];
     cb["gFrameCount"] = mFrame;
+    cb["gProbeBatchStart"] = mProbeCursor;
+    cb["gProbeBatchCount"] = mProbeBatchCount;
     cb["gFrameDim"] = data.getDefaultTextureDims();
-    cb["gAdjustPrimaryShadingNormals"] = data.getDictionary().getValue(kRenderPassGBufferAdjustShadingNormals, false);
+    cb["gAdjustPrimaryShadingNormals"] = mOptions.primaryShadingNormalCorrection &&
+        data.getDictionary().getValue(kRenderPassGBufferAdjustShadingNormals, false);
     cb["gFinalGather"] = mOptions.finalGather;
     cb["gHalfResolutionGather"] = mOptions.halfResolutionGather;
     cb["gGatherOffset"] = mGatherOffset;
@@ -894,6 +912,9 @@ void RTXGIDDGI::updateProbes(RenderContext* context)
     const auto bind = [&](const ref<ComputePass>& pass)
     {
         auto root = pass->getRootVar();
+        root["ProbeBatchCB"]["gBatchStart"] = mProbeCursor;
+        root["ProbeBatchCB"]["gBatchCount"] = mProbeBatchCount;
+        root["ProbeBatchCB"]["gBatchTotal"] = mOptions.counts.x * mOptions.counts.y * mOptions.counts.z;
         root["DDGI"]["volumeIndex"] = 0u;
         root["DDGIVolumes"] = mpVolume;
         root["RayData"] = mpRayData;
@@ -922,6 +943,11 @@ void RTXGIDDGI::updateProbes(RenderContext* context)
         mpClassify->execute(context, uint3(count, 1, 1));
         context->uavBarrier(mpProbeData.get());
     }
+    mLastProbeBatchStart = mProbeCursor;
+    mLastProbeBatchCount = mProbeBatchCount;
+    mProbeUpdatesTotal += mProbeBatchCount;
+    mProbeCursor += mProbeBatchCount;
+    if (mProbeCursor >= count) { mProbeCursor -= count; ++mProbeSweeps; }
     ++mUpdatedFrames;
 }
 
@@ -999,6 +1025,8 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
     {
         if (mReallocate) allocateResources(context);
         if (mResetPending) clearHistory(context);
+        const uint32_t total = mOptions.counts.x * mOptions.counts.y * mOptions.counts.z;
+        mProbeBatchCount = mOptions.batchProbeUpdates ? std::min(mOptions.probesPerFrame, mOptions.wrapProbeBatches ? total : total - mProbeCursor) : total;
         uploadConstants();
     }
     if (mOptions.worldCache && mOptions.update) updateWorldCache(context, data);
@@ -1011,7 +1039,7 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
             FALCOR_PROFILE(context, "OriginalTrace");
             bindRayProgram(mTrace, data);
             mpScene->raytrace(context, mTrace.program.get(), mTrace.vars,
-                              uint3(mOptions.rays, mOptions.counts.x * mOptions.counts.z, mOptions.counts.y));
+                              uint3(mOptions.rays, mProbeBatchCount, 1));
         }
         context->uavBarrier(mpRayData.get());
         {
@@ -1129,6 +1157,12 @@ Properties RTXGIDDGI::getStats() const
         stats["cacheInsertionFailures"] = counters[2]; stats["cacheOccupied"] = counters[3];
     }
     stats["updatedFrames"] = mUpdatedFrames;
+    stats["batchProbeUpdates"] = mOptions.batchProbeUpdates;
+    stats["probesPerFrame"] = mOptions.probesPerFrame;
+    stats["lastProbeBatchStart"] = mLastProbeBatchStart;
+    stats["lastProbeBatchCount"] = mLastProbeBatchCount;
+    stats["completedProbeSweeps"] = mProbeSweeps;
+    stats["probeUpdatesTotal"] = mProbeUpdatesTotal;
     const bool allocated = mpProbeData && !mReallocate && mpScene && mSupported;
     stats["totalProbes"] = allocated ? mOptions.counts.x * mOptions.counts.y * mOptions.counts.z : 0u;
     stats["status"] = mStatus;
@@ -1274,6 +1308,12 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
     Properties p;
     auto options = mOptions;
     if (widgets.checkbox("Update probes", options.update)) p["updateEnabled"] = options.update;
+    if (!options.worldCache)
+    {
+        if (widgets.checkbox("Batch probe updates", options.batchProbeUpdates)) p["batchProbeUpdates"] = options.batchProbeUpdates;
+        if (options.batchProbeUpdates && widgets.var("Probes per frame", options.probesPerFrame, 1u, 32768u)) p["probesPerFrame"] = options.probesPerFrame;
+        widgets.tooltip("Round-robin probe budget. The last batch of a sweep may be smaller. Changing the budget resets probe history. Off updates all probes.");
+    }
     if (widgets.button("Reset history")) reset();
     if (widgets.checkbox("Enable DDGI", options.enableGI)) p["enableGI"] = options.enableGI;
     if (auto gather = widgets.group("Final gather", true))

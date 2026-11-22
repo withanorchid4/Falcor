@@ -31,4 +31,4 @@ foreach ($requiredPath in @($officialExe, $officialConfig, $workingDirectory)) {
     }
 }
 
-Start-Process -FilePath $officialExe -ArgumentList $officialConfig -WorkingDirectory $workingDirectory -WindowStyle Hidden
+Start-Process -FilePath $officialExe -ArgumentList $officialConfig -WorkingDirectory $workingDirectory -WindowStyle Normal

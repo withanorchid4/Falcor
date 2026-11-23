@@ -88,6 +88,7 @@ Properties RTXGIDDGI::getProperties() const
     p["gridCounts"] = mOptions.counts;
     p["raysPerProbe"] = mOptions.rays;
     p["optimizedProbeCapture"] = mOptions.optimizedProbeCapture;
+    p["precomputeProbePositions"] = mOptions.precomputeProbePositions;
     p["multiviewProbeCapture"] = mOptions.multiviewProbeCapture;
     p["multiviewAcrossProbes"] = mOptions.multiviewAcrossProbes;
     p["rasterProbeUpdate"] = mOptions.rasterProbeUpdate;
@@ -182,6 +183,7 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         else if (name == "multiviewAcrossProbes") next.multiviewAcrossProbes = value;
         else if (name == "multiviewProbeCapture") next.multiviewProbeCapture = value;
         else if (name == "optimizedProbeCapture") next.optimizedProbeCapture = value;
+        else if (name == "precomputeProbePositions") next.precomputeProbePositions = value;
         else if (name == "rasterProbeUpdate") next.rasterProbeUpdate = value;
         else if (name == "probeCubemapSize") next.probeCubemapSize = value;
         else if (name == "batchProbeUpdates") next.batchProbeUpdates = value;
@@ -340,7 +342,7 @@ RenderPassReflection RTXGIDDGI::reflect(const CompileData& data)
 
 void RTXGIDDGI::setScene(RenderContext* context, const ref<Scene>& scene)
 {
-    for (uint32_t i = 0; i < 16; ++i) { mpProbeCapturePrograms[i] = nullptr; mpProbeCaptureVariables[i] = nullptr; }
+    for (uint32_t i = 0; i < 32; ++i) { mpProbeCapturePrograms[i] = nullptr; mpProbeCaptureVariables[i] = nullptr; }
     mpProbeCaptureProgram = nullptr; mpProbeCaptureVars = nullptr; mpProbeCaptureCull = nullptr; mpProbeMeshBounds = nullptr; mpProbeCaptureCompare = nullptr; mpProbeCaptureReference = nullptr; mpProbeCaptureDifference = nullptr;
     mpScene = scene;
     mWorldCacheReset = true;
@@ -425,7 +427,7 @@ void RTXGIDDGI::buildRayProgram(RayProgram& ray, const char* shader, const char*
 
 void RTXGIDDGI::createPrograms()
 {
-    for (uint32_t i = 0; i < 16; ++i) { mpProbeCapturePrograms[i] = nullptr; mpProbeCaptureVariables[i] = nullptr; }
+    for (uint32_t i = 0; i < 32; ++i) { mpProbeCapturePrograms[i] = nullptr; mpProbeCaptureVariables[i] = nullptr; }
     mpProbeCaptureProgram = nullptr; mpProbeCaptureVars = nullptr; mpProbeCaptureCull = nullptr; mpProbeMeshBounds = nullptr; mpProbeCaptureCompare = nullptr; mpProbeCaptureReference = nullptr; mpProbeCaptureDifference = nullptr;
     buildRayProgram(mTrace, kRayShader, "traceProbes");
     buildRayProgram(mRender, kRayShader, "render");
@@ -1395,6 +1397,8 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
     if (options.rasterProbeUpdate && widgets.checkbox("Cull objects per probe face", options.optimizedProbeCapture)) p["optimizedProbeCapture"] = options.optimizedProbeCapture;
     if (options.rasterProbeUpdate && options.optimizedProbeCapture)
     {
+        if (widgets.checkbox("Precompute probe world positions", options.precomputeProbePositions))
+            p["precomputeProbePositions"] = options.precomputeProbePositions;
         if (getProbeViewInstancingTier() >= 2)
         {
             if (widgets.checkbox("Hardware multiview (3 views)", options.multiviewProbeCapture)) p["multiviewProbeCapture"] = options.multiviewProbeCapture;
@@ -1546,6 +1550,7 @@ Properties RTXGIDDGI::getProbeCaptureStats() const
 {
     Properties stats;
     stats["optimizedProbeCapture"] = mProbeCaptureOptimized;
+    stats["precomputeProbePositions"] = mProbeCapturePrecomputed;
     stats["multiviewProbeCapture"] = mProbeCaptureMultiview;
     stats["multiviewAcrossProbes"] = mProbeCaptureMultiview && mProbeCaptureAcrossProbes;
     stats["viewInstancingTier"] = getProbeViewInstancingTier();

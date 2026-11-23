@@ -44,6 +44,7 @@ private:
         uint32_t rays = 256;
         bool rasterProbeUpdate = false;
         bool optimizedProbeCapture = true;
+        bool precomputeProbePositions = true; // Cache relocated positions once per capture; false retains the A/B baseline.
         bool multiviewProbeCapture = false;
         bool multiviewAcrossProbes = false;
         uint32_t probeCaptureDiagnosticMode = 0; // 0 normal, 1 minimal PS, 2 full VS/clip all, 3 minimal VS/clip all, 4 no vertex-position input/clip all, 5 view-independent position/clip all.
@@ -180,13 +181,17 @@ private:
     void rasterizeProbes(RenderContext* context, const RenderData& data);
     ref<GraphicsState> mpProbeCaptureState;
     ref<Program> mpProbeCaptureProgram;
-    ref<Program> mpProbeCapturePrograms[16];
-    ref<ProgramVars> mpProbeCaptureVariables[16];
+    ref<Program> mpProbeCapturePrograms[32];
+    ref<ProgramVars> mpProbeCaptureVariables[32];
     ref<ProgramVars> mpProbeCaptureVars;
     ref<Fbo> mpProbeCaptureFbo;
     ref<Texture> mpProbeCaptureHits, mpProbeCaptureDepth;
     uint32_t mRasterOffset = 0;
     uint32_t mProbeCaptureDiagnosticShader = 0;
+    bool mProbeCapturePrecomputed = false;
+    ref<ComputePass> mpPrecomputeProbePositions;
+    ref<Buffer> mpCaptureProbePositions;
+    uint32_t mCaptureProbePositionCapacity = 0;
     bool mProbeCaptureOptimized = false, mProbeCaptureMultiview = false, mProbeCaptureAcrossProbes = false;
     std::shared_ptr<ProbeCapturePipelineDiagnostics> mpProbePipelineDiagnostics;
     ref<ComputePass> mpProbeCaptureCompare;

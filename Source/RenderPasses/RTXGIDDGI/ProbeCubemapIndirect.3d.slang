@@ -21,8 +21,13 @@ ParameterBlock<ViewInstancingSettings> gFalcorViewInstancing3;
 #endif
 StructuredBuffer<uint> gViewMasks;
 #endif
+#if PROBE_PRECOMPUTED_POSITIONS
+StructuredBuffer<float4> gCaptureProbePositions;
+cbuffer PositionReadCB { uint gPositionOffset; }
+#else
 StructuredBuffer<DDGIVolumeDescGPUPacked> DDGIVolumes;
 Texture2DArray<float4> gProbeData;
+#endif
 cbuffer CaptureCB
 {
     uint gStart;
@@ -92,8 +97,12 @@ VOut vsMain(VIn i
     if (gDiagnosticMode == 3 || gDiagnosticMode == 4) { o.h = float4(inputPosition.xy, -1 - float(gDiagnosticMode & 4), 1); return o; }
     GeometryInstanceID id = {inst};
     float3 pos = mul(gScene.getWorldMatrix(id), float4(inputPosition, 1)).xyz;
+#if PROBE_PRECOMPUTED_POSITIONS
+    float3 origin = gCaptureProbePositions[gPositionOffset + slot].xyz;
+#else
     DDGIVolumeDescGPU volume = UnpackDDGIVolumeDescGPU(DDGIVolumes[0]);
     float3 origin = DDGIGetProbeWorldPosition(DDGIGetProbeCoords((gStart + slot) % gTotal, volume), volume, gProbeData);
+#endif
     float3 F = cubeForward(face), U = cubeUp(face), R = cross(F, U);
 #if PROBE_MULTIVIEW && PROBE_MULTIVIEW_ACROSS_PROBES
     float3 base = float3(dot(pos, R), dot(pos, U), dot(pos, F));

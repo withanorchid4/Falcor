@@ -1,0 +1,56 @@
+[
+  {
+    "mode": "raster",
+    "shape": [
+      1080,
+      1920,
+      3
+    ],
+    "finite": true,
+    "linear_mae": 1.966803466757483e-07,
+    "linear_rmse": 2.4401670088991523e-06,
+    "linear_max": 0.0006597042083740234,
+    "relative_l1": 1.5187703183983103e-06,
+    "linear_equal_pixels_fraction": 0.059876543209876544,
+    "display_mae_255": 0.0001057741769547325,
+    "display_max_255": 1.0,
+    "display_pixels_gt1_fraction": 0.0,
+    "display_pixels_gt5_fraction": 0.0
+  },
+  {
+    "mode": "multiview",
+    "shape": [
+      1080,
+      1920,
+      3
+    ],
+    "finite": true,
+    "linear_mae": 1.966803466757483e-07,
+    "linear_rmse": 2.4401670088991523e-06,
+    "linear_max": 0.0006597042083740234,
+    "relative_l1": 1.5187703183983103e-06,
+    "linear_equal_pixels_fraction": 0.059876543209876544,
+    "display_mae_255": 0.0001057741769547325,
+    "display_max_255": 1.0,
+    "display_pixels_gt1_fraction": 0.0,
+    "display_pixels_gt5_fraction": 0.0
+  },
+  {
+    "mode": "across",
+    "shape": [
+      1080,
+      1920,
+      3
+    ],
+    "finite": true,
+    "linear_mae": 1.966803466757483e-07,
+    "linear_rmse": 2.4401670088991523e-06,
+    "linear_max": 0.0006597042083740234,
+    "relative_l1": 1.5187703183983103e-06,
+    "linear_equal_pixels_fraction": 0.059876543209876544,
+    "display_mae_255": 0.0001057741769547325,
+    "display_max_255": 1.0,
+    "display_pixels_gt1_fraction": 0.0,
+    "display_pixels_gt5_fraction": 0.0
+  }
+]

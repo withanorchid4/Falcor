@@ -16,6 +16,7 @@ target_sources(RTXGIDDGI PRIVATE
     ProbeCubemapCompare.cs.slang
     ProbeCubemapCull.cs.slang
     ProbeCubemapIndirect.3d.slang
+    PrecomputeProbePositions.cs.slang
     ProbeCubemap.cpp
     ProbeCubemap.3d.slang
     ProbeCubemapCommon.slang

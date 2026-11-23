@@ -1,0 +1,52 @@
+<!doctype html><meta charset="utf-8"><title>Probe world-position precompute A/B</title><style>body{font:16px system-ui;max-width:1100px;margin:40px auto;color:#222}img{max-width:100%}td,th{padding:10px;border-bottom:1px solid #ddd;text-align:left}pre{background:#f6f6f6;padding:16px;overflow:auto}</style><h1>Probe world-position precompute A/B</h1><p>2026-11-23. RTX 5070, D3D12 Release, SponzaLambert, 1920x1080. Grid 22^3, 256 rays/probe, 1024 probes/frame, wrap enabled, cubemap face 32x32. Normal application GPU timestamps; not Nsight base-clock capture.</p><p>Each mode uses A/B/B/A, 32 warmup frames and 128 captured frames/run; first 4 timing records discarded. Means of 2 runs per variant. ProbeUpdate includes the new compute dispatch and synchronization. Geometry, culling, projection and multiview mapping are unchanged; only VS probe-origin computation is replaced by a float4 buffer load. The buffer is refreshed before relocation updates every capture.</p><img src="timings.png"><table><tr><th>Mode</th><th>Before ms</th><th>After ms</th><th>Saved</th><th>Precompute ms</th></tr><tr><td>Raster</td><td>81.225</td><td>66.781</td><td>14.444 (17.78%)</td><td>0.00301</td></tr><tr><td>Multiview / faces</td><td>79.012</td><td>74.791</td><td>4.221 (5.34%)</td><td>0.00302</td></tr><tr><td>Multiview / probes</td><td>80.358</td><td>79.154</td><td>1.203 (1.50%)</td><td>0.00299</td></tr></table><p>Correctness: frozen-field GS reference checked at offsets 0, 5000, 10640 (wrapping and 8-probe tail), and 1024 (17 probes). All modes have zero missing/extra/non-finite capture pixels. Old VS has zero position mismatches; new VS has 4/9/21/18/1 respectively, identical across all three view modes. At offset 0 one surface/material selection differs (maximum world-position difference 3.985 units); this is a real rare hit change, not merely a 4-unit origin error. Floating-point regrouping across the compute-buffer boundary is a likely cause, not proven by disassembly. Exact pixel equality is not guaranteed.</p><p>Image pairs run in fresh processes with identical scene, paused clock and frame sequence: 512 ray warmup frames, 64 raster frames, then 128 accumulated frames. These compare the optimization on the same scene/camera, not global correctness or full convergence. Linear EXR and tonemapped 8-bit PNG metrics are below. Difference images are magnified 16x.</p><h2>raster: image comparison</h2><img src="raster-comparison.png"><pre>{
+  "mode": "raster",
+  "shape": [
+    1080,
+    1920,
+    3
+  ],
+  "finite": true,
+  "linear_mae": 1.966803466757483e-07,
+  "linear_rmse": 2.4401670088991523e-06,
+  "linear_max": 0.0006597042083740234,
+  "relative_l1": 1.5187703183983103e-06,
+  "linear_equal_pixels_fraction": 0.059876543209876544,
+  "display_mae_255": 0.0001057741769547325,
+  "display_max_255": 1.0,
+  "display_pixels_gt1_fraction": 0.0,
+  "display_pixels_gt5_fraction": 0.0
+}</pre><h2>multiview: image comparison</h2><img src="multiview-comparison.png"><pre>{
+  "mode": "multiview",
+  "shape": [
+    1080,
+    1920,
+    3
+  ],
+  "finite": true,
+  "linear_mae": 1.966803466757483e-07,
+  "linear_rmse": 2.4401670088991523e-06,
+  "linear_max": 0.0006597042083740234,
+  "relative_l1": 1.5187703183983103e-06,
+  "linear_equal_pixels_fraction": 0.059876543209876544,
+  "display_mae_255": 0.0001057741769547325,
+  "display_max_255": 1.0,
+  "display_pixels_gt1_fraction": 0.0,
+  "display_pixels_gt5_fraction": 0.0
+}</pre><h2>across: image comparison</h2><img src="across-comparison.png"><pre>{
+  "mode": "across",
+  "shape": [
+    1080,
+    1920,
+    3
+  ],
+  "finite": true,
+  "linear_mae": 1.966803466757483e-07,
+  "linear_rmse": 2.4401670088991523e-06,
+  "linear_max": 0.0006597042083740234,
+  "relative_l1": 1.5187703183983103e-06,
+  "linear_equal_pixels_fraction": 0.059876543209876544,
+  "display_mae_255": 0.0001057741769547325,
+  "display_max_255": 1.0,
+  "display_pixels_gt1_fraction": 0.0,
+  "display_pixels_gt5_fraction": 0.0
+}</pre>

@@ -102,16 +102,18 @@ void RTXGIDDGI::rasterizeProbes(RenderContext* context, const RenderData& data)
     const bool optimized = mOptions.optimizedProbeCapture && mpScene->getMeshVao()->getIndexBuffer();
     const bool multiview = optimized && mOptions.multiviewProbeCapture && getProbeViewInstancingTier() >= 2;
     const bool acrossProbes = multiview && mOptions.multiviewAcrossProbes;
+    const bool precompute = optimized && mOptions.precomputeProbePositions;
     const uint32_t diagnosticShader = mOptions.probeCaptureDiagnosticMode == 5 ? 3u : mOptions.probeCaptureDiagnosticMode == 4 ? 2u :
         ((mOptions.probeCaptureDiagnosticMode != 0 || mOptions.probeCaptureDiagnosticRestore) ? 1u : 0u);
-    const uint32_t programIndex = (multiview ? (acrossProbes ? 3u : 2u) : uint32_t(optimized)) + diagnosticShader * 4;
+    const uint32_t programIndex = (multiview ? (acrossProbes ? 3u : 2u) : uint32_t(optimized)) + diagnosticShader * 4 + (precompute ? 16u : 0u);
     if (!mpProbeCaptureProgram || mProbeCaptureOptimized != optimized || mProbeCaptureMultiview != multiview ||
-        mProbeCaptureAcrossProbes != acrossProbes || mProbeCaptureDiagnosticShader != diagnosticShader)
+        mProbeCaptureAcrossProbes != acrossProbes || mProbeCaptureDiagnosticShader != diagnosticShader || mProbeCapturePrecomputed != precompute)
     {
         mProbeCaptureOptimized = optimized;
         mProbeCaptureMultiview = multiview;
         mProbeCaptureAcrossProbes = acrossProbes;
         mProbeCaptureDiagnosticShader = diagnosticShader;
+        mProbeCapturePrecomputed = precompute;
         if (!mpProbeCapturePrograms[programIndex])
         {
             ProgramDesc desc;
@@ -127,6 +129,7 @@ void RTXGIDDGI::rasterizeProbes(RenderContext* context, const RenderData& data)
             defines.add("PROBE_CAPTURE_DIAGNOSTICS", diagnosticShader != 0 ? "1" : "0");
             defines.add("PROBE_CAPTURE_INDEPENDENT_VIEW", diagnosticShader == 3 ? "1" : "0");
             defines.add("PROBE_CAPTURE_NO_VERTEX_POSITION", diagnosticShader == 2 ? "1" : "0");
+            defines.add("PROBE_PRECOMPUTED_POSITIONS", precompute ? "1" : "0");
             defines.add("PROBE_MULTIVIEW", multiview ? "1" : "0");
             defines.add("PROBE_MULTIVIEW_ACROSS_PROBES", acrossProbes ? "1" : "0");
             mpProbeCapturePrograms[programIndex] = Program::create(mpDevice, desc, defines);
@@ -192,14 +195,14 @@ void RTXGIDDGI::rasterizeProbes(RenderContext* context, const RenderData& data)
         mpProbeCaptureCull = ComputePass::create(mpDevice, cull, mpScene->getSceneDefines());
     }
     auto root = mpProbeCaptureVars->getRootVar();
-    root["DDGIVolumes"] = mpVolume;
+    if (!precompute) root["DDGIVolumes"] = mpVolume;
     if (optimized && diagnosticShader != 0) root["CaptureDiagnosticCB"]["gDiagnosticMode"] = mOptions.probeCaptureDiagnosticMode;
     if (multiview)
     {
         root["gViewMasks"] = mpProbeViewMasks;
         root[acrossProbes ? "gFalcorViewInstancing3AcrossProbes" : "gFalcorViewInstancing3"]["viewCount"] = 3u;
     }
-    root["gProbeData"] = mpProbeData;
+    if (!precompute) root["gProbeData"] = mpProbeData;
     FALCOR_CHECK(mOptions.probeCaptureTriangleDivisor == 1 || (mOptions.captureOnly && mOptions.probeCaptureDiagnosticMode >= 2),
         "Triangle reduction is only supported in clip-all capture diagnostics.");
 #if FALCOR_HAS_D3D12
@@ -210,11 +213,35 @@ void RTXGIDDGI::rasterizeProbes(RenderContext* context, const RenderData& data)
     }
 #endif
     const uint32_t total = mOptions.counts.x * mOptions.counts.y * mOptions.counts.z;
+    if (precompute && mProbeBatchCount > 0)
+    {
+        FALCOR_PROFILE(context, "PrecomputeProbePositions");
+        if (!mpPrecomputeProbePositions)
+            mpPrecomputeProbePositions = ComputePass::create(mpDevice, "RenderPasses/RTXGIDDGI/PrecomputeProbePositions.cs.slang", "main");
+        if (!mpCaptureProbePositions || mCaptureProbePositionCapacity < mProbeBatchCount)
+        {
+            mCaptureProbePositionCapacity = mProbeBatchCount;
+            mpCaptureProbePositions = mpDevice->createStructuredBuffer(sizeof(float4), mCaptureProbePositionCapacity,
+                ResourceBindFlags::ShaderResource | ResourceBindFlags::UnorderedAccess);
+        }
+        auto positions = mpPrecomputeProbePositions->getRootVar();
+        positions["DDGIVolumes"] = mpVolume;
+        positions["gProbeData"] = mpProbeData;
+        positions["gPositions"] = mpCaptureProbePositions;
+        positions["PositionCB"]["gStart"] = mProbeCursor;
+        positions["PositionCB"]["gCount"] = mProbeBatchCount;
+        positions["PositionCB"]["gTotal"] = total;
+        mpPrecomputeProbePositions->execute(context, uint3(mProbeBatchCount, 1, 1));
+        // Capture reads this frame's relocated positions before the SDK updates relocation.
+        context->resourceBarrier(mpCaptureProbePositions.get(), Resource::State::ShaderResource);
+        root["gCaptureProbePositions"] = mpCaptureProbePositions;
+    }
     for (uint32_t offset = 0; offset < mProbeBatchCount; offset += 32)
     {
         uint32_t count = std::min(32u, mProbeBatchCount - offset);
         context->clearUAV(mpProbeCaptureHits->getUAV().get(), uint4(0u));
         context->clearDsv(mpProbeCaptureDepth->getDSV().get(), 0.f, 0); // Reversed-Z.
+        if (precompute) root["PositionReadCB"]["gPositionOffset"] = offset;
         root["CaptureCB"]["gStart"] = (mProbeCursor + offset) % total;
         root["CaptureCB"]["gCount"] = count;
         root["CaptureCB"]["gTotal"] = total;

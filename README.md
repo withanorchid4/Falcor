@@ -191,3 +191,23 @@ DDGI 面板中的 `4-probe tetrahedral interpolation` 可切换四点四面体�
 实验脚本为 `tests/ddgi/ddgi_tetrahedral_comparison.py`，报告脚本为 `tests/ddgi/report_ddgi_tetrahedral.py`。
 
 DDGI 查询还默认启用两项等价计算精简：`hoistNormalOct=True` 将公共法线八面体坐标移至 probe 循环外；`skipDirectionNormalize=True` 省略仅用于八面体映射的方向长度归一化。八面体映射自身进行 L1 归一化，距离测试和法线权重仍保留原计算。两个属性可单独关闭用于消融，不重置探针内容；可能存在微小浮点舍入差异。测试脚本 `tests/ddgi/ddgi_query_math_comparison.py` 在冻结缓存上交替计时并比较间接光输出。
+
+## DDGI 光栅化 cubemap 采集实验
+
+DDGI 面板可开启 `Raster cubemap probe capture`，默认关闭，保留原射线采集。Python 属性 `rasterProbeUpdate`，每面分辨率 `probeCubemapSize`（8–128，默认32）。切换后重置探针与图像历史。建议配合每帧probe预算使用，大批量全量光栅捕获很昂贵。
+
+该后端以32个probe为一批，默认先在GPU上用物体包围盒对每个probe的六面视锥做保守剔除，再通过间接绘制与普通VS/PS写入分层cubemap（双面可见性、LOD0 alpha test），存储三角形命中和重心坐标；再按原DDGI的256等方向读取最近邻命中并着色。保留官方八面体irradiance/distance存储、积分、relocation、classification、递归间接光及4/8点插值。最终图像仍走原Accumulate。当前直接光阴影仍使用射线，因此是混合后端；并不是纯光栅的shadow-map GI。与three.js整张cubemap着色也有区别，当前只着色原DDGI方向数量，以隔离采集方式差异。
+
+近裁剪0.0001，远裁剪与DDGI最大射线距离一致。光栅角度离散、近裁剪以及重定位变化可能引入偏差。当前只支持三角形场景。动态/蒙皮/顶点动画物体保守保留，不做包围盒剔除；无索引场景退回旧GS路径。尚未做meshlet或遮挡剔除，也不支持WRC更新缓存叠加。测试脚本 `tests/ddgi/probe_raster_comparison.py`，比较SponzaLambert下相同probe更新预算的稳定画质与GPU耗时；报告脚本 `tests/ddgi/report_probe_raster.py`。
+
+光栅捕获优化开关 `optimizedProbeCapture` 默认打开，界面名 `Cull objects per probe face`；关闭后使用原GS捕获作为对照。优化不改变八面体贴图、DDGI方向数量、SDK更新或屏幕查询。`tests/ddgi/probe_capture_optimization.py` 测固定probe位置下16/32/64分辨率的A/B耗时；`probe_capture_validation.py` 遍历Sponza全部probe核对可见性，并测正常轮转更新的耗时。`captureOnly`、`validateCapture`、`probeCaptureTestOffset` 仅用于隔离测量/调试，默认关闭；正常运行请勿开启 `captureOnly`，它会跳过SDK更新。报告见 `docs/2026-11-23_DDGI光栅捕获批处理优化/report.html`。
+
+每帧1024 probe的射线/优化光栅收敛对照：`tests/ddgi/probe_raster_1024_comparison.py`；报告生成：`tests/ddgi/report_probe_raster_1024.py`；结果：`docs/2026-11-23_Sponza每帧1024探针光栅与射线对比/report.html`。两组均先预热probe场，再开启Accumulate并连续两次通过翻倍稳定检查，GPU计时保持每帧1024 probe的实时更新。
+
+DDGI 光栅捕获可选 `multiviewProbeCapture`（默认false），在支持的D3D12/NVAPI构建中使用原生三视图PSO和 `SV_ViewID`。界面 `Hardware multiview (3 views)`；`View grouping` 可选同一probe的三个面（默认）或相邻三个probe的同朝向面（`multiviewAcrossProbes`）。GPU按三位可见性mask生成7组间接绘制列表，命令列表用 `SetViewInstanceMask` 关闭不可见视图。两种布局保留逐面剔除；不支持的设备/后端回退单面捕获。后端需View Instancing Tier≥2，当前RTX5070为Tier3。该选项保持probe更新预算、八面体存储、着色与Accumulate流程不变。
+实验：`tests/ddgi/probe_multiview_benchmark.py`（默认同probe，可通过环境变量 `MULTIVIEW_ACROSS_PROBES=1` 测另一布局，`MULTIVIEW_TEST_OUTPUT` 指定输出目录）、`tests/ddgi/probe_multiview_comparison.py`（1024预算的稳定画质、全probe可见性校验及同进程ABBA计时）。此路径通过 `Device.cpp` 的原生PSO dispatcher扩展启用，没有修改Slang二进制依赖；不含该dispatcher的构建自动回退。
+
+多视图实测报告：`docs/2026-11-23_DDGI硬件多视图捕获对比/report.html`。Sponza每帧1024 probe下本次未获得明显加速，故默认关闭。接入涉及Falcor.dll的PSO创建扩展，需要重新编译Falcor及RTXGIDDGI；构建RTXGIDDGI目标会自动构建其Falcor依赖。
+
+多视图瓶颈复查：`tests/ddgi/probe_multiview_diagnosis.py`、`tests/ddgi/report_probe_multiview_diagnosis.py`，报告 `docs/2026-11-23_DDGI多视图瓶颈排查/report.html`。已将多视图层偏移移入原生PSO（同probe为0/1/2，跨probe为0/6/12），VS只输出公共层基址，保留硬件mask与原更新预算。
+诊断选项默认不启用：`probeCapturePipelineStats` 配合 `capture_pipeline_stats` 读取原生D3D12计数（读取会submit/wait，必须在计时外）；`probeCaptureDiagnosticMode` 为0正常、1简化PS、2完整VS并全裁剪、3极简VS并全裁剪、4去掉POSITION输入并全裁剪、5无SV_ViewID的相同投影校准。消融要求 `captureOnly=True`、optimized capture且关闭validation；`probeCaptureTriangleDivisor` 默认1，0/2/4等仅允许全裁剪诊断。`probeCaptureDiagnosticRestore=True` 时先运行模式0保存同位置捕获，再运行其他模式，在计时区间外恢复命中纹理供正常光照着色。诊断应使用固定位置、单批不超过32 probe。正常模式0且restore关闭时，动态诊断分支在编译时移除。诊断输出不能用于画质对比。

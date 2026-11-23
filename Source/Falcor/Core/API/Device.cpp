@@ -112,6 +112,76 @@ class GFXDebugCallBack : public gfx::IDebugCallback
 GFXDebugCallBack gGFXDebugCallBack; // TODO: REMOVEGLOBAL
 
 #if FALCOR_NVAPI_AVAILABLE
+// Native PSO extension for programs explicitly opting into three-view capture.
+// Keep the marker in shader reflection; ordinary programs use the existing path.
+template<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE Kind, typename T>
+struct alignas(void*) ViewPipelineSubobject
+{
+    D3D12_PIPELINE_STATE_SUBOBJECT_TYPE kind = Kind;
+    T value = {};
+};
+static HRESULT createThreeViewPipeline(ID3D12Device* device, const D3D12_GRAPHICS_PIPELINE_STATE_DESC& d, void** output, uint32_t layerStride)
+{
+    D3D12_FEATURE_DATA_D3D12_OPTIONS3 options = {};
+    FALCOR_D3D_CALL(device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS3, &options, sizeof(options)));
+    FALCOR_CHECK(options.ViewInstancingTier >= D3D12_VIEW_INSTANCING_TIER_2, "Three-view capture requires View Instancing Tier 2 or higher.");
+    struct Stream
+    {
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_ROOT_SIGNATURE, ID3D12RootSignature*> root;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_VS, D3D12_SHADER_BYTECODE> vs;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_PS, D3D12_SHADER_BYTECODE> ps;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_DS, D3D12_SHADER_BYTECODE> ds;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_HS, D3D12_SHADER_BYTECODE> hs;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_GS, D3D12_SHADER_BYTECODE> gs;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_STREAM_OUTPUT, D3D12_STREAM_OUTPUT_DESC> streamOutput;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_BLEND, D3D12_BLEND_DESC> blend;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_SAMPLE_MASK, UINT> sampleMask;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_RASTERIZER, D3D12_RASTERIZER_DESC> raster;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_DEPTH_STENCIL, D3D12_DEPTH_STENCIL_DESC> depth;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_INPUT_LAYOUT, D3D12_INPUT_LAYOUT_DESC> input;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_IB_STRIP_CUT_VALUE, D3D12_INDEX_BUFFER_STRIP_CUT_VALUE> strip;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_PRIMITIVE_TOPOLOGY, D3D12_PRIMITIVE_TOPOLOGY_TYPE> topology;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_RENDER_TARGET_FORMATS, D3D12_RT_FORMAT_ARRAY> targets;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_DEPTH_STENCIL_FORMAT, DXGI_FORMAT> depthFormat;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_SAMPLE_DESC, DXGI_SAMPLE_DESC> samples;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_NODE_MASK, UINT> nodeMask;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_CACHED_PSO, D3D12_CACHED_PIPELINE_STATE> cache;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_FLAGS, D3D12_PIPELINE_STATE_FLAGS> flags;
+        ViewPipelineSubobject<D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_VIEW_INSTANCING, D3D12_VIEW_INSTANCING_DESC> views;
+    } stream;
+    stream.root.value = d.pRootSignature;
+    stream.vs.value = d.VS;
+    stream.ps.value = d.PS;
+    stream.ds.value = d.DS;
+    stream.hs.value = d.HS;
+    stream.gs.value = d.GS;
+    stream.streamOutput.value = d.StreamOutput;
+    stream.blend.value = d.BlendState;
+    stream.sampleMask.value = d.SampleMask;
+    stream.raster.value = d.RasterizerState;
+    stream.depth.value = d.DepthStencilState;
+    stream.input.value = d.InputLayout;
+    stream.strip.value = d.IBStripCutValue;
+    stream.topology.value = d.PrimitiveTopologyType;
+    stream.depthFormat.value = d.DSVFormat;
+    stream.samples.value = d.SampleDesc;
+    stream.nodeMask.value = d.NodeMask;
+    stream.cache.value = d.CachedPSO;
+    stream.flags.value = d.Flags;
+    stream.targets.value.NumRenderTargets = d.NumRenderTargets;
+    std::copy(std::begin(d.RTVFormats), std::end(d.RTVFormats), stream.targets.value.RTFormats);
+    const D3D12_VIEW_INSTANCE_LOCATION locations[3] = {{0, 0}, {0, layerStride}, {0, 2 * layerStride}};
+    stream.views.value = {3, locations, D3D12_VIEW_INSTANCING_FLAG_ENABLE_VIEW_INSTANCE_MASKING};
+    FALCOR_GET_COM_INTERFACE(device, ID3D12Device2, device2);
+    D3D12_PIPELINE_STATE_STREAM_DESC desc = {sizeof(stream), &stream};
+    ID3D12PipelineState* state = nullptr;
+    HRESULT result = device2->CreatePipelineState(&desc, IID_PPV_ARGS(&state));
+    if (SUCCEEDED(result)) *output = state;
+    return result;
+}
+#endif
+
+#if FALCOR_NVAPI_AVAILABLE
 // To use NVAPI, we intercept the API calls in the gfx layer and dispatch into the NVAPI_Create*PipelineState
 // functions instead if the shader uses NVAPI functionalities.
 // We use the gfx API dispatcher mechanism to intercept and redirect the API call.
@@ -229,6 +299,12 @@ public:
         gfx::IDevice::InteropHandles nativeHandle;
         FALCOR_GFX_CALL(device->getNativeDeviceHandles(&nativeHandle));
         ID3D12Device* pD3D12Device = reinterpret_cast<ID3D12Device*>(nativeHandle.handles[0].handleValue);
+
+        auto globals = program->getLayout()->getGlobalParamsVarLayout()->getTypeLayout();
+        if (globals->findFieldIndexByName("gFalcorViewInstancing3AcrossProbes") != -1)
+            return createThreeViewPipeline(pD3D12Device, *reinterpret_cast<D3D12_GRAPHICS_PIPELINE_STATE_DESC*>(pipelineDesc), outPipelineState, 6);
+        if (globals->findFieldIndexByName("gFalcorViewInstancing3") != -1)
+            return createThreeViewPipeline(pD3D12Device, *reinterpret_cast<D3D12_GRAPHICS_PIPELINE_STATE_DESC*>(pipelineDesc), outPipelineState, 1);
 
         uint32_t space, registerId;
         if (findNvApiShaderParameter(program, space, registerId))

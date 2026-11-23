@@ -12,6 +12,8 @@ using namespace Falcor;
 /** Dynamic diffuse GI using the original RTXGI-DDGI 1.3.7 SDK shaders.
  * Falcor owns resources and dispatches; no static SH cache is used.
  */
+struct ProbeCapturePipelineDiagnostics;
+
 class RTXGIDDGI : public RenderPass
 {
 public:
@@ -32,12 +34,24 @@ public:
     uint32_t getUpdatedFrames() const { return mUpdatedFrames; }
     const std::string& getStatus() const { return mStatus; }
     Properties getStats() const;
+    Properties getProbeCaptureStats() const;
+    Properties getProbePipelineStats() const;
 
 private:
     struct Options
     {
         uint3 counts = uint3(8, 6, 8);
         uint32_t rays = 256;
+        bool rasterProbeUpdate = false;
+        bool optimizedProbeCapture = true;
+        bool multiviewProbeCapture = false;
+        bool multiviewAcrossProbes = false;
+        uint32_t probeCaptureDiagnosticMode = 0; // 0 normal, 1 minimal PS, 2 full VS/clip all, 3 minimal VS/clip all, 4 no vertex-position input/clip all, 5 view-independent position/clip all.
+        bool probeCapturePipelineStats = false;
+        bool probeCaptureDiagnosticRestore = false;
+        uint32_t probeCaptureTriangleDivisor = 1;
+        bool captureOnly = false, validateCapture = false; // Diagnostic: retain the same probe field for A/B.
+        uint32_t probeCubemapSize = 32;
         bool batchProbeUpdates = false;
         bool wrapProbeBatches = false; // Fill the frame budget across the end of the probe grid.
         uint32_t probesPerFrame = 1024;
@@ -162,6 +176,27 @@ private:
     void uploadConstants();
     void bindRayProgram(RayProgram& ray, const RenderData& data);
     void updateProbes(RenderContext* context);
+    uint32_t getProbeViewInstancingTier() const;
+    void rasterizeProbes(RenderContext* context, const RenderData& data);
+    ref<GraphicsState> mpProbeCaptureState;
+    ref<Program> mpProbeCaptureProgram;
+    ref<Program> mpProbeCapturePrograms[16];
+    ref<ProgramVars> mpProbeCaptureVariables[16];
+    ref<ProgramVars> mpProbeCaptureVars;
+    ref<Fbo> mpProbeCaptureFbo;
+    ref<Texture> mpProbeCaptureHits, mpProbeCaptureDepth;
+    uint32_t mRasterOffset = 0;
+    uint32_t mProbeCaptureDiagnosticShader = 0;
+    bool mProbeCaptureOptimized = false, mProbeCaptureMultiview = false, mProbeCaptureAcrossProbes = false;
+    std::shared_ptr<ProbeCapturePipelineDiagnostics> mpProbePipelineDiagnostics;
+    ref<ComputePass> mpProbeCaptureCompare;
+    ref<Texture> mpProbeCaptureReference;
+    ref<Buffer> mpProbeCaptureDifference;
+    ref<ComputePass> mpProbeCaptureCull;
+    ref<Buffer> mpProbeViewMasks;
+    ref<Buffer> mpProbeMeshBounds, mpProbeDraw16, mpProbeDraw32, mpProbeDrawCounts;
+    ref<Vao> mpProbeCaptureVao16, mpProbeCaptureVao32;
+
     ref<Scene> mpScene;
     ref<SampleGenerator> mpSampleGenerator;
     ref<Buffer> mpVolume;

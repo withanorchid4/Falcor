@@ -1,0 +1,6239 @@
+{
+  "groups": [
+    {
+      "mode": 0,
+      "divisor": 1,
+      "multiview": false,
+      "gpu": {
+        "RenderGraphExe::execute()": 4.167058046594222,
+        "ProbeUpdate": 2.6325090503304955,
+        "RasterProbeCapture": 2.631792044898036,
+        "CullCaptureDraws": 0.005793994670572279,
+        "RasterVisibility": 2.553218429973778
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3425272361938223,
+        "ProbeUpdate": 0.2079036586329866,
+        "RasterProbeCapture": 0.205550406744002,
+        "CullCaptureDraws": 0.024041463426619687,
+        "RasterVisibility": 0.026836314425377178
+      },
+      "pipeline": {
+        "IAVertices": 75830035,
+        "IAPrimitives": 25276678.333333332,
+        "VSInvocations": 25965936,
+        "GSInvocations": 0,
+        "CInvocations": 25276678.333333332,
+        "CPrimitives": 8516081.666666666,
+        "PSInvocations": 1031954.5
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2940,
+        2985
+      ]
+    },
+    {
+      "mode": 0,
+      "divisor": 1,
+      "multiview": true,
+      "gpu": {
+        "RenderGraphExe::execute()": 4.009626014768916,
+        "ProbeUpdate": 2.481218602599167,
+        "RasterProbeCapture": 2.4805026341906085,
+        "CullCaptureDraws": 0.006329235784850793,
+        "RasterVisibility": 2.40124773979187
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4030598914477883,
+        "ProbeUpdate": 0.271841192713921,
+        "RasterProbeCapture": 0.26950081300525486,
+        "CullCaptureDraws": 0.024070460711502366,
+        "RasterVisibility": 0.08969471553658567
+      },
+      "pipeline": {
+        "IAVertices": 48870278,
+        "IAPrimitives": 16290092.666666666,
+        "VSInvocations": 16333955.666666666,
+        "GSInvocations": 0,
+        "CInvocations": 25276678.333333332,
+        "CPrimitives": 8516081.666666666,
+        "PSInvocations": 1012292.1666666666
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2940,
+        2985
+      ]
+    },
+    {
+      "mode": 1,
+      "divisor": 1,
+      "multiview": false,
+      "gpu": {
+        "RenderGraphExe::execute()": 4.125094497106908,
+        "ProbeUpdate": 2.5917280498881974,
+        "RasterProbeCapture": 2.5910082616134065,
+        "CullCaptureDraws": 0.005793994666786415,
+        "RasterVisibility": 2.5129577425437244
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.34974715406413326,
+        "ProbeUpdate": 0.21396598926566157,
+        "RasterProbeCapture": 0.21152818423057312,
+        "CullCaptureDraws": 0.024398509524055936,
+        "RasterVisibility": 0.027353387570821334
+      },
+      "pipeline": {
+        "IAVertices": 75830035,
+        "IAPrimitives": 25276678.333333332,
+        "VSInvocations": 25965936,
+        "GSInvocations": 0,
+        "CInvocations": 25276678.333333332,
+        "CPrimitives": 8516081.666666666,
+        "PSInvocations": 1043948.1666666666
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2940,
+        2970
+      ]
+    },
+    {
+      "mode": 1,
+      "divisor": 1,
+      "multiview": true,
+      "gpu": {
+        "RenderGraphExe::execute()": 4.003630134794447,
+        "ProbeUpdate": 2.4748418444217384,
+        "RasterProbeCapture": 2.4741262242722963,
+        "CullCaptureDraws": 0.006333745261376628,
+        "RasterVisibility": 2.3957749592256414
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4123090786662528,
+        "ProbeUpdate": 0.27597425516624113,
+        "RasterProbeCapture": 0.27356300801846395,
+        "CullCaptureDraws": 0.024858807614906046,
+        "RasterVisibility": 0.08998672098809787
+      },
+      "pipeline": {
+        "IAVertices": 48870278,
+        "IAPrimitives": 16290092.666666666,
+        "VSInvocations": 16333955.666666666,
+        "GSInvocations": 0,
+        "CInvocations": 25276678.333333332,
+        "CPrimitives": 8516081.666666666,
+        "PSInvocations": 1031650.6666666666
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2940,
+        2970
+      ]
+    },
+    {
+      "mode": 2,
+      "divisor": 1,
+      "multiview": false,
+      "gpu": {
+        "RenderGraphExe::execute()": 3.76566980621679,
+        "ProbeUpdate": 2.222313796117054,
+        "RasterProbeCapture": 2.221600264714662,
+        "CullCaptureDraws": 0.0058134201482483525,
+        "RasterVisibility": 2.143324962960995
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.347251354860581,
+        "ProbeUpdate": 0.21213021674534172,
+        "RasterProbeCapture": 0.20970284547101514,
+        "CullCaptureDraws": 0.02420338755852081,
+        "RasterVisibility": 0.02720000009559761
+      },
+      "pipeline": {
+        "IAVertices": 75830035,
+        "IAPrimitives": 25276678.333333332,
+        "VSInvocations": 25965936,
+        "GSInvocations": 0,
+        "CInvocations": 25276678.333333332,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2925,
+        2970
+      ]
+    },
+    {
+      "mode": 2,
+      "divisor": 1,
+      "multiview": true,
+      "gpu": {
+        "RenderGraphExe::execute()": 3.8643564279809555,
+        "ProbeUpdate": 2.335373180345468,
+        "RasterProbeCapture": 2.334656177659022,
+        "CullCaptureDraws": 0.006336520333221652,
+        "RasterVisibility": 2.2562868722732152
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.41400406531848233,
+        "ProbeUpdate": 0.27948834696597846,
+        "RasterProbeCapture": 0.2770845525592646,
+        "CullCaptureDraws": 0.024544037956754527,
+        "RasterVisibility": 0.09307994571360469
+      },
+      "pipeline": {
+        "IAVertices": 48870278,
+        "IAPrimitives": 16290092.666666666,
+        "VSInvocations": 16333955.666666666,
+        "GSInvocations": 0,
+        "CInvocations": 25276678.333333332,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2925,
+        2970
+      ]
+    },
+    {
+      "mode": 3,
+      "divisor": 1,
+      "multiview": false,
+      "gpu": {
+        "RenderGraphExe::execute()": 3.362518377420379,
+        "ProbeUpdate": 1.8334171939994586,
+        "RasterProbeCapture": 1.8326994901104026,
+        "CullCaptureDraws": 0.005789832066906096,
+        "RasterVisibility": 1.7546982416292516
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3458176147202812,
+        "ProbeUpdate": 0.21201327923675217,
+        "RasterProbeCapture": 0.20957249314158266,
+        "CullCaptureDraws": 0.02378956644939698,
+        "RasterVisibility": 0.02671978324853631
+      },
+      "pipeline": {
+        "IAVertices": 75830035,
+        "IAPrimitives": 25276678.333333332,
+        "VSInvocations": 25965936,
+        "GSInvocations": 0,
+        "CInvocations": 25276678.333333332,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2925,
+        2970
+      ]
+    },
+    {
+      "mode": 3,
+      "divisor": 1,
+      "multiview": true,
+      "gpu": {
+        "RenderGraphExe::execute()": 3.5659530405106583,
+        "ProbeUpdate": 2.036998591125819,
+        "RasterProbeCapture": 2.0362860904476507,
+        "CullCaptureDraws": 0.006323685643053677,
+        "RasterVisibility": 1.9578498482381101
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4113004055368868,
+        "ProbeUpdate": 0.27802452582330883,
+        "RasterProbeCapture": 0.2756388891074393,
+        "CullCaptureDraws": 0.024355420100737393,
+        "RasterVisibility": 0.09220975624311584
+      },
+      "pipeline": {
+        "IAVertices": 48870278,
+        "IAPrimitives": 16290092.666666666,
+        "VSInvocations": 16333955.666666666,
+        "GSInvocations": 0,
+        "CInvocations": 25276678.333333332,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2970,
+        2970
+      ]
+    },
+    {
+      "mode": 4,
+      "divisor": 1,
+      "multiview": false,
+      "gpu": {
+        "RenderGraphExe::execute()": 3.3542549154622767,
+        "ProbeUpdate": 1.8250659739745019,
+        "RasterProbeCapture": 1.8243579809581685,
+        "CullCaptureDraws": 0.00577110035324767,
+        "RasterVisibility": 1.7464673826041905
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.33726869893025574,
+        "ProbeUpdate": 0.20814336048878307,
+        "RasterProbeCapture": 0.20575663950142822,
+        "CullCaptureDraws": 0.023444173476459374,
+        "RasterVisibility": 0.026260569188138093
+      },
+      "pipeline": {
+        "IAVertices": 75830035,
+        "IAPrimitives": 25276678.333333332,
+        "VSInvocations": 25965936,
+        "GSInvocations": 0,
+        "CInvocations": 25276678.333333332,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2970,
+        2985
+      ]
+    },
+    {
+      "mode": 4,
+      "divisor": 1,
+      "multiview": true,
+      "gpu": {
+        "RenderGraphExe::execute()": 3.5474860041445186,
+        "ProbeUpdate": 2.0186762048946165,
+        "RasterProbeCapture": 2.017957808687112,
+        "CullCaptureDraws": 0.006313972922198495,
+        "RasterVisibility": 1.9395163597130194
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.39588482399296954,
+        "ProbeUpdate": 0.268104201127197,
+        "RasterProbeCapture": 0.26579268294863584,
+        "CullCaptureDraws": 0.02322344177561562,
+        "RasterVisibility": 0.08867154475856764
+      },
+      "pipeline": {
+        "IAVertices": 48870278,
+        "IAPrimitives": 16290092.666666666,
+        "VSInvocations": 16333955.666666666,
+        "GSInvocations": 0,
+        "CInvocations": 25276678.333333332,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2970,
+        2985
+      ]
+    },
+    {
+      "mode": 5,
+      "divisor": 1,
+      "multiview": false,
+      "gpu": {
+        "RenderGraphExe::execute()": 3.757242271247595,
+        "ProbeUpdate": 2.217478939026675,
+        "RasterProbeCapture": 2.216766089604799,
+        "CullCaptureDraws": 0.005786016349981067,
+        "RasterVisibility": 2.138596595948951
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3384353662247903,
+        "ProbeUpdate": 0.2058443088882015,
+        "RasterProbeCapture": 0.20351056910061902,
+        "CullCaptureDraws": 0.023621002742187765,
+        "RasterVisibility": 0.02648902444931146
+      },
+      "pipeline": {
+        "IAVertices": 75830035,
+        "IAPrimitives": 25276678.333333332,
+        "VSInvocations": 25965936,
+        "GSInvocations": 0,
+        "CInvocations": 25276678.333333332,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2940,
+        2985
+      ]
+    },
+    {
+      "mode": 5,
+      "divisor": 1,
+      "multiview": true,
+      "gpu": {
+        "RenderGraphExe::execute()": 3.5144682505589513,
+        "ProbeUpdate": 1.9836225902161948,
+        "RasterProbeCapture": 1.9829100911533284,
+        "CullCaptureDraws": 0.00632784824419595,
+        "RasterVisibility": 1.904516510685608
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4139539293318906,
+        "ProbeUpdate": 0.28026856358862184,
+        "RasterProbeCapture": 0.2778272360845956,
+        "CullCaptureDraws": 0.024330081343701297,
+        "RasterVisibility": 0.0933216801544192
+      },
+      "pipeline": {
+        "IAVertices": 48870278,
+        "IAPrimitives": 16290092.666666666,
+        "VSInvocations": 16333955.666666666,
+        "GSInvocations": 0,
+        "CInvocations": 25276678.333333332,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2925,
+        2985
+      ]
+    },
+    {
+      "mode": 3,
+      "divisor": 2,
+      "multiview": false,
+      "gpu": {
+        "RenderGraphExe::execute()": 2.4833852317598133,
+        "ProbeUpdate": 0.9540426205328809,
+        "RasterProbeCapture": 0.9533287352178155,
+        "CullCaptureDraws": 0.005807870016546875,
+        "RasterVisibility": 0.8755834814171157
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.31800406408019183,
+        "ProbeUpdate": 0.19704512177605615,
+        "RasterProbeCapture": 0.19479105692245774,
+        "CullCaptureDraws": 0.022045257488684602,
+        "RasterVisibility": 0.02463766940311607
+      },
+      "pipeline": {
+        "IAVertices": 37914795,
+        "IAPrimitives": 12638265,
+        "VSInvocations": 12835229.666666666,
+        "GSInvocations": 0,
+        "CInvocations": 12638265,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2940,
+        2970
+      ]
+    },
+    {
+      "mode": 3,
+      "divisor": 2,
+      "multiview": true,
+      "gpu": {
+        "RenderGraphExe::execute()": 2.5837830272793445,
+        "ProbeUpdate": 1.054541353610796,
+        "RasterProbeCapture": 1.0538385655821823,
+        "CullCaptureDraws": 0.006351436305977909,
+        "RasterVisibility": 0.9753069317114709
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.38487140850484536,
+        "ProbeUpdate": 0.2641069108070074,
+        "RasterProbeCapture": 0.261824255026776,
+        "CullCaptureDraws": 0.02246517620016606,
+        "RasterVisibility": 0.08799878064149279
+      },
+      "pipeline": {
+        "IAVertices": 24435043,
+        "IAPrimitives": 8145014.333333333,
+        "VSInvocations": 8095825.333333333,
+        "GSInvocations": 0,
+        "CInvocations": 12638265,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2940,
+        2970
+      ]
+    },
+    {
+      "mode": 3,
+      "divisor": 4,
+      "multiview": false,
+      "gpu": {
+        "RenderGraphExe::execute()": 2.053849494554163,
+        "ProbeUpdate": 0.5198291598296747,
+        "RasterProbeCapture": 0.5191197832263905,
+        "CullCaptureDraws": 0.005815848334614177,
+        "RasterVisibility": 0.4409391881246877
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.2947555552653181,
+        "ProbeUpdate": 0.18455121963004756,
+        "RasterProbeCapture": 0.1824432248022498,
+        "CullCaptureDraws": 0.02005501358131285,
+        "RasterVisibility": 0.022872899733433313
+      },
+      "pipeline": {
+        "IAVertices": 18957042,
+        "IAPrimitives": 6319014,
+        "VSInvocations": 6408636.333333333,
+        "GSInvocations": 0,
+        "CInvocations": 6319014,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2955,
+        2970
+      ]
+    },
+    {
+      "mode": 3,
+      "divisor": 4,
+      "multiview": true,
+      "gpu": {
+        "RenderGraphExe::execute()": 2.099049453651356,
+        "ProbeUpdate": 0.5680244547645574,
+        "RasterProbeCapture": 0.5673081401967743,
+        "CullCaptureDraws": 0.006367392925707103,
+        "RasterVisibility": 0.4887411182085027
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.35790270898077226,
+        "ProbeUpdate": 0.2461830621085516,
+        "RasterProbeCapture": 0.24406504031361603,
+        "CullCaptureDraws": 0.02037574529905266,
+        "RasterVisibility": 0.08141422775500835
+      },
+      "pipeline": {
+        "IAVertices": 12217277,
+        "IAPrimitives": 4072425.6666666665,
+        "VSInvocations": 4041564.6666666665,
+        "GSInvocations": 0,
+        "CInvocations": 6319014,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2932,
+        2970
+      ]
+    },
+    {
+      "mode": 3,
+      "divisor": 0,
+      "multiview": false,
+      "gpu": {
+        "RenderGraphExe::execute()": 1.6233140348095882,
+        "ProbeUpdate": 0.08024281846879297,
+        "RasterProbeCapture": 0.07952164775795406,
+        "CullCaptureDraws": 0.005322233000189712,
+        "RasterVisibility": 0.0016841192798863157
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.26905230327754165,
+        "ProbeUpdate": 0.1697997289702175,
+        "RasterProbeCapture": 0.16786368550646918,
+        "CullCaptureDraws": 0.01784674802335701,
+        "RasterVisibility": 0.020301083976094963
+      },
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2925,
+        2970
+      ]
+    },
+    {
+      "mode": 3,
+      "divisor": 0,
+      "multiview": true,
+      "gpu": {
+        "RenderGraphExe::execute()": 1.6238950647635835,
+        "ProbeUpdate": 0.08107325733515629,
+        "RasterProbeCapture": 0.0803676965194666,
+        "CullCaptureDraws": 0.005740921483766338,
+        "RasterVisibility": 0.0020407154522949786
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.32103739856542934,
+        "ProbeUpdate": 0.2218428184871428,
+        "RasterProbeCapture": 0.2198699191212654,
+        "CullCaptureDraws": 0.018140785931167885,
+        "RasterVisibility": 0.0725020324321701
+      },
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "count": 6,
+      "graphicsClockMHz": [
+        2925,
+        2955
+      ]
+    }
+  ],
+  "live1024": [
+    {
+      "multiview": false,
+      "gpu": {
+        "RenderGraphExe::execute()": 83.5517180528098,
+        "ProbeUpdate": 81.78701214674042,
+        "RasterProbeCapture": 81.64956789094258,
+        "CullCaptureDraws": 0.15376651717153023,
+        "RasterVisibility": 80.0927164341376
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 3.0462780434910846,
+        "ProbeUpdate": 2.750491056015821,
+        "RasterProbeCapture": 2.694364230807235,
+        "CullCaptureDraws": 0.30207154251695645,
+        "RasterVisibility": 0.3409325022522996
+      }
+    },
+    {
+      "multiview": true,
+      "gpu": {
+        "RenderGraphExe::execute()": 80.65298616983057,
+        "ProbeUpdate": 78.88827213814588,
+        "RasterProbeCapture": 78.75038683511377,
+        "CullCaptureDraws": 0.17402167273003882,
+        "RasterVisibility": 77.17469865132153
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 4.6174256142562,
+        "ProbeUpdate": 4.322503246912142,
+        "RasterProbeCapture": 4.267505275524728,
+        "CullCaptureDraws": 0.3046121872295209,
+        "RasterVisibility": 1.8883951747320533
+      }
+    }
+  ],
+  "validation": {
+    "False": {
+      "referencePixels": 63457177,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 22274,
+      "captureNonFinite": 0,
+      "batches": 333
+    },
+    "True": {
+      "referencePixels": 575891,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 174,
+      "captureNonFinite": 0,
+      "batches": 3
+    }
+  },
+  "runs": [
+    {
+      "offset": 0,
+      "mode": 0,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2985,
+          "sm": 2985,
+          "memory": 14001
+        },
+        {
+          "graphics": 2947,
+          "sm": 2947,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 71571066,
+        "IAPrimitives": 23857022,
+        "VSInvocations": 24279924,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 8485353,
+        "PSInvocations": 793195
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.0046329769661755,
+        "ProbeUpdate": 2.4753285132772556,
+        "RasterProbeCapture": 2.4746229687357335,
+        "CullCaptureDraws": 0.005808910650269288,
+        "RasterVisibility": 2.395414904850285
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.33914959418579815,
+        "ProbeUpdate": 0.20602276497255495,
+        "RasterProbeCapture": 0.20366178913329674,
+        "CullCaptureDraws": 0.023917073179490683,
+        "RasterVisibility": 0.026639024477179456
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 0,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2985,
+          "sm": 2985,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 50102316,
+        "IAPrimitives": 16700772,
+        "VSInvocations": 16723108,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 8485353,
+        "PSInvocations": 785713
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.939565282527024,
+        "ProbeUpdate": 2.411324353722053,
+        "RasterProbeCapture": 2.410606308681209,
+        "CullCaptureDraws": 0.006304260176735196,
+        "RasterVisibility": 2.3308217370413185
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3940333338772378,
+        "ProbeUpdate": 0.2679756104461546,
+        "RasterProbeCapture": 0.2656414634813138,
+        "CullCaptureDraws": 0.02333902445720221,
+        "RasterVisibility": 0.08849186983292665
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 0,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 50102316,
+        "IAPrimitives": 16700772,
+        "VSInvocations": 16723108,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 8485353,
+        "PSInvocations": 787177
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.9402999722860694,
+        "ProbeUpdate": 2.4115678682559873,
+        "RasterProbeCapture": 2.410845657674278,
+        "CullCaptureDraws": 0.0063438048828544655,
+        "RasterVisibility": 2.330667703132319
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.41010406395284144,
+        "ProbeUpdate": 0.27571951325346783,
+        "RasterProbeCapture": 0.2733121951663397,
+        "CullCaptureDraws": 0.02437154474721207,
+        "RasterVisibility": 0.09124146335250963
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 0,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 71571066,
+        "IAPrimitives": 23857022,
+        "VSInvocations": 24279924,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 8485353,
+        "PSInvocations": 922832
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.015235144917558,
+        "ProbeUpdate": 2.4823966181375146,
+        "RasterProbeCapture": 2.481666078412436,
+        "CullCaptureDraws": 0.005800585463128197,
+        "RasterVisibility": 2.402622439996983
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3513983737647049,
+        "ProbeUpdate": 0.21399674800837912,
+        "RasterProbeCapture": 0.21156422805979969,
+        "CullCaptureDraws": 0.024538211418482347,
+        "RasterVisibility": 0.027900000125533196
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 1,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 71571066,
+        "IAPrimitives": 23857022,
+        "VSInvocations": 24279924,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 8485353,
+        "PSInvocations": 994154
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.9686535238250484,
+        "ProbeUpdate": 2.438647685012197,
+        "RasterProbeCapture": 2.437917139472031,
+        "CullCaptureDraws": 0.0057672846388465504,
+        "RasterVisibility": 2.359360510740823
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3636560974324622,
+        "ProbeUpdate": 0.22197235708798818,
+        "RasterProbeCapture": 0.21943414659519506,
+        "CullCaptureDraws": 0.025550406562482437,
+        "RasterVisibility": 0.028365853719595
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 1,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 50102316,
+        "IAPrimitives": 16700772,
+        "VSInvocations": 16723108,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 8485353,
+        "PSInvocations": 788414
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.9336065024864384,
+        "ProbeUpdate": 2.4043395092816855,
+        "RasterProbeCapture": 2.4036402043288314,
+        "CullCaptureDraws": 0.006356292703317675,
+        "RasterVisibility": 2.32428852135573
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4154463398262737,
+        "ProbeUpdate": 0.2771000006819159,
+        "RasterProbeCapture": 0.27474715385010573,
+        "CullCaptureDraws": 0.025009756120360965,
+        "RasterVisibility": 0.09107398423479825
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 1,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 50102316,
+        "IAPrimitives": 16700772,
+        "VSInvocations": 16723108,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 8485353,
+        "PSInvocations": 881834
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.933614839383257,
+        "ProbeUpdate": 2.404420691777051,
+        "RasterProbeCapture": 2.4037047285374586,
+        "CullCaptureDraws": 0.006329235760873653,
+        "RasterVisibility": 2.3243572014134104
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3959536593619401,
+        "ProbeUpdate": 0.26727886195105266,
+        "RasterProbeCapture": 0.26497560969697753,
+        "CullCaptureDraws": 0.023470731724689647,
+        "RasterVisibility": 0.08743902471491961
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 1,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 71571066,
+        "IAPrimitives": 23857022,
+        "VSInvocations": 24279924,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 8485353,
+        "PSInvocations": 790388
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.969157203426206,
+        "ProbeUpdate": 2.4390930858084827,
+        "RasterProbeCapture": 2.438393755656917,
+        "CullCaptureDraws": 0.005758959425204411,
+        "RasterVisibility": 2.3601243515324786
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3407186990588661,
+        "ProbeUpdate": 0.20937235726089012,
+        "RasterProbeCapture": 0.20700406519378103,
+        "CullCaptureDraws": 0.02386016265405872,
+        "RasterVisibility": 0.026668292780717213
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 2,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 71571066,
+        "IAPrimitives": 23857022,
+        "VSInvocations": 24279924,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.6345027675473593,
+        "ProbeUpdate": 2.092633489670792,
+        "RasterProbeCapture": 2.09194250804622,
+        "CullCaptureDraws": 0.005810991959358618,
+        "RasterVisibility": 2.013460816406622
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.35063170708291896,
+        "ProbeUpdate": 0.21386991950069986,
+        "RasterProbeCapture": 0.21140243839926837,
+        "CullCaptureDraws": 0.024061788585249003,
+        "RasterVisibility": 0.027030894381365154
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 2,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2962,
+          "sm": 2962,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 50102316,
+        "IAPrimitives": 16700772,
+        "VSInvocations": 16723108,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.797402032991735,
+        "ProbeUpdate": 2.267883178664417,
+        "RasterProbeCapture": 2.267175540691469,
+        "CullCaptureDraws": 0.006345886173014476,
+        "RasterVisibility": 2.1878113746643066
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4285943081708458,
+        "ProbeUpdate": 0.2901520324431784,
+        "RasterProbeCapture": 0.2876162610160626,
+        "CullCaptureDraws": 0.024822764219791908,
+        "RasterVisibility": 0.0965707314208271
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 2,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 50102316,
+        "IAPrimitives": 16700772,
+        "VSInvocations": 16723108,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.7951001016105095,
+        "ProbeUpdate": 2.2656957444136703,
+        "RasterProbeCapture": 2.2649735396470483,
+        "CullCaptureDraws": 0.006329235768445381,
+        "RasterVisibility": 2.186144262794557
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.41873414802357434,
+        "ProbeUpdate": 0.2845447161575643,
+        "RasterProbeCapture": 0.2822024384892084,
+        "CullCaptureDraws": 0.024949593484643998,
+        "RasterVisibility": 0.09670081304583122
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 2,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2947,
+          "sm": 2947,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 71571066,
+        "IAPrimitives": 23857022,
+        "VSInvocations": 24279924,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.6350522273924293,
+        "ProbeUpdate": 2.093389005195804,
+        "RasterProbeCapture": 2.092668882230433,
+        "CullCaptureDraws": 0.005794341554789524,
+        "RasterVisibility": 2.013406695389166
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.355915447318457,
+        "ProbeUpdate": 0.21856097598386004,
+        "RasterProbeCapture": 0.21605609817718102,
+        "CullCaptureDraws": 0.024918699228182073,
+        "RasterVisibility": 0.028082926992357263
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 71571066,
+        "IAPrimitives": 23857022,
+        "VSInvocations": 24279924,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.2579225970477594,
+        "ProbeUpdate": 1.728241433942221,
+        "RasterProbeCapture": 1.7275337979076355,
+        "CullCaptureDraws": 0.005786016352504976,
+        "RasterVisibility": 1.649041696292598
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.35242195148778155,
+        "ProbeUpdate": 0.21634878000108207,
+        "RasterProbeCapture": 0.21385853634617194,
+        "CullCaptureDraws": 0.024243902475610982,
+        "RasterVisibility": 0.027002439084576398
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 50102316,
+        "IAPrimitives": 16700772,
+        "VSInvocations": 16723108,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.4252446298676777,
+        "ProbeUpdate": 1.8958069551281813,
+        "RasterProbeCapture": 1.8950764241257334,
+        "CullCaptureDraws": 0.006306341489610391,
+        "RasterVisibility": 1.8163345645113689
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.39308292497464314,
+        "ProbeUpdate": 0.26697967522512606,
+        "RasterProbeCapture": 0.2646983734718183,
+        "CullCaptureDraws": 0.02322926834165081,
+        "RasterVisibility": 0.08850487806205827
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 50102316,
+        "IAPrimitives": 16700772,
+        "VSInvocations": 16723108,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.42424351800748,
+        "ProbeUpdate": 1.895049361678643,
+        "RasterProbeCapture": 1.8943583693930772,
+        "CullCaptureDraws": 0.006339642302534445,
+        "RasterVisibility": 1.8154854008821937
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4100658527719296,
+        "ProbeUpdate": 0.2795211374759674,
+        "RasterProbeCapture": 0.2771495935635838,
+        "CullCaptureDraws": 0.023746341557764426,
+        "RasterVisibility": 0.09391219538401782
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 71571066,
+        "IAPrimitives": 23857022,
+        "VSInvocations": 24279924,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.257341917937364,
+        "ProbeUpdate": 1.7279937606516893,
+        "RasterProbeCapture": 1.7272902814353384,
+        "CullCaptureDraws": 0.005788097646450851,
+        "RasterVisibility": 1.6486837166111643
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3481813005315579,
+        "ProbeUpdate": 0.2138341464162842,
+        "RasterProbeCapture": 0.21139593543560525,
+        "CullCaptureDraws": 0.023806504132907566,
+        "RasterVisibility": 0.027288617914527413
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 4,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2985,
+          "sm": 2985,
+          "memory": 14001
+        },
+        {
+          "graphics": 2977,
+          "sm": 2977,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 71571066,
+        "IAPrimitives": 23857022,
+        "VSInvocations": 24279924,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.247447407342554,
+        "ProbeUpdate": 1.7183864727252867,
+        "RasterProbeCapture": 1.7176892330976037,
+        "CullCaptureDraws": 0.005746471627456386,
+        "RasterVisibility": 1.639182560812167
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.31543983688684013,
+        "ProbeUpdate": 0.19564959346278896,
+        "RasterProbeCapture": 0.19345040679947148,
+        "CullCaptureDraws": 0.022017073219384606,
+        "RasterVisibility": 0.024539837394121702
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 4,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2985,
+          "sm": 2985,
+          "memory": 14001
+        },
+        {
+          "graphics": 2977,
+          "sm": 2977,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 50102316,
+        "IAPrimitives": 16700772,
+        "VSInvocations": 16723108,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.399267908034286,
+        "ProbeUpdate": 1.8707168732232196,
+        "RasterProbeCapture": 1.8700050735861304,
+        "CullCaptureDraws": 0.006329235787374702,
+        "RasterVisibility": 1.7910613383704084
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3671390239785357,
+        "ProbeUpdate": 0.2482593500517248,
+        "RasterProbeCapture": 0.24610406487453274,
+        "CullCaptureDraws": 0.021073170755876273,
+        "RasterVisibility": 0.08163170710327179
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 4,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2977,
+          "sm": 2977,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 50102316,
+        "IAPrimitives": 16700772,
+        "VSInvocations": 16723108,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.400872581373385,
+        "ProbeUpdate": 1.8714786322136236,
+        "RasterProbeCapture": 1.8707543417690247,
+        "CullCaptureDraws": 0.00629385369564823,
+        "RasterVisibility": 1.7920437246803347
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.41198292665365266,
+        "ProbeUpdate": 0.2775325202118091,
+        "RasterProbeCapture": 0.27515772336382205,
+        "CullCaptureDraws": 0.025386178964461253,
+        "RasterVisibility": 0.09013658537854993
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 4,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 71571066,
+        "IAPrimitives": 23857022,
+        "VSInvocations": 24279924,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.2487003628800557,
+        "ProbeUpdate": 1.7192231571771266,
+        "RasterProbeCapture": 1.7185175854985306,
+        "CullCaptureDraws": 0.005771447238095892,
+        "RasterVisibility": 1.6396945714950562
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.32838292686435266,
+        "ProbeUpdate": 0.2041967473621291,
+        "RasterProbeCapture": 0.20187560862641993,
+        "CullCaptureDraws": 0.022860162671867426,
+        "RasterVisibility": 0.025380487788498888
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 5,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2985,
+          "sm": 2985,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 71571066,
+        "IAPrimitives": 23857022,
+        "VSInvocations": 24279924,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.616842921187238,
+        "ProbeUpdate": 2.0827348232269287,
+        "RasterProbeCapture": 2.082012612645219,
+        "CullCaptureDraws": 0.005752715524437466,
+        "RasterVisibility": 2.0033207172300758
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.31860650409527913,
+        "ProbeUpdate": 0.19621544688697753,
+        "RasterProbeCapture": 0.19403739939860212,
+        "CullCaptureDraws": 0.02217479678612899,
+        "RasterVisibility": 0.025286991951790284
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 5,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2985,
+          "sm": 2985,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 50102316,
+        "IAPrimitives": 16700772,
+        "VSInvocations": 16723108,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.4820995020672556,
+        "ProbeUpdate": 1.9528075456619263,
+        "RasterProbeCapture": 1.9520998999355286,
+        "CullCaptureDraws": 0.006316747985840813,
+        "RasterVisibility": 1.8734204885436267
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.40600731629666276,
+        "ProbeUpdate": 0.2748926824670497,
+        "RasterProbeCapture": 0.27242357822937696,
+        "CullCaptureDraws": 0.02344227641275743,
+        "RasterVisibility": 0.09173089411200547
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 5,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 50102316,
+        "IAPrimitives": 16700772,
+        "VSInvocations": 16723108,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.481937158398512,
+        "ProbeUpdate": 1.9523558975235233,
+        "RasterProbeCapture": 1.9516378524826794,
+        "CullCaptureDraws": 0.006314666688109074,
+        "RasterVisibility": 1.872727417364353
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4020967483520508,
+        "ProbeUpdate": 0.2714300812259922,
+        "RasterProbeCapture": 0.26912357639975665,
+        "CullCaptureDraws": 0.024050406596767222,
+        "RasterVisibility": 0.09095691083892574
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 5,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 71571066,
+        "IAPrimitives": 23857022,
+        "VSInvocations": 24279924,
+        "GSInvocations": 0,
+        "CInvocations": 23857022,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.633840907879961,
+        "ProbeUpdate": 2.091746867187624,
+        "RasterProbeCapture": 2.091022567051213,
+        "CullCaptureDraws": 0.005810991955572754,
+        "RasterVisibility": 2.012382697283737
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3120821147430234,
+        "ProbeUpdate": 0.18549918728630718,
+        "RasterProbeCapture": 0.18343658551452605,
+        "CullCaptureDraws": 0.022289430919459195,
+        "RasterVisibility": 0.024443902559881287
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 2,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 35785245,
+        "IAPrimitives": 11928415,
+        "VSInvocations": 12021984,
+        "GSInvocations": 0,
+        "CInvocations": 11928415,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.432464132464029,
+        "ProbeUpdate": 0.9026435148425218,
+        "RasterProbeCapture": 0.901929627589094,
+        "CullCaptureDraws": 0.005771447245667621,
+        "RasterVisibility": 0.8233730192106914
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3237455269185508,
+        "ProbeUpdate": 0.20078943076172495,
+        "RasterProbeCapture": 0.19843089435158706,
+        "CullCaptureDraws": 0.022294308990240097,
+        "RasterVisibility": 0.024935772324480663
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 2,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 25051062,
+        "IAPrimitives": 8350354,
+        "VSInvocations": 8289402,
+        "GSInvocations": 0,
+        "CInvocations": 11928415,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.515453922070139,
+        "ProbeUpdate": 0.9857352836345269,
+        "RasterProbeCapture": 0.9850297216477433,
+        "CullCaptureDraws": 0.006381268264740948,
+        "RasterVisibility": 0.9058278944434189
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.38602601561119887,
+        "ProbeUpdate": 0.2660593504343576,
+        "RasterProbeCapture": 0.26380162692166925,
+        "CullCaptureDraws": 0.02257154476109559,
+        "RasterVisibility": 0.08855853629548376
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 2,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 25051062,
+        "IAPrimitives": 8350354,
+        "VSInvocations": 8289402,
+        "GSInvocations": 0,
+        "CInvocations": 11928415,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.515541332523997,
+        "ProbeUpdate": 0.9856374636898196,
+        "RasterProbeCapture": 0.9849464689813009,
+        "CullCaptureDraws": 0.006316747970697357,
+        "RasterVisibility": 0.9057425585219531
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3662788601425605,
+        "ProbeUpdate": 0.2522910577737219,
+        "RasterProbeCapture": 0.24995121965563394,
+        "CullCaptureDraws": 0.021356097551259567,
+        "RasterVisibility": 0.08364146384524136
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 2,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 35785245,
+        "IAPrimitives": 11928415,
+        "VSInvocations": 12021984,
+        "GSInvocations": 0,
+        "CInvocations": 11928415,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.4319375646792776,
+        "ProbeUpdate": 0.9023021827868329,
+        "RasterProbeCapture": 0.9015903763654756,
+        "CullCaptureDraws": 0.005788097650236715,
+        "RasterVisibility": 0.8232856039109269
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.26570894296576336,
+        "ProbeUpdate": 0.164492683076277,
+        "RasterProbeCapture": 0.1626471545153517,
+        "CullCaptureDraws": 0.01815934968370248,
+        "RasterVisibility": 0.020762601594735936
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 4,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 17892270,
+        "IAPrimitives": 5964090,
+        "VSInvocations": 6000905,
+        "GSInvocations": 0,
+        "CInvocations": 5964090,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.0230119073294044,
+        "ProbeUpdate": 0.49318712247096425,
+        "RasterProbeCapture": 0.4924815609687712,
+        "CullCaptureDraws": 0.005804748062377538,
+        "RasterVisibility": 0.4136959934622292
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.261285365718167,
+        "ProbeUpdate": 0.16459918749041674,
+        "RasterProbeCapture": 0.16278130046235836,
+        "CullCaptureDraws": 0.018281300862630207,
+        "RasterVisibility": 0.0207422764562979
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 4,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 12525288,
+        "IAPrimitives": 4175096,
+        "VSInvocations": 4137962,
+        "GSInvocations": 0,
+        "CInvocations": 5964090,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.0627064685511396,
+        "ProbeUpdate": 0.5327609762912844,
+        "RasterProbeCapture": 0.5320158683187594,
+        "CullCaptureDraws": 0.006379186959437481,
+        "RasterVisibility": 0.452851507964173
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3219260142101505,
+        "ProbeUpdate": 0.21736422835326777,
+        "RasterProbeCapture": 0.21547479673129757,
+        "CullCaptureDraws": 0.01868211386377007,
+        "RasterVisibility": 0.06947967479747486
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 4,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 12525288,
+        "IAPrimitives": 4175096,
+        "VSInvocations": 4137962,
+        "GSInvocations": 0,
+        "CInvocations": 5964090,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1561,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.0620113116938894,
+        "ProbeUpdate": 0.5323717720140286,
+        "RasterProbeCapture": 0.5316599651080806,
+        "CullCaptureDraws": 0.006356292657887306,
+        "RasterVisibility": 0.45272662896450944
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3318317057640572,
+        "ProbeUpdate": 0.22786422788612243,
+        "RasterProbeCapture": 0.22590894282348756,
+        "CullCaptureDraws": 0.01880243905948672,
+        "RasterVisibility": 0.07485609746924261
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 4,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 17892270,
+        "IAPrimitives": 5964090,
+        "VSInvocations": 6000905,
+        "GSInvocations": 0,
+        "CInvocations": 5964090,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2507,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.0234926832400686,
+        "ProbeUpdate": 0.49351388603691165,
+        "RasterProbeCapture": 0.49281040778974206,
+        "CullCaptureDraws": 0.005771447234310028,
+        "RasterVisibility": 0.41381462754272835
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.2857097562977938,
+        "ProbeUpdate": 0.17883333357853617,
+        "RasterProbeCapture": 0.17679105699062347,
+        "CullCaptureDraws": 0.019460975654362663,
+        "RasterVisibility": 0.02210731706695586
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 0,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 0,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.6229400877060929,
+        "ProbeUpdate": 0.08105626023881804,
+        "RasterProbeCapture": 0.08033821138182307,
+        "CullCaptureDraws": 0.005323967419383003,
+        "RasterVisibility": 0.0016983415026641715
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.2671983742374715,
+        "ProbeUpdate": 0.1693894310695369,
+        "RasterProbeCapture": 0.16748211381396627,
+        "CullCaptureDraws": 0.017875609828568086,
+        "RasterVisibility": 0.020530081331366447
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 0,
+      "clocks": [
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 0,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.6235603210402698,
+        "ProbeUpdate": 0.08195330051144933,
+        "RasterProbeCapture": 0.0812581463194475,
+        "CullCaptureDraws": 0.005721496009245151,
+        "RasterVisibility": 0.0020521626082756293
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3178333342075348,
+        "ProbeUpdate": 0.21905121922008391,
+        "RasterProbeCapture": 0.2171699184227765,
+        "CullCaptureDraws": 0.018018699251115322,
+        "RasterVisibility": 0.07185203212548077
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 0,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 0,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.6232689415536277,
+        "ProbeUpdate": 0.08169521985015249,
+        "RasterProbeCapture": 0.08097925206752328,
+        "CullCaptureDraws": 0.0057547968297409335,
+        "RasterVisibility": 0.002037593501438273
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3046642287475307,
+        "ProbeUpdate": 0.21025934960783982,
+        "RasterProbeCapture": 0.20846748012837354,
+        "CullCaptureDraws": 0.01729024391681925,
+        "RasterVisibility": 0.06771951202091163
+      }
+    },
+    {
+      "offset": 0,
+      "mode": 3,
+      "triangleDivisor": 0,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 0,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.6228589236251707,
+        "ProbeUpdate": 0.08091681311285592,
+        "RasterProbeCapture": 0.0801904391709382,
+        "CullCaptureDraws": 0.005298991801171768,
+        "RasterVisibility": 0.001694178899628966
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.25842276445733825,
+        "ProbeUpdate": 0.16324308914382282,
+        "RasterProbeCapture": 0.16135121930420884,
+        "CullCaptureDraws": 0.01686910572423925,
+        "RasterVisibility": 0.019304064927789254
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 0,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 94895190,
+        "IAPrimitives": 31631730,
+        "VSInvocations": 32611170,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 8556175,
+        "PSInvocations": 1180792
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.786935678342494,
+        "ProbeUpdate": 3.2469395757690678,
+        "RasterProbeCapture": 3.246209043797439,
+        "CullCaptureDraws": 0.005810991970716211,
+        "RasterVisibility": 3.1647177750502173
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.35177561022886417,
+        "ProbeUpdate": 0.2103406504644611,
+        "RasterProbeCapture": 0.20798211393317556,
+        "CullCaptureDraws": 0.02458780478474086,
+        "RasterVisibility": 0.027417886154196127
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 0,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 48926436,
+        "IAPrimitives": 16308812,
+        "VSInvocations": 16353271,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 8556175,
+        "PSInvocations": 1181120
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.409063017465235,
+        "ProbeUpdate": 2.8814132058523536,
+        "RasterProbeCapture": 2.8806930828869826,
+        "CullCaptureDraws": 0.006283447214561265,
+        "RasterVisibility": 2.798629462234373
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4079886173329702,
+        "ProbeUpdate": 0.273798373050806,
+        "RasterProbeCapture": 0.2714390245879569,
+        "CullCaptureDraws": 0.024935772385054487,
+        "RasterVisibility": 0.0894975612560908
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 0,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 48926436,
+        "IAPrimitives": 16308812,
+        "VSInvocations": 16353271,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 8556175,
+        "PSInvocations": 1156468
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.408415724591511,
+        "ProbeUpdate": 2.880795054319428,
+        "RasterProbeCapture": 2.8800853267917788,
+        "CullCaptureDraws": 0.006308422810057315,
+        "RasterVisibility": 2.7974327095155793
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.40584715377024516,
+        "ProbeUpdate": 0.2706951222768644,
+        "RasterProbeCapture": 0.2683886182986624,
+        "CullCaptureDraws": 0.024606504076258924,
+        "RasterVisibility": 0.08839430923505527
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 0,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 94895190,
+        "IAPrimitives": 31631730,
+        "VSInvocations": 32611170,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 8556175,
+        "PSInvocations": 1146184
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.7524818559972255,
+        "ProbeUpdate": 3.2243949281490916,
+        "RasterProbeCapture": 3.223678955217687,
+        "CullCaptureDraws": 0.0057610407342937415,
+        "RasterVisibility": 3.1423021797242203
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3192788612067215,
+        "ProbeUpdate": 0.19171382099147735,
+        "RasterProbeCapture": 0.1895699189688132,
+        "CullCaptureDraws": 0.02287479678577766,
+        "RasterVisibility": 0.02534065045779798
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 1,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 94895190,
+        "IAPrimitives": 31631730,
+        "VSInvocations": 32611170,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 8556175,
+        "PSInvocations": 1192024
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.727699764375764,
+        "ProbeUpdate": 3.187468493857035,
+        "RasterProbeCapture": 3.18675877020611,
+        "CullCaptureDraws": 0.005804748051019945,
+        "RasterVisibility": 3.1055963543372425
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3460780496035165,
+        "ProbeUpdate": 0.20952032542810206,
+        "RasterProbeCapture": 0.20713821126193535,
+        "CullCaptureDraws": 0.024149593511005728,
+        "RasterVisibility": 0.02717398376605375
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 1,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 48926436,
+        "IAPrimitives": 16308812,
+        "VSInvocations": 16353271,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 8556175,
+        "PSInvocations": 1182082
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.400648303148223,
+        "ProbeUpdate": 2.872813267436454,
+        "RasterProbeCapture": 2.8720931328409085,
+        "CullCaptureDraws": 0.006281365897900205,
+        "RasterVisibility": 2.790884938666491
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.43858861874758714,
+        "ProbeUpdate": 0.28476341504876207,
+        "RasterProbeCapture": 0.28231138172673015,
+        "CullCaptureDraws": 0.027645528422501998,
+        "RasterVisibility": 0.08939024382005863
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 1,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 48926436,
+        "IAPrimitives": 16308812,
+        "VSInvocations": 16353271,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 8556175,
+        "PSInvocations": 1175184
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.400390248957688,
+        "ProbeUpdate": 2.8724719237505907,
+        "RasterProbeCapture": 2.87175804231225,
+        "CullCaptureDraws": 0.006295934974450648,
+        "RasterVisibility": 2.791376125521776
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4017886168103877,
+        "ProbeUpdate": 0.26974065080890813,
+        "RasterProbeCapture": 0.2673910576395872,
+        "CullCaptureDraws": 0.024426829357578502,
+        "RasterVisibility": 0.08831544698980766
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 1,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 94895190,
+        "IAPrimitives": 31631730,
+        "VSInvocations": 32611170,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 8556175,
+        "PSInvocations": 1142056
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.691033468013856,
+        "ProbeUpdate": 3.1628404652200093,
+        "RasterProbeCapture": 3.1621099196798435,
+        "CullCaptureDraws": 0.005790178940396726,
+        "RasterVisibility": 3.0815282003666327
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3499162598111765,
+        "ProbeUpdate": 0.21312276510203756,
+        "RasterProbeCapture": 0.21067398350413252,
+        "CullCaptureDraws": 0.024581300806466158,
+        "RasterVisibility": 0.027908130162736265
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 2,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 94895190,
+        "IAPrimitives": 31631730,
+        "VSInvocations": 32611170,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.286574297804173,
+        "ProbeUpdate": 2.7460974290118956,
+        "RasterProbeCapture": 2.7453939546414508,
+        "CullCaptureDraws": 0.005810991963144482,
+        "RasterVisibility": 2.6644042836941355
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.33396260016332796,
+        "ProbeUpdate": 0.2027569096989748,
+        "RasterProbeCapture": 0.20045040656880633,
+        "CullCaptureDraws": 0.023658536510860046,
+        "RasterVisibility": 0.027195935175428544
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 2,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 48926436,
+        "IAPrimitives": 16308812,
+        "VSInvocations": 16353271,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.297049506893003,
+        "ProbeUpdate": 2.7691582431638144,
+        "RasterProbeCapture": 2.768431882548138,
+        "CullCaptureDraws": 0.006268878096366316,
+        "RasterVisibility": 2.6873485596199345
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.39761544727697606,
+        "ProbeUpdate": 0.26483414655293874,
+        "RasterProbeCapture": 0.26252520399365,
+        "CullCaptureDraws": 0.024544715533048156,
+        "RasterVisibility": 0.08632520368186439
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 2,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 48926436,
+        "IAPrimitives": 16308812,
+        "VSInvocations": 16353271,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.298040192301681,
+        "ProbeUpdate": 2.7700074126080767,
+        "RasterProbeCapture": 2.7693081057168603,
+        "CullCaptureDraws": 0.006287609802453014,
+        "RasterVisibility": 2.688707642438935
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4093487810313217,
+        "ProbeUpdate": 0.27604390281002694,
+        "RasterProbeCapture": 0.2736869918379357,
+        "CullCaptureDraws": 0.024443089477415008,
+        "RasterVisibility": 0.09134146359150971
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 2,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 94895190,
+        "IAPrimitives": 31631730,
+        "VSInvocations": 32611170,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.285040374693832,
+        "ProbeUpdate": 2.744548933292792,
+        "RasterProbeCapture": 2.74382466417018,
+        "CullCaptureDraws": 0.005817235863911427,
+        "RasterVisibility": 2.6629244893546997
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3520934969429078,
+        "ProbeUpdate": 0.211343089254891,
+        "RasterProbeCapture": 0.20891138196476106,
+        "CullCaptureDraws": 0.0253130082434755,
+        "RasterVisibility": 0.027374796857073055
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 94895190,
+        "IAPrimitives": 31631730,
+        "VSInvocations": 32611170,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.809477728556811,
+        "ProbeUpdate": 2.2813117387818127,
+        "RasterProbeCapture": 2.2805749517146165,
+        "CullCaptureDraws": 0.005773528543399359,
+        "RasterVisibility": 2.1993376161994003
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.34646503881710333,
+        "ProbeUpdate": 0.21348617849795798,
+        "RasterProbeCapture": 0.21106747907351672,
+        "CullCaptureDraws": 0.023920325244345318,
+        "RasterVisibility": 0.027873170933103174
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 48926436,
+        "IAPrimitives": 16308812,
+        "VSInvocations": 16353271,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.152328320635044,
+        "ProbeUpdate": 2.624353829438124,
+        "RasterProbeCapture": 2.6236649160462666,
+        "CullCaptureDraws": 0.006283447176702623,
+        "RasterVisibility": 2.5426149116299017
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4179975615768898,
+        "ProbeUpdate": 0.2820276419321696,
+        "RasterProbeCapture": 0.2795813012171567,
+        "CullCaptureDraws": 0.024829268394931544,
+        "RasterVisibility": 0.09337317059195138
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 48926436,
+        "IAPrimitives": 16308812,
+        "VSInvocations": 16353271,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.1527050297434736,
+        "ProbeUpdate": 2.6246868304120814,
+        "RasterProbeCapture": 2.623964614015285,
+        "CullCaptureDraws": 0.006285528478220227,
+        "RasterVisibility": 2.5426211531569316
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.42693008009980365,
+        "ProbeUpdate": 0.28409512268333903,
+        "RasterProbeCapture": 0.28168780471735855,
+        "CullCaptureDraws": 0.026514634247717817,
+        "RasterVisibility": 0.09295691077302141
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 94895190,
+        "IAPrimitives": 31631730,
+        "VSInvocations": 32611170,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.809030257589449,
+        "ProbeUpdate": 2.280889243614383,
+        "RasterProbeCapture": 2.280171188881727,
+        "CullCaptureDraws": 0.005800585451770604,
+        "RasterVisibility": 2.1994104869966584
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3380918703912719,
+        "ProbeUpdate": 0.20639756115956034,
+        "RasterProbeCapture": 0.20401626013643373,
+        "CullCaptureDraws": 0.02313414652173112,
+        "RasterVisibility": 0.025952032487082288
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 4,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 94895190,
+        "IAPrimitives": 31631730,
+        "VSInvocations": 32611170,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.8011983080608087,
+        "ProbeUpdate": 2.2727721667871243,
+        "RasterProbeCapture": 2.2720437108016593,
+        "CullCaptureDraws": 0.005748552913830533,
+        "RasterVisibility": 2.191568114893223
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.34693821101653866,
+        "ProbeUpdate": 0.21248374007097104,
+        "RasterProbeCapture": 0.21002926768326177,
+        "CullCaptureDraws": 0.0240780488110897,
+        "RasterVisibility": 0.027196748121603716
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 4,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 48926436,
+        "IAPrimitives": 16308812,
+        "VSInvocations": 16353271,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.1458513213367,
+        "ProbeUpdate": 2.617772743953922,
+        "RasterProbeCapture": 2.6170567807143295,
+        "CullCaptureDraws": 0.006295935000951697,
+        "RasterVisibility": 2.5363522603259825
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.39547886208790106,
+        "ProbeUpdate": 0.2673666675885518,
+        "RasterProbeCapture": 0.2650756099359776,
+        "CullCaptureDraws": 0.023227642282722442,
+        "RasterVisibility": 0.08897154469315599
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 4,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 48926436,
+        "IAPrimitives": 16308812,
+        "VSInvocations": 16353271,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.14640076567487,
+        "ProbeUpdate": 2.6183680092416157,
+        "RasterProbeCapture": 2.6176603480083185,
+        "CullCaptureDraws": 0.006243902516013723,
+        "RasterVisibility": 2.536329366327301
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3728837407216793,
+        "ProbeUpdate": 0.24843577228910554,
+        "RasterProbeCapture": 0.24624065037180737,
+        "CullCaptureDraws": 0.022032520347615568,
+        "RasterVisibility": 0.08077479708122044
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 4,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 94895190,
+        "IAPrimitives": 31631730,
+        "VSInvocations": 32611170,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.800580172034783,
+        "ProbeUpdate": 2.27224766917345,
+        "RasterProbeCapture": 2.2715441909262806,
+        "CullCaptureDraws": 0.005748552921402261,
+        "RasterVisibility": 2.1914869537198447
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.34055691121554954,
+        "ProbeUpdate": 0.2093471546725529,
+        "RasterProbeCapture": 0.20695121986110035,
+        "CullCaptureDraws": 0.023828455299987058,
+        "RasterVisibility": 0.026544715542861117
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 5,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2962,
+          "sm": 2962,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 94895190,
+        "IAPrimitives": 31631730,
+        "VSInvocations": 32611170,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.267688561261185,
+        "ProbeUpdate": 2.734044623568775,
+        "RasterProbeCapture": 2.733332806486424,
+        "CullCaptureDraws": 0.005804748062377538,
+        "RasterVisibility": 2.652726109434919
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.35425203287504553,
+        "ProbeUpdate": 0.2146991875355806,
+        "RasterProbeCapture": 0.2122243897217076,
+        "CullCaptureDraws": 0.02464959347938619,
+        "RasterVisibility": 0.027595934965382745
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 5,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2947,
+          "sm": 2947,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 48926436,
+        "IAPrimitives": 16308812,
+        "VSInvocations": 16353271,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.7884940558332736,
+        "ProbeUpdate": 2.2603905084656506,
+        "RasterProbeCapture": 2.259678703013474,
+        "CullCaptureDraws": 0.006298016279754116,
+        "RasterVisibility": 2.178233235832152
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4271455290840893,
+        "ProbeUpdate": 0.288954471306103,
+        "RasterProbeCapture": 0.2864178868570948,
+        "CullCaptureDraws": 0.024757723558724413,
+        "RasterVisibility": 0.09566016192358684
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 5,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 48926436,
+        "IAPrimitives": 16308812,
+        "VSInvocations": 16353271,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.7885398438306357,
+        "ProbeUpdate": 2.260634011369411,
+        "RasterProbeCapture": 2.259920126054345,
+        "CullCaptureDraws": 0.006285528478220227,
+        "RasterVisibility": 2.1790636806953243
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.43845609799633184,
+        "ProbeUpdate": 0.29659837448015447,
+        "RasterProbeCapture": 0.2940252034402475,
+        "CullCaptureDraws": 0.026330894343857842,
+        "RasterVisibility": 0.09996341502036506
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 5,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 94895190,
+        "IAPrimitives": 31631730,
+        "VSInvocations": 32611170,
+        "GSInvocations": 0,
+        "CInvocations": 31631730,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 4.288957394235503,
+        "ProbeUpdate": 2.748397276653507,
+        "RasterProbeCapture": 2.747685467324606,
+        "CullCaptureDraws": 0.005777691150220429,
+        "RasterVisibility": 2.666564681665684
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3558097553204715,
+        "ProbeUpdate": 0.21182276429684183,
+        "RasterProbeCapture": 0.20941788551768636,
+        "CullCaptureDraws": 0.025283739818790094,
+        "RasterVisibility": 0.028513821190207955
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 2,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 47447361,
+        "IAPrimitives": 15815787,
+        "VSInvocations": 16134799,
+        "GSInvocations": 0,
+        "CInvocations": 15815787,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.7072582671312784,
+        "ProbeUpdate": 1.1783679946651304,
+        "RasterProbeCapture": 1.1776541132267897,
+        "CullCaptureDraws": 0.005792260249486056,
+        "RasterVisibility": 1.097349183346198
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.302054471116725,
+        "ProbeUpdate": 0.1852658535164546,
+        "RasterProbeCapture": 0.18318699191256269,
+        "CullCaptureDraws": 0.021504878058908432,
+        "RasterVisibility": 0.023674796782131118
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 2,
+      "clocks": [
+        {
+          "graphics": 2962,
+          "sm": 2962,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 24463122,
+        "IAPrimitives": 8154374,
+        "VSInvocations": 8104896,
+        "GSInvocations": 0,
+        "CInvocations": 15815787,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.8771465367417997,
+        "ProbeUpdate": 1.3490742125162265,
+        "RasterProbeCapture": 1.3483769728885433,
+        "CullCaptureDraws": 0.006316747993412541,
+        "RasterVisibility": 1.267324901208645
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3879040646843794,
+        "ProbeUpdate": 0.2650674788690195,
+        "RasterProbeCapture": 0.2628186988394435,
+        "CullCaptureDraws": 0.0226130082415856,
+        "RasterVisibility": 0.08841138230106695
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 2,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 24463122,
+        "IAPrimitives": 8154374,
+        "VSInvocations": 8104896,
+        "GSInvocations": 0,
+        "CInvocations": 15815787,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.8775919394764475,
+        "ProbeUpdate": 1.3493760000399457,
+        "RasterProbeCapture": 1.3486870876172694,
+        "CullCaptureDraws": 0.0062938536805047735,
+        "RasterVisibility": 1.2673685996513055
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.385074796715403,
+        "ProbeUpdate": 0.2631325209286155,
+        "RasterProbeCapture": 0.2609186989020526,
+        "CullCaptureDraws": 0.022482113927845063,
+        "RasterVisibility": 0.08818861833069383
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 2,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 47447361,
+        "IAPrimitives": 15815787,
+        "VSInvocations": 16134799,
+        "GSInvocations": 0,
+        "CInvocations": 15815787,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.705686887105306,
+        "ProbeUpdate": 1.1774605464159957,
+        "RasterProbeCapture": 1.1767404215122625,
+        "CullCaptureDraws": 0.005817235875269019,
+        "RasterVisibility": 1.0970578038595555
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3466268277507487,
+        "ProbeUpdate": 0.21382032480181717,
+        "RasterProbeCapture": 0.21132439047825047,
+        "CullCaptureDraws": 0.023715447149867935,
+        "RasterVisibility": 0.02645365866582568
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 4,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 23723256,
+        "IAPrimitives": 7907752,
+        "VSInvocations": 8058955,
+        "GSInvocations": 0,
+        "CInvocations": 7907752,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.1603923154071096,
+        "ProbeUpdate": 0.6321743087070745,
+        "RasterProbeCapture": 0.6314562588203244,
+        "CullCaptureDraws": 0.005806829363895141,
+        "RasterVisibility": 0.5508516624691041
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.32619105667118137,
+        "ProbeUpdate": 0.20406341528504846,
+        "RasterProbeCapture": 0.20170487778458168,
+        "CullCaptureDraws": 0.02225447153839154,
+        "RasterVisibility": 0.02515447166998212
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 4,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 12231318,
+        "IAPrimitives": 4077106,
+        "VSInvocations": 4046123,
+        "GSInvocations": 0,
+        "CInvocations": 7907752,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.2452490523578676,
+        "ProbeUpdate": 0.7171579807754455,
+        "RasterProbeCapture": 0.7164482610012458,
+        "CullCaptureDraws": 0.006333398375266451,
+        "RasterVisibility": 0.6354315552285047
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.37971056791825025,
+        "ProbeUpdate": 0.261595934387145,
+        "RasterProbeCapture": 0.25935040583940056,
+        "CullCaptureDraws": 0.021271544697929204,
+        "RasterVisibility": 0.08763983712448337
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 4,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 12231318,
+        "IAPrimitives": 4077106,
+        "VSInvocations": 4046123,
+        "GSInvocations": 0,
+        "CInvocations": 7907752,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1534,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.245496714987406,
+        "ProbeUpdate": 0.717376519994038,
+        "RasterProbeCapture": 0.7166522271264859,
+        "CullCaptureDraws": 0.006327154463141914,
+        "RasterVisibility": 0.6354461244451322
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.38774552795945144,
+        "ProbeUpdate": 0.26622845462667266,
+        "RasterProbeCapture": 0.26394959290822345,
+        "CullCaptureDraws": 0.022557723631219165,
+        "RasterVisibility": 0.08888617939338452
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 4,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 23723256,
+        "IAPrimitives": 7907752,
+        "VSInvocations": 8058955,
+        "GSInvocations": 0,
+        "CInvocations": 7907752,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 3087,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.1664010509242857,
+        "ProbeUpdate": 0.6332357719661744,
+        "RasterProbeCapture": 0.6325198048498573,
+        "CullCaptureDraws": 0.005829723676802908,
+        "RasterVisibility": 0.5520005240672972
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.2944764217467812,
+        "ProbeUpdate": 0.18358292630532894,
+        "RasterProbeCapture": 0.18146504025633742,
+        "CullCaptureDraws": 0.01987398374916577,
+        "RasterVisibility": 0.023063414707416442
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 0,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2947,
+          "sm": 2947,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 0,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.6226299797616355,
+        "ProbeUpdate": 0.08260682927883738,
+        "RasterProbeCapture": 0.08188045533691965,
+        "CullCaptureDraws": 0.0052906665913154925,
+        "RasterVisibility": 0.0016692032918288577
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.2583650406298599,
+        "ProbeUpdate": 0.16238292700391474,
+        "RasterProbeCapture": 0.16054065053055927,
+        "CullCaptureDraws": 0.0173341463494107,
+        "RasterVisibility": 0.019646341443001255
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 0,
+      "clocks": [
+        {
+          "graphics": 2947,
+          "sm": 2947,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 0,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.6233313762075532,
+        "ProbeUpdate": 0.0837473819047455,
+        "RasterProbeCapture": 0.08305430890825706,
+        "CullCaptureDraws": 0.005711089497871273,
+        "RasterVisibility": 0.0020459187037228203
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.32065691017523046,
+        "ProbeUpdate": 0.22105528426364185,
+        "RasterProbeCapture": 0.21913902461528778,
+        "CullCaptureDraws": 0.0185398375464043,
+        "RasterVisibility": 0.07157398381732344
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 0,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 0,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.6227465344638359,
+        "ProbeUpdate": 0.08313964216447459,
+        "RasterProbeCapture": 0.08244032521800297,
+        "CullCaptureDraws": 0.005684032581928299,
+        "RasterVisibility": 0.0020459187046692868
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.30704878040445527,
+        "ProbeUpdate": 0.2130455287491403,
+        "RasterProbeCapture": 0.21117154527001264,
+        "CullCaptureDraws": 0.01711707319155699,
+        "RasterVisibility": 0.06953252025130319
+      }
+    },
+    {
+      "offset": 5000,
+      "mode": 3,
+      "triangleDivisor": 0,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 0,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.622211644319984,
+        "ProbeUpdate": 0.0823508292678895,
+        "RasterProbeCapture": 0.08163694298364282,
+        "CullCaptureDraws": 0.0053031544042069735,
+        "RasterVisibility": 0.0016837723948803496
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.26923333205343264,
+        "ProbeUpdate": 0.16993414592452166,
+        "RasterProbeCapture": 0.16797723602957843,
+        "CullCaptureDraws": 0.01776585369787323,
+        "RasterVisibility": 0.020125203235907767
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 0,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 61023849,
+        "IAPrimitives": 20341283,
+        "VSInvocations": 21006714,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 8506717,
+        "PSInvocations": 1086787
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.728685793837881,
+        "ProbeUpdate": 2.1873222754253603,
+        "RasterProbeCapture": 2.1866125459593486,
+        "CullCaptureDraws": 0.005781853745683906,
+        "RasterVisibility": 2.1116545084046154
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.34453577263568474,
+        "ProbeUpdate": 0.21103983717720684,
+        "RasterProbeCapture": 0.20865609769414112,
+        "CullCaptureDraws": 0.02427642289700547,
+        "RasterVisibility": 0.02702276420787098
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 0,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 47582082,
+        "IAPrimitives": 15860694,
+        "VSInvocations": 15925488,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 8506717,
+        "PSInvocations": 1083619
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.6800603575822786,
+        "ProbeUpdate": 2.1509390633280683,
+        "RasterProbeCapture": 2.150221002780325,
+        "CullCaptureDraws": 0.00638334954732923,
+        "RasterVisibility": 2.074721811263542
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.40442601670094624,
+        "ProbeUpdate": 0.2737260165253306,
+        "RasterProbeCapture": 0.2713943088684625,
+        "CullCaptureDraws": 0.02417317067643976,
+        "RasterVisibility": 0.09093739837408066
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 0,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 47582082,
+        "IAPrimitives": 15860694,
+        "VSInvocations": 15925488,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 8506717,
+        "PSInvocations": 1079656
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.680351734161377,
+        "ProbeUpdate": 2.151272070117113,
+        "RasterProbeCapture": 2.150564426329078,
+        "CullCaptureDraws": 0.006352130077567284,
+        "RasterVisibility": 2.075213015564089
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3959601630524891,
+        "ProbeUpdate": 0.2691325207309025,
+        "RasterProbeCapture": 0.2668292676287938,
+        "CullCaptureDraws": 0.022996747926846754,
+        "RasterVisibility": 0.089605691168851
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 0,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 61023849,
+        "IAPrimitives": 20341283,
+        "VSInvocations": 21006714,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 8506717,
+        "PSInvocations": 1061937
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.7143768295039976,
+        "ProbeUpdate": 2.178672391224683,
+        "RasterProbeCapture": 2.1779626772655702,
+        "CullCaptureDraws": 0.005800585459342332,
+        "RasterVisibility": 2.102598771816347
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.34902520514116053,
+        "ProbeUpdate": 0.21430813018384018,
+        "RasterProbeCapture": 0.2118682926747857,
+        "CullCaptureDraws": 0.024054471494221106,
+        "RasterVisibility": 0.02669756112968534
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 1,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 61023849,
+        "IAPrimitives": 20341283,
+        "VSInvocations": 21006714,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 8506717,
+        "PSInvocations": 1087723
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.7105368404853634,
+        "ProbeUpdate": 2.168727936783457,
+        "RasterProbeCapture": 2.167999482736355,
+        "CullCaptureDraws": 0.005819317173000758,
+        "RasterVisibility": 2.092956102960478
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3452300807324851,
+        "ProbeUpdate": 0.2129504072472332,
+        "RasterProbeCapture": 0.21053495894118054,
+        "CullCaptureDraws": 0.023896748003194003,
+        "RasterVisibility": 0.026753658489362012
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 1,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 47582082,
+        "IAPrimitives": 15860694,
+        "VSInvocations": 15925488,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 8506717,
+        "PSInvocations": 1079722
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.6769259189202534,
+        "ProbeUpdate": 2.147683909268883,
+        "RasterProbeCapture": 2.1469679343991164,
+        "CullCaptureDraws": 0.006372943073813993,
+        "RasterVisibility": 2.071991160633118
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.41360325299627415,
+        "ProbeUpdate": 0.2793073176853056,
+        "RasterProbeCapture": 0.27689512170911806,
+        "CullCaptureDraws": 0.024564227695024112,
+        "RasterVisibility": 0.09222845551444263
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 1,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 47582082,
+        "IAPrimitives": 15860694,
+        "VSInvocations": 15925488,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 8506717,
+        "PSInvocations": 1082668
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.676594995870823,
+        "ProbeUpdate": 2.1473217650157648,
+        "RasterProbeCapture": 2.146593303215213,
+        "CullCaptureDraws": 0.006366699157903592,
+        "RasterVisibility": 2.0717518077633246
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.40847398425505416,
+        "ProbeUpdate": 0.27765528482150253,
+        "RasterProbeCapture": 0.27505772348826496,
+        "CullCaptureDraws": 0.024035772369281064,
+        "RasterVisibility": 0.0914731706545605
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 1,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 61023849,
+        "IAPrimitives": 20341283,
+        "VSInvocations": 21006714,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 8506717,
+        "PSInvocations": 1057344
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.6834861825152143,
+        "ProbeUpdate": 2.1535906326480028,
+        "RasterProbeCapture": 2.1528705019291823,
+        "CullCaptureDraws": 0.0058234797722501,
+        "RasterVisibility": 2.078180935324692
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.352883737746293,
+        "ProbeUpdate": 0.21685772346771828,
+        "RasterProbeCapture": 0.2143837398872143,
+        "CullCaptureDraws": 0.02435284560712857,
+        "RasterVisibility": 0.027250406506463765
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 2,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2925,
+          "sm": 2925,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 61023849,
+        "IAPrimitives": 20341283,
+        "VSInvocations": 21006714,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.3764734907848077,
+        "ProbeUpdate": 1.8286995781146413,
+        "RasterProbeCapture": 1.8279690393587438,
+        "CullCaptureDraws": 0.0058276423752853055,
+        "RasterVisibility": 1.7530005850443027
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3379471549173681,
+        "ProbeUpdate": 0.2092609754422816,
+        "RasterProbeCapture": 0.20690569075627055,
+        "CullCaptureDraws": 0.023073170742974047,
+        "RasterVisibility": 0.026171544703041633
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 2,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2925,
+          "sm": 2925,
+          "memory": 14001
+        },
+        {
+          "graphics": 2962,
+          "sm": 2962,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 47582082,
+        "IAPrimitives": 15860694,
+        "VSInvocations": 15925488,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.499865497030863,
+        "ProbeUpdate": 1.9703154496061124,
+        "RasterProbeCapture": 1.9695994708596207,
+        "CullCaptureDraws": 0.0064187316882719355,
+        "RasterVisibility": 1.8943146661045105
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4138300806526246,
+        "ProbeUpdate": 0.278998373485193,
+        "RasterProbeCapture": 0.27656016117188986,
+        "CullCaptureDraws": 0.024017073274627935,
+        "RasterVisibility": 0.09285121913847884
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 2,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 47582082,
+        "IAPrimitives": 15860694,
+        "VSInvocations": 15925488,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.4986812370579417,
+        "ProbeUpdate": 1.9691790536167175,
+        "RasterProbeCapture": 1.9684485264909946,
+        "CullCaptureDraws": 0.006368780470778787,
+        "RasterVisibility": 1.8933947280170471
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4159016267555516,
+        "ProbeUpdate": 0.28235691034696936,
+        "RasterProbeCapture": 0.2799162588468412,
+        "CullCaptureDraws": 0.024486991751000164,
+        "RasterVisibility": 0.09469024340311687
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 2,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2925,
+          "sm": 2925,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 61023849,
+        "IAPrimitives": 20341283,
+        "VSInvocations": 21006714,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.3763756790781407,
+        "ProbeUpdate": 1.8285143414163978,
+        "RasterProbeCapture": 1.8278025398409463,
+        "CullCaptureDraws": 0.005819317173000758,
+        "RasterVisibility": 1.7527529078770459
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.35295772273850634,
+        "ProbeUpdate": 0.2169894305913429,
+        "RasterProbeCapture": 0.2144910569598035,
+        "CullCaptureDraws": 0.024195122040384185,
+        "RasterVisibility": 0.02734390246432002
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2925,
+          "sm": 2925,
+          "memory": 14001
+        },
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 61023849,
+        "IAPrimitives": 20341283,
+        "VSInvocations": 21006714,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.0205960351277175,
+        "ProbeUpdate": 1.4909648110226887,
+        "RasterProbeCapture": 1.49023427129761,
+        "CullCaptureDraws": 0.005800585459342332,
+        "RasterVisibility": 1.4158923034745503
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.35169593529488014,
+        "ProbeUpdate": 0.21840406590845526,
+        "RasterProbeCapture": 0.21593414658937998,
+        "CullCaptureDraws": 0.024260975602196484,
+        "RasterVisibility": 0.02686016266120643
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 47582082,
+        "IAPrimitives": 15860694,
+        "VSInvocations": 15925488,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.1205817238102114,
+        "ProbeUpdate": 1.5910857896494672,
+        "RasterProbeCapture": 1.5903635703451264,
+        "CullCaptureDraws": 0.0063708617609387974,
+        "RasterVisibility": 1.5152931378139713
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.40620243670494577,
+        "ProbeUpdate": 0.2770699186295998,
+        "RasterProbeCapture": 0.2746739853930667,
+        "CullCaptureDraws": 0.023883739789205837,
+        "RasterVisibility": 0.09201219550720076
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 47582082,
+        "IAPrimitives": 15860694,
+        "VSInvocations": 15925488,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.1206150210000634,
+        "ProbeUpdate": 1.5910087804484174,
+        "RasterProbeCapture": 1.5902886487604158,
+        "CullCaptureDraws": 0.006356292650315578,
+        "RasterVisibility": 1.5147499214342939
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4135235770931089,
+        "ProbeUpdate": 0.2784536589936512,
+        "RasterProbeCapture": 0.27604227628165146,
+        "CullCaptureDraws": 0.023929268273153927,
+        "RasterVisibility": 0.0924991871404454
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 61023849,
+        "IAPrimitives": 20341283,
+        "VSInvocations": 21006714,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.0207417282631726,
+        "ProbeUpdate": 1.4911021759839562,
+        "RasterProbeCapture": 1.4903924494254879,
+        "CullCaptureDraws": 0.005790178947968454,
+        "RasterVisibility": 1.4158236302011382
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3380495917990925,
+        "ProbeUpdate": 0.20360894343717312,
+        "RasterProbeCapture": 0.2011626012683884,
+        "CullCaptureDraws": 0.023371544719590406,
+        "RasterVisibility": 0.02534227641072215
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 4,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 61023849,
+        "IAPrimitives": 20341283,
+        "VSInvocations": 21006714,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.013702760866987,
+        "ProbeUpdate": 1.483902963196359,
+        "RasterProbeCapture": 1.4831807477687433,
+        "CullCaptureDraws": 0.005817235863911427,
+        "RasterVisibility": 1.4083975417827204
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3537983732010291,
+        "ProbeUpdate": 0.21867154502287145,
+        "RasterProbeCapture": 0.21611626082804145,
+        "CullCaptureDraws": 0.024443902453877092,
+        "RasterVisibility": 0.027489430960116346
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 4,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 47582082,
+        "IAPrimitives": 15860694,
+        "VSInvocations": 15925488,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.0962013616794493,
+        "ProbeUpdate": 1.5668823418578481,
+        "RasterProbeCapture": 1.5661559705811787,
+        "CullCaptureDraws": 0.0063708617571529335,
+        "RasterVisibility": 1.4906983995825294
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.41451300838129307,
+        "ProbeUpdate": 0.2837674809180624,
+        "RasterProbeCapture": 0.28136178923816213,
+        "CullCaptureDraws": 0.023574796785426334,
+        "RasterVisibility": 0.09638292663465671
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 4,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 47582082,
+        "IAPrimitives": 15860694,
+        "VSInvocations": 15925488,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.0963220867684216,
+        "ProbeUpdate": 1.5668386288774692,
+        "RasterProbeCapture": 1.566114337463689,
+        "CullCaptureDraws": 0.006350048776049682,
+        "RasterVisibility": 1.4906130689915602
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.41331138213475543,
+        "ProbeUpdate": 0.28326341570392854,
+        "RasterProbeCapture": 0.28081625990751313,
+        "CullCaptureDraws": 0.024046341517591864,
+        "RasterVisibility": 0.094131707660551
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 4,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 61023849,
+        "IAPrimitives": 20341283,
+        "VSInvocations": 21006714,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.0139004815884722,
+        "ProbeUpdate": 1.4838634147876646,
+        "RasterProbeCapture": 1.483172417656193,
+        "CullCaptureDraws": 0.005794341554789524,
+        "RasterVisibility": 1.4084745529221325
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3384959343972245,
+        "ProbeUpdate": 0.2085113823413849,
+        "RasterProbeCapture": 0.2061170732102743,
+        "CullCaptureDraws": 0.023437398402550356,
+        "RasterVisibility": 0.02641219532162678
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 5,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2947,
+          "sm": 2947,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 61023849,
+        "IAPrimitives": 20341283,
+        "VSInvocations": 21006714,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.3760926277656864,
+        "ProbeUpdate": 1.8282604227221109,
+        "RasterProbeCapture": 1.8275423738045422,
+        "CullCaptureDraws": 0.005779772451738032,
+        "RasterVisibility": 1.7523949291647933
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3465617898760772,
+        "ProbeUpdate": 0.21413333217302957,
+        "RasterProbeCapture": 0.2116934958754516,
+        "CullCaptureDraws": 0.02387235777043715,
+        "RasterVisibility": 0.02656829270829515
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 5,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2925,
+          "sm": 2925,
+          "memory": 14001
+        },
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 47582082,
+        "IAPrimitives": 15860694,
+        "VSInvocations": 15925488,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.2719818053206775,
+        "ProbeUpdate": 1.7368330432147514,
+        "RasterProbeCapture": 1.7361233205330082,
+        "CullCaptureDraws": 0.006395837371578303,
+        "RasterVisibility": 1.6609758710473534
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.4004772346678788,
+        "ProbeUpdate": 0.27273658463140815,
+        "RasterProbeCapture": 0.2703959354297902,
+        "CullCaptureDraws": 0.023791056997104872,
+        "RasterVisibility": 0.09044065059927421
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 5,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        },
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 47582082,
+        "IAPrimitives": 15860694,
+        "VSInvocations": 15925488,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.273757137903353,
+        "ProbeUpdate": 1.738714535061906,
+        "RasterProbeCapture": 1.7380006449009344,
+        "CullCaptureDraws": 0.00635629266167317,
+        "RasterVisibility": 1.6626783706308381
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.40954064959433023,
+        "ProbeUpdate": 0.27699918742102336,
+        "RasterProbeCapture": 0.2745772361513076,
+        "CullCaptureDraws": 0.023608130152995992,
+        "RasterVisibility": 0.09117804843235791
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 5,
+      "triangleDivisor": 1,
+      "clocks": [
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        },
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 61023849,
+        "IAPrimitives": 20341283,
+        "VSInvocations": 21006714,
+        "GSInvocations": 0,
+        "CInvocations": 20341283,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 3.360031215155997,
+        "ProbeUpdate": 1.8196896208011037,
+        "RasterProbeCapture": 1.8190007103167898,
+        "CullCaptureDraws": 0.0057901789555401826,
+        "RasterVisibility": 1.7441904409144953
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.34330000043884523,
+        "ProbeUpdate": 0.21269593515047214,
+        "RasterProbeCapture": 0.2102536585757403,
+        "CullCaptureDraws": 0.023456097678924964,
+        "RasterVisibility": 0.026525203320311337
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 2,
+      "clocks": [
+        {
+          "graphics": 2947,
+          "sm": 2947,
+          "memory": 14001
+        },
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 30511779,
+        "IAPrimitives": 10170593,
+        "VSInvocations": 10348906,
+        "GSInvocations": 0,
+        "CInvocations": 10170593,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.3113261878005855,
+        "ProbeUpdate": 0.7816595711359163,
+        "RasterProbeCapture": 0.7809519278324717,
+        "CullCaptureDraws": 0.005846374096515459,
+        "RasterVisibility": 0.7063019324124344
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.32305690912696405,
+        "ProbeUpdate": 0.20127804855990217,
+        "RasterProbeCapture": 0.19897235748244496,
+        "CullCaptureDraws": 0.022077235794527743,
+        "RasterVisibility": 0.02470406506786017
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 2,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 23790945,
+        "IAPrimitives": 7930315,
+        "VSInvocations": 7893178,
+        "GSInvocations": 0,
+        "CInvocations": 10170593,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.3587007464432137,
+        "ProbeUpdate": 0.8288863693795553,
+        "RasterProbeCapture": 0.8281704008094664,
+        "CullCaptureDraws": 0.00639791865795245,
+        "RasterVisibility": 0.7528273225799809
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3872292681438167,
+        "ProbeUpdate": 0.26675853678366035,
+        "RasterProbeCapture": 0.2644373987748371,
+        "CullCaptureDraws": 0.02223252036374032,
+        "RasterVisibility": 0.08870406491242773
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 2,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 23790945,
+        "IAPrimitives": 7930315,
+        "VSInvocations": 7893178,
+        "GSInvocations": 0,
+        "CInvocations": 10170593,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.3582636864204716,
+        "ProbeUpdate": 0.8285387924047021,
+        "RasterProbeCapture": 0.8278207415487708,
+        "CullCaptureDraws": 0.006402081268559384,
+        "RasterVisibility": 0.7527503138635216
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3967154457317135,
+        "ProbeUpdate": 0.2713325200526695,
+        "RasterProbeCapture": 0.26901788706701946,
+        "CullCaptureDraws": 0.02353577235547023,
+        "RasterVisibility": 0.09048861816404312
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 2,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 30511779,
+        "IAPrimitives": 10170593,
+        "VSInvocations": 10348906,
+        "GSInvocations": 0,
+        "CInvocations": 10170593,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 2.3116383513784022,
+        "ProbeUpdate": 0.7818219133508884,
+        "RasterProbeCapture": 0.7811059447807994,
+        "CullCaptureDraws": 0.005831804982106376,
+        "RasterVisibility": 0.7061333457628886
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3468317066023989,
+        "ProbeUpdate": 0.21662438994016103,
+        "RasterProbeCapture": 0.2141845527945495,
+        "CullCaptureDraws": 0.024520325254860934,
+        "RasterVisibility": 0.027295121983662855
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 4,
+      "clocks": [
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        },
+        {
+          "graphics": 2970,
+          "sm": 2970,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 15255600,
+        "IAPrimitives": 5085200,
+        "VSInvocations": 5166049,
+        "GSInvocations": 0,
+        "CInvocations": 5085200,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.9820081867822787,
+        "ProbeUpdate": 0.4346359665316295,
+        "RasterProbeCapture": 0.4339179176140607,
+        "CullCaptureDraws": 0.005846374088943731,
+        "RasterVisibility": 0.35864142407246724
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.29908048743154947,
+        "ProbeUpdate": 0.1873219508708008,
+        "RasterProbeCapture": 0.1851764224409088,
+        "CullCaptureDraws": 0.020175609798208486,
+        "RasterVisibility": 0.023063414510551508
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 4,
+      "clocks": [
+        {
+          "graphics": 2940,
+          "sm": 2940,
+          "memory": 14001
+        },
+        {
+          "graphics": 2932,
+          "sm": 2932,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 11895225,
+        "IAPrimitives": 3965075,
+        "VSInvocations": 3940609,
+        "GSInvocations": 0,
+        "CInvocations": 5085200,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.9893760070568178,
+        "ProbeUpdate": 0.4541773011044758,
+        "RasterProbeCapture": 0.4534634143356385,
+        "CullCaptureDraws": 0.006375024345044683,
+        "RasterVisibility": 0.3779288438277516
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.36622764109596007,
+        "ProbeUpdate": 0.2545967465493737,
+        "RasterProbeCapture": 0.25240812977639643,
+        "CullCaptureDraws": 0.020584552912268697,
+        "RasterVisibility": 0.08482032541821642
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 4,
+      "clocks": [
+        {
+          "graphics": 2932,
+          "sm": 2932,
+          "memory": 14001
+        },
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 11895225,
+        "IAPrimitives": 3965075,
+        "VSInvocations": 3940609,
+        "GSInvocations": 0,
+        "CInvocations": 5085200,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 1506,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.989457167261015,
+        "ProbeUpdate": 0.45430217840807224,
+        "RasterProbeCapture": 0.4536091052904362,
+        "CullCaptureDraws": 0.006433300753464786,
+        "RasterVisibility": 0.3780620488209453
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.359974796936764,
+        "ProbeUpdate": 0.24944878084872796,
+        "RasterProbeCapture": 0.24729837380289063,
+        "CullCaptureDraws": 0.0203560976296421,
+        "RasterVisibility": 0.08280325232724833
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 4,
+      "clocks": [
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        },
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 15255600,
+        "IAPrimitives": 5085200,
+        "VSInvocations": 5166049,
+        "GSInvocations": 0,
+        "CInvocations": 5085200,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 2131,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.9677908236418313,
+        "ProbeUpdate": 0.43222790326529403,
+        "RasterProbeCapture": 0.4315327493155875,
+        "CullCaptureDraws": 0.005835967581355717,
+        "RasterVisibility": 0.3566308971343002
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.3017902437264357,
+        "ProbeUpdate": 0.18890650425015426,
+        "RasterProbeCapture": 0.18674065087868916,
+        "CullCaptureDraws": 0.020283739885118435,
+        "RasterVisibility": 0.023106503989396055
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 0,
+      "clocks": [
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        },
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 0,
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 0,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.6243408094576703,
+        "ProbeUpdate": 0.07709138228641293,
+        "RasterProbeCapture": 0.07636917079609584,
+        "CullCaptureDraws": 0.0053697560489844014,
+        "RasterVisibility": 0.001679609795631008
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.2819715449965097,
+        "ProbeUpdate": 0.17738536593875265,
+        "RasterProbeCapture": 0.17537886134492672,
+        "CullCaptureDraws": 0.018773983830843513,
+        "RasterVisibility": 0.021246341397849526
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 0,
+      "clocks": [
+        {
+          "graphics": 2955,
+          "sm": 2955,
+          "memory": 14001
+        },
+        {
+          "graphics": 2925,
+          "sm": 2925,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 1,
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 0,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.625281554896657,
+        "ProbeUpdate": 0.07788643858781676,
+        "RasterProbeCapture": 0.07717047171379493,
+        "CullCaptureDraws": 0.005798504146467137,
+        "RasterVisibility": 0.002027186995743191
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.33118536680694516,
+        "ProbeUpdate": 0.2280471547832334,
+        "RasterProbeCapture": 0.22572195154380023,
+        "CullCaptureDraws": 0.018210569055887256,
+        "RasterVisibility": 0.07476422766117545
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 0,
+      "clocks": [
+        {
+          "graphics": 2925,
+          "sm": 2925,
+          "memory": 14001
+        },
+        {
+          "graphics": 2925,
+          "sm": 2925,
+          "memory": 14001
+        }
+      ],
+      "multiview": true,
+      "repeat": 2,
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": true,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 0,
+        "candidateMeshViews": 1600,
+        "hardwareViewMaskBuckets": 7
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.6251816604195573,
+        "ProbeUpdate": 0.07801756099229906,
+        "RasterProbeCapture": 0.07730367488977385,
+        "CullCaptureDraws": 0.005775609837345234,
+        "RasterVisibility": 0.0020355121999206705
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.34483577105087965,
+        "ProbeUpdate": 0.23959837429891756,
+        "RasterProbeCapture": 0.23754959474734175,
+        "CullCaptureDraws": 0.019668292625224203,
+        "RasterVisibility": 0.07956991871682609
+      }
+    },
+    {
+      "offset": 10000,
+      "mode": 3,
+      "triangleDivisor": 0,
+      "clocks": [
+        {
+          "graphics": 2925,
+          "sm": 2925,
+          "memory": 14001
+        },
+        {
+          "graphics": 2925,
+          "sm": 2925,
+          "memory": 14001
+        }
+      ],
+      "multiview": false,
+      "repeat": 3,
+      "pipeline": {
+        "IAVertices": 0,
+        "IAPrimitives": 0,
+        "VSInvocations": 0,
+        "GSInvocations": 0,
+        "CInvocations": 0,
+        "CPrimitives": 0,
+        "PSInvocations": 0
+      },
+      "capture": {
+        "optimizedProbeCapture": true,
+        "multiviewProbeCapture": false,
+        "multiviewAcrossProbes": false,
+        "viewInstancingTier": 3,
+        "visibleMeshViews": 0,
+        "candidateMeshViews": 4800,
+        "hardwareViewMaskBuckets": 1
+      },
+      "gpu": {
+        "RenderGraphExe::execute()": 1.6249027639869753,
+        "ProbeUpdate": 0.07743479662794407,
+        "RasterProbeCapture": 0.07671466687830483,
+        "CullCaptureDraws": 0.005346861736076634,
+        "RasterVisibility": 0.001679609794684542
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 0.2791227632906379,
+        "ProbeUpdate": 0.17646341474075627,
+        "RasterProbeCapture": 0.17445203201557563,
+        "CullCaptureDraws": 0.01846178870920728,
+        "RasterVisibility": 0.020954471520655524
+      }
+    }
+  ],
+  "liveRuns": [
+    {
+      "multiview": false,
+      "gpu": {
+        "RenderGraphExe::execute()": 83.54536704706952,
+        "ProbeUpdate": 81.78042559119744,
+        "RasterProbeCapture": 81.64287430677956,
+        "CullCaptureDraws": 0.15363747717403783,
+        "RasterVisibility": 80.08509932107073
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 3.032136572085745,
+        "ProbeUpdate": 2.7379918660574813,
+        "RasterProbeCapture": 2.681756911239004,
+        "CullCaptureDraws": 0.30137479305267334,
+        "RasterVisibility": 0.3394081088585582
+      }
+    },
+    {
+      "multiview": true,
+      "gpu": {
+        "RenderGraphExe::execute()": 80.65032717076744,
+        "ProbeUpdate": 78.88563841532886,
+        "RasterProbeCapture": 78.74790390138703,
+        "CullCaptureDraws": 0.17405081061812921,
+        "RasterVisibility": 77.17261722223546
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 4.627498366968418,
+        "ProbeUpdate": 4.330669092938183,
+        "RasterProbeCapture": 4.275866671306331,
+        "CullCaptureDraws": 0.3052276382601358,
+        "RasterVisibility": 1.8917472062072134
+      }
+    },
+    {
+      "multiview": true,
+      "gpu": {
+        "RenderGraphExe::execute()": 80.6556451688937,
+        "ProbeUpdate": 78.8909058609629,
+        "RasterProbeCapture": 78.75286976884051,
+        "CullCaptureDraws": 0.1739925348419484,
+        "RasterVisibility": 77.17678008040761
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 4.607352861543981,
+        "ProbeUpdate": 4.314337400886101,
+        "RasterProbeCapture": 4.259143879743126,
+        "CullCaptureDraws": 0.303996736198906,
+        "RasterVisibility": 1.885043143256893
+      }
+    },
+    {
+      "multiview": false,
+      "gpu": {
+        "RenderGraphExe::execute()": 83.55806905855009,
+        "ProbeUpdate": 81.7935987022834,
+        "RasterProbeCapture": 81.6562614751056,
+        "CullCaptureDraws": 0.1538955571690226,
+        "RasterVisibility": 80.10033354720449
+      },
+      "cpu": {
+        "RenderGraphExe::execute()": 3.0604195148964237,
+        "ProbeUpdate": 2.762990245974161,
+        "RasterProbeCapture": 2.7069715503754654,
+        "CullCaptureDraws": 0.3027682919812396,
+        "RasterVisibility": 0.342456895646041
+      }
+    }
+  ],
+  "source_sha256": {
+    "Source\\Falcor\\Core\\API\\Device.cpp": "058a0fd4bdc27eaadd3a7e31e970b55483a6fa307c53f6c48a18e727192760f8",
+    "Source\\RenderPasses\\RTXGIDDGI\\ProbeCubemap.cpp": "7253ddc837e813d89f331b19b013b2c91465e711790881473d291dd92738ab22",
+    "Source\\RenderPasses\\RTXGIDDGI\\ProbeCubemapIndirect.3d.slang": "e33de8d0afd4ad26ae7ce45e1abbf2721e8b5e29c59f66019d7915833b24a5cd",
+    "Source\\RenderPasses\\RTXGIDDGI\\ProbeCubemapCull.cs.slang": "ccfdc6c6013c5c1accd1db3db7731412370967747a19b13078e142df6bfc5650",
+    "tests\\ddgi\\probe_multiview_diagnosis.py": "6cade50f877fa592cb56bd392eef46799565871428190efc5148ce49437df63e"
+  }
+}

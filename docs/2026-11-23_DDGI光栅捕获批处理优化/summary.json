@@ -1,0 +1,783 @@
+{
+  "fixedFieldTimings": [
+    {
+      "size": 16,
+      "optimized": false,
+      "ms": {
+        "CapturedSampleShading": 0.0439735244944751,
+        "ProbeUpdate": 5.395437132631482,
+        "RasterProbeCapture": 5.394721142957568,
+        "RasterVisibility": 5.336251155630368,
+        "RenderGraphExe::execute()": 7.160312853328102,
+        "SDKUpdate": 6.476494007552806e-05
+      }
+    },
+    {
+      "size": 16,
+      "optimized": true,
+      "ms": {
+        "CapturedSampleShading": 0.0437737901584996,
+        "CullCaptureDraws": 0.004337041236826307,
+        "ProbeUpdate": 2.4496143628876523,
+        "RasterProbeCapture": 2.448903141901946,
+        "RasterVisibility": 2.3862482452614215,
+        "RenderGraphExe::execute()": 4.217977034143242,
+        "SDKUpdate": 6.867463462076992e-05
+      }
+    },
+    {
+      "size": 32,
+      "optimized": false,
+      "ms": {
+        "CapturedSampleShading": 0.04344605568148305,
+        "ProbeUpdate": 5.422732240175346,
+        "RasterProbeCapture": 5.422004529046189,
+        "RasterVisibility": 5.363797669075083,
+        "RenderGraphExe::execute()": 7.187680886561177,
+        "SDKUpdate": 6.459495335616972e-05
+      }
+    },
+    {
+      "size": 32,
+      "optimized": true,
+      "ms": {
+        "CapturedSampleShading": 0.04335664266381527,
+        "CullCaptureDraws": 0.004966161880459127,
+        "ProbeUpdate": 2.5062230025946226,
+        "RasterProbeCapture": 2.505500214824955,
+        "RasterVisibility": 2.442338932557885,
+        "RenderGraphExe::execute()": 4.275010120029627,
+        "SDKUpdate": 6.561487367231978e-05
+      }
+    },
+    {
+      "size": 64,
+      "optimized": false,
+      "ms": {
+        "CapturedSampleShading": 0.04417427880800815,
+        "ProbeUpdate": 5.488971303975282,
+        "RasterProbeCapture": 5.488256003277235,
+        "RasterVisibility": 5.4278112724324465,
+        "RenderGraphExe::execute()": 7.255424845899402,
+        "SDKUpdate": 6.221513928515295e-05
+      }
+    },
+    {
+      "size": 64,
+      "optimized": true,
+      "ms": {
+        "CapturedSampleShading": 0.04444098801093589,
+        "CullCaptureDraws": 0.008696690715038048,
+        "ProbeUpdate": 2.599072299155581,
+        "RasterProbeCapture": 2.598356825105381,
+        "RasterVisibility": 2.528884270909931,
+        "RenderGraphExe::execute()": 4.368149083924009,
+        "SDKUpdate": 6.663479398846982e-05
+      }
+    }
+  ],
+  "normalUpdateTimings": [
+    {
+      "optimized": false,
+      "ms": {
+        "CapturedSampleShading": 0.03711045340847835,
+        "ProbeUpdate": 5.587744159015285,
+        "RasterProbeCapture": 5.53180677617029,
+        "RasterVisibility": 5.479732508748272,
+        "RenderGraphExe::execute()": 7.22928223221529,
+        "SDKUpdate": 0.055277283446930926
+      }
+    },
+    {
+      "optimized": true,
+      "ms": {
+        "CapturedSampleShading": 0.037059579976817,
+        "CullCaptureDraws": 0.005661896029642625,
+        "ProbeUpdate": 2.6921596873379787,
+        "RasterProbeCapture": 2.636560831266484,
+        "RasterVisibility": 2.578877676165022,
+        "RenderGraphExe::execute()": 4.3399992796342906,
+        "SDKUpdate": 0.054942775139323746
+      }
+    }
+  ],
+  "validation": {
+    "referencePixels": 63457177,
+    "missingCapturePixels": 0,
+    "extraCapturePixels": 0,
+    "capturePositionMismatch": 25736,
+    "captureNonFinite": 0,
+    "captureMaterialMismatch": 27858,
+    "captureSameTrianglePositionMismatch": 0,
+    "visibleMeshViews": 906860,
+    "candidateMeshViews": 1597200,
+    "maxPositionError": 0.5403146147727966,
+    "batches": 333,
+    "probes": 10648,
+    "texels": 65421312
+  },
+  "normalStats": {
+    "optimizedProbeCapture": false,
+    "worldCache": false,
+    "sharc": false,
+    "rasterProbeUpdate": true,
+    "probeCubemapSize": 32,
+    "worldCacheUpdates": 0,
+    "updatedFrames": 8448,
+    "batchProbeUpdates": true,
+    "probesPerFrame": 32,
+    "lastProbeBatchStart": 2840,
+    "lastProbeBatchCount": 32,
+    "completedProbeSweeps": 4108,
+    "probeUpdatesTotal": 43753472,
+    "totalProbes": 10648,
+    "status": "Raster cubemap visibility; shared DDGI shading with ray-traced shadows.",
+    "supported": true,
+    "usingRTXDI": false,
+    "finalGather": false,
+    "restirGather": false,
+    "restirHistoryLength": 20,
+    "restirMaxAge": 0,
+    "restirFullResolution": false,
+    "restirSpatialPasses": 2,
+    "restirSpatialFeedback": false,
+    "restirTemporalCellMapping": true,
+    "restirIntegrateSamples": 16,
+    "restirAllocatedBytes": 0,
+    "restirResetCount": 0,
+    "gridMin": [
+      -11.109999656677246,
+      0.15000009536743164,
+      -4.974999904632568
+    ],
+    "gridMax": [
+      10.3100004196167,
+      10.649999618530273,
+      4.474999904632568
+    ],
+    "wrcEnabled": false,
+    "wrcScreenCache": false,
+    "wrcGroupByMaterial": false,
+    "wrcStressMode": 0,
+    "wrcStressIterations": 0,
+    "showWrcCells": false,
+    "wrcCellsLod": 0,
+    "wrcCellSize": 0.25,
+    "wrcTableSize": 262144,
+    "wrcLodDistance": 8.0,
+    "fgGatherHits": 0,
+    "fgScreenCacheHits": 0,
+    "fgWrcHits": 0,
+    "fgShadedHits": 0,
+    "wrcProbeLimit": 16,
+    "wrcInvalidations": 0,
+    "wrcAllocatedBytes": 0,
+    "wrcValidRays": 0,
+    "wrcOccupiedEntries": 0,
+    "wrcShadedEntries": 0,
+    "wrcServedRays": 0,
+    "wrcFallbackRays": 0,
+    "wrcTemporalReusedEntries": 0,
+    "wrcNonFiniteResults": 0,
+    "wrcShadeEvaluations": 0,
+    "wrcProbeSteps": 0,
+    "wrcProbeLimitFailures": 0,
+    "wrcMaxLod": 0,
+    "wrcLodRays": 0,
+    "wrcCrossPrimitiveServedRays": 0,
+    "wrcWaveTypeSum": 0,
+    "wrcWaveCount": 0,
+    "wrcStressChecksum": 0,
+    "wrcStressEntries": 0,
+    "wrcActiveEntries": 0,
+    "wrcShaderGroups": 0,
+    "wrcMaterialTypes": 0,
+    "wrcDispatches": 0,
+    "wrcScheduledThreads": 0,
+    "rejectedMaterialSamples": 0,
+    "rejectedDirectSamples": 0,
+    "rejectedHistorySamples": 0,
+    "rejectedRaySamples": 0,
+    "activeProbes": 4332,
+    "relocatedProbes": 456,
+    "finite": true,
+    "nonFiniteTexels": 0,
+    "irradianceMax": 1.2659895420074463
+  },
+  "fixedRuns": [
+    {
+      "size": 16,
+      "offset": 0,
+      "optimized": false,
+      "repeat": 0,
+      "ms": {
+        "RenderGraphExe::execute()": 7.058940933045163,
+        "ProbeUpdate": 5.293526180236938,
+        "RasterProbeCapture": 5.292797977705876,
+        "RasterVisibility": 5.234326938234003,
+        "CapturedSampleShading": 0.04399120313415964,
+        "SDKUpdate": 6.221513928515295e-05
+      }
+    },
+    {
+      "size": 16,
+      "offset": 0,
+      "optimized": true,
+      "repeat": 1,
+      "ms": {
+        "RenderGraphExe::execute()": 4.077548625459709,
+        "ProbeUpdate": 2.3108161217662917,
+        "RasterProbeCapture": 2.3101072843331263,
+        "CullCaptureDraws": 0.004346900467438052,
+        "RasterVisibility": 2.247572909313369,
+        "CapturedSampleShading": 0.04349654187184881,
+        "SDKUpdate": 7.139442213050338e-05
+      }
+    },
+    {
+      "size": 16,
+      "offset": 0,
+      "optimized": true,
+      "repeat": 2,
+      "ms": {
+        "RenderGraphExe::execute()": 4.082318784706146,
+        "ProbeUpdate": 2.3135056495666504,
+        "RasterProbeCapture": 2.3127794721686983,
+        "CullCaptureDraws": 0.0043469004711485,
+        "RasterVisibility": 2.2501441302052534,
+        "CapturedSampleShading": 0.043737243029819545,
+        "SDKUpdate": 6.731474086590319e-05
+      }
+    },
+    {
+      "size": 16,
+      "offset": 0,
+      "optimized": false,
+      "repeat": 3,
+      "ms": {
+        "RenderGraphExe::execute()": 7.0588419959839594,
+        "ProbeUpdate": 5.293577175216371,
+        "RasterProbeCapture": 5.292854054515581,
+        "RasterVisibility": 5.234408534380544,
+        "CapturedSampleShading": 0.04392694808038108,
+        "SDKUpdate": 5.3035856439802516e-05
+      }
+    },
+    {
+      "size": 16,
+      "offset": 5000,
+      "optimized": false,
+      "repeat": 0,
+      "ms": {
+        "RenderGraphExe::execute()": 7.219529425480451,
+        "ProbeUpdate": 5.455360015549982,
+        "RasterProbeCapture": 5.454655212235166,
+        "RasterVisibility": 5.395812973083253,
+        "CapturedSampleShading": 0.04432471709481749,
+        "SDKUpdate": 6.731474086590319e-05
+      }
+    },
+    {
+      "size": 16,
+      "offset": 5000,
+      "optimized": true,
+      "repeat": 1,
+      "ms": {
+        "RenderGraphExe::execute()": 4.768382480894902,
+        "ProbeUpdate": 3.0004770689276583,
+        "RasterProbeCapture": 2.999753944427369,
+        "CullCaptureDraws": 0.004310183329099559,
+        "RasterVisibility": 2.936929911731249,
+        "CapturedSampleShading": 0.044093195230243694,
+        "SDKUpdate": 7.445418307895353e-05
+      }
+    },
+    {
+      "size": 16,
+      "offset": 5000,
+      "optimized": true,
+      "repeat": 2,
+      "ms": {
+        "RenderGraphExe::execute()": 4.768503848300037,
+        "ProbeUpdate": 3.0001588542147934,
+        "RasterProbeCapture": 2.999444909304737,
+        "CullCaptureDraws": 0.004323442295876395,
+        "RasterVisibility": 2.9366800319626036,
+        "CapturedSampleShading": 0.04378415932099658,
+        "SDKUpdate": 5.9155378336702806e-05
+      }
+    },
+    {
+      "size": 16,
+      "offset": 5000,
+      "optimized": false,
+      "repeat": 3,
+      "ms": {
+        "RenderGraphExe::execute()": 7.215191719541512,
+        "ProbeUpdate": 5.451124267274165,
+        "RasterProbeCapture": 5.450418487488036,
+        "RasterVisibility": 5.391455882099045,
+        "CapturedSampleShading": 0.04433797608571224,
+        "SDKUpdate": 6.731474086590319e-05
+      }
+    },
+    {
+      "size": 16,
+      "offset": 10000,
+      "optimized": false,
+      "repeat": 0,
+      "ms": {
+        "RenderGraphExe::execute()": 7.204996587745697,
+        "ProbeUpdate": 5.439894947872694,
+        "RasterProbeCapture": 5.43918711635696,
+        "RasterVisibility": 5.380974159772652,
+        "CapturedSampleShading": 0.04373214337455324,
+        "SDKUpdate": 6.935458149820328e-05
+      }
+    },
+    {
+      "size": 16,
+      "offset": 10000,
+      "optimized": true,
+      "repeat": 1,
+      "ms": {
+        "RenderGraphExe::execute()": 3.8057561785101415,
+        "ProbeUpdate": 2.0365544571819534,
+        "RasterProbeCapture": 2.035864990545934,
+        "CullCaptureDraws": 0.004353019989566855,
+        "RasterVisibility": 1.973114392671927,
+        "CapturedSampleShading": 0.04396876493891872,
+        "SDKUpdate": 7.139442213050338e-05
+      }
+    },
+    {
+      "size": 16,
+      "offset": 10000,
+      "optimized": true,
+      "repeat": 2,
+      "ms": {
+        "RenderGraphExe::execute()": 3.8053522869885206,
+        "ProbeUpdate": 2.036174025668566,
+        "RasterProbeCapture": 2.035468250631811,
+        "CullCaptureDraws": 0.004341800867828477,
+        "RasterVisibility": 1.9730480956841274,
+        "CapturedSampleShading": 0.04356283655917027,
+        "SDKUpdate": 6.833466118205324e-05
+      }
+    },
+    {
+      "size": 16,
+      "offset": 10000,
+      "optimized": false,
+      "repeat": 3,
+      "ms": {
+        "RenderGraphExe::execute()": 7.204376458171829,
+        "ProbeUpdate": 5.43914020963874,
+        "RasterProbeCapture": 5.438414009443792,
+        "RasterVisibility": 5.380528446212708,
+        "CapturedSampleShading": 0.04352815919722694,
+        "SDKUpdate": 6.935458149820328e-05
+      }
+    },
+    {
+      "size": 32,
+      "offset": 0,
+      "optimized": false,
+      "repeat": 0,
+      "ms": {
+        "RenderGraphExe::execute()": 7.091164286868031,
+        "ProbeUpdate": 5.326154450496355,
+        "RasterProbeCapture": 5.325425212601742,
+        "RasterVisibility": 5.266808336949444,
+        "CapturedSampleShading": 0.043991203178685025,
+        "SDKUpdate": 7.241434244665343e-05
+      }
+    },
+    {
+      "size": 32,
+      "offset": 0,
+      "optimized": true,
+      "repeat": 1,
+      "ms": {
+        "RenderGraphExe::execute()": 4.135233271169472,
+        "ProbeUpdate": 2.366188617341547,
+        "RasterProbeCapture": 2.3654828337559186,
+        "CullCaptureDraws": 0.004981290691892108,
+        "RasterVisibility": 2.3016806978628455,
+        "CapturedSampleShading": 0.04395652593547605,
+        "SDKUpdate": 6.833466118205324e-05
+      }
+    },
+    {
+      "size": 32,
+      "offset": 0,
+      "optimized": true,
+      "repeat": 2,
+      "ms": {
+        "RenderGraphExe::execute()": 4.1348059091909946,
+        "ProbeUpdate": 2.3658489934001787,
+        "RasterProbeCapture": 2.3651278978324983,
+        "CullCaptureDraws": 0.004972111413336964,
+        "RasterVisibility": 2.301573607076212,
+        "CapturedSampleShading": 0.04382699598888477,
+        "SDKUpdate": 5.813545802055276e-05
+      }
+    },
+    {
+      "size": 32,
+      "offset": 0,
+      "optimized": false,
+      "repeat": 3,
+      "ms": {
+        "RenderGraphExe::execute()": 7.088826644943055,
+        "ProbeUpdate": 5.323413924866938,
+        "RasterProbeCapture": 5.322696934658218,
+        "RasterVisibility": 5.263788371447073,
+        "CapturedSampleShading": 0.044102374538482425,
+        "SDKUpdate": 6.323505960130299e-05
+      }
+    },
+    {
+      "size": 32,
+      "offset": 5000,
+      "optimized": false,
+      "repeat": 0,
+      "ms": {
+        "RenderGraphExe::execute()": 7.252295385793861,
+        "ProbeUpdate": 5.4880943602299785,
+        "RasterProbeCapture": 5.4873630516082645,
+        "RasterVisibility": 5.4263177544947165,
+        "CapturedSampleShading": 0.04616057366667041,
+        "SDKUpdate": 6.935458149820328e-05
+      }
+    },
+    {
+      "size": 32,
+      "offset": 5000,
+      "optimized": true,
+      "repeat": 1,
+      "ms": {
+        "RenderGraphExe::execute()": 4.838534632527021,
+        "ProbeUpdate": 3.070528252666215,
+        "RasterProbeCapture": 3.069816354736389,
+        "CullCaptureDraws": 0.0049598723839211515,
+        "RasterVisibility": 3.0039672357627594,
+        "CapturedSampleShading": 0.046147314631250276,
+        "SDKUpdate": 6.731474086590319e-05
+      }
+    },
+    {
+      "size": 32,
+      "offset": 5000,
+      "optimized": true,
+      "repeat": 2,
+      "ms": {
+        "RenderGraphExe::execute()": 4.839606552959913,
+        "ProbeUpdate": 3.0714767796109874,
+        "RasterProbeCapture": 3.0707628337510555,
+        "CullCaptureDraws": 0.004956812612653016,
+        "RasterVisibility": 3.0048351857766686,
+        "CapturedSampleShading": 0.04603818326119883,
+        "SDKUpdate": 6.0175298652852854e-05
+      }
+    },
+    {
+      "size": 32,
+      "offset": 5000,
+      "optimized": false,
+      "repeat": 3,
+      "ms": {
+        "RenderGraphExe::execute()": 7.251189799897699,
+        "ProbeUpdate": 5.486939787389748,
+        "RasterProbeCapture": 5.486211579159437,
+        "RasterVisibility": 5.42543145099959,
+        "CapturedSampleShading": 0.04617791234022118,
+        "SDKUpdate": 6.323505960130299e-05
+      }
+    },
+    {
+      "size": 32,
+      "offset": 10000,
+      "optimized": false,
+      "repeat": 0,
+      "ms": {
+        "RenderGraphExe::execute()": 7.222509642521223,
+        "ProbeUpdate": 5.457184631985972,
+        "RasterProbeCapture": 5.456456418056412,
+        "RasterVisibility": 5.40150515301769,
+        "CapturedSampleShading": 0.04013386419213626,
+        "SDKUpdate": 6.425497991745305e-05
+      }
+    },
+    {
+      "size": 32,
+      "offset": 10000,
+      "optimized": true,
+      "repeat": 1,
+      "ms": {
+        "RenderGraphExe::execute()": 3.8499105641566427,
+        "ProbeUpdate": 2.0808353205601056,
+        "RasterProbeCapture": 2.0800989263086205,
+        "CullCaptureDraws": 0.004970071573864179,
+        "RasterVisibility": 2.0200684716502035,
+        "CapturedSampleShading": 0.04006450975024368,
+        "SDKUpdate": 6.11952189690029e-05
+      }
+    },
+    {
+      "size": 32,
+      "offset": 10000,
+      "optimized": true,
+      "repeat": 2,
+      "ms": {
+        "RenderGraphExe::execute()": 3.8519697901737167,
+        "ProbeUpdate": 2.0824600519887007,
+        "RasterProbeCapture": 2.0817124425652493,
+        "CullCaptureDraws": 0.004956812607087344,
+        "RasterVisibility": 2.0219083972186205,
+        "CapturedSampleShading": 0.040106326415838,
+        "SDKUpdate": 7.853386434355372e-05
+      }
+    },
+    {
+      "size": 32,
+      "offset": 10000,
+      "optimized": false,
+      "repeat": 3,
+      "ms": {
+        "RenderGraphExe::execute()": 7.220099559343193,
+        "ProbeUpdate": 5.454606286083084,
+        "RasterProbeCapture": 5.453873978193062,
+        "RasterVisibility": 5.398934947541985,
+        "CapturedSampleShading": 0.040110406172702985,
+        "SDKUpdate": 5.507569707210261e-05
+      }
+    },
+    {
+      "size": 64,
+      "offset": 0,
+      "optimized": false,
+      "repeat": 0,
+      "ms": {
+        "RenderGraphExe::execute()": 7.161089025170679,
+        "ProbeUpdate": 5.3957497228189295,
+        "RasterProbeCapture": 5.395040899633886,
+        "RasterVisibility": 5.333449943132135,
+        "CapturedSampleShading": 0.04523448597090653,
+        "SDKUpdate": 6.0175298652852854e-05
+      }
+    },
+    {
+      "size": 64,
+      "offset": 0,
+      "optimized": true,
+      "repeat": 1,
+      "ms": {
+        "RenderGraphExe::execute()": 4.225148419459978,
+        "ProbeUpdate": 2.4558498194493144,
+        "RasterProbeCapture": 2.4551348524739542,
+        "CullCaptureDraws": 0.008704000145226598,
+        "RasterVisibility": 2.3847583090641584,
+        "CapturedSampleShading": 0.04537319522573653,
+        "SDKUpdate": 7.343426276280347e-05
+      }
+    },
+    {
+      "size": 64,
+      "offset": 0,
+      "optimized": true,
+      "repeat": 2,
+      "ms": {
+        "RenderGraphExe::execute()": 4.225518674964449,
+        "ProbeUpdate": 2.4559742492508603,
+        "RasterProbeCapture": 2.4552684647153575,
+        "CullCaptureDraws": 0.008725418482881143,
+        "RasterVisibility": 2.3847940148585347,
+        "CapturedSampleShading": 0.04539053400317986,
+        "SDKUpdate": 7.139442213050338e-05
+      }
+    },
+    {
+      "size": 64,
+      "offset": 0,
+      "optimized": false,
+      "repeat": 3,
+      "ms": {
+        "RenderGraphExe::execute()": 7.161673429952675,
+        "ProbeUpdate": 5.396060804921793,
+        "RasterProbeCapture": 5.395343809013823,
+        "RasterVisibility": 5.333909927611332,
+        "CapturedSampleShading": 0.04510291622751263,
+        "SDKUpdate": 7.037450181435334e-05
+      }
+    },
+    {
+      "size": 64,
+      "offset": 5000,
+      "optimized": false,
+      "repeat": 0,
+      "ms": {
+        "RenderGraphExe::execute()": 7.323435859376215,
+        "ProbeUpdate": 5.559200125386515,
+        "RasterProbeCapture": 5.558490268737671,
+        "RasterVisibility": 5.495721298384951,
+        "CapturedSampleShading": 0.04646960965012649,
+        "SDKUpdate": 5.609561738825266e-05
+      }
+    },
+    {
+      "size": 64,
+      "offset": 5000,
+      "optimized": true,
+      "repeat": 1,
+      "ms": {
+        "RenderGraphExe::execute()": 4.947532503728373,
+        "ProbeUpdate": 3.1790233000341166,
+        "RasterProbeCapture": 3.178298141851843,
+        "CullCaptureDraws": 0.008673402530872133,
+        "RasterVisibility": 3.106649750257393,
+        "CapturedSampleShading": 0.046665434239513845,
+        "SDKUpdate": 6.527490023360309e-05
+      }
+    },
+    {
+      "size": 64,
+      "offset": 5000,
+      "optimized": true,
+      "repeat": 2,
+      "ms": {
+        "RenderGraphExe::execute()": 4.946316762749418,
+        "ProbeUpdate": 3.1780635503183796,
+        "RasterProbeCapture": 3.1773445150291777,
+        "CullCaptureDraws": 0.008669322842650443,
+        "RasterVisibility": 3.1056920484717625,
+        "CapturedSampleShading": 0.0466776733023237,
+        "SDKUpdate": 6.323505960130299e-05
+      }
+    },
+    {
+      "size": 64,
+      "offset": 5000,
+      "optimized": false,
+      "repeat": 3,
+      "ms": {
+        "RenderGraphExe::execute()": 7.335727923419846,
+        "ProbeUpdate": 5.569181058511316,
+        "RasterProbeCapture": 5.568453870446558,
+        "RasterVisibility": 5.5061744807725885,
+        "CapturedSampleShading": 0.0461034582430623,
+        "SDKUpdate": 6.425497991745305e-05
+      }
+    },
+    {
+      "size": 64,
+      "offset": 10000,
+      "optimized": false,
+      "repeat": 0,
+      "ms": {
+        "RenderGraphExe::execute()": 7.275933049114577,
+        "ProbeUpdate": 5.507376980496593,
+        "RasterProbeCapture": 5.506654845765862,
+        "RasterVisibility": 5.449412841720885,
+        "CapturedSampleShading": 0.041027314515702754,
+        "SDKUpdate": 5.813545802055276e-05
+      }
+    },
+    {
+      "size": 64,
+      "offset": 10000,
+      "optimized": true,
+      "repeat": 1,
+      "ms": {
+        "RenderGraphExe::execute()": 3.932039658861806,
+        "ProbeUpdate": 2.1626502688662463,
+        "RasterProbeCapture": 2.161937338422494,
+        "CullCaptureDraws": 0.008694820855540108,
+        "RasterVisibility": 2.095425272367865,
+        "CapturedSampleShading": 0.041362868391897574,
+        "SDKUpdate": 5.4055776755952564e-05
+      }
+    },
+    {
+      "size": 64,
+      "offset": 10000,
+      "optimized": true,
+      "repeat": 2,
+      "ms": {
+        "RenderGraphExe::execute()": 3.9323384837800286,
+        "ProbeUpdate": 2.1628726070145685,
+        "RasterProbeCapture": 2.1621576381394587,
+        "CullCaptureDraws": 0.008713179433057864,
+        "RasterVisibility": 2.0959862304398738,
+        "CapturedSampleShading": 0.041176222902963834,
+        "SDKUpdate": 7.241434244665343e-05
+      }
+    },
+    {
+      "size": 64,
+      "offset": 10000,
+      "optimized": false,
+      "repeat": 3,
+      "ms": {
+        "RenderGraphExe::execute()": 7.274689788362419,
+        "ProbeUpdate": 5.506259131716542,
+        "RasterProbeCapture": 5.505552326065611,
+        "RasterVisibility": 5.448199142972786,
+        "CapturedSampleShading": 0.041107888240738216,
+        "SDKUpdate": 6.425497991745305e-05
+      }
+    }
+  ],
+  "normalRuns": [
+    {
+      "optimized": false,
+      "repeat": 0,
+      "ms": {
+        "RenderGraphExe::execute()": 7.229983906282644,
+        "ProbeUpdate": 5.5884727121452356,
+        "RasterProbeCapture": 5.532563220764399,
+        "RasterVisibility": 5.48051231812916,
+        "CapturedSampleShading": 0.03703835137075104,
+        "SDKUpdate": 0.055249774117494356
+      }
+    },
+    {
+      "optimized": true,
+      "repeat": 1,
+      "ms": {
+        "RenderGraphExe::execute()": 4.339105792087708,
+        "ProbeUpdate": 2.6915098897842245,
+        "RasterProbeCapture": 2.6359224647020336,
+        "CullCaptureDraws": 0.005658881307851023,
+        "RasterVisibility": 2.57829759235588,
+        "CapturedSampleShading": 0.03705870066847108,
+        "SDKUpdate": 0.054930465034519024
+      }
+    },
+    {
+      "optimized": true,
+      "repeat": 2,
+      "ms": {
+        "RenderGraphExe::execute()": 4.340892767180873,
+        "ProbeUpdate": 2.6928094848917326,
+        "RasterProbeCapture": 2.637199197830934,
+        "CullCaptureDraws": 0.005664910751434228,
+        "RasterVisibility": 2.579457759974164,
+        "CapturedSampleShading": 0.03706045928516291,
+        "SDKUpdate": 0.05495508524412847
+      }
+    },
+    {
+      "optimized": false,
+      "repeat": 3,
+      "ms": {
+        "RenderGraphExe::execute()": 7.228580558147936,
+        "ProbeUpdate": 5.587015605885334,
+        "RasterProbeCapture": 5.531050331576182,
+        "RasterVisibility": 5.478952699367385,
+        "CapturedSampleShading": 0.037182555446205655,
+        "SDKUpdate": 0.055304792776367497
+      }
+    }
+  ]
+}

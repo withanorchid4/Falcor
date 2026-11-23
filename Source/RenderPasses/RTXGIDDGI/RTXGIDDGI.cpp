@@ -46,6 +46,8 @@ void registerBindings(pybind11::module& module)
     pass.def("reset", &RTXGIDDGI::reset);
     pass.def_property_readonly("updatedFrames", &RTXGIDDGI::getUpdatedFrames);
     pass.def_property_readonly("status", &RTXGIDDGI::getStatus);
+    pass.def_property_readonly("capture_pipeline_stats", [](const RTXGIDDGI& self) { return self.getProbePipelineStats().toPython(); });
+    pass.def_property_readonly("capture_stats", [](const RTXGIDDGI& self) { return self.getProbeCaptureStats().toPython(); });
     pass.def_property_readonly("stats", [](const RTXGIDDGI& self) { return self.getStats().toPython(); });
 }
 }
@@ -85,6 +87,11 @@ Properties RTXGIDDGI::getProperties() const
     p["worldCacheMaxIntensity"] = mOptions.worldCacheMaxIntensity;
     p["gridCounts"] = mOptions.counts;
     p["raysPerProbe"] = mOptions.rays;
+    p["optimizedProbeCapture"] = mOptions.optimizedProbeCapture;
+    p["multiviewProbeCapture"] = mOptions.multiviewProbeCapture;
+    p["multiviewAcrossProbes"] = mOptions.multiviewAcrossProbes;
+    p["rasterProbeUpdate"] = mOptions.rasterProbeUpdate;
+    p["probeCubemapSize"] = mOptions.probeCubemapSize;
     p["batchProbeUpdates"] = mOptions.batchProbeUpdates;
     p["wrapProbeBatches"] = mOptions.wrapProbeBatches;
     p["probesPerFrame"] = mOptions.probesPerFrame;
@@ -165,6 +172,18 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         else if (name == "worldCacheDensity") next.worldCacheDensity = value;
         else if (name == "gridCounts") next.counts = value;
         else if (name == "raysPerProbe") next.rays = value;
+        else if (name == "probeCaptureDiagnosticMode") next.probeCaptureDiagnosticMode = value;
+        else if (name == "probeCaptureDiagnosticRestore") next.probeCaptureDiagnosticRestore = value;
+        else if (name == "probeCaptureTriangleDivisor") next.probeCaptureTriangleDivisor = value;
+        else if (name == "probeCapturePipelineStats") next.probeCapturePipelineStats = value;
+        else if (name == "captureOnly") next.captureOnly = value;
+        else if (name == "validateCapture") next.validateCapture = value;
+        else if (name == "probeCaptureTestOffset") mProbeCursor = uint32_t(value);
+        else if (name == "multiviewAcrossProbes") next.multiviewAcrossProbes = value;
+        else if (name == "multiviewProbeCapture") next.multiviewProbeCapture = value;
+        else if (name == "optimizedProbeCapture") next.optimizedProbeCapture = value;
+        else if (name == "rasterProbeUpdate") next.rasterProbeUpdate = value;
+        else if (name == "probeCubemapSize") next.probeCubemapSize = value;
         else if (name == "batchProbeUpdates") next.batchProbeUpdates = value;
         else if (name == "wrapProbeBatches") next.wrapProbeBatches = value;
         else if (name == "probesPerFrame") next.probesPerFrame = value;
@@ -224,7 +243,7 @@ void RTXGIDDGI::setProperties(const Properties& properties)
     }
     FALCOR_CHECK(all(next.counts >= uint3(2)) && all(next.counts <= uint3(32)), "DDGI gridCounts must be 2..32 per axis.");
     FALCOR_CHECK(next.probesPerFrame >= 1 && next.probesPerFrame <= 32768, "Probe budget must be 1..32768.");
-    if (next.batchProbeUpdates != mOptions.batchProbeUpdates || next.probesPerFrame != mOptions.probesPerFrame || next.wrapProbeBatches != mOptions.wrapProbeBatches) mResetPending = true;
+    if (!next.captureOnly && (next.batchProbeUpdates != mOptions.batchProbeUpdates || next.probesPerFrame != mOptions.probesPerFrame || next.wrapProbeBatches != mOptions.wrapProbeBatches)) mResetPending = true;
     FALCOR_CHECK(next.rays >= 64 && next.rays <= 512, "DDGI raysPerProbe must be 64..512 (32 rays are reserved for probe placement).");
     FALCOR_CHECK(std::isfinite(next.hysteresis) && next.hysteresis >= 0.f && next.hysteresis < 1.f, "DDGI hysteresis must be in [0,1).");
     FALCOR_CHECK(std::isfinite(next.normalBias) && next.normalBias >= 0.f && next.normalBias <= 1.f, "DDGI normalBias must be in [0,1].");
@@ -254,6 +273,8 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         "WRC cell overlay opacity must be in [0,1].");
     if (any(next.counts != mOptions.counts) || next.rays != mOptions.rays || next.autoBounds != mOptions.autoBounds ||
         any(next.gridMin != mOptions.gridMin) || any(next.gridMax != mOptions.gridMax)) mReallocate = true;
+    FALCOR_CHECK(next.probeCubemapSize >= 8 && next.probeCubemapSize <= 128, "Cubemap face resolution must be 8..128.");
+    if (!next.captureOnly && (next.rasterProbeUpdate != mOptions.rasterProbeUpdate || next.probeCubemapSize != mOptions.probeCubemapSize)) mResetPending = true;
     if (next.tetrahedralInterpolation != mOptions.tetrahedralInterpolation) mResetPending = true;
     if (next.relocation != mOptions.relocation || next.classification != mOptions.classification) mResetPending = true;
     if (next.minFrontfaceDistance != mOptions.minFrontfaceDistance) mResetPending = true;
@@ -266,7 +287,7 @@ void RTXGIDDGI::setProperties(const Properties& properties)
     if (next.wrcTableSize != mOptions.wrcTableSize) mWrcReallocate = true;
     // WRC (with its screen-space cache) is only available for DDGI + final gather.
     // ReSTIR gather and WorldCache use their own caches.
-    if (!next.finalGather || next.restirGather || next.worldCache) next.useWRC = false;
+    if (!next.finalGather || next.restirGather || next.worldCache || next.rasterProbeUpdate) next.useWRC = false;
     if (next.useWRC != mOptions.useWRC || next.wrcCellSize != mOptions.wrcCellSize ||
         next.wrcLodDistance != mOptions.wrcLodDistance || next.wrcMaxLod != mOptions.wrcMaxLod ||
         next.wrcProbeLimit != mOptions.wrcProbeLimit ||
@@ -319,6 +340,8 @@ RenderPassReflection RTXGIDDGI::reflect(const CompileData& data)
 
 void RTXGIDDGI::setScene(RenderContext* context, const ref<Scene>& scene)
 {
+    for (uint32_t i = 0; i < 16; ++i) { mpProbeCapturePrograms[i] = nullptr; mpProbeCaptureVariables[i] = nullptr; }
+    mpProbeCaptureProgram = nullptr; mpProbeCaptureVars = nullptr; mpProbeCaptureCull = nullptr; mpProbeMeshBounds = nullptr; mpProbeCaptureCompare = nullptr; mpProbeCaptureReference = nullptr; mpProbeCaptureDifference = nullptr;
     mpScene = scene;
     mWorldCacheReset = true;
     mpRestirInitial = mpRestirTemporal = mpRestirSpatial = mpRestirHistory = nullptr;
@@ -402,6 +425,8 @@ void RTXGIDDGI::buildRayProgram(RayProgram& ray, const char* shader, const char*
 
 void RTXGIDDGI::createPrograms()
 {
+    for (uint32_t i = 0; i < 16; ++i) { mpProbeCapturePrograms[i] = nullptr; mpProbeCaptureVariables[i] = nullptr; }
+    mpProbeCaptureProgram = nullptr; mpProbeCaptureVars = nullptr; mpProbeCaptureCull = nullptr; mpProbeMeshBounds = nullptr; mpProbeCaptureCompare = nullptr; mpProbeCaptureReference = nullptr; mpProbeCaptureDifference = nullptr;
     buildRayProgram(mTrace, kRayShader, "traceProbes");
     buildRayProgram(mRender, kRayShader, "render");
     buildRayProgram(mHalfGather, kRayShader, "gatherHalf");
@@ -808,11 +833,12 @@ void RTXGIDDGI::uploadConstants()
 
 void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
 {
+    bool rasterChanged = ray.program->addDefine("RASTER_PROBE_CAPTURE",mOptions.rasterProbeUpdate && &ray == &mTrace ? "1" : "0");
     bool mathChanged = ray.program->addDefine("DDGI_HOIST_NORMAL_OCT",mOptions.hoistNormalOct ? "1" : "0");
     mathChanged |= ray.program->addDefine("DDGI_SKIP_DIRECTION_NORMALIZE",mOptions.skipDirectionNormalize ? "1" : "0");
     bool tetraChanged = ray.program->addDefine("DDGI_TETRAHEDRAL", mOptions.tetrahedralInterpolation ? "1" : "0");
     bool changed = ray.program->addDefine("LUMEN_WORLD_CACHE", mOptions.worldCache && !mOptions.sharc ? "1" : "0");
-    changed |= tetraChanged || mathChanged;
+    changed |= tetraChanged || mathChanged || rasterChanged;
     changed |= ray.program->addDefine("SHARC_CACHE", mOptions.sharc ? "1" : "0");
     changed |= ray.program->addDefine("SHARC_UPDATE", mOptions.sharc && &ray == &mWorldCacheTrace ? "1" : "0");
     changed |= ray.program->addDefine("SHARC_QUERY", mOptions.sharc && &ray != &mWorldCacheTrace ? "1" : "0");
@@ -892,6 +918,11 @@ void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
     if (data.getTexture("diffuseReflectance")) root["gDiffuseReflectance"] = data.getTexture("diffuseReflectance");
     if (data.getTexture("specularReflectance")) root["gSpecularReflectance"] = data.getTexture("specularReflectance");
     if (data.getTexture("unfilteredColor")) root["gUnfilteredColor"] = data.getTexture("unfilteredColor");
+    if (mOptions.rasterProbeUpdate && &ray == &mTrace) {
+        root["gRasterHits"] = mpProbeCaptureHits;
+        root["RasterCB"]["gRasterOffset"] = mRasterOffset;
+        root["RasterCB"]["gRasterSize"] = mOptions.probeCubemapSize;
+    }
     auto cb = root["PerFrameCB"];
     cb["gFrameCount"] = mFrame;
     cb["gProbeBatchStart"] = mProbeCursor;
@@ -1062,7 +1093,8 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
     if (!mOptions.worldCache && mOptions.update)
     {
         FALCOR_PROFILE(context, "ProbeUpdate");
-        if (wrcActive()) traceWithWrc(context, data);
+        if (mOptions.rasterProbeUpdate) rasterizeProbes(context,data);
+        else if (wrcActive()) traceWithWrc(context, data);
         else
         {
             FALCOR_PROFILE(context, "OriginalTrace");
@@ -1073,7 +1105,7 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
         context->uavBarrier(mpRayData.get());
         {
             FALCOR_PROFILE(context, "SDKUpdate");
-            updateProbes(context);
+            if (!mOptions.captureOnly) updateProbes(context);
         }
     }
     if (mOptions.showProbes || (mOptions.showWrcCells && wrcActive() && !mOptions.wrcBypassSharing))
@@ -1169,6 +1201,7 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
     drawProbeVisualization(context, data);
     mStatus = mOptions.update ? (wrcActive() ? "Updating probes via active WRC cells; final gather reads screen/WRC caches." : "Updating probes with original per-ray shading.") :
         "Probe updates frozen; camera and direct light remain live.";
+    if (mOptions.rasterProbeUpdate && mOptions.update) mStatus = "Raster cubemap visibility; shared DDGI shading with ray-traced shadows.";
     if (mOptions.worldCache) mStatus = "WorldCache: independent diffuse surface radiance; no DDGI probe updates.";
     if (mOptions.sharc) mStatus = "NVIDIA SHaRC: update, resolve and half/full FG query; no DDGI probes.";
     ++mFrame;
@@ -1176,9 +1209,11 @@ void RTXGIDDGI::execute(RenderContext* context, const RenderData& data)
 
 Properties RTXGIDDGI::getStats() const
 {
-    Properties stats;
+    Properties stats = getProbeCaptureStats();
     stats["worldCache"] = mOptions.worldCache;
     stats["sharc"] = mOptions.sharc;
+    stats["rasterProbeUpdate"] = mOptions.rasterProbeUpdate;
+    stats["probeCubemapSize"] = mOptions.probeCubemapSize;
     if (mOptions.sharc && mpSharcStats)
     {
         uint32_t c[4] = {}; mpSharcStats->getBlob(c,0,sizeof(c));
@@ -1356,6 +1391,24 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
     widgets.text("Probe updates: " + std::to_string(mUpdatedFrames));
     Properties p;
     auto options = mOptions;
+    if (widgets.checkbox("Raster cubemap probe capture", options.rasterProbeUpdate)) p["rasterProbeUpdate"] = options.rasterProbeUpdate;
+    if (options.rasterProbeUpdate && widgets.checkbox("Cull objects per probe face", options.optimizedProbeCapture)) p["optimizedProbeCapture"] = options.optimizedProbeCapture;
+    if (options.rasterProbeUpdate && options.optimizedProbeCapture)
+    {
+        if (getProbeViewInstancingTier() >= 2)
+        {
+            if (widgets.checkbox("Hardware multiview (3 views)", options.multiviewProbeCapture)) p["multiviewProbeCapture"] = options.multiviewProbeCapture;
+            if (options.multiviewProbeCapture)
+            {
+                uint32_t grouping = options.multiviewAcrossProbes ? 1u : 0u;
+                const Gui::DropdownList modes = {{0, "Faces of one probe"}, {1, "Same face across probes"}};
+                if (widgets.dropdown("View grouping", modes, grouping)) p["multiviewAcrossProbes"] = grouping == 1;
+            }
+        }
+        else widgets.text("Hardware multiview unavailable; using per-face capture.");
+    }
+    if (options.rasterProbeUpdate && widgets.var("Cubemap face resolution", options.probeCubemapSize,8u,128u,8u)) p["probeCubemapSize"] = options.probeCubemapSize;
+    widgets.tooltip("Raster primary visibility; shared DDGI lighting still uses ray-traced shadows. Expensive for many probes; use update batching.");
     if (widgets.checkbox("Update probes", options.update)) p["updateEnabled"] = options.update;
     if (!options.worldCache)
     {
@@ -1487,4 +1540,39 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
         else if (changed) widgets.text("Grid max must exceed grid min.");
     }
     if (!p.empty()) setProperties(p);
+}
+
+Properties RTXGIDDGI::getProbeCaptureStats() const
+{
+    Properties stats;
+    stats["optimizedProbeCapture"] = mProbeCaptureOptimized;
+    stats["multiviewProbeCapture"] = mProbeCaptureMultiview;
+    stats["multiviewAcrossProbes"] = mProbeCaptureMultiview && mProbeCaptureAcrossProbes;
+    stats["viewInstancingTier"] = getProbeViewInstancingTier();
+    if (mpProbeDrawCounts && mProbeCaptureOptimized)
+    {
+        uint32_t counts[14] = {};
+        mpProbeDrawCounts->getBlob(counts, 0, sizeof(counts));
+        uint32_t visible = 0;
+        for (uint32_t i = 0; i < (mProbeCaptureMultiview ? 14u : 2u); ++i) visible += counts[i];
+        stats["visibleMeshViews"] = visible;
+        stats["candidateMeshViews"] = mpScene->getGeometryInstanceCount() * (mProbeCaptureMultiview ? (mProbeCaptureAcrossProbes ? ((std::min(32u, mProbeBatchCount) + 2) / 3) * 6 : std::min(32u, mProbeBatchCount) * 2) : std::min(32u, mProbeBatchCount) * 6);
+        stats["hardwareViewMaskBuckets"] = mProbeCaptureMultiview ? 7u : 1u;
+    }
+    if (mpProbeCaptureDifference && mOptions.validateCapture)
+    {
+        uint32_t counts[8] = {};
+        mpProbeCaptureDifference->getBlob(counts, 0, sizeof(counts));
+        stats["referencePixels"] = counts[0];
+        stats["missingCapturePixels"] = counts[1];
+        stats["extraCapturePixels"] = counts[2];
+        stats["capturePositionMismatch"] = counts[3];
+        float error;
+        std::memcpy(&error, counts + 4, sizeof(error));
+        stats["captureMaxPositionError"] = error;
+        stats["captureNonFinite"] = counts[5];
+        stats["captureMaterialMismatch"] = counts[6];
+        stats["captureSameTrianglePositionMismatch"] = counts[7];
+    }
+    return stats;
 }

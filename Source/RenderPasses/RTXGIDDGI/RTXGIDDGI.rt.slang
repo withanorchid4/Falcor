@@ -35,6 +35,14 @@
 #include "RTXGIConfig.slang"
 #include "RTXGI/rtxgi-sdk/shaders/ddgi/IrradianceTetrahedral.hlsl"
 
+#ifndef RASTER_PROBE_CAPTURE
+#define RASTER_PROBE_CAPTURE 0
+#endif
+#if RASTER_PROBE_CAPTURE
+#include "ProbeCubemapCommon.slang"
+Texture2DArray<uint4> gRasterHits;
+cbuffer RasterCB { uint gRasterOffset; uint gRasterSize; }
+#endif
 import Rendering.Materials.IsotropicGGX;
 import Scene.Raytracing;
 import Scene.Intersection;
@@ -425,7 +433,11 @@ void traceProbes()
     uint3 launch = DispatchRaysIndex();
     int rayIndex = int(launch.x);
     int probeCount = volume.probeCounts.x * volume.probeCounts.y * volume.probeCounts.z;
-    int probeIndex = int((gProbeBatchStart + launch.y) % uint(probeCount));
+    int probeIndex = int((gProbeBatchStart + launch.y
+#if RASTER_PROBE_CAPTURE
+        + gRasterOffset
+#endif
+    ) % uint(probeCount));
     if (rayIndex >= volume.probeNumRays || probeIndex >= probeCount) return;
     int3 probeCoords = DDGIGetProbeCoords(probeIndex, volume);
     probeIndex = DDGIGetScrollingProbeIndex(probeCoords, volume);
@@ -444,7 +456,26 @@ void traceProbes()
     ProbeRayPayload payload = {};
     payload.hitT = -1.f;
     // Back faces must be preserved for SDK relocation and classification.
+#if RASTER_PROBE_CAPTURE
+    uint face = cubeFace(direction);
+    float2 uv = cubeUV(direction,face);
+    uint2 pixel = min(uint2(saturate(uv)*gRasterSize),uint2(gRasterSize-1));
+    uint4 packed = gRasterHits.Load(int4(pixel,launch.y*6+face,0));
+#if HIT_INFO_USE_COMPRESSION
+    HitInfo rasterHit = HitInfo(packed.xy);
+#else
+    HitInfo rasterHit = HitInfo(packed);
+#endif
+    if (rasterHit.isValid()) {
+        VertexData v = gScene.getVertexData(rasterHit.getTriangleHit());
+        payload.hit = rasterHit.data;
+        payload.hitT = length(v.posW-origin);
+        payload.backFace = dot(v.faceNormalW,normalize(v.posW-origin)) > 0.f;
+        if (payload.hitT > volume.probeMaxRayDistance) payload.hitT = -1.f;
+    }
+#else
     TraceRay(gScene.rtAccel, RAY_FLAG_NONE, 0xff, 0, rayTypeCount, 0, ray, payload);
+#endif
 
     if (payload.hitT < 0.f)
     {

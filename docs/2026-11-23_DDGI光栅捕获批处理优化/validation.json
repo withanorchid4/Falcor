@@ -1,0 +1,4997 @@
+[
+  {
+    "offset": 0,
+    "stats": {
+      "visibleMeshViews": 2507,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 48,
+      "captureMaxPositionError": 0.26565825939178467,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 52,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 32,
+    "stats": {
+      "visibleMeshViews": 2709,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 36,
+      "captureMaxPositionError": 0.08745492249727249,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 38,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 64,
+    "stats": {
+      "visibleMeshViews": 2701,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196604,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 66,
+      "captureMaxPositionError": 0.08623317629098892,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 69,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 96,
+    "stats": {
+      "visibleMeshViews": 2990,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196588,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 23,
+      "captureMaxPositionError": 0.07267123460769653,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 23,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 128,
+    "stats": {
+      "visibleMeshViews": 2922,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196205,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 27,
+      "captureMaxPositionError": 0.23801393806934357,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 28,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 160,
+    "stats": {
+      "visibleMeshViews": 3306,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193960,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 90,
+      "captureMaxPositionError": 0.31447821855545044,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 92,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 192,
+    "stats": {
+      "visibleMeshViews": 2956,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194400,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 145,
+      "captureMaxPositionError": 0.3993058502674103,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 148,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 224,
+    "stats": {
+      "visibleMeshViews": 3305,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193567,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 153,
+      "captureMaxPositionError": 0.26936978101730347,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 156,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 256,
+    "stats": {
+      "visibleMeshViews": 3036,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193995,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 144,
+      "captureMaxPositionError": 0.26927244663238525,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 146,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 288,
+    "stats": {
+      "visibleMeshViews": 3218,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193975,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 95,
+      "captureMaxPositionError": 0.3029992878437042,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 96,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 320,
+    "stats": {
+      "visibleMeshViews": 3035,
+      "candidateMeshViews": 4800,
+      "referencePixels": 195948,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 36,
+      "captureMaxPositionError": 0.12215764075517654,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 39,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 352,
+    "stats": {
+      "visibleMeshViews": 2862,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196548,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 39,
+      "captureMaxPositionError": 0.13343918323516846,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 43,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 384,
+    "stats": {
+      "visibleMeshViews": 2857,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 35,
+      "captureMaxPositionError": 0.21368543803691864,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 38,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 416,
+    "stats": {
+      "visibleMeshViews": 2596,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 33,
+      "captureMaxPositionError": 0.11034027487039566,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 35,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 448,
+    "stats": {
+      "visibleMeshViews": 2606,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 61,
+      "captureMaxPositionError": 0.09818284213542938,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 62,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 480,
+    "stats": {
+      "visibleMeshViews": 2423,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 42,
+      "captureMaxPositionError": 0.13106995820999146,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 46,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 512,
+    "stats": {
+      "visibleMeshViews": 2717,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 33,
+      "captureMaxPositionError": 0.09392494708299637,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 36,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 544,
+    "stats": {
+      "visibleMeshViews": 2677,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 31,
+      "captureMaxPositionError": 0.1326472908258438,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 33,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 576,
+    "stats": {
+      "visibleMeshViews": 3010,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 53,
+      "captureMaxPositionError": 0.13071346282958984,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 58,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 608,
+    "stats": {
+      "visibleMeshViews": 2942,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196582,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 72,
+      "captureMaxPositionError": 0.2350192666053772,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 75,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 640,
+    "stats": {
+      "visibleMeshViews": 3251,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193904,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 123,
+      "captureMaxPositionError": 0.27084219455718994,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 127,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 672,
+    "stats": {
+      "visibleMeshViews": 3224,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193606,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 108,
+      "captureMaxPositionError": 0.17468777298927307,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 112,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 704,
+    "stats": {
+      "visibleMeshViews": 3304,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193725,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 72,
+      "captureMaxPositionError": 0.22145816683769226,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 75,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 736,
+    "stats": {
+      "visibleMeshViews": 3350,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193557,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 167,
+      "captureMaxPositionError": 0.28998035192489624,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 179,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 768,
+    "stats": {
+      "visibleMeshViews": 3058,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194149,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 78,
+      "captureMaxPositionError": 0.14396293461322784,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 83,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 800,
+    "stats": {
+      "visibleMeshViews": 3230,
+      "candidateMeshViews": 4800,
+      "referencePixels": 195435,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 68,
+      "captureMaxPositionError": 0.25769728422164917,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 69,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 832,
+    "stats": {
+      "visibleMeshViews": 2792,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196526,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 15,
+      "captureMaxPositionError": 0.061988286674022675,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 16,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 864,
+    "stats": {
+      "visibleMeshViews": 2922,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 401,
+      "captureMaxPositionError": 0.11799075454473495,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 416,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 896,
+    "stats": {
+      "visibleMeshViews": 2553,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 50,
+      "captureMaxPositionError": 0.10991410911083221,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 57,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 928,
+    "stats": {
+      "visibleMeshViews": 2621,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 34,
+      "captureMaxPositionError": 0.11301145702600479,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 39,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 960,
+    "stats": {
+      "visibleMeshViews": 2477,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 41,
+      "captureMaxPositionError": 0.0954236313700676,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 42,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 992,
+    "stats": {
+      "visibleMeshViews": 2671,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 58,
+      "captureMaxPositionError": 0.09835448861122131,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 61,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1024,
+    "stats": {
+      "visibleMeshViews": 2697,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 58,
+      "captureMaxPositionError": 0.10888391733169556,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 75,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1056,
+    "stats": {
+      "visibleMeshViews": 2887,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196566,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 22,
+      "captureMaxPositionError": 0.04904446378350258,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 26,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1088,
+    "stats": {
+      "visibleMeshViews": 3096,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196553,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 41,
+      "captureMaxPositionError": 0.041777532547712326,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 44,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1120,
+    "stats": {
+      "visibleMeshViews": 3070,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194154,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 98,
+      "captureMaxPositionError": 0.2195049375295639,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 103,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1152,
+    "stats": {
+      "visibleMeshViews": 3492,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192909,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 94,
+      "captureMaxPositionError": 0.16318055987358093,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 96,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1184,
+    "stats": {
+      "visibleMeshViews": 3146,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194061,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 123,
+      "captureMaxPositionError": 0.35274478793144226,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 127,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1216,
+    "stats": {
+      "visibleMeshViews": 3595,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193398,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 346,
+      "captureMaxPositionError": 0.24789686501026154,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 351,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1248,
+    "stats": {
+      "visibleMeshViews": 3032,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193864,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 60,
+      "captureMaxPositionError": 0.29791367053985596,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 67,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1280,
+    "stats": {
+      "visibleMeshViews": 3222,
+      "candidateMeshViews": 4800,
+      "referencePixels": 195077,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 79,
+      "captureMaxPositionError": 0.18283593654632568,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 84,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1312,
+    "stats": {
+      "visibleMeshViews": 2857,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 28,
+      "captureMaxPositionError": 0.09071076661348343,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 29,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1344,
+    "stats": {
+      "visibleMeshViews": 2861,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 14,
+      "captureMaxPositionError": 0.14826050400733948,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 18,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1376,
+    "stats": {
+      "visibleMeshViews": 2667,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 94,
+      "captureMaxPositionError": 0.15550607442855835,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 102,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1408,
+    "stats": {
+      "visibleMeshViews": 2544,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 62,
+      "captureMaxPositionError": 0.10975392907857895,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 66,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1440,
+    "stats": {
+      "visibleMeshViews": 2628,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 67,
+      "captureMaxPositionError": 0.38655492663383484,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 69,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1472,
+    "stats": {
+      "visibleMeshViews": 2606,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 74,
+      "captureMaxPositionError": 0.14685525000095367,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 80,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1504,
+    "stats": {
+      "visibleMeshViews": 2866,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 17,
+      "captureMaxPositionError": 0.05327619984745979,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 24,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1536,
+    "stats": {
+      "visibleMeshViews": 2760,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 98,
+      "captureMaxPositionError": 0.07634963095188141,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 111,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1568,
+    "stats": {
+      "visibleMeshViews": 3230,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196597,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 63,
+      "captureMaxPositionError": 0.12110111117362976,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 64,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1600,
+    "stats": {
+      "visibleMeshViews": 3028,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194434,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 244,
+      "captureMaxPositionError": 0.3697347342967987,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 249,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1632,
+    "stats": {
+      "visibleMeshViews": 3557,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192772,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 39,
+      "captureMaxPositionError": 0.21876627206802368,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 40,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1664,
+    "stats": {
+      "visibleMeshViews": 3286,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193777,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 79,
+      "captureMaxPositionError": 0.384686142206192,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 81,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1696,
+    "stats": {
+      "visibleMeshViews": 3565,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193447,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 184,
+      "captureMaxPositionError": 0.23662084341049194,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 190,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1728,
+    "stats": {
+      "visibleMeshViews": 3319,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193462,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 80,
+      "captureMaxPositionError": 0.22816765308380127,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 83,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1760,
+    "stats": {
+      "visibleMeshViews": 3155,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194602,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 56,
+      "captureMaxPositionError": 0.5403146147727966,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 56,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1792,
+    "stats": {
+      "visibleMeshViews": 3071,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 5,
+      "captureMaxPositionError": 0.09317848086357117,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 6,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1824,
+    "stats": {
+      "visibleMeshViews": 2773,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 24,
+      "captureMaxPositionError": 0.09051191061735153,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 25,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1856,
+    "stats": {
+      "visibleMeshViews": 2838,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 85,
+      "captureMaxPositionError": 0.2905053198337555,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 97,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1888,
+    "stats": {
+      "visibleMeshViews": 2557,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 57,
+      "captureMaxPositionError": 0.14751803874969482,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 68,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1920,
+    "stats": {
+      "visibleMeshViews": 2704,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 40,
+      "captureMaxPositionError": 0.10257594287395477,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 49,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1952,
+    "stats": {
+      "visibleMeshViews": 2631,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 61,
+      "captureMaxPositionError": 0.10125196725130081,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 69,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 1984,
+    "stats": {
+      "visibleMeshViews": 2948,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 44,
+      "captureMaxPositionError": 0.21604879200458527,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 52,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2016,
+    "stats": {
+      "visibleMeshViews": 2824,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 72,
+      "captureMaxPositionError": 0.07742548733949661,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 79,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2048,
+    "stats": {
+      "visibleMeshViews": 3142,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 159,
+      "captureMaxPositionError": 0.10462672263383865,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 168,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2080,
+    "stats": {
+      "visibleMeshViews": 3243,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194341,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 46,
+      "captureMaxPositionError": 0.204410120844841,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 50,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2112,
+    "stats": {
+      "visibleMeshViews": 3293,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193249,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 128,
+      "captureMaxPositionError": 0.22611665725708008,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 129,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2144,
+    "stats": {
+      "visibleMeshViews": 3516,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192916,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 72,
+      "captureMaxPositionError": 0.21667680144309998,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 75,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2176,
+    "stats": {
+      "visibleMeshViews": 3274,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193584,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 321,
+      "captureMaxPositionError": 0.20484128594398499,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 325,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2208,
+    "stats": {
+      "visibleMeshViews": 3496,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192715,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 78,
+      "captureMaxPositionError": 0.22085493803024292,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 83,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2240,
+    "stats": {
+      "visibleMeshViews": 3075,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194419,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 44,
+      "captureMaxPositionError": 0.14255386590957642,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 49,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2272,
+    "stats": {
+      "visibleMeshViews": 3217,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196551,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 326,
+      "captureMaxPositionError": 0.15272128582000732,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 336,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2304,
+    "stats": {
+      "visibleMeshViews": 2816,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 27,
+      "captureMaxPositionError": 0.1558632254600525,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 33,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2336,
+    "stats": {
+      "visibleMeshViews": 2954,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 91,
+      "captureMaxPositionError": 0.11043205112218857,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 96,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2368,
+    "stats": {
+      "visibleMeshViews": 2696,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 46,
+      "captureMaxPositionError": 0.10438190400600433,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 50,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2400,
+    "stats": {
+      "visibleMeshViews": 2664,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 57,
+      "captureMaxPositionError": 0.13894562423229218,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 62,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2432,
+    "stats": {
+      "visibleMeshViews": 2735,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 28,
+      "captureMaxPositionError": 0.05663556233048439,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 30,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2464,
+    "stats": {
+      "visibleMeshViews": 2865,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 50,
+      "captureMaxPositionError": 0.3253657817840576,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 53,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2496,
+    "stats": {
+      "visibleMeshViews": 3027,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 41,
+      "captureMaxPositionError": 0.1421181708574295,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 47,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2528,
+    "stats": {
+      "visibleMeshViews": 2954,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 20,
+      "captureMaxPositionError": 0.048594698309898376,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 27,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2560,
+    "stats": {
+      "visibleMeshViews": 3372,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194211,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 115,
+      "captureMaxPositionError": 0.1875544637441635,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 118,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2592,
+    "stats": {
+      "visibleMeshViews": 3113,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193824,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 157,
+      "captureMaxPositionError": 0.20533481240272522,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 159,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2624,
+    "stats": {
+      "visibleMeshViews": 3515,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192232,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 320,
+      "captureMaxPositionError": 0.19730310142040253,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 334,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2656,
+    "stats": {
+      "visibleMeshViews": 3138,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193466,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 147,
+      "captureMaxPositionError": 0.1991536021232605,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 155,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2688,
+    "stats": {
+      "visibleMeshViews": 3483,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192077,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 130,
+      "captureMaxPositionError": 0.5322884321212769,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 136,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2720,
+    "stats": {
+      "visibleMeshViews": 3123,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193596,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 155,
+      "captureMaxPositionError": 0.14507289230823517,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 163,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2752,
+    "stats": {
+      "visibleMeshViews": 3174,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 61,
+      "captureMaxPositionError": 0.20573467016220093,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 69,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2784,
+    "stats": {
+      "visibleMeshViews": 2986,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 43,
+      "captureMaxPositionError": 0.06001431867480278,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 46,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2816,
+    "stats": {
+      "visibleMeshViews": 2848,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 61,
+      "captureMaxPositionError": 0.054851703345775604,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 65,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2848,
+    "stats": {
+      "visibleMeshViews": 2838,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 64,
+      "captureMaxPositionError": 0.32518109679222107,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 66,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2880,
+    "stats": {
+      "visibleMeshViews": 2572,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 37,
+      "captureMaxPositionError": 0.05529684200882912,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 44,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2912,
+    "stats": {
+      "visibleMeshViews": 2822,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 14,
+      "captureMaxPositionError": 0.02392483688890934,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 19,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2944,
+    "stats": {
+      "visibleMeshViews": 2770,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 4,
+      "captureMaxPositionError": 0.028567221015691757,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 7,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 2976,
+    "stats": {
+      "visibleMeshViews": 3104,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 5,
+      "captureMaxPositionError": 0.010221351869404316,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 9,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3008,
+    "stats": {
+      "visibleMeshViews": 2943,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 3,
+      "captureMaxPositionError": 0.0083552161231637,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 8,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3040,
+    "stats": {
+      "visibleMeshViews": 3360,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194460,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 74,
+      "captureMaxPositionError": 0.16588985919952393,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 75,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3072,
+    "stats": {
+      "visibleMeshViews": 3176,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193034,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 95,
+      "captureMaxPositionError": 0.13363492488861084,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 96,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3104,
+    "stats": {
+      "visibleMeshViews": 3401,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192024,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 101,
+      "captureMaxPositionError": 0.18380816280841827,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 105,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3136,
+    "stats": {
+      "visibleMeshViews": 3270,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192623,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 158,
+      "captureMaxPositionError": 0.1657690852880478,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 167,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3168,
+    "stats": {
+      "visibleMeshViews": 3277,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192440,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 112,
+      "captureMaxPositionError": 0.2493842989206314,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 114,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3200,
+    "stats": {
+      "visibleMeshViews": 3316,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192874,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 149,
+      "captureMaxPositionError": 0.16642914712429047,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 152,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3232,
+    "stats": {
+      "visibleMeshViews": 3032,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 6,
+      "captureMaxPositionError": 0.009153015911579132,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 7,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3264,
+    "stats": {
+      "visibleMeshViews": 3160,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 1,
+      "captureMaxPositionError": 0.006382118910551071,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 2,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3296,
+    "stats": {
+      "visibleMeshViews": 2803,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 1,
+      "captureMaxPositionError": 0.001320945448242128,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 1,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3328,
+    "stats": {
+      "visibleMeshViews": 2913,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 5,
+      "captureMaxPositionError": 0.00822171289473772,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 5,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3360,
+    "stats": {
+      "visibleMeshViews": 2622,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 0,
+      "captureMaxPositionError": 0.0,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 0,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3392,
+    "stats": {
+      "visibleMeshViews": 2780,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 18,
+      "captureMaxPositionError": 0.09510298818349838,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 19,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3424,
+    "stats": {
+      "visibleMeshViews": 2772,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196489,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 72,
+      "captureMaxPositionError": 0.25274088978767395,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 77,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3456,
+    "stats": {
+      "visibleMeshViews": 3026,
+      "candidateMeshViews": 4800,
+      "referencePixels": 195883,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 330,
+      "captureMaxPositionError": 0.1348486989736557,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 353,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3488,
+    "stats": {
+      "visibleMeshViews": 3048,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196019,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 40,
+      "captureMaxPositionError": 0.10440561920404434,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 41,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3520,
+    "stats": {
+      "visibleMeshViews": 3157,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194958,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 29,
+      "captureMaxPositionError": 0.529868483543396,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 30,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3552,
+    "stats": {
+      "visibleMeshViews": 3237,
+      "candidateMeshViews": 4800,
+      "referencePixels": 191406,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 145,
+      "captureMaxPositionError": 0.19751285016536713,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 150,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3584,
+    "stats": {
+      "visibleMeshViews": 3083,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192109,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 120,
+      "captureMaxPositionError": 0.5280381441116333,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 124,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3616,
+    "stats": {
+      "visibleMeshViews": 3383,
+      "candidateMeshViews": 4800,
+      "referencePixels": 191220,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 76,
+      "captureMaxPositionError": 0.16231875121593475,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 79,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3648,
+    "stats": {
+      "visibleMeshViews": 2985,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192371,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 64,
+      "captureMaxPositionError": 0.15343008935451508,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 66,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3680,
+    "stats": {
+      "visibleMeshViews": 3334,
+      "candidateMeshViews": 4800,
+      "referencePixels": 191530,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 124,
+      "captureMaxPositionError": 0.5299373865127563,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 129,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3712,
+    "stats": {
+      "visibleMeshViews": 2992,
+      "candidateMeshViews": 4800,
+      "referencePixels": 195979,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 23,
+      "captureMaxPositionError": 0.09076584130525589,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 25,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3744,
+    "stats": {
+      "visibleMeshViews": 3165,
+      "candidateMeshViews": 4800,
+      "referencePixels": 195180,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 47,
+      "captureMaxPositionError": 0.16674788296222687,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 52,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3776,
+    "stats": {
+      "visibleMeshViews": 2872,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196068,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 59,
+      "captureMaxPositionError": 0.1473504602909088,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 342,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3808,
+    "stats": {
+      "visibleMeshViews": 2867,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196566,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 20,
+      "captureMaxPositionError": 0.14525040984153748,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 20,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3840,
+    "stats": {
+      "visibleMeshViews": 2688,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 9,
+      "captureMaxPositionError": 0.2665765583515167,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 9,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3872,
+    "stats": {
+      "visibleMeshViews": 2744,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 38,
+      "captureMaxPositionError": 0.252214252948761,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 43,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3904,
+    "stats": {
+      "visibleMeshViews": 2905,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 74,
+      "captureMaxPositionError": 0.2872749865055084,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 78,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3936,
+    "stats": {
+      "visibleMeshViews": 2906,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196437,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 39,
+      "captureMaxPositionError": 0.14296412467956543,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 42,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 3968,
+    "stats": {
+      "visibleMeshViews": 3145,
+      "candidateMeshViews": 4800,
+      "referencePixels": 195363,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 76,
+      "captureMaxPositionError": 0.1304149627685547,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 79,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4000,
+    "stats": {
+      "visibleMeshViews": 3031,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193913,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 17,
+      "captureMaxPositionError": 0.2317207306623459,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 18,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4032,
+    "stats": {
+      "visibleMeshViews": 3279,
+      "candidateMeshViews": 4800,
+      "referencePixels": 190026,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 219,
+      "captureMaxPositionError": 0.24627557396888733,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 230,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4064,
+    "stats": {
+      "visibleMeshViews": 2962,
+      "candidateMeshViews": 4800,
+      "referencePixels": 191626,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 54,
+      "captureMaxPositionError": 0.34401944279670715,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 58,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4096,
+    "stats": {
+      "visibleMeshViews": 3289,
+      "candidateMeshViews": 4800,
+      "referencePixels": 190460,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 133,
+      "captureMaxPositionError": 0.23165090382099152,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 141,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4128,
+    "stats": {
+      "visibleMeshViews": 3016,
+      "candidateMeshViews": 4800,
+      "referencePixels": 191395,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 100,
+      "captureMaxPositionError": 0.42360010743141174,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 104,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4160,
+    "stats": {
+      "visibleMeshViews": 3203,
+      "candidateMeshViews": 4800,
+      "referencePixels": 190514,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 254,
+      "captureMaxPositionError": 0.24802157282829285,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 267,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4192,
+    "stats": {
+      "visibleMeshViews": 3158,
+      "candidateMeshViews": 4800,
+      "referencePixels": 193716,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 73,
+      "captureMaxPositionError": 0.1213962659239769,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 74,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4224,
+    "stats": {
+      "visibleMeshViews": 3009,
+      "candidateMeshViews": 4800,
+      "referencePixels": 195557,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 36,
+      "captureMaxPositionError": 0.0967705175280571,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 37,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4256,
+    "stats": {
+      "visibleMeshViews": 3053,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196173,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 39,
+      "captureMaxPositionError": 0.08732659369707108,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 43,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4288,
+    "stats": {
+      "visibleMeshViews": 2788,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 61,
+      "captureMaxPositionError": 0.23164057731628418,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 63,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4320,
+    "stats": {
+      "visibleMeshViews": 2830,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 55,
+      "captureMaxPositionError": 0.23461224138736725,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 56,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4352,
+    "stats": {
+      "visibleMeshViews": 2683,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 74,
+      "captureMaxPositionError": 0.11536596715450287,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 78,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4384,
+    "stats": {
+      "visibleMeshViews": 3010,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 77,
+      "captureMaxPositionError": 0.23268544673919678,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 87,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4416,
+    "stats": {
+      "visibleMeshViews": 2863,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196603,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 63,
+      "captureMaxPositionError": 0.16628281772136688,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 65,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4448,
+    "stats": {
+      "visibleMeshViews": 3108,
+      "candidateMeshViews": 4800,
+      "referencePixels": 195857,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 95,
+      "captureMaxPositionError": 0.1444474458694458,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 102,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4480,
+    "stats": {
+      "visibleMeshViews": 2945,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194329,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 116,
+      "captureMaxPositionError": 0.12751542031764984,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 119,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4512,
+    "stats": {
+      "visibleMeshViews": 3108,
+      "candidateMeshViews": 4800,
+      "referencePixels": 189891,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 165,
+      "captureMaxPositionError": 0.2731885015964508,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 168,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4544,
+    "stats": {
+      "visibleMeshViews": 3017,
+      "candidateMeshViews": 4800,
+      "referencePixels": 190313,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 65,
+      "captureMaxPositionError": 0.3024916350841522,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 68,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4576,
+    "stats": {
+      "visibleMeshViews": 2924,
+      "candidateMeshViews": 4800,
+      "referencePixels": 190371,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 98,
+      "captureMaxPositionError": 0.24441011250019073,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 104,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4608,
+    "stats": {
+      "visibleMeshViews": 3078,
+      "candidateMeshViews": 4800,
+      "referencePixels": 190068,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 256,
+      "captureMaxPositionError": 0.24441805481910706,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 272,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4640,
+    "stats": {
+      "visibleMeshViews": 2925,
+      "candidateMeshViews": 4800,
+      "referencePixels": 190875,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 54,
+      "captureMaxPositionError": 0.21342958509922028,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 56,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4672,
+    "stats": {
+      "visibleMeshViews": 3151,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192184,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 149,
+      "captureMaxPositionError": 0.2040257751941681,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 150,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4704,
+    "stats": {
+      "visibleMeshViews": 2901,
+      "candidateMeshViews": 4800,
+      "referencePixels": 195848,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 40,
+      "captureMaxPositionError": 0.0958622619509697,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 46,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4736,
+    "stats": {
+      "visibleMeshViews": 3108,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196428,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 48,
+      "captureMaxPositionError": 0.16023121774196625,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 84,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4768,
+    "stats": {
+      "visibleMeshViews": 2815,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 59,
+      "captureMaxPositionError": 0.23267872631549835,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 64,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4800,
+    "stats": {
+      "visibleMeshViews": 2873,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 82,
+      "captureMaxPositionError": 0.23233644664287567,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 85,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4832,
+    "stats": {
+      "visibleMeshViews": 2774,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 40,
+      "captureMaxPositionError": 0.13011184334754944,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 42,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4864,
+    "stats": {
+      "visibleMeshViews": 2937,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 60,
+      "captureMaxPositionError": 0.158917635679245,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 68,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4896,
+    "stats": {
+      "visibleMeshViews": 2932,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 77,
+      "captureMaxPositionError": 0.17363719642162323,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 78,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4928,
+    "stats": {
+      "visibleMeshViews": 2942,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196486,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 101,
+      "captureMaxPositionError": 0.1192980408668518,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 102,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4960,
+    "stats": {
+      "visibleMeshViews": 3035,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194533,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 42,
+      "captureMaxPositionError": 0.1927012801170349,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 43,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 4992,
+    "stats": {
+      "visibleMeshViews": 2871,
+      "candidateMeshViews": 4800,
+      "referencePixels": 190716,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 203,
+      "captureMaxPositionError": 0.2616167664527893,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 207,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5024,
+    "stats": {
+      "visibleMeshViews": 3051,
+      "candidateMeshViews": 4800,
+      "referencePixels": 188490,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 156,
+      "captureMaxPositionError": 0.20426377654075623,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 158,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5056,
+    "stats": {
+      "visibleMeshViews": 2783,
+      "candidateMeshViews": 4800,
+      "referencePixels": 191156,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 65,
+      "captureMaxPositionError": 0.15534986555576324,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 90,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5088,
+    "stats": {
+      "visibleMeshViews": 3029,
+      "candidateMeshViews": 4800,
+      "referencePixels": 188510,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 161,
+      "captureMaxPositionError": 0.20453116297721863,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 168,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5120,
+    "stats": {
+      "visibleMeshViews": 2869,
+      "candidateMeshViews": 4800,
+      "referencePixels": 191205,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 126,
+      "captureMaxPositionError": 0.27635398507118225,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 130,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5152,
+    "stats": {
+      "visibleMeshViews": 3064,
+      "candidateMeshViews": 4800,
+      "referencePixels": 191059,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 193,
+      "captureMaxPositionError": 0.2646966874599457,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 200,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5184,
+    "stats": {
+      "visibleMeshViews": 2887,
+      "candidateMeshViews": 4800,
+      "referencePixels": 195986,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 80,
+      "captureMaxPositionError": 0.1682271957397461,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 85,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5216,
+    "stats": {
+      "visibleMeshViews": 3013,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 85,
+      "captureMaxPositionError": 0.09531822055578232,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 92,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5248,
+    "stats": {
+      "visibleMeshViews": 2927,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 51,
+      "captureMaxPositionError": 0.12884435057640076,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 63,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5280,
+    "stats": {
+      "visibleMeshViews": 2830,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 57,
+      "captureMaxPositionError": 0.4499033987522125,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 62,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5312,
+    "stats": {
+      "visibleMeshViews": 2869,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 30,
+      "captureMaxPositionError": 0.06670545041561127,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 33,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5344,
+    "stats": {
+      "visibleMeshViews": 2804,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 75,
+      "captureMaxPositionError": 0.21147537231445312,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 81,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5376,
+    "stats": {
+      "visibleMeshViews": 2968,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 124,
+      "captureMaxPositionError": 0.21006251871585846,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 135,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5408,
+    "stats": {
+      "visibleMeshViews": 2742,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 63,
+      "captureMaxPositionError": 0.12226599454879761,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 69,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5440,
+    "stats": {
+      "visibleMeshViews": 2942,
+      "candidateMeshViews": 4800,
+      "referencePixels": 195410,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 34,
+      "captureMaxPositionError": 0.1542002111673355,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 34,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5472,
+    "stats": {
+      "visibleMeshViews": 2725,
+      "candidateMeshViews": 4800,
+      "referencePixels": 191066,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 141,
+      "captureMaxPositionError": 0.5280795097351074,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 146,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5504,
+    "stats": {
+      "visibleMeshViews": 2880,
+      "candidateMeshViews": 4800,
+      "referencePixels": 187501,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 110,
+      "captureMaxPositionError": 0.2559952735900879,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 117,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5536,
+    "stats": {
+      "visibleMeshViews": 2730,
+      "candidateMeshViews": 4800,
+      "referencePixels": 189753,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 138,
+      "captureMaxPositionError": 0.12182054668664932,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 139,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5568,
+    "stats": {
+      "visibleMeshViews": 2877,
+      "candidateMeshViews": 4800,
+      "referencePixels": 188214,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 157,
+      "captureMaxPositionError": 0.21006104350090027,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 169,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5600,
+    "stats": {
+      "visibleMeshViews": 2766,
+      "candidateMeshViews": 4800,
+      "referencePixels": 189143,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 103,
+      "captureMaxPositionError": 0.24729081988334656,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 105,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5632,
+    "stats": {
+      "visibleMeshViews": 2822,
+      "candidateMeshViews": 4800,
+      "referencePixels": 190849,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 187,
+      "captureMaxPositionError": 0.303918719291687,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 190,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5664,
+    "stats": {
+      "visibleMeshViews": 2910,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196039,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 76,
+      "captureMaxPositionError": 0.079761803150177,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 79,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5696,
+    "stats": {
+      "visibleMeshViews": 2787,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 91,
+      "captureMaxPositionError": 0.08990083634853363,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 94,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5728,
+    "stats": {
+      "visibleMeshViews": 2949,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 127,
+      "captureMaxPositionError": 0.2020871490240097,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 156,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5760,
+    "stats": {
+      "visibleMeshViews": 2781,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 55,
+      "captureMaxPositionError": 0.18008172512054443,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 56,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5792,
+    "stats": {
+      "visibleMeshViews": 2892,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 60,
+      "captureMaxPositionError": 0.09326140582561493,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 62,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5824,
+    "stats": {
+      "visibleMeshViews": 2776,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 43,
+      "captureMaxPositionError": 0.13283100724220276,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 45,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5856,
+    "stats": {
+      "visibleMeshViews": 2876,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 102,
+      "captureMaxPositionError": 0.1759343296289444,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 107,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5888,
+    "stats": {
+      "visibleMeshViews": 2710,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 28,
+      "captureMaxPositionError": 0.1067223772406578,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 54,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5920,
+    "stats": {
+      "visibleMeshViews": 2794,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 61,
+      "captureMaxPositionError": 0.06677448749542236,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 66,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5952,
+    "stats": {
+      "visibleMeshViews": 2708,
+      "candidateMeshViews": 4800,
+      "referencePixels": 190614,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 31,
+      "captureMaxPositionError": 0.12250425666570663,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 32,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 5984,
+    "stats": {
+      "visibleMeshViews": 2674,
+      "candidateMeshViews": 4800,
+      "referencePixels": 188019,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 211,
+      "captureMaxPositionError": 0.3836117684841156,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 221,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6016,
+    "stats": {
+      "visibleMeshViews": 2775,
+      "candidateMeshViews": 4800,
+      "referencePixels": 187655,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 89,
+      "captureMaxPositionError": 0.3292502164840698,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 94,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6048,
+    "stats": {
+      "visibleMeshViews": 2655,
+      "candidateMeshViews": 4800,
+      "referencePixels": 188851,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 147,
+      "captureMaxPositionError": 0.38836678862571716,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 154,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6080,
+    "stats": {
+      "visibleMeshViews": 2759,
+      "candidateMeshViews": 4800,
+      "referencePixels": 186556,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 155,
+      "captureMaxPositionError": 0.2703329920768738,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 164,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6112,
+    "stats": {
+      "visibleMeshViews": 2607,
+      "candidateMeshViews": 4800,
+      "referencePixels": 190445,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 104,
+      "captureMaxPositionError": 0.21271753311157227,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 106,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6144,
+    "stats": {
+      "visibleMeshViews": 2830,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 26,
+      "captureMaxPositionError": 0.09673715382814407,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 27,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6176,
+    "stats": {
+      "visibleMeshViews": 2693,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 38,
+      "captureMaxPositionError": 0.3268754780292511,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 41,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6208,
+    "stats": {
+      "visibleMeshViews": 2886,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 60,
+      "captureMaxPositionError": 0.11231473833322525,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 64,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6240,
+    "stats": {
+      "visibleMeshViews": 2768,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 63,
+      "captureMaxPositionError": 0.1508963406085968,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 70,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6272,
+    "stats": {
+      "visibleMeshViews": 2820,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 53,
+      "captureMaxPositionError": 0.0786687582731247,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 56,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6304,
+    "stats": {
+      "visibleMeshViews": 2742,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 42,
+      "captureMaxPositionError": 0.1251412034034729,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 43,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6336,
+    "stats": {
+      "visibleMeshViews": 2737,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 73,
+      "captureMaxPositionError": 0.1997545212507248,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 78,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6368,
+    "stats": {
+      "visibleMeshViews": 2751,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 50,
+      "captureMaxPositionError": 0.1596960425376892,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 56,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6400,
+    "stats": {
+      "visibleMeshViews": 2615,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 18,
+      "captureMaxPositionError": 0.06446736305952072,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 23,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6432,
+    "stats": {
+      "visibleMeshViews": 2707,
+      "candidateMeshViews": 4800,
+      "referencePixels": 189844,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 128,
+      "captureMaxPositionError": 0.5299510359764099,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 133,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6464,
+    "stats": {
+      "visibleMeshViews": 2559,
+      "candidateMeshViews": 4800,
+      "referencePixels": 188739,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 88,
+      "captureMaxPositionError": 0.5279801487922668,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 95,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6496,
+    "stats": {
+      "visibleMeshViews": 2721,
+      "candidateMeshViews": 4800,
+      "referencePixels": 184471,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 316,
+      "captureMaxPositionError": 0.2576553225517273,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 320,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6528,
+    "stats": {
+      "visibleMeshViews": 2585,
+      "candidateMeshViews": 4800,
+      "referencePixels": 188606,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 126,
+      "captureMaxPositionError": 0.2138310819864273,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 134,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6560,
+    "stats": {
+      "visibleMeshViews": 2707,
+      "candidateMeshViews": 4800,
+      "referencePixels": 184576,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 123,
+      "captureMaxPositionError": 0.5279768705368042,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 134,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6592,
+    "stats": {
+      "visibleMeshViews": 2539,
+      "candidateMeshViews": 4800,
+      "referencePixels": 187940,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 120,
+      "captureMaxPositionError": 0.20469605922698975,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 120,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6624,
+    "stats": {
+      "visibleMeshViews": 2660,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 23,
+      "captureMaxPositionError": 0.08859427273273468,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 25,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6656,
+    "stats": {
+      "visibleMeshViews": 2689,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 26,
+      "captureMaxPositionError": 0.13011828064918518,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 32,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6688,
+    "stats": {
+      "visibleMeshViews": 2715,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 72,
+      "captureMaxPositionError": 0.1508234143257141,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 78,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6720,
+    "stats": {
+      "visibleMeshViews": 2800,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 51,
+      "captureMaxPositionError": 0.2564471662044525,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 55,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6752,
+    "stats": {
+      "visibleMeshViews": 2734,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 19,
+      "captureMaxPositionError": 0.09174153953790665,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 19,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6784,
+    "stats": {
+      "visibleMeshViews": 2756,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 3,
+      "captureMaxPositionError": 0.02541269361972809,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 4,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6816,
+    "stats": {
+      "visibleMeshViews": 2608,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 3,
+      "captureMaxPositionError": 0.010613137856125832,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 3,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6848,
+    "stats": {
+      "visibleMeshViews": 2700,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 9,
+      "captureMaxPositionError": 0.028555162250995636,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 16,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6880,
+    "stats": {
+      "visibleMeshViews": 2502,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 6,
+      "captureMaxPositionError": 0.04724571481347084,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 7,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6912,
+    "stats": {
+      "visibleMeshViews": 2613,
+      "candidateMeshViews": 4800,
+      "referencePixels": 190328,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 114,
+      "captureMaxPositionError": 0.2871481776237488,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 122,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6944,
+    "stats": {
+      "visibleMeshViews": 2501,
+      "candidateMeshViews": 4800,
+      "referencePixels": 186271,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 97,
+      "captureMaxPositionError": 0.19446071982383728,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 106,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 6976,
+    "stats": {
+      "visibleMeshViews": 2548,
+      "candidateMeshViews": 4800,
+      "referencePixels": 183127,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 104,
+      "captureMaxPositionError": 0.19286055862903595,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 113,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7008,
+    "stats": {
+      "visibleMeshViews": 2546,
+      "candidateMeshViews": 4800,
+      "referencePixels": 184935,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 67,
+      "captureMaxPositionError": 0.11189765483140945,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 69,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7040,
+    "stats": {
+      "visibleMeshViews": 2556,
+      "candidateMeshViews": 4800,
+      "referencePixels": 184680,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 130,
+      "captureMaxPositionError": 0.19459572434425354,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 142,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7072,
+    "stats": {
+      "visibleMeshViews": 2586,
+      "candidateMeshViews": 4800,
+      "referencePixels": 183857,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 112,
+      "captureMaxPositionError": 0.19661711156368256,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 124,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7104,
+    "stats": {
+      "visibleMeshViews": 2502,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 0,
+      "captureMaxPositionError": 0.0,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 0,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7136,
+    "stats": {
+      "visibleMeshViews": 2660,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 0,
+      "captureMaxPositionError": 0.0005973633960820735,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 5,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7168,
+    "stats": {
+      "visibleMeshViews": 2603,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 2,
+      "captureMaxPositionError": 0.006408281158655882,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 5,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7200,
+    "stats": {
+      "visibleMeshViews": 2738,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 6,
+      "captureMaxPositionError": 0.031136460602283478,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 8,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7232,
+    "stats": {
+      "visibleMeshViews": 2687,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 0,
+      "captureMaxPositionError": 0.0,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 0,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7264,
+    "stats": {
+      "visibleMeshViews": 2680,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 0,
+      "captureMaxPositionError": 0.0,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 0,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7296,
+    "stats": {
+      "visibleMeshViews": 2570,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 5,
+      "captureMaxPositionError": 0.018169520422816277,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 5,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7328,
+    "stats": {
+      "visibleMeshViews": 2485,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 68,
+      "captureMaxPositionError": 0.09960931539535522,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 84,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7360,
+    "stats": {
+      "visibleMeshViews": 2482,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 4,
+      "captureMaxPositionError": 0.009532427415251732,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 4,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7392,
+    "stats": {
+      "visibleMeshViews": 2498,
+      "candidateMeshViews": 4800,
+      "referencePixels": 192022,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 13,
+      "captureMaxPositionError": 0.29478490352630615,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 15,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7424,
+    "stats": {
+      "visibleMeshViews": 2494,
+      "candidateMeshViews": 4800,
+      "referencePixels": 180462,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 105,
+      "captureMaxPositionError": 0.16797806322574615,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 117,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7456,
+    "stats": {
+      "visibleMeshViews": 2419,
+      "candidateMeshViews": 4800,
+      "referencePixels": 183318,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 96,
+      "captureMaxPositionError": 0.13803482055664062,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 123,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7488,
+    "stats": {
+      "visibleMeshViews": 2503,
+      "candidateMeshViews": 4800,
+      "referencePixels": 178848,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 101,
+      "captureMaxPositionError": 0.17210906744003296,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 105,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7520,
+    "stats": {
+      "visibleMeshViews": 2402,
+      "candidateMeshViews": 4800,
+      "referencePixels": 184699,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 323,
+      "captureMaxPositionError": 0.16202403604984283,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 332,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7552,
+    "stats": {
+      "visibleMeshViews": 2530,
+      "candidateMeshViews": 4800,
+      "referencePixels": 178774,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 56,
+      "captureMaxPositionError": 0.09401505440473557,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 58,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7584,
+    "stats": {
+      "visibleMeshViews": 2452,
+      "candidateMeshViews": 4800,
+      "referencePixels": 195577,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 35,
+      "captureMaxPositionError": 0.07518665492534637,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 37,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7616,
+    "stats": {
+      "visibleMeshViews": 2527,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 32,
+      "captureMaxPositionError": 0.07697681337594986,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 34,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7648,
+    "stats": {
+      "visibleMeshViews": 2530,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 17,
+      "captureMaxPositionError": 0.030487993732094765,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 18,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7680,
+    "stats": {
+      "visibleMeshViews": 2646,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 3,
+      "captureMaxPositionError": 0.013048219494521618,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 4,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7712,
+    "stats": {
+      "visibleMeshViews": 2661,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 11,
+      "captureMaxPositionError": 0.02781212143599987,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 14,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7744,
+    "stats": {
+      "visibleMeshViews": 2558,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 10,
+      "captureMaxPositionError": 0.013659825548529625,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 10,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7776,
+    "stats": {
+      "visibleMeshViews": 2513,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 16,
+      "captureMaxPositionError": 0.13432416319847107,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 17,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7808,
+    "stats": {
+      "visibleMeshViews": 2402,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 37,
+      "captureMaxPositionError": 0.17755413055419922,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 45,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7840,
+    "stats": {
+      "visibleMeshViews": 2455,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 57,
+      "captureMaxPositionError": 0.07913149148225784,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 67,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7872,
+    "stats": {
+      "visibleMeshViews": 2419,
+      "candidateMeshViews": 4800,
+      "referencePixels": 194865,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 16,
+      "captureMaxPositionError": 0.5338630676269531,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 18,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7904,
+    "stats": {
+      "visibleMeshViews": 2456,
+      "candidateMeshViews": 4800,
+      "referencePixels": 175032,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 119,
+      "captureMaxPositionError": 0.1852985918521881,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 121,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7936,
+    "stats": {
+      "visibleMeshViews": 2360,
+      "candidateMeshViews": 4800,
+      "referencePixels": 181851,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 131,
+      "captureMaxPositionError": 0.14063295722007751,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 159,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 7968,
+    "stats": {
+      "visibleMeshViews": 2399,
+      "candidateMeshViews": 4800,
+      "referencePixels": 174027,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 164,
+      "captureMaxPositionError": 0.22200143337249756,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 169,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8000,
+    "stats": {
+      "visibleMeshViews": 2366,
+      "candidateMeshViews": 4800,
+      "referencePixels": 180113,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 144,
+      "captureMaxPositionError": 0.12767718732357025,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 159,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8032,
+    "stats": {
+      "visibleMeshViews": 2424,
+      "candidateMeshViews": 4800,
+      "referencePixels": 176478,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 89,
+      "captureMaxPositionError": 0.15916895866394043,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 89,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8064,
+    "stats": {
+      "visibleMeshViews": 2463,
+      "candidateMeshViews": 4800,
+      "referencePixels": 191846,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 46,
+      "captureMaxPositionError": 0.1394941359758377,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 52,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8096,
+    "stats": {
+      "visibleMeshViews": 2417,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 13,
+      "captureMaxPositionError": 0.005589062348008156,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 22,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8128,
+    "stats": {
+      "visibleMeshViews": 2446,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 21,
+      "captureMaxPositionError": 0.13428515195846558,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 24,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8160,
+    "stats": {
+      "visibleMeshViews": 2503,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 21,
+      "captureMaxPositionError": 0.1582348644733429,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 22,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8192,
+    "stats": {
+      "visibleMeshViews": 2611,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 7,
+      "captureMaxPositionError": 0.010561168193817139,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 7,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8224,
+    "stats": {
+      "visibleMeshViews": 2478,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 19,
+      "captureMaxPositionError": 0.21279259026050568,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 19,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8256,
+    "stats": {
+      "visibleMeshViews": 2424,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 23,
+      "captureMaxPositionError": 0.21656714379787445,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 27,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8288,
+    "stats": {
+      "visibleMeshViews": 2350,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 10,
+      "captureMaxPositionError": 0.08728885650634766,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 10,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8320,
+    "stats": {
+      "visibleMeshViews": 2402,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196604,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 38,
+      "captureMaxPositionError": 0.06650819629430771,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 49,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8352,
+    "stats": {
+      "visibleMeshViews": 2325,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 27,
+      "captureMaxPositionError": 0.03845329210162163,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 43,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8384,
+    "stats": {
+      "visibleMeshViews": 2382,
+      "candidateMeshViews": 4800,
+      "referencePixels": 173204,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 126,
+      "captureMaxPositionError": 0.20245692133903503,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 132,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8416,
+    "stats": {
+      "visibleMeshViews": 2325,
+      "candidateMeshViews": 4800,
+      "referencePixels": 173550,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 92,
+      "captureMaxPositionError": 0.13381919264793396,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 112,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8448,
+    "stats": {
+      "visibleMeshViews": 2296,
+      "candidateMeshViews": 4800,
+      "referencePixels": 171405,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 63,
+      "captureMaxPositionError": 0.1321970820426941,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 68,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8480,
+    "stats": {
+      "visibleMeshViews": 2334,
+      "candidateMeshViews": 4800,
+      "referencePixels": 170253,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 116,
+      "captureMaxPositionError": 0.10605355352163315,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 129,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8512,
+    "stats": {
+      "visibleMeshViews": 2327,
+      "candidateMeshViews": 4800,
+      "referencePixels": 177200,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 113,
+      "captureMaxPositionError": 0.22089585661888123,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 121,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8544,
+    "stats": {
+      "visibleMeshViews": 2388,
+      "candidateMeshViews": 4800,
+      "referencePixels": 187085,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 58,
+      "captureMaxPositionError": 0.09409638494253159,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 61,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8576,
+    "stats": {
+      "visibleMeshViews": 2344,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 45,
+      "captureMaxPositionError": 0.03874737769365311,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 57,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8608,
+    "stats": {
+      "visibleMeshViews": 2410,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 7,
+      "captureMaxPositionError": 0.21701081097126007,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 8,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8640,
+    "stats": {
+      "visibleMeshViews": 2358,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 23,
+      "captureMaxPositionError": 0.03898294270038605,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 24,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8672,
+    "stats": {
+      "visibleMeshViews": 2509,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 39,
+      "captureMaxPositionError": 0.21300438046455383,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 43,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8704,
+    "stats": {
+      "visibleMeshViews": 2382,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 9,
+      "captureMaxPositionError": 0.016416799277067184,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 12,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8736,
+    "stats": {
+      "visibleMeshViews": 2350,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 21,
+      "captureMaxPositionError": 0.16546721756458282,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 21,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8768,
+    "stats": {
+      "visibleMeshViews": 2326,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 33,
+      "captureMaxPositionError": 0.18043363094329834,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 34,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8800,
+    "stats": {
+      "visibleMeshViews": 2320,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196586,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 24,
+      "captureMaxPositionError": 0.10347304493188858,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 51,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8832,
+    "stats": {
+      "visibleMeshViews": 2290,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196605,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 4,
+      "captureMaxPositionError": 0.0032497229985892773,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 6,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8864,
+    "stats": {
+      "visibleMeshViews": 2260,
+      "candidateMeshViews": 4800,
+      "referencePixels": 174941,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 108,
+      "captureMaxPositionError": 0.24083212018013,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 121,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8896,
+    "stats": {
+      "visibleMeshViews": 2289,
+      "candidateMeshViews": 4800,
+      "referencePixels": 160981,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 552,
+      "captureMaxPositionError": 0.23821476101875305,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 573,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8928,
+    "stats": {
+      "visibleMeshViews": 2216,
+      "candidateMeshViews": 4800,
+      "referencePixels": 168998,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 102,
+      "captureMaxPositionError": 0.23697529733181,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 123,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8960,
+    "stats": {
+      "visibleMeshViews": 2277,
+      "candidateMeshViews": 4800,
+      "referencePixels": 157775,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 53,
+      "captureMaxPositionError": 0.5380856990814209,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 55,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 8992,
+    "stats": {
+      "visibleMeshViews": 2250,
+      "candidateMeshViews": 4800,
+      "referencePixels": 174847,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 89,
+      "captureMaxPositionError": 0.24084948003292084,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 99,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9024,
+    "stats": {
+      "visibleMeshViews": 2306,
+      "candidateMeshViews": 4800,
+      "referencePixels": 181532,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 48,
+      "captureMaxPositionError": 0.21495619416236877,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 50,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9056,
+    "stats": {
+      "visibleMeshViews": 2264,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196600,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 15,
+      "captureMaxPositionError": 0.013863365165889263,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 21,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9088,
+    "stats": {
+      "visibleMeshViews": 2352,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 5,
+      "captureMaxPositionError": 0.059189677238464355,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 5,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9120,
+    "stats": {
+      "visibleMeshViews": 2326,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 34,
+      "captureMaxPositionError": 0.06510759145021439,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 36,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9152,
+    "stats": {
+      "visibleMeshViews": 2351,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 15,
+      "captureMaxPositionError": 0.04097408801317215,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 15,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9184,
+    "stats": {
+      "visibleMeshViews": 2348,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 11,
+      "captureMaxPositionError": 0.05803663283586502,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 13,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9216,
+    "stats": {
+      "visibleMeshViews": 2292,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 14,
+      "captureMaxPositionError": 0.03259443864226341,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 16,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9248,
+    "stats": {
+      "visibleMeshViews": 2310,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 20,
+      "captureMaxPositionError": 0.0485244020819664,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 24,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9280,
+    "stats": {
+      "visibleMeshViews": 2205,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196568,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 62,
+      "captureMaxPositionError": 0.1236189678311348,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 79,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9312,
+    "stats": {
+      "visibleMeshViews": 2257,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196535,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 11,
+      "captureMaxPositionError": 0.07600172609090805,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 27,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9344,
+    "stats": {
+      "visibleMeshViews": 2185,
+      "candidateMeshViews": 4800,
+      "referencePixels": 177575,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 90,
+      "captureMaxPositionError": 0.2291945070028305,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 94,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9376,
+    "stats": {
+      "visibleMeshViews": 2202,
+      "candidateMeshViews": 4800,
+      "referencePixels": 151314,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 209,
+      "captureMaxPositionError": 0.16101786494255066,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 310,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9408,
+    "stats": {
+      "visibleMeshViews": 2192,
+      "candidateMeshViews": 4800,
+      "referencePixels": 157199,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 117,
+      "captureMaxPositionError": 0.20303267240524292,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 145,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9440,
+    "stats": {
+      "visibleMeshViews": 2214,
+      "candidateMeshViews": 4800,
+      "referencePixels": 148259,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 130,
+      "captureMaxPositionError": 0.1380278617143631,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 132,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9472,
+    "stats": {
+      "visibleMeshViews": 2209,
+      "candidateMeshViews": 4800,
+      "referencePixels": 161947,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 44,
+      "captureMaxPositionError": 0.31139448285102844,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 49,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9504,
+    "stats": {
+      "visibleMeshViews": 2206,
+      "candidateMeshViews": 4800,
+      "referencePixels": 179823,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 40,
+      "captureMaxPositionError": 0.1405673623085022,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 40,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9536,
+    "stats": {
+      "visibleMeshViews": 2228,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196517,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 7,
+      "captureMaxPositionError": 0.015308273024857044,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 24,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9568,
+    "stats": {
+      "visibleMeshViews": 2227,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 50,
+      "captureMaxPositionError": 0.08453873544931412,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 52,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9600,
+    "stats": {
+      "visibleMeshViews": 2311,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 0,
+      "captureMaxPositionError": 0.0,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 0,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9632,
+    "stats": {
+      "visibleMeshViews": 2289,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 10,
+      "captureMaxPositionError": 0.06977242231369019,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 10,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9664,
+    "stats": {
+      "visibleMeshViews": 2294,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 8,
+      "captureMaxPositionError": 0.009282806888222694,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 9,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9696,
+    "stats": {
+      "visibleMeshViews": 2227,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 7,
+      "captureMaxPositionError": 0.2752969563007355,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 7,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9728,
+    "stats": {
+      "visibleMeshViews": 2201,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 39,
+      "captureMaxPositionError": 0.4469812512397766,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 42,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9760,
+    "stats": {
+      "visibleMeshViews": 2142,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 29,
+      "captureMaxPositionError": 0.34689846634864807,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 33,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9792,
+    "stats": {
+      "visibleMeshViews": 2124,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 8,
+      "captureMaxPositionError": 0.01108577847480774,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 24,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9824,
+    "stats": {
+      "visibleMeshViews": 2120,
+      "candidateMeshViews": 4800,
+      "referencePixels": 176644,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 98,
+      "captureMaxPositionError": 0.3938521146774292,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 107,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9856,
+    "stats": {
+      "visibleMeshViews": 2073,
+      "candidateMeshViews": 4800,
+      "referencePixels": 144827,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 172,
+      "captureMaxPositionError": 0.23515111207962036,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 176,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9888,
+    "stats": {
+      "visibleMeshViews": 2117,
+      "candidateMeshViews": 4800,
+      "referencePixels": 137854,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 161,
+      "captureMaxPositionError": 0.38593798875808716,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 170,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9920,
+    "stats": {
+      "visibleMeshViews": 2108,
+      "candidateMeshViews": 4800,
+      "referencePixels": 147614,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 90,
+      "captureMaxPositionError": 0.23368392884731293,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 92,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9952,
+    "stats": {
+      "visibleMeshViews": 2098,
+      "candidateMeshViews": 4800,
+      "referencePixels": 136943,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 243,
+      "captureMaxPositionError": 0.23795950412750244,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 285,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 9984,
+    "stats": {
+      "visibleMeshViews": 2096,
+      "candidateMeshViews": 4800,
+      "referencePixels": 181946,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 37,
+      "captureMaxPositionError": 0.17802517116069794,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 44,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10016,
+    "stats": {
+      "visibleMeshViews": 2134,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 4,
+      "captureMaxPositionError": 0.008801574818789959,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 6,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10048,
+    "stats": {
+      "visibleMeshViews": 2116,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 20,
+      "captureMaxPositionError": 0.22128485143184662,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 22,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10080,
+    "stats": {
+      "visibleMeshViews": 2189,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 16,
+      "captureMaxPositionError": 0.06737686693668365,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 17,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10112,
+    "stats": {
+      "visibleMeshViews": 2236,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 3,
+      "captureMaxPositionError": 0.01261222641915083,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 3,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10144,
+    "stats": {
+      "visibleMeshViews": 2223,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 47,
+      "captureMaxPositionError": 0.1701505482196808,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 51,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10176,
+    "stats": {
+      "visibleMeshViews": 2235,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 19,
+      "captureMaxPositionError": 0.07409001886844635,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 20,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10208,
+    "stats": {
+      "visibleMeshViews": 2152,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 0,
+      "captureMaxPositionError": 0.0,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 0,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10240,
+    "stats": {
+      "visibleMeshViews": 2142,
+      "candidateMeshViews": 4800,
+      "referencePixels": 190987,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 0,
+      "captureMaxPositionError": 0.0,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 0,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10272,
+    "stats": {
+      "visibleMeshViews": 2062,
+      "candidateMeshViews": 4800,
+      "referencePixels": 139935,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 7,
+      "captureMaxPositionError": 0.0641176626086235,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 7,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10304,
+    "stats": {
+      "visibleMeshViews": 2052,
+      "candidateMeshViews": 4800,
+      "referencePixels": 121529,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 249,
+      "captureMaxPositionError": 0.25785234570503235,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 254,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10336,
+    "stats": {
+      "visibleMeshViews": 2047,
+      "candidateMeshViews": 4800,
+      "referencePixels": 135273,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 260,
+      "captureMaxPositionError": 0.17127864062786102,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 264,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10368,
+    "stats": {
+      "visibleMeshViews": 2030,
+      "candidateMeshViews": 4800,
+      "referencePixels": 120476,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 469,
+      "captureMaxPositionError": 0.170333132147789,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 480,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10400,
+    "stats": {
+      "visibleMeshViews": 2046,
+      "candidateMeshViews": 4800,
+      "referencePixels": 140172,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 193,
+      "captureMaxPositionError": 0.2569855749607086,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 196,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10432,
+    "stats": {
+      "visibleMeshViews": 2049,
+      "candidateMeshViews": 4800,
+      "referencePixels": 123752,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 305,
+      "captureMaxPositionError": 0.1657697856426239,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 312,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10464,
+    "stats": {
+      "visibleMeshViews": 2075,
+      "candidateMeshViews": 4800,
+      "referencePixels": 138037,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 114,
+      "captureMaxPositionError": 0.261199027299881,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 115,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10496,
+    "stats": {
+      "visibleMeshViews": 2056,
+      "candidateMeshViews": 4800,
+      "referencePixels": 130180,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 8,
+      "captureMaxPositionError": 0.031655121594667435,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 10,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10528,
+    "stats": {
+      "visibleMeshViews": 2118,
+      "candidateMeshViews": 4800,
+      "referencePixels": 178559,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 9,
+      "captureMaxPositionError": 0.062387894839048386,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 10,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10560,
+    "stats": {
+      "visibleMeshViews": 2135,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 4,
+      "captureMaxPositionError": 0.06138627231121063,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 4,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10592,
+    "stats": {
+      "visibleMeshViews": 2210,
+      "candidateMeshViews": 4800,
+      "referencePixels": 196608,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 2,
+      "captureMaxPositionError": 0.013648904860019684,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 3,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  },
+  {
+    "offset": 10624,
+    "stats": {
+      "visibleMeshViews": 1656,
+      "candidateMeshViews": 3600,
+      "referencePixels": 147456,
+      "missingCapturePixels": 0,
+      "extraCapturePixels": 0,
+      "capturePositionMismatch": 0,
+      "captureMaxPositionError": 0.0,
+      "captureNonFinite": 0,
+      "captureMaterialMismatch": 0,
+      "captureSameTrianglePositionMismatch": 0
+    }
+  }
+]

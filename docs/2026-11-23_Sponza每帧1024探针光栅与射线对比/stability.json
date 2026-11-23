@@ -1,0 +1,34 @@
+{
+  "ray": [
+    {
+      "frame": 256,
+      "relative_rms": 0.0004103586319039071,
+      "mean_display_levels": 0.026252832263708115,
+      "p99_display_levels": 0.2776966989040375,
+      "stable": true
+    },
+    {
+      "frame": 512,
+      "relative_rms": 0.0004851652967578814,
+      "mean_display_levels": 0.031858935952186584,
+      "p99_display_levels": 0.3395642042160034,
+      "stable": true
+    }
+  ],
+  "raster": [
+    {
+      "frame": 256,
+      "relative_rms": 0.0003699117800282656,
+      "mean_display_levels": 0.02336430735886097,
+      "p99_display_levels": 0.2711154520511627,
+      "stable": true
+    },
+    {
+      "frame": 512,
+      "relative_rms": 0.0005105880397974715,
+      "mean_display_levels": 0.032750505954027176,
+      "p99_display_levels": 0.3666575253009796,
+      "stable": true
+    }
+  ]
+}

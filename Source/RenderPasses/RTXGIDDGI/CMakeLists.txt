@@ -13,6 +13,12 @@ target_sources(RTXGIDDGI PRIVATE
     LumenWorldCacheTrace.slang
     RTXGIDDGI.h
     RTXGIDDGI.cpp
+    ProbeCubemapCompare.cs.slang
+    ProbeCubemapCull.cs.slang
+    ProbeCubemapIndirect.3d.slang
+    ProbeCubemap.cpp
+    ProbeCubemap.3d.slang
+    ProbeCubemapCommon.slang
     ProbeVisualization.cpp
     ProbeVisualization.cs.slang
     DDGIReconstruct.cpp

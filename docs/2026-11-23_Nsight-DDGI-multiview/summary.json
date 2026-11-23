@@ -1,0 +1,304 @@
+{
+  "configuration": {
+    "scene": "SponzaLambert",
+    "gpu": "RTX 5070",
+    "driver": "621.01",
+    "nsight": "2026.4.0.26300",
+    "resolution": [
+      1920,
+      1080
+    ],
+    "probes_per_frame": 1024,
+    "rays_per_probe": 256,
+    "cubemap_face": 32,
+    "warmup_presents": 700,
+    "captured_frames": 3,
+    "clock": "base",
+    "metrics": "Top-Level Triage",
+    "shader_profiler": true,
+    "multi_pass": false
+  },
+  "modes": {
+    "off": {
+      "trace": "C:\\workspace\\1116GitFalcor\\Falcor\\build\\nsight-multiview\\off\\Mogwai_2026_11_23_11_21_25.ngfx-gputrace",
+      "graph_ms": 112.212,
+      "raster_ms": 107.93357666666667,
+      "metrics_percent": {
+        "SM throughput": 30.27171450588762,
+        "L2 throughput": 24.245229261101418,
+        "VRAM throughput": 0.8136943605116332,
+        "Screen pipe": 1.176695661579361,
+        "Primitive input (PDA)": 26.2569846568567,
+        "Vertex attribute fetch": 11.934163692500015,
+        "VPC cull input": 9.445800721672555,
+        "VTG active warps": 12.762252649106134,
+        "PS active warps": 0.15360313294012648
+      },
+      "warp_state_sample_percent": {
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_drain.avg.per_cycle_elapsed": 0.12312783769167382,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_barrier.avg.per_cycle_elapsed": 0.0,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_membar.avg.per_cycle_elapsed": 0.0,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_sleeping.avg.per_cycle_elapsed": 0.0,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_branch_resolving.avg.per_cycle_elapsed": 1.242048114632016,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_wait.avg.per_cycle_elapsed": 38.86108173008787,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_long_scoreboard_pipe_rtcore.avg.per_cycle_elapsed": 0.0,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_long_scoreboard_pipe_l1tex.avg.per_cycle_elapsed": 12.145350459907617,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_short_scoreboard.avg.per_cycle_elapsed": 13.32095508204524,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_no_instruction.avg.per_cycle_elapsed": 1.9510977224232546,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_math_pipe_throttle.avg.per_cycle_elapsed": 0.5647185125413845,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_tex_throttle.avg.per_cycle_elapsed": 3.715449883908329e-05,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_mio_throttle_pipe_rtcore.avg.per_cycle_elapsed": 0.0,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_lg_throttle.avg.per_cycle_elapsed": 0.00191724136988957,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_mio_throttle_pipe_mio.avg.per_cycle_elapsed": 0.015174819743101264,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_dispatch_stall.avg.per_cycle_elapsed": 0.8457954413044444,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_selected.avg.per_cycle_elapsed": 30.150845804011034,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_not_selected.avg.per_cycle_elapsed": 0.5789038641897916,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_misc.avg.per_cycle_elapsed": 0.1989462155538345
+      },
+      "shader_profile": [
+        [
+          "vsMain",
+          "vertex",
+          6,
+          95.97148249817238,
+          [
+            "Wait",
+            "Selected",
+            "Short Scoreboard"
+          ]
+        ],
+        [
+          "render",
+          "raygen",
+          22,
+          0.9903698311420708,
+          [
+            "Long Scoreboard",
+            "Wait",
+            "Selected"
+          ]
+        ],
+        [
+          "psMain",
+          "fragment",
+          5,
+          0.8434698858976439,
+          [
+            "Long Scoreboard",
+            "Wait",
+            "Short Scoreboard"
+          ]
+        ],
+        [
+          "traceProbes",
+          "raygen",
+          7,
+          0.62043435593971,
+          [
+            "Long Scoreboard",
+            "Wait",
+            "Selected"
+          ]
+        ],
+        [
+          "Ray Tracing Traversal",
+          "ray_tracing",
+          36,
+          0.4541361765970187,
+          [
+            "MIO Throttle",
+            "Long Scoreboard",
+            "Wait"
+          ]
+        ],
+        [
+          "accumulateSingleCompensated",
+          "compute",
+          23,
+          0.2709846083237635,
+          [
+            "Long Scoreboard",
+            "Texture Throttle",
+            "Miscellaneous"
+          ]
+        ],
+        [
+          "Ray Tracing Scheduler",
+          "ray_tracing",
+          35,
+          0.14155632241940694,
+          [
+            "Wait",
+            "Long Scoreboard",
+            "Short Scoreboard"
+          ]
+        ],
+        [
+          "main",
+          "compute",
+          4,
+          0.09323186559066272,
+          [
+            "Long Scoreboard",
+            "Short Scoreboard",
+            "Wait"
+          ]
+        ],
+        [
+          "DDGIProbeBlendingCS",
+          "compute",
+          14,
+          0.08374251885904158,
+          [
+            "MIO Throttle",
+            "Not Selected",
+            "Wait"
+          ]
+        ],
+        [
+          "DDGIProbeBlendingCS",
+          "compute",
+          13,
+          0.04897584886733137,
+          [
+            "Long Scoreboard",
+            "Short Scoreboard",
+            "Wait"
+          ]
+        ],
+        [
+          "main",
+          "fragment",
+          24,
+          0.045459435913263506,
+          [
+            "Long Scoreboard",
+            "Short Scoreboard",
+            "Wait"
+          ]
+        ],
+        [
+          "closestHit",
+          "closest_hit",
+          2,
+          0.023450113389137023,
+          [
+            "Long Scoreboard",
+            "Wait",
+            "Selected"
+          ]
+        ]
+      ]
+    },
+    "on": {
+      "trace": "C:\\workspace\\1116GitFalcor\\Falcor\\build\\nsight-multiview\\on\\Mogwai_2026_11_23_11_23_24.ngfx-gputrace",
+      "graph_ms": 108.09,
+      "raster_ms": 103.79259,
+      "metrics_percent": {
+        "SM throughput": 21.38261376541106,
+        "L2 throughput": 14.763447372720282,
+        "VRAM throughput": 1.0678350497458762,
+        "Screen pipe": 1.2372802102227145,
+        "Primitive input (PDA)": 15.48591471865188,
+        "Vertex attribute fetch": 6.871065765717316,
+        "VPC cull input": 30.717984888792802,
+        "VTG active warps": 8.683518304509985,
+        "PS active warps": 0.15022209384863922
+      },
+      "warp_state_sample_percent": {
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_drain.avg.per_cycle_elapsed": 0.1553248770601194,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_barrier.avg.per_cycle_elapsed": 0.0,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_membar.avg.per_cycle_elapsed": 0.0,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_sleeping.avg.per_cycle_elapsed": 0.0,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_branch_resolving.avg.per_cycle_elapsed": 3.023126732317184,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_wait.avg.per_cycle_elapsed": 40.64548792794297,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_long_scoreboard_pipe_rtcore.avg.per_cycle_elapsed": 0.0,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_long_scoreboard_pipe_l1tex.avg.per_cycle_elapsed": 11.483665541572712,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_short_scoreboard.avg.per_cycle_elapsed": 9.253540613614842,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_no_instruction.avg.per_cycle_elapsed": 5.1423018469524555,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_math_pipe_throttle.avg.per_cycle_elapsed": 0.42476351620343133,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_tex_throttle.avg.per_cycle_elapsed": 9.409979564558038e-06,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_mio_throttle_pipe_rtcore.avg.per_cycle_elapsed": 0.0,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_lg_throttle.avg.per_cycle_elapsed": 0.005557553038048958,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_mio_throttle_pipe_mio.avg.per_cycle_elapsed": 0.009269353504934024,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_dispatch_stall.avg.per_cycle_elapsed": 0.2809318383314555,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_selected.avg.per_cycle_elapsed": 29.19455165664908,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_not_selected.avg.per_cycle_elapsed": 0.1384078565623986,
+        "GPUTrace.PCSampler.tpc__warps_issue_stalled_misc.avg.per_cycle_elapsed": 0.2430612762708116
+      },
+      "shader_profile": [
+        [
+          "Internal Function",
+          "fragment",
+          0,
+          96.70950923792404,
+          [
+            "Wait",
+            "Selected",
+            "Long Scoreboard"
+          ]
+        ],
+        [
+          "render",
+          "raygen",
+          16,
+          1.0314086372962723,
+          [
+            "Long Scoreboard",
+            "Wait",
+            "Selected"
+          ]
+        ],
+        [
+          "traceProbes",
+          "raygen",
+          6,
+          0.6457376084800294,
+          [
+            "Long Scoreboard",
+            "Wait",
+            "Selected"
+          ]
+        ],
+        [
+          "Ray Tracing Traversal",
+          "ray_tracing",
+          35,
+          0.4770797729561432,
+          [
+            "MIO Throttle",
+            "Long Scoreboard",
+            "Wait"
+          ]
+        ],
+        [
+          "accumulateSingleCompensated",
+          "compute",
+          22,
+          0.2832217765234566,
+          [
+            "Long Scoreboard",
+            "Texture Throttle",
+            "Miscellaneous"
+          ]
+        ]
+      ]
+    }
+  },
+  "notes": [
+    "Hardware utilization weighted by duration over 32 RasterVisibility markers and 3 captured frames.",
+    "The first exported regime hierarchy already contains all 3 frame columns; later frame hierarchy repeats were excluded.",
+    "Shader sample percentage is not GPU wall-time percentage.",
+    "Multiview shader attribution includes Internal Function labeled fragment; this ambiguous label was not used as evidence that PS dominates.",
+    "No source-line debug information available through workflow API; no precise source instruction attribution is claimed.",
+    "Single paired trace; ordinary-run performance comparison remains in prior benchmark."
+  ],
+  "source_sha256": {
+    "Source\\RenderPasses\\RTXGIDDGI\\ProbeCubemap.3d.slang": "4bdd15efe609fb7e1d30760d39570e5b7a0141c757b9c8fd58b3be24645cfbd1",
+    "Source\\RenderPasses\\RTXGIDDGI\\ProbeCubemap.cpp": "7b6d5c52bb08b1d11928d495651d4a35fdca8134d0c030cc7c81412a3f95f26a",
+    "Source\\RenderPasses\\RTXGIDDGI\\ProbeCubemapCommon.slang": "a9288295e8b386fc004308414f999aace77296c4a26a6fe1cb7b3262f223c1d3",
+    "Source\\RenderPasses\\RTXGIDDGI\\ProbeCubemapCompare.cs.slang": "9cbce34c7eedd04f8f76a6d346b68b0cd88d1568b2dafc05eac9715b238b7ff6",
+    "Source\\RenderPasses\\RTXGIDDGI\\ProbeCubemapCull.cs.slang": "015a4640676277eec0d836ee90b7e112d3f51133faee53078320c2fc73d8780b",
+    "Source\\RenderPasses\\RTXGIDDGI\\ProbeCubemapIndirect.3d.slang": "d4953aa5240e94065b4de4a62f681dadaa1afa13b3b61e2352ea414199a05202"
+  }
+}

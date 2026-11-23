@@ -1,0 +1,140 @@
+{
+  "baseline": {
+    "mse": 0.000289188672200066,
+    "hdr_flip": 0.2136564701795578,
+    "graph_ms": 13.835993766784668,
+    "query_ms": 6.997154712677002,
+    "pack_ms": 0,
+    "atomic_frozen_query_ms": {
+      "True": [
+        4.074036598205566,
+        4.055737495422363,
+        4.054487705230713
+      ],
+      "False": [
+        4.0572896003723145,
+        4.059252738952637,
+        4.056025505065918
+      ]
+    },
+    "config": {
+      "scene": "SponzaLambert",
+      "runs": {
+        "surfel": {
+          "frames": 8192,
+          "warmup": 2048,
+          "stats": {
+            "surfels": 32768,
+            "requestedRays": 418119,
+            "capacity": 32768,
+            "rayCapacity": 524288,
+            "queryCompact": false,
+            "queryShared": false,
+            "queryMark": true,
+            "cellSize": 0.835688054561615,
+            "frames": 10242
+          }
+        }
+      },
+      "resolution": [
+        1920,
+        1080
+      ],
+      "started": 1795344129.2520976,
+      "stage": "complete"
+    }
+  },
+  "optimized": {
+    "mse": 0.00028941467587638984,
+    "hdr_flip": 0.21364927291870117,
+    "graph_ms": 10.886287689208984,
+    "query_ms": 4.080347061157227,
+    "pack_ms": 0.003655278356745839,
+    "atomic_frozen_query_ms": {
+      "True": [
+        4.0807671546936035,
+        4.057229042053223,
+        4.054193496704102
+      ],
+      "False": [
+        4.064616680145264,
+        4.053840637207031,
+        4.054590702056885
+      ]
+    },
+    "config": {
+      "scene": "SponzaLambert",
+      "runs": {
+        "surfel": {
+          "frames": 8192,
+          "warmup": 2048,
+          "stats": {
+            "surfels": 32768,
+            "requestedRays": 418057,
+            "capacity": 32768,
+            "rayCapacity": 524288,
+            "queryCompact": true,
+            "queryShared": true,
+            "queryMark": true,
+            "cellSize": 0.835688054561615,
+            "frames": 10242
+          }
+        }
+      },
+      "resolution": [
+        1920,
+        1080
+      ],
+      "started": 1795343735.4290333,
+      "stage": "complete"
+    }
+  },
+  "lean_global_ablation": {
+    "mse": 0.0002893305094702334,
+    "hdr_flip": 0.213672935962677,
+    "graph_ms": 10.842248916625977,
+    "query_ms": 3.988175868988037,
+    "pack_ms": 0,
+    "atomic_frozen_query_ms": {
+      "True": [
+        4.070450305938721,
+        4.061248302459717,
+        4.056999206542969
+      ],
+      "False": [
+        4.059480667114258,
+        4.052738189697266,
+        4.0460920333862305
+      ]
+    },
+    "config": {
+      "scene": "SponzaLambert",
+      "runs": {
+        "surfel": {
+          "frames": 8192,
+          "warmup": 2048,
+          "stats": {
+            "surfels": 32768,
+            "requestedRays": 418243,
+            "capacity": 32768,
+            "rayCapacity": 524288,
+            "queryCompact": false,
+            "queryShared": false,
+            "queryMark": true,
+            "cellSize": 0.835688054561615,
+            "frames": 10242
+          }
+        }
+      },
+      "resolution": [
+        1920,
+        1080
+      ],
+      "started": 1795343910.097506,
+      "stage": "complete"
+    }
+  },
+  "difference": {
+    "mse": 2.0075019203702376e-07
+  }
+}

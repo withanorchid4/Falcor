@@ -2,7 +2,7 @@ param(
     [string]$Scene = '',
     [ValidateSet('vulkan', 'd3d12')]
     [string]$Device = 'd3d12',
-    [ValidateSet('PathTracer', 'Probe', 'DDGI', 'WorldCache', 'SHaRC')]
+    [ValidateSet('PathTracer', 'Probe', 'DDGI', 'WorldCache', 'SHaRC', 'SurfelGI')]
     [string]$Renderer = 'PathTracer',
     [ValidateSet('manual', 'auto', 'bake', 'load')][string]$Mode = 'manual',
     [ValidateRange(1, 65536)][int]$Samples = 2048,
@@ -58,6 +58,7 @@ if (-not $PSBoundParameters.ContainsKey('Scene')) {
     [void]$rendererBox.Items.Add('DDGI')
     [void]$rendererBox.Items.Add('WorldCache')
     [void]$rendererBox.Items.Add('SHaRC')
+    [void]$rendererBox.Items.Add('SurfelGI')
     [void]$rendererBox.Items.Add('PathTracer')
     [void]$rendererBox.Items.Add('Probe')
     $defaultRenderer = 'DDGI'
@@ -99,7 +100,7 @@ if ($Scene -notin $availableScenes) {
     throw "Unknown scene '$Scene'. Available scenes: $($availableScenes -join ', ')."
 }
 
-if ($Renderer -in @('DDGI', 'WorldCache', 'SHaRC')) {
+if ($Renderer -in @('DDGI', 'WorldCache', 'SHaRC', 'SurfelGI')) {
     if ($PSBoundParameters.ContainsKey('Device') -and $Device -ne 'd3d12') {
         throw "$Renderer requires D3D12 in this integration. Use -Device d3d12 or omit -Device."
     }
@@ -132,6 +133,9 @@ public static extern uint QueryDosDevice(string name, System.Text.StringBuilder 
 $executable = 'F:\build\windows-vs2022\bin\Release\Mogwai.exe'
 if (-not (Test-Path -LiteralPath $executable)) {
     throw 'Mogwai.exe was not found. Build the Release configuration first.'
+}
+if ($Device -eq 'd3d12' -and -not (Test-Path -LiteralPath 'F:\build\windows-vs2022\bin\Release\plugins\Surfel.dll')) {
+    throw 'Surfel.dll was not found. Reconfigure CMake and build the Release Surfel target before using GIPreview.'
 }
 
 $scenes = @{

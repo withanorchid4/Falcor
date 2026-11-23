@@ -1,0 +1,151 @@
+#pragma once
+#include "Falcor.h"
+#include "RenderGraph/RenderPass.h"
+#include "RenderGraph/RenderPassHelpers.h"
+#include "OverlayMode.slang"
+
+using namespace Falcor;
+
+class SurfelGI : public RenderPass
+{
+public:
+    FALCOR_PLUGIN_CLASS(SurfelGI, "SurfelGI", "Surfel GI Pass");
+
+    static ref<SurfelGI> create(ref<Device> pDevice, const Properties& props)
+    {
+        return make_ref<SurfelGI>(pDevice, props);
+    }
+
+    SurfelGI(ref<Device> pDevice, const Properties& props);
+
+    void reset() { mResetSurfelBuffer = true; }
+    Properties getStats();
+    virtual void setProperties(const Properties& props) override;
+    virtual Properties getProperties() const override;
+    virtual RenderPassReflection reflect(const CompileData& compileData) override;
+    virtual void compile(RenderContext* pRenderContext, const CompileData& compileData) override {}
+    virtual void execute(RenderContext* pRenderContext, const RenderData& renderData) override;
+    virtual void renderUI(Gui::Widgets& widget) override;
+    virtual void setScene(RenderContext* pRenderContext, const ref<Scene>& pScene) override;
+    virtual bool onMouseEvent(const MouseEvent& mouseEvent) override { return false; }
+    virtual bool onKeyEvent(const KeyboardEvent& keyEvent) override;
+
+private:
+    void reflectInput(RenderPassReflection& reflector, uint2 resolution);
+    void reflectOutput(RenderPassReflection& reflector, uint2 resolution);
+    void resetAndRecompile();
+    void createPasses();
+    void createResolutionIndependentResources();
+    void createResolutionDependentResources();
+    void bindResources(const RenderData& renderData);
+
+    struct RuntimeParams
+    {
+        // Surfel generation.
+        float chanceMultiply = 0.3f;
+        uint chancePower = 1;
+        float placementThreshold = 2.f;
+        float removalThreshold = 4.f;
+        float thresholdGap = 2.f;
+        uint blendingDelay = 240;
+        Falcor::OverlayMode overlayMode = Falcor::OverlayMode::IndirectLighting;
+
+        // Ray tracing.
+        float varianceSensitivity = 40.f;
+        uint minRayCount = 4u;
+        uint maxRayCount = 16u;
+        uint rayStep = 3;
+        uint maxStep = 6;
+
+        // Integrate.
+        float shortMeanWindow = 0.03f;
+    };
+
+    struct StaticParams
+    {
+        uint surfelTargetArea = 2048;
+        float cellUnit = 0.f;
+        uint cellDim = 64u;
+        uint cellCount = cellDim * cellDim * cellDim;
+        uint perCellSurfelLimit = 1024u;
+
+        bool useSurfelRadinace = true;
+        bool limitSurfelSearch = false;
+        uint maxSurfelForStep = 10;
+        bool useRayGuiding = false;
+        bool useSurfelDepth = true;
+        bool useIrradianceSharing = false;
+
+        DefineList getDefines(const SurfelGI& owner) const;
+    };
+
+    RuntimeParams mRuntimeParams;
+    StaticParams mStaticParams;
+    StaticParams mTempStaticParams;
+
+    uint mFrameIndex = 0;
+    uint mMaxFrameIndex = 1000000;
+    uint2 mFrameDim = uint2(0);
+    float mFOVy;
+    float3 mCamPos;
+    float mRenderScale;
+
+    bool mIsFrameDimChanged = false;
+    bool mReadBackValid = false;
+    bool mLockSurfel = false;
+    bool mResetSurfelBuffer = false;
+    bool mRecompile = false;
+    bool mAutoCellSize = true;
+    bool mOptionsChanged = true;
+
+    std::vector<float> mSurfelCount;
+    std::vector<float> mRayBudget;
+
+    ref<Scene> mpScene;
+    ref<Fence> mpFence;
+    ref<SampleGenerator> mpSampleGenerator;
+
+    bool mQueryCompact = true, mQueryShared = true, mQueryMark = true;
+    ref<Buffer> mpQueryBuffer;
+    ref<ComputePass> mpPackQueryPass;
+    ref<ComputePass> mpSurfelEvaluationPass;
+
+    ref<ComputePass> mpPreparePass;
+    ref<ComputePass> mpCollectCellInfoPass;
+    ref<ComputePass> mpAccumulateCellInfoPass;
+    ref<ComputePass> mpUpdateCellToSurfelBuffer;
+    ref<ComputePass> mpSurfelGenerationPass;
+    ref<ComputePass> mpSurfelIntegratePass;
+
+    struct
+    {
+        ref<Program> pProgram;
+        ref<RtBindingTable> pBindingTable;
+        ref<RtProgramVars> pVars;
+    } mRtPass;
+
+    ref<Texture> mpOutputTexture;
+    ref<Texture> mpIrradianceMapTexture;
+    ref<Texture> mpSurfelDepthTexture;
+    ref<Texture> mpSurfelDepthHistory;
+
+    ref<Buffer> mpSurfelBuffer;
+    ref<Buffer> mpSurfelHistory;
+    ref<Buffer> mpSurfelGeometryBuffer;
+    ref<Buffer> mpSurfelValidIndexBuffer;
+    ref<Buffer> mpSurfelDirtyIndexBuffer;
+    ref<Buffer> mpSurfelFreeIndexBuffer;
+    ref<Buffer> mpCellInfoBuffer;
+    ref<Buffer> mpCellToSurfelBuffer;
+    ref<Buffer> mpSurfelRayResultBuffer;
+    ref<Buffer> mpSurfelRecycleInfoBuffer;
+
+    ref<Buffer> mpSurfelReservationBuffer;
+    ref<Buffer> mpSurfelRefCounter;
+    ref<Buffer> mpSurfelCounter;
+
+    ref<Buffer> mpEmptySurfelBuffer;
+    ref<Buffer> mpReadBackBuffer;
+
+    ref<Sampler> mpSurfelDepthSampler;
+};

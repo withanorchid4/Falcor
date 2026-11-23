@@ -1,0 +1,193 @@
+{
+  "CornellLambert": {
+    "mse": 4.317098283083647e-07,
+    "hdr_flip": 0.03295884653925896,
+    "graph_ms": 2.5360071659088135,
+    "passes_ms": {
+      "": 2.5360071659088135,
+      "Visibility": 0.15251977741718292,
+      "Visibility/raytraceScene": 0.15236115455627441,
+      "Surfel": 1.8505055904388428,
+      "Surfel/Prepare Pass": 0.003952439408749342,
+      "Surfel/Update Pass (Collect Cell Info Pass)": 0.05494362488389015,
+      "Surfel/Update Pass (Accumulate Cell Info Pass)": 0.004032752942293882,
+      "Surfel/Update Pass (Update Cell To Surfel buffer Pass)": 0.023757804185152054,
+      "Surfel/Surfel RayTrace Pass": 0.6512278318405151,
+      "Surfel/Surfel RayTrace Pass/raytraceScene": 0.6510913372039795,
+      "Surfel/Surfel Integrate Pass": 0.10031887143850327,
+      "Surfel/Surfel Generation Pass": 0.20862193405628204,
+      "Surfel/Surfel Evaluation Pass": 0.787447988986969,
+      "Surfel/Read Back": 0.006693145260214806,
+      "Lighting": 0.19730672240257263,
+      "Accumulate": 0.3035266399383545,
+      "Display": 0.03150707483291626
+    },
+    "stability": {
+      "pt": {
+        "doubling_relative_rms": 0.0013857275515318762
+      },
+      "surfel": {
+        "doubling_relative_rms": 0.0009039963514218249
+      }
+    },
+    "mse_curve": {
+      "512": 4.824031952268476e-07,
+      "1024": 4.573634727675887e-07,
+      "2048": 4.4729648315967724e-07,
+      "4096": 4.3871427778740187e-07,
+      "8192": 4.317098283083647e-07
+    },
+    "exposure_ev": 2.084395204658489,
+    "flip_parameters": {
+      "ppd": 67.0,
+      "startExposure": 3.0111637115478516,
+      "stopExposure": 24.083297729492188,
+      "numExposures": 22,
+      "tonemapper": "ACES"
+    },
+    "configuration": {
+      "scene": "CornellLambert",
+      "runs": {
+        "surfel": {
+          "frames": 8192,
+          "warmup": 2048,
+          "stats": {
+            "surfels": 32768,
+            "requestedRays": 136219,
+            "capacity": 32768,
+            "rayCapacity": 524288,
+            "cellSize": 0.1785714328289032,
+            "frames": 10242
+          }
+        }
+      },
+      "resolution": [
+        1920,
+        1080
+      ],
+      "started": 1795337974.4678605,
+      "stage": "complete"
+    },
+    "pt_reference": "C:\\workspace\\1116GitFalcor\\Falcor\\build\\surfel-validation-CornellLambert\\pt-8192.Accumulate.output.0.exr",
+    "pt_spp": 65536,
+    "pt_sha256": "32609d76e8dfb6051471fd4c1be614157dd3486f56b759916daeff83eb12e43d"
+  },
+  "SponzaLambert": {
+    "mse": 0.00028926943728606433,
+    "hdr_flip": 0.21384413540363312,
+    "graph_ms": 13.761011123657227,
+    "passes_ms": {
+      "": 13.761011123657227,
+      "Visibility": 0.35693326592445374,
+      "Visibility/raytraceScene": 0.35674354434013367,
+      "Surfel": 12.544365882873535,
+      "Surfel/Prepare Pass": 0.0037566744722425938,
+      "Surfel/Update Pass (Collect Cell Info Pass)": 0.06625079363584518,
+      "Surfel/Update Pass (Accumulate Cell Info Pass)": 0.003956454806029797,
+      "Surfel/Update Pass (Update Cell To Surfel buffer Pass)": 0.024579012766480446,
+      "Surfel/Surfel RayTrace Pass": 4.226216793060303,
+      "Surfel/Surfel RayTrace Pass/raytraceScene": 4.226085186004639,
+      "Surfel/Surfel Integrate Pass": 0.12545405328273773,
+      "Surfel/Surfel Generation Pass": 1.0984829664230347,
+      "Surfel/Surfel Evaluation Pass": 6.9799604415893555,
+      "Surfel/Read Back": 0.006809600163251162,
+      "Lighting": 0.49726343154907227,
+      "Accumulate": 0.3099738359451294,
+      "Display": 0.05185556039214134
+    },
+    "stability": {
+      "pt": {
+        "doubling_relative_rms": 0.0009153247771004123
+      },
+      "surfel": {
+        "doubling_relative_rms": 0.00046227086884888425
+      }
+    },
+    "mse_curve": {
+      "512": 0.000288593378326864,
+      "1024": 0.00028895304767020675,
+      "2048": 0.0002890220411394616,
+      "4096": 0.0002889977133850187,
+      "8192": 0.00028926943728606433
+    },
+    "exposure_ev": -2.3269853780899363,
+    "flip_parameters": {
+      "ppd": 67.0,
+      "startExposure": -2.272261619567871,
+      "stopExposure": 7.581640720367432,
+      "numExposures": 10,
+      "tonemapper": "ACES"
+    },
+    "configuration": {
+      "scene": "SponzaLambert",
+      "runs": {
+        "surfel": {
+          "frames": 8192,
+          "warmup": 2048,
+          "stats": {
+            "surfels": 32768,
+            "requestedRays": 418443,
+            "capacity": 32768,
+            "rayCapacity": 524288,
+            "cellSize": 0.835688054561615,
+            "frames": 10242
+          }
+        }
+      },
+      "resolution": [
+        1920,
+        1080
+      ],
+      "started": 1795338109.237956,
+      "stage": "complete"
+    },
+    "pt_reference": "C:\\workspace\\1116GitFalcor\\Falcor\\build\\sponza-sun50-20261120\\pt-8192.Accumulate.output.0.exr",
+    "pt_spp": 65536,
+    "pt_sha256": "1899bc2fe3a971ab1cccb106c44e6702b7e7777f9316739fcef30617053b62da"
+  },
+  "unit_environment": {
+    "expected": 0.5,
+    "mean": 0.49962496757507324,
+    "median": 0.49965962767601013,
+    "passed": true
+  },
+  "hardware": "NVIDIA GeForce RTX 5070, 621.01",
+  "preview_validation": {
+    "graphs": [
+      "PTReference",
+      "TraditionalProbeGI",
+      "RTXGIDDGI",
+      "LumenWorldCache",
+      "SHaRC",
+      "SurfelGI"
+    ],
+    "materialsUnchanged": true,
+    "accumulateDefaultEnabled": true,
+    "cacheResetPassed": true,
+    "sharingTogglePassed": true
+  },
+  "source_hashes": {
+    "Source\\RenderPasses\\Surfel\\CMakeLists.txt": "a504f4e5c11c3f5a141501df16b03d9737a308834b78900c1e6a30d96a549257",
+    "Source\\RenderPasses\\Surfel\\HashUtils.slang": "387f1af2d4cbc9181c1e5b1eef7542b86e0facd80adb9fa926036c7f1e22fe9a",
+    "Source\\RenderPasses\\Surfel\\LICENSE.W298": "53f37e28f363bbc922b82f78127edb7076622ae06d7f190e6516f1ea34747bc4",
+    "Source\\RenderPasses\\Surfel\\Random.slang": "3f73bf814fb4e2a446eed862d3d8b5e77a9f1134a124dd91bff0de95ae469365",
+    "Source\\RenderPasses\\Surfel\\README.md": "fa4f4d01161243bdb9c44d9cb94eadc2ede44116916d8fe379f1e1147bd68ef8",
+    "Source\\RenderPasses\\Surfel\\Surfel.cpp": "33ee4fbc5d7bb29ae37b0f6327617e15e491c3b5d4ee31d7b0c5744fe85fe6bd",
+    "Source\\RenderPasses\\Surfel\\SurfelGI\\MultiscaleMeanEstimator.slang": "0251d5bef81e3558ebca679c966cb018ac83a526b6dfbc7771ce6b26478a8548",
+    "Source\\RenderPasses\\Surfel\\SurfelGI\\OverlayMode.slang": "8ea83f88ef59e21d0db29dd6e1a8575fbcc0c6ccb72e599263b092700e85f77c",
+    "Source\\RenderPasses\\Surfel\\SurfelGI\\StaticParams.slang": "a5b18a346fce223a0324490ac9e6dbb63d11552462409c32e2cbf81caec7b4cd",
+    "Source\\RenderPasses\\Surfel\\SurfelGI\\SurfelEvaluationPass.cs.slang": "2766b54337a4ef0e60bf787818741b8d5f3baddb7a6d5845cf475d0b447f03d4",
+    "Source\\RenderPasses\\Surfel\\SurfelGI\\SurfelGenerationPass.cs.slang": "35a003102912f64284c098d8e40222d4a639929a4bf77aecfb10452008fb27ce",
+    "Source\\RenderPasses\\Surfel\\SurfelGI\\SurfelGI.cpp": "7a21806e0ef10c8cba4248de2b7c64582df985580332127be46a3558b1e529a6",
+    "Source\\RenderPasses\\Surfel\\SurfelGI\\SurfelGI.h": "2565a5a70c6c665aafaf7a22acf9905272590f26c6d210bf13e3559fda6d2d00",
+    "Source\\RenderPasses\\Surfel\\SurfelGI\\SurfelIntegratePass.cs.slang": "8a25681d6911ea83e8a21c6314a19d137fc4eab64891510abc0413e220ee0588",
+    "Source\\RenderPasses\\Surfel\\SurfelGI\\SurfelPreparePass.cs.slang": "6d17a5f163deb1785fed9ecae80028aced8b7c4337a8b079e1ff931ba371c866",
+    "Source\\RenderPasses\\Surfel\\SurfelGI\\SurfelRayTrace.rt.slang": "8cee3a7141d723b1ce758f893eb787374982bf9a3c5d68a2d44eb969d4c16e13",
+    "Source\\RenderPasses\\Surfel\\SurfelGI\\SurfelTypes.slang": "5463ce0bd0946c0721d8eb8bdb979b66369445133a82dfbdacf8cedc734f7c13",
+    "Source\\RenderPasses\\Surfel\\SurfelGI\\SurfelUpdatePass.cs.slang": "dd8d9bf9d6d30fc9babb42ae8a072bb668a82d4863d80eaa9be7d82cde7bbd88",
+    "Source\\RenderPasses\\Surfel\\SurfelGI\\SurfelUtils.slang": "47098cfde50234101d1ba696c18cfd01538770692a381477ff2de2b5cb8049bc",
+    "Source\\RenderPasses\\Surfel\\SurfelGIRenderPass\\SurfelGIRenderPass.cpp": "15804aa1d39580479934016917daa312da65730e41d82fb69d83b571b5af4e8c",
+    "Source\\RenderPasses\\Surfel\\SurfelGIRenderPass\\SurfelGIRenderPass.cs.slang": "059c718b63f23b3e9bb48e5d98072ec6af396c27bf994fc44882f02f5188de7e",
+    "Source\\RenderPasses\\Surfel\\SurfelGIRenderPass\\SurfelGIRenderPass.h": "4f7d142e824faff08fcd530c3708e34ebf8c21a8ffb5dad0765aba8aaa32438b"
+  }
+}

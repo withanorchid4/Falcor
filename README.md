@@ -93,6 +93,12 @@ Falcor ships with the following NVIDIA RTX SDKs:
 
 Note that these SDKs are not under the same license as Falcor, see [LICENSE.md](LICENSE.md) for details.
 
+## 独立 SurfelGI
+
+启动器 Renderer 和 Active Graph 可选择 `SurfelGI`，默认开启 Accumulate。基于 W298/SurfelGI 移植，使用独立的表面缓存；不依赖 DDGI、WorldCache 或屏幕 final gather。当前验证范围为 Lambert 漫反射场景，属于实验路径。
+
+更新后重新配置 CMake 并构建 Release 的 `Surfel` 目标（或完整 Release），以生成 `plugins/Surfel.dll`。实现说明见 [Surfel 插件文档](Source/RenderPasses/Surfel/README.md)，CornellLambert / SponzaLambert 的 PT 对照见 [实验报告](docs/2026-11-22_独立SurfelGI验证与对比/report.html)。
+
 ## SHaRC 与 SponzaLambert 默认灯光
 
 `Run-Falcor.ps1` 的 Renderer 可选择 `SHaRC`，运行后也可在 Active Graph 切换 `SHaRC` / `LumenWorldCache` / DDGI / PTReference。SHaRC 是独立缓存路径，不更新 DDGI 探针；默认使用半分辨率 FG 和 Accumulate。通过切换 Active Graph 可回到原有算法。

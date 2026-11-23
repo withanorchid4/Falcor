@@ -7,7 +7,7 @@ import runpy
 def create_preview_graphs():
     directory = Path(__file__).parent
     graphs = {}
-    for name in ("PTReference", "TraditionalProbeGI", "RTXGIDDGI", "LumenWorldCache", "SHaRC"):
+    for name in ("PTReference", "TraditionalProbeGI", "RTXGIDDGI", "LumenWorldCache", "SHaRC", "SurfelGI"):
         graphs[name] = runpy.run_path(str(directory / (name + ".py")))[name]
     return graphs
 
@@ -35,6 +35,7 @@ initial_graph = {
     "DDGI": "RTXGIDDGI",
     "WorldCache": "LumenWorldCache",
     "SHaRC": "SHaRC",
+    "SurfelGI": "SurfelGI",
 }.get(renderer, "PTReference")
 try:
     for graph in graphs.values():

@@ -74,6 +74,9 @@ Properties RTXGIDDGI::getProperties() const
     p["worldCache"] = mOptions.worldCache;
     p["sharc"] = mOptions.sharc;
     p["sharcSceneScale"] = mOptions.sharcSceneScale;
+    p["hoistNormalOct"] = mOptions.hoistNormalOct;
+    p["skipDirectionNormalize"] = mOptions.skipDirectionNormalize;
+    p["tetrahedralInterpolation"] = mOptions.tetrahedralInterpolation;
     p["primaryShadingNormalCorrection"] = mOptions.primaryShadingNormalCorrection;
     p["worldCacheDownsample"] = mOptions.worldCacheDownsample;
     p["worldCacheBounces"] = mOptions.worldCacheBounces;
@@ -151,6 +154,9 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         if (name == "worldCache") next.worldCache = value;
         else if (name == "sharc") next.sharc = value;
         else if (name == "sharcSceneScale") next.sharcSceneScale = value;
+        else if (name == "hoistNormalOct") next.hoistNormalOct = value;
+        else if (name == "skipDirectionNormalize") next.skipDirectionNormalize = value;
+        else if (name == "tetrahedralInterpolation") next.tetrahedralInterpolation = value;
         else if (name == "primaryShadingNormalCorrection") next.primaryShadingNormalCorrection = value;
         else if (name == "worldCacheDownsample") next.worldCacheDownsample = value;
         else if (name == "worldCacheBounces") next.worldCacheBounces = value;
@@ -248,6 +254,7 @@ void RTXGIDDGI::setProperties(const Properties& properties)
         "WRC cell overlay opacity must be in [0,1].");
     if (any(next.counts != mOptions.counts) || next.rays != mOptions.rays || next.autoBounds != mOptions.autoBounds ||
         any(next.gridMin != mOptions.gridMin) || any(next.gridMax != mOptions.gridMax)) mReallocate = true;
+    if (next.tetrahedralInterpolation != mOptions.tetrahedralInterpolation) mResetPending = true;
     if (next.relocation != mOptions.relocation || next.classification != mOptions.classification) mResetPending = true;
     if (next.minFrontfaceDistance != mOptions.minFrontfaceDistance) mResetPending = true;
     if (next.normalBias != mOptions.normalBias || next.viewBias != mOptions.viewBias) mWrcResetPending = true;
@@ -609,7 +616,11 @@ ref<ComputePass> RTXGIDDGI::createWrcCompute(const char* entry)
 void RTXGIDDGI::bindWrcCompute(RenderContext* context, const ref<ComputePass>& pass, const RenderData& data, uint32_t shaderBucket)
 {
     auto program = pass->getProgram();
+    bool mathChanged = program->addDefine("DDGI_HOIST_NORMAL_OCT",mOptions.hoistNormalOct ? "1" : "0");
+    mathChanged |= program->addDefine("DDGI_SKIP_DIRECTION_NORMALIZE",mOptions.skipDirectionNormalize ? "1" : "0");
+    bool tetraChanged = program->addDefine("DDGI_TETRAHEDRAL", mOptions.tetrahedralInterpolation ? "1" : "0");
     bool changed = program->addDefine("USE_ANALYTIC_LIGHTS", mpScene->useAnalyticLights() ? "1" : "0");
+    changed |= tetraChanged || mathChanged;
     changed |= program->addDefine("USE_EMISSIVE_LIGHTS", mpScene->useEmissiveLights() ? "1" : "0");
     changed |= program->addDefine("USE_ENV_LIGHT", mpScene->useEnvLight() ? "1" : "0");
     changed |= program->addDefine("USE_ENV_BACKGROUND", mpScene->useEnvBackground() ? "1" : "0");
@@ -797,7 +808,11 @@ void RTXGIDDGI::uploadConstants()
 
 void RTXGIDDGI::bindRayProgram(RayProgram& ray, const RenderData& data)
 {
+    bool mathChanged = ray.program->addDefine("DDGI_HOIST_NORMAL_OCT",mOptions.hoistNormalOct ? "1" : "0");
+    mathChanged |= ray.program->addDefine("DDGI_SKIP_DIRECTION_NORMALIZE",mOptions.skipDirectionNormalize ? "1" : "0");
+    bool tetraChanged = ray.program->addDefine("DDGI_TETRAHEDRAL", mOptions.tetrahedralInterpolation ? "1" : "0");
     bool changed = ray.program->addDefine("LUMEN_WORLD_CACHE", mOptions.worldCache && !mOptions.sharc ? "1" : "0");
+    changed |= tetraChanged || mathChanged;
     changed |= ray.program->addDefine("SHARC_CACHE", mOptions.sharc ? "1" : "0");
     changed |= ray.program->addDefine("SHARC_UPDATE", mOptions.sharc && &ray == &mWorldCacheTrace ? "1" : "0");
     changed |= ray.program->addDefine("SHARC_QUERY", mOptions.sharc && &ray != &mWorldCacheTrace ? "1" : "0");
@@ -1350,6 +1365,8 @@ void RTXGIDDGI::renderUI(Gui::Widgets& widgets)
     }
     if (widgets.button("Reset history")) reset();
     if (widgets.checkbox("Enable DDGI", options.enableGI)) p["enableGI"] = options.enableGI;
+    if (widgets.checkbox("4-probe tetrahedral interpolation", options.tetrahedralInterpolation)) p["tetrahedralInterpolation"] = options.tetrahedralInterpolation;
+    widgets.tooltip("Off: original 8-probe interpolation. On: 4 corners of the containing grid tetrahedron. Changing clears probe and image history.");
     if (auto gather = widgets.group("Final gather", true))
     {
         if (gather.checkbox("Enabled", options.finalGather)) p["finalGather"] = options.finalGather;

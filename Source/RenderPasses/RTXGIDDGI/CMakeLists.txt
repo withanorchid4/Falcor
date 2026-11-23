@@ -58,6 +58,10 @@ add_custom_target(RTXGIDDGIShaders
         "-DSDK=${FALCOR_RTXGI_DDGI_DIR}"
         "-DOUTPUT=${FALCOR_SHADER_OUTPUT_DIRECTORY}/RTXGI/rtxgi-sdk/shaders/ddgi"
         -P "${PROJECT_SOURCE_DIR}/cmake/ddgi-probe-batch.cmake"
+    COMMAND ${CMAKE_COMMAND}
+        "-DSDK=${FALCOR_RTXGI_DDGI_DIR}"
+        "-DOUTPUT=${FALCOR_SHADER_OUTPUT_DIRECTORY}/RTXGI/rtxgi-sdk/shaders/ddgi"
+        -P "${PROJECT_SOURCE_DIR}/cmake/ddgi-tetrahedral.cmake"
     COMMENT "Deploying NVIDIA RTXGI-DDGI shaders and batch-update adaptations"
     VERBATIM
 )

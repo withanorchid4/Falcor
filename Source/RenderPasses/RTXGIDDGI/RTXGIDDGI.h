@@ -59,6 +59,9 @@ private:
         uint32_t worldCacheDownsample = 8, worldCacheBounces = 3, worldCacheHistory = 16;
         float worldCacheDensity = 20.f, worldCacheMaxIntensity = 0.f;
         bool finalGather = false;
+        bool hoistNormalOct = true;
+        bool skipDirectionNormalize = true;
+        bool tetrahedralInterpolation = false; // Optional four-corner query; default SDK eight-corner interpolation.
         bool primaryShadingNormalCorrection = true; // Diagnostic A/B override; still honors the GBuffer policy.
         bool halfResolutionGather = false;
         bool jitterHalfGather = false;

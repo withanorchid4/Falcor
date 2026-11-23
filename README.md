@@ -181,3 +181,13 @@ The BibTeX entry is
    note =        {\url{https://github.com/NVIDIAGameWorks/Falcor}}
 }
 ```
+
+## DDGI 可选四探针插值
+
+DDGI 面板中的 `4-probe tetrahedral interpolation` 可切换四点四面体插值；默认关闭，保留原 SDK 的八点三线性插值。Python 属性为 `tetrahedralInterpolation`。每个规则单元沿 000→111 对角线拆成六个四面体，根据 bias 后的局部坐标选择四个角点；保留官方可见性和法线权重，实际距离使用 relocation 后的位置。四面体拓扑按规则网格计算，不重建 relocation 后的 Delaunay 网格。
+
+切换会清空探针与屏幕累积历史；此模式用于所有 DDGI 查询，包括探针更新时的递归光照与 FG 命中查询。`cmake/ddgi-tetrahedral.cmake` 从 SDK 原文件生成输出目录中的可选版本，不修改下载的 NVIDIA 源码；更新后需重新编译 Release 的 RTXGIDDGI。
+
+实验脚本为 `tests/ddgi/ddgi_tetrahedral_comparison.py`，报告脚本为 `tests/ddgi/report_ddgi_tetrahedral.py`。
+
+DDGI 查询还默认启用两项等价计算精简：`hoistNormalOct=True` 将公共法线八面体坐标移至 probe 循环外；`skipDirectionNormalize=True` 省略仅用于八面体映射的方向长度归一化。八面体映射自身进行 L1 归一化，距离测试和法线权重仍保留原计算。两个属性可单独关闭用于消融，不重置探针内容；可能存在微小浮点舍入差异。测试脚本 `tests/ddgi/ddgi_query_math_comparison.py` 在冻结缓存上交替计时并比较间接光输出。

@@ -24,7 +24,7 @@
  # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ***************************************************************************/
 
-// Falcor scene/material bridge for the unmodified NVIDIA RTXGI-DDGI SDK.
+// Falcor scene/material bridge for NVIDIA RTXGI-DDGI with optional generated query adaptations.
 // Intersection, alpha testing and analytic-light sampling follow MinimalPathTracer.
 // Only triangle meshes are supported by this first integration. Glass is treated
 // as a geometric boundary; optional final gather adds one reflection segment, not transmission.
@@ -33,7 +33,7 @@
 #include "Scene/SceneDefines.slangh"
 #include "Utils/Math/MathConstants.slangh"
 #include "RTXGIConfig.slang"
-#include "RTXGI/rtxgi-sdk/shaders/ddgi/Irradiance.hlsl"
+#include "RTXGI/rtxgi-sdk/shaders/ddgi/IrradianceTetrahedral.hlsl"
 
 import Rendering.Materials.IsotropicGGX;
 import Scene.Raytracing;

@@ -1,0 +1,125 @@
+{
+  "commit": "311c0e8841f781626b6d2eb2b789da5293cdbf5a",
+  "cases": [
+    {
+      "name": "pt",
+      "mode": "pt"
+    },
+    {
+      "name": "sharc-half",
+      "mode": "sharc",
+      "half": true
+    },
+    {
+      "name": "sharc-full",
+      "mode": "sharc"
+    },
+    {
+      "name": "wc-half",
+      "mode": "wc",
+      "half": true
+    },
+    {
+      "name": "wc-full",
+      "mode": "wc"
+    },
+    {
+      "name": "uncached-raw",
+      "mode": "sharc",
+      "bypass": true
+    },
+    {
+      "name": "uncached-material",
+      "mode": "sharc",
+      "bypass": true,
+      "material": true
+    },
+    {
+      "name": "sharc-material",
+      "mode": "sharc",
+      "material": true
+    },
+    {
+      "name": "wc-material",
+      "mode": "wc",
+      "material": true
+    },
+    {
+      "name": "uncached-strict-raw",
+      "mode": "sharc",
+      "bypass": true,
+      "strict": true
+    },
+    {
+      "name": "uncached-strict",
+      "mode": "sharc",
+      "bypass": true,
+      "material": true,
+      "strict": true
+    },
+    {
+      "name": "pt-noNormals",
+      "mode": "pt",
+      "noNormals": true
+    },
+    {
+      "name": "sharc-noNormals",
+      "mode": "sharc",
+      "noNormals": true
+    },
+    {
+      "name": "wc-noNormals",
+      "mode": "wc",
+      "noNormals": true
+    },
+    {
+      "name": "sharc-material-fine",
+      "mode": "sharc",
+      "material": true,
+      "scale": 60
+    },
+    {
+      "name": "1080-sharc-original",
+      "mode": "sharc",
+      "half": true,
+      "width": 1920,
+      "height": 1080,
+      "warmup": 4096,
+      "frames": 8192
+    },
+    {
+      "name": "1080-sharc-material",
+      "mode": "sharc",
+      "half": true,
+      "material": true,
+      "width": 1920,
+      "height": 1080,
+      "warmup": 4096,
+      "frames": 8192
+    },
+    {
+      "name": "1080-wc-material",
+      "mode": "wc",
+      "half": true,
+      "material": true,
+      "width": 1920,
+      "height": 1080,
+      "warmup": 4096,
+      "frames": 8192
+    },
+    {
+      "name": "ddgi-half",
+      "mode": "ddgi",
+      "half": true
+    },
+    {
+      "name": "ddgi-material",
+      "mode": "ddgi",
+      "half": true,
+      "material": true
+    }
+  ],
+  "method": "GPU experiments temporarily modify deployed shader copies only; repository renderer sources unchanged.",
+  "reference480": "PT 8192 spp, current script",
+  "reference1080": "Existing PT 65536 spp from build/sponza-sun50-20261120; current original SHaRC rerun cross-checks old comparison."
+}

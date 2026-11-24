@@ -1,0 +1,4 @@
+numpy
+OpenEXR
+Pillow
+matplotlib

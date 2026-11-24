@@ -46,6 +46,7 @@ cbuffer RasterCB { uint gRasterOffset; uint gRasterSize; }
 import Rendering.Materials.IsotropicGGX;
 import Scene.Raytracing;
 import Scene.Intersection;
+import Scene.Material.ShadingUtils;
 #ifndef DDGI_INLINE_SHADOW
 #define DDGI_INLINE_SHADOW 0
 #endif
@@ -310,13 +311,35 @@ bool traceShadow(float3 origin, float3 direction, float distance)
 #endif
 }
 
+// Material setup applies normal maps and orientation to its own shading frame;
+// sd.frame is the untextured vertex frame. Keep the Lambert cache model while
+// using the same reflection hemisphere checks as Falcor's material instances.
+bool validDiffuseReflection(ShadingData sd, BSDFProperties properties, float3 direction)
+{
+    bool validTangent;
+    ShadingFrame sf = ShadingFrame::createSafe(properties.guideNormal, sd.tangentW, validTangent);
+    return isValidHemisphereReflection(sd, sf, sf.toLocal(sd.V), sf.toLocal(direction), direction);
+}
+
+bool sampleDiffuseReflection(ShadingData sd, BSDFProperties properties, inout SampleGenerator sg, out float3 direction)
+{
+    // Preserve the existing cosine sampling distribution and random-number count.
+    float3 n = properties.guideNormal;
+    float2 u = sampleNext2D(sg);
+    float3 t = normalize(cross(abs(n.z) < .999f ? float3(0, 0, 1) : float3(0, 1, 0), n));
+    direction = t * (sqrt(u.x) * cos(2.f * M_PI * u.y)) + cross(n, t) * (sqrt(u.x) * sin(2.f * M_PI * u.y)) + n * sqrt(1.f - u.x);
+    return dot(direction, sd.getOrientedFaceNormal()) > 0.f && validDiffuseReflection(sd, properties, direction);
+}
+
 float3 evaluateBRDFCosine(ShadingData sd, IMaterialInstance material, float3 direction, bool diffuseOnly, inout SampleGenerator sg)
 {
     if (dot(sd.getOrientedFaceNormal(), direction) <= kMinCosTheta) return float3(0.f);
     if (diffuseOnly)
     {
-        float3 albedo = finiteRadiance(material.getProperties(sd).diffuseReflectionAlbedo, 0u);
-        return albedo * (max(0.f, dot(sd.frame.N, direction)) / M_PI);
+        let properties = material.getProperties(sd);
+        if (!validDiffuseReflection(sd, properties, direction)) return float3(0.f);
+        float3 albedo = finiteRadiance(properties.diffuseReflectionAlbedo, 0u);
+        return albedo * (max(0.f, dot(properties.guideNormal, direction)) / M_PI);
     }
     return finiteRadiance(material.eval(sd, direction, sg), 0u);
 }

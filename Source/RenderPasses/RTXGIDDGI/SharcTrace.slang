@@ -1,12 +1,6 @@
 // This software contains source code provided by NVIDIA Corporation.
 // Control-flow baseline: RTXGI 04372d7f Samples/Pathtracer/Shaders/Pathtracer.hlsl.
 // Falcor bridge is currently validated for Lambert reflection only.
-float3 sharcCosine(float3 n, inout SampleGenerator sg)
-{
-    float2 u = sampleNext2D(sg);
-    float3 t = normalize(cross(abs(n.z) < .999f ? float3(0,0,1) : float3(0,1,0), n));
-    return t * (sqrt(u.x)*cos(2.f*M_PI*u.y)) + cross(n,t)*(sqrt(u.x)*sin(2.f*M_PI*u.y)) + n*sqrt(1.f-u.x);
-}
 float sharcLuminance(float3 value) { return dot(value,float3(.2126f,.7152f,.0722f)); }
 
 // The common FG has already shaded/sampled camera vertex 0. Continue at vertex 1.
@@ -40,9 +34,9 @@ float3 sharcQueryPath(ShadingData sd, float segmentLength, float3 primaryWeight,
             weight /= probability;
         }
         RayDesc ray;
-        ray.Origin = computeRayOrigin(sd.posW,n); ray.Direction = sharcCosine(sd.frame.N,sg);
+        ray.Origin = computeRayOrigin(sd.posW,n);
         ray.TMin = 0.f; ray.TMax = 1000.f;
-        if (dot(ray.Direction,n) <= 0.f) break;
+        if (!sampleDiffuseReflection(sd, properties, sg, ray.Direction)) break;
         weight *= finiteRadiance(properties.diffuseReflectionAlbedo,0u);
         if (sharcLuminance(weight*primaryWeight) < .01f) break;
         ProbeRayPayload hit = {}; hit.hitT = -1.f;
@@ -77,7 +71,10 @@ void updateSharcCache()
         ShadingData sd = loadTriangleSurface(HitInfo(hit.hit),ray.Direction);
         if (!validSurface(sd) || (!sd.frontFacing && !sd.mtl.isDoubleSided())) break;
         float3 n = sd.getOrientedFaceNormal();
-        let material = gScene.materials.getMaterialInstance(sd,ExplicitLodTextureSampler(0.f));
+        // This update path starts at the camera, just like PathTracer. Secondary
+        // vertices retain the default unadjusted material policy.
+        uint hints = bounce == 0u ? primaryMaterialHints() : 0u;
+        let material = gScene.materials.getMaterialInstance(sd,ExplicitLodTextureSampler(0.f),hints);
         let properties = material.getProperties(sd);
         float3 direct = finiteRadiance(properties.emission,0u) + evaluateAnalyticDirect(sd,material,true,sg);
         // Match sample ordering: max-vertex termination precedes UpdateHit.
@@ -90,8 +87,7 @@ void updateSharcCache()
             if (.95f < sampleNext1D(sg)) break;
             segmentWeight /= .95f;
         }
-        ray.Direction = sharcCosine(sd.frame.N,sg);
-        if (dot(ray.Direction,n) <= 0.f) break;
+        if (!sampleDiffuseReflection(sd, properties, sg, ray.Direction)) break;
         SharcSetThroughput(state,segmentWeight*finiteRadiance(properties.diffuseReflectionAlbedo,0u));
         ray.Origin = computeRayOrigin(sd.posW,n);
     }

@@ -21,6 +21,7 @@ void updateWorldCache()
     float3 normal = primary.getOrientedFaceNormal();
     RayDesc ray;
     ray.Origin = computeRayOrigin(primary.posW, normal);
+    // Coverage proposal only: no primary BRDF/throughput is accumulated.
     ray.Direction = wcCosineDirection(normal, sg);
     ray.TMin = 0.f; ray.TMax = FLT_MAX;
     uint previous = WC_INVALID;
@@ -49,8 +50,7 @@ void updateWorldCache()
         wcAccumulate(slot, direct, 1u);
         previous = slot;
         previousAlbedo = finiteRadiance(properties.diffuseReflectionAlbedo, 0u);
-        ray.Direction = wcCosineDirection(sd.frame.N, sg);
-        if (dot(ray.Direction, geometryNormal) <= 0.f) break;
+        if (!sampleDiffuseReflection(sd, properties, sg, ray.Direction)) break;
         ray.Origin = computeRayOrigin(sd.posW, geometryNormal);
     }
 }

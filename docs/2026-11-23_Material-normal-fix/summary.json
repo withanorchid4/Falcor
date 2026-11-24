@@ -1,0 +1,642 @@
+{
+  "images": [
+    {
+      "name": "after-0-ddgi-4096",
+      "mse": 7.536926873399128e-05,
+      "dark_bias_percent": -2.4489698711191776,
+      "mean_bias_percent": -0.4775578434627281
+    },
+    {
+      "name": "after-0-ddgi-8192",
+      "mse": 7.477541126697705e-05,
+      "dark_bias_percent": -2.449621031072602,
+      "mean_bias_percent": -0.4769968247479994
+    },
+    {
+      "name": "after-0-sharc-4096",
+      "mse": 7.5065172629233e-05,
+      "dark_bias_percent": 3.2370757943472883,
+      "mean_bias_percent": 0.02567084507307804
+    },
+    {
+      "name": "after-0-sharc-8192",
+      "mse": 7.456389840313837e-05,
+      "dark_bias_percent": 3.253256179053743,
+      "mean_bias_percent": 0.027535089501684595
+    },
+    {
+      "name": "after-0-worldcache-4096",
+      "mse": 0.00010542584387606569,
+      "dark_bias_percent": 3.4460012537748774,
+      "mean_bias_percent": 0.04785658078112487
+    },
+    {
+      "name": "after-0-worldcache-8192",
+      "mse": 0.0001051157958837685,
+      "dark_bias_percent": 3.453998016149029,
+      "mean_bias_percent": 0.04793417594715077
+    },
+    {
+      "name": "before-0-ddgi-4096",
+      "mse": 7.491951909301019e-05,
+      "dark_bias_percent": -1.6669501774459694,
+      "mean_bias_percent": -0.37847589251986946
+    },
+    {
+      "name": "before-0-ddgi-8192",
+      "mse": 7.432496206004739e-05,
+      "dark_bias_percent": -1.6686935329366048,
+      "mean_bias_percent": -0.37802120408879647
+    },
+    {
+      "name": "before-0-sharc-4096",
+      "mse": 7.630074127609727e-05,
+      "dark_bias_percent": 5.278933386897111,
+      "mean_bias_percent": 0.37899190052312903
+    },
+    {
+      "name": "before-0-sharc-8192",
+      "mse": 7.57794274587776e-05,
+      "dark_bias_percent": 5.2799263790828554,
+      "mean_bias_percent": 0.3790470034515492
+    },
+    {
+      "name": "before-0-worldcache-4096",
+      "mse": 0.00010656328938218494,
+      "dark_bias_percent": 6.75015456396717,
+      "mean_bias_percent": 0.5590106807892736
+    },
+    {
+      "name": "before-0-worldcache-8192",
+      "mse": 0.00010614346735693218,
+      "dark_bias_percent": 6.759060076605761,
+      "mean_bias_percent": 0.5593792774411632
+    }
+  ],
+  "timing_groups": {
+    "before-worldcache": {
+      "/onFrameRender/gpu_time": 2.0498768279303228,
+      "/onFrameRender/animate/gpu_time": 1.7167652816616398e-05,
+      "/onFrameRender/LightCollection::update()/gpu_time": 0.0017947771446871217,
+      "/onFrameRender/RenderGraphExe::execute()/gpu_time": 1.9266009605847874,
+      "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.3603709971704897,
+      "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.3602472903166532,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/gpu_time": 0.9585455462072023,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/gpu_time": 0.24772241473550627,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CachePaths/gpu_time": 0.21752451267644496,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CachePaths/raytraceScene/gpu_time": 0.21738893854665098,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CacheResolve/gpu_time": 0.028382927309758447,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/gpu_time": 0.4110377897054721,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/raytraceScene/gpu_time": 0.4109219087533932,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/gpu_time": 0.2995237861218067,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/raytraceScene/gpu_time": 0.2993990681345411,
+      "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24644645394599413,
+      "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.3075509272089606,
+      "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.05322679302322676,
+      "/renderUI/gpu_time": 0.014189065231976543
+    },
+    "after-worldcache": {
+      "/onFrameRender/gpu_time": 2.0840833742002527,
+      "/onFrameRender/animate/gpu_time": 2.953846146388409e-05,
+      "/onFrameRender/LightCollection::update()/gpu_time": 0.0017947771446871217,
+      "/onFrameRender/RenderGraphExe::execute()/gpu_time": 1.9565678590383286,
+      "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.3618428760908059,
+      "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.36171765340385587,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/gpu_time": 0.9884710377137337,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/gpu_time": 0.28066158550378134,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CachePaths/gpu_time": 0.2511892704774407,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CachePaths/raytraceScene/gpu_time": 0.25106177543688574,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CacheResolve/gpu_time": 0.02766011839390859,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/gpu_time": 0.4072768127130569,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/raytraceScene/gpu_time": 0.407144773553109,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/gpu_time": 0.300278153909734,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/raytraceScene/gpu_time": 0.3001569705837107,
+      "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24668654890573,
+      "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.3056907632647181,
+      "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.05339897449699614,
+      "/renderUI/gpu_time": 0.014253191484590255
+    },
+    "before-sharc": {
+      "/onFrameRender/gpu_time": 2.287093143726477,
+      "/onFrameRender/animate/gpu_time": 2.3984220846743494e-05,
+      "/onFrameRender/LightCollection::update()/gpu_time": 0.0017935148174176452,
+      "/onFrameRender/RenderGraphExe::execute()/gpu_time": 2.1492712250828037,
+      "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.3606449241880364,
+      "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.3605229829601517,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/gpu_time": 1.1813445675537666,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/gpu_time": 0.2587243548100282,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CachePaths/gpu_time": 0.17176842623384747,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CachePaths/raytraceScene/gpu_time": 0.17163840646045447,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CacheResolve/gpu_time": 0.08513918731368975,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/gpu_time": 0.4008813607680962,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/raytraceScene/gpu_time": 0.40075790555872154,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/gpu_time": 0.5214820989137571,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/raytraceScene/gpu_time": 0.5213571286648218,
+      "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.2456362921693151,
+      "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.30829039448229284,
+      "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.052885207180411384,
+      "/renderUI/gpu_time": 0.014210524806234788
+    },
+    "after-sharc": {
+      "/onFrameRender/gpu_time": 2.386514553186691,
+      "/onFrameRender/animate/gpu_time": 3.534516756362199e-05,
+      "/onFrameRender/LightCollection::update()/gpu_time": 0.0017952820754801044,
+      "/onFrameRender/RenderGraphExe::execute()/gpu_time": 2.2471483064121043,
+      "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.3618789791355471,
+      "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.3617562818574247,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/gpu_time": 1.2792090249249686,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/gpu_time": 0.29236437145187066,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CachePaths/gpu_time": 0.20893563712254548,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CachePaths/raytraceScene/gpu_time": 0.20879981054004126,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CacheResolve/gpu_time": 0.08161047827709592,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/gpu_time": 0.3997200183438126,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/raytraceScene/gpu_time": 0.3995937849936871,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/gpu_time": 0.5868731821194673,
+      "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/raytraceScene/gpu_time": 0.5867464443635658,
+      "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24511772917337438,
+      "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.306430733033421,
+      "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.05404351894877836,
+      "/renderUI/gpu_time": 0.014222895619101249
+    },
+    "before-ddgi": {
+      "/onFrameRender/gpu_time": 4.740468392005333,
+      "/onFrameRender/animate/gpu_time": 2.6508875672716492e-05,
+      "/onFrameRender/LightCollection::update()/gpu_time": 0.0017960394724158301,
+      "/onFrameRender/RenderGraphExe::execute()/gpu_time": 4.580780937356591,
+      "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.36505701503104715,
+      "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.36492800453945967,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 3.608011993901029,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/gpu_time": 2.3138226712714047,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/OriginalTrace/gpu_time": 1.4975893946559236,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/OriginalTrace/raytraceScene/gpu_time": 1.4972195337274843,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/SDKUpdate/gpu_time": 0.8156647260137329,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.41063283413237134,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.4105091253093479,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/gpu_time": 0.8827155181877242,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/raytraceScene/gpu_time": 0.8825870130424198,
+      "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24578423745180727,
+      "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.3082646458635669,
+      "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.05319750698786633,
+      "/renderUI/gpu_time": 0.014351400592652767
+    },
+    "after-ddgi": {
+      "/onFrameRender/gpu_time": 4.830161038235095,
+      "/onFrameRender/animate/gpu_time": 1.9944773125186698e-05,
+      "/onFrameRender/LightCollection::update()/gpu_time": 0.0017952820754801042,
+      "/onFrameRender/RenderGraphExe::execute()/gpu_time": 4.660128060647487,
+      "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.3649689023781575,
+      "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.36484039737980745,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 3.6884580994028546,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/gpu_time": 2.3976667129546696,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/OriginalTrace/gpu_time": 1.5815581531214291,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/OriginalTrace/raytraceScene/gpu_time": 1.5811660751788574,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/SDKUpdate/gpu_time": 0.8155442991200283,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.4111632672992684,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.4110400634992287,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/gpu_time": 0.8787881656158605,
+      "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/raytraceScene/gpu_time": 0.8786611756276802,
+      "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.2450644567285534,
+      "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.30796597798077546,
+      "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.0532045760090946,
+      "/renderUI/gpu_time": 0.014340292109466751
+    }
+  },
+  "timing_runs": [
+    {
+      "name": "after-0-ddgi",
+      "gpu_ms": {
+        "/onFrameRender/gpu_time": 4.8110054738422825,
+        "/onFrameRender/animate/gpu_time": 2.3226824398951595e-05,
+        "/onFrameRender/LightCollection::update()/gpu_time": 0.0017970493338869873,
+        "/onFrameRender/RenderGraphExe::execute()/gpu_time": 4.646957942955122,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.36436929599303,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.3642420525381551,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 3.6773592141958384,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/gpu_time": 2.38749891813455,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/OriginalTrace/gpu_time": 1.58068285468062,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/OriginalTrace/raytraceScene/gpu_time": 1.5802541696108305,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/SDKUpdate/gpu_time": 0.8062545781775105,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.41157175844472776,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.4114404756877079,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/gpu_time": 0.8774463112302551,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/raytraceScene/gpu_time": 0.8773241181815634,
+        "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24439769498342592,
+        "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.30825328262599966,
+        "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.05210837073756393,
+        "/renderUI/gpu_time": 0.014396591933124517
+      }
+    },
+    {
+      "name": "after-0-sharc",
+      "gpu_ms": {
+        "/onFrameRender/gpu_time": 2.391113210241705,
+        "/onFrameRender/animate/gpu_time": 3.080078887687059e-05,
+        "/onFrameRender/LightCollection::update()/gpu_time": 0.001792504955487256,
+        "/onFrameRender/RenderGraphExe::execute()/gpu_time": 2.2457395479288795,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.36193704534564497,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.3618098040069114,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/gpu_time": 1.2797566210259583,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/gpu_time": 0.2922202139446251,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CachePaths/gpu_time": 0.2087071559132909,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CachePaths/raytraceScene/gpu_time": 0.20857890329417392,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CacheResolve/gpu_time": 0.08169783138958425,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/gpu_time": 0.40017445893917797,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/raytraceScene/gpu_time": 0.40004418622812576,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/gpu_time": 0.5871064600624747,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/raytraceScene/gpu_time": 0.5869756828868647,
+        "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.244881421121855,
+        "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.3044158056878009,
+        "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.0542820987881288,
+        "/renderUI/gpu_time": 0.014234509038016993
+      }
+    },
+    {
+      "name": "after-0-worldcache",
+      "gpu_ms": {
+        "/onFrameRender/gpu_time": 2.0837319409823745,
+        "/onFrameRender/animate/gpu_time": 2.827613405089759e-05,
+        "/onFrameRender/LightCollection::update()/gpu_time": 0.0017930098863950465,
+        "/onFrameRender/RenderGraphExe::execute()/gpu_time": 1.9558132400174113,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.3616260102632248,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.3614967481271755,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/gpu_time": 0.9864174837661683,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/gpu_time": 0.2798842439754945,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CachePaths/gpu_time": 0.2504124343101325,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CachePaths/raytraceScene/gpu_time": 0.25028620160660564,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CacheResolve/gpu_time": 0.027653049357984898,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/gpu_time": 0.406259372624655,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/raytraceScene/gpu_time": 0.40613314015625496,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/gpu_time": 0.30003200004086694,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/raytraceScene/gpu_time": 0.2999087970049894,
+        "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24748888582402667,
+        "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.3055700843150799,
+        "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.05424473396478555,
+        "/renderUI/gpu_time": 0.014209767406773285
+      }
+    },
+    {
+      "name": "after-1-ddgi",
+      "gpu_ms": {
+        "/onFrameRender/gpu_time": 4.849316602627907,
+        "/onFrameRender/animate/gpu_time": 1.6662721851421797e-05,
+        "/onFrameRender/LightCollection::update()/gpu_time": 0.001793514817073221,
+        "/onFrameRender/RenderGraphExe::execute()/gpu_time": 4.673298178339851,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.36556850876328506,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.36543874222145983,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 3.699556984609871,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/gpu_time": 2.4078345077747896,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/OriginalTrace/gpu_time": 1.5824334515622382,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/OriginalTrace/raytraceScene/gpu_time": 1.5820779807468843,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/SDKUpdate/gpu_time": 0.8248340200625462,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.410754776153809,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.41063965131074953,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/gpu_time": 0.880130020001466,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/raytraceScene/gpu_time": 0.879998233073797,
+        "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24573121847368087,
+        "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.30767867333555127,
+        "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.054300781280625265,
+        "/renderUI/gpu_time": 0.014283992285808985
+      }
+    },
+    {
+      "name": "after-1-sharc",
+      "gpu_ms": {
+        "/onFrameRender/gpu_time": 2.381915896131677,
+        "/onFrameRender/animate/gpu_time": 3.988954625037339e-05,
+        "/onFrameRender/LightCollection::update()/gpu_time": 0.0017980591954729526,
+        "/onFrameRender/RenderGraphExe::execute()/gpu_time": 2.248557064895329,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.3618209129254493,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.361702759707938,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/gpu_time": 1.278661428823979,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/gpu_time": 0.2925085289591163,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CachePaths/gpu_time": 0.20916411833180007,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CachePaths/raytraceScene/gpu_time": 0.20902071778590864,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CacheResolve/gpu_time": 0.08152312516460758,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/gpu_time": 0.39926557774844723,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/raytraceScene/gpu_time": 0.3991433837592484,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/gpu_time": 0.58663990417646,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/raytraceScene/gpu_time": 0.5865172058402669,
+        "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24535403722489374,
+        "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.3084456603790411,
+        "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.05380493910942792,
+        "/renderUI/gpu_time": 0.014211282200185506
+      }
+    },
+    {
+      "name": "after-1-worldcache",
+      "gpu_ms": {
+        "/onFrameRender/gpu_time": 2.084434807418131,
+        "/onFrameRender/animate/gpu_time": 3.080078887687059e-05,
+        "/onFrameRender/LightCollection::update()/gpu_time": 0.0017965444029791968,
+        "/onFrameRender/RenderGraphExe::execute()/gpu_time": 1.9573224780592458,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.362059741918387,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.36193855868053626,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/gpu_time": 0.990524591661299,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/gpu_time": 0.2814389270320682,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CachePaths/gpu_time": 0.25196610664474894,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CachePaths/raytraceScene/gpu_time": 0.25183734926716583,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CacheResolve/gpu_time": 0.027667187429832284,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/gpu_time": 0.40829425280145876,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/raytraceScene/gpu_time": 0.4081564069499631,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/gpu_time": 0.3005243077786011,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/raytraceScene/gpu_time": 0.30040514416243197,
+        "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24588421198743335,
+        "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.30581144221435635,
+        "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.052553215029206735,
+        "/renderUI/gpu_time": 0.014296615562407224
+      }
+    },
+    {
+      "name": "before-0-ddgi",
+      "gpu_ms": {
+        "/onFrameRender/gpu_time": 4.742869093103051,
+        "/onFrameRender/animate/gpu_time": 2.878106501609219e-05,
+        "/onFrameRender/LightCollection::update()/gpu_time": 0.0017920000245794654,
+        "/onFrameRender/RenderGraphExe::execute()/gpu_time": 4.591770013173421,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.36474345245304896,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.3646252978835586,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 3.6190063600709452,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/gpu_time": 2.3225839786980984,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/OriginalTrace/gpu_time": 1.4998666332553359,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/OriginalTrace/raytraceScene/gpu_time": 1.4995056087448753,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/SDKUpdate/gpu_time": 0.8221533398421323,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.4106467199866353,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.41051038794028455,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/gpu_time": 0.8849298921092257,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/raytraceScene/gpu_time": 0.8848006295029228,
+        "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24662494679997424,
+        "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.3089112091581732,
+        "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.05202960147278078,
+        "/renderUI/gpu_time": 0.014407195487010055
+      }
+    },
+    {
+      "name": "before-0-sharc",
+      "gpu_ms": {
+        "/onFrameRender/gpu_time": 2.2700580351451447,
+        "/onFrameRender/animate/gpu_time": 1.5147928955837996e-05,
+        "/onFrameRender/LightCollection::update()/gpu_time": 0.0017930098866246625,
+        "/onFrameRender/RenderGraphExe::execute()/gpu_time": 2.144599346954677,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.3595734557221392,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.35944974675216146,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/gpu_time": 1.177462659408825,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/gpu_time": 0.2568917082258936,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CachePaths/gpu_time": 0.17121754663112837,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CachePaths/raytraceScene/gpu_time": 0.17108373987604175,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CacheResolve/gpu_time": 0.08385994374987171,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/gpu_time": 0.40052538610539257,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/raytraceScene/gpu_time": 0.40040723241762766,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/gpu_time": 0.5197890679511799,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/raytraceScene/gpu_time": 0.5196658650328657,
+        "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24660222514493932,
+        "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.30849817336428564,
+        "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.05197910832964927,
+        "/renderUI/gpu_time": 0.014213806861383323
+      }
+    },
+    {
+      "name": "before-0-worldcache",
+      "gpu_ms": {
+        "/onFrameRender/gpu_time": 2.041563640684771,
+        "/onFrameRender/animate/gpu_time": 3.029585791167599e-06,
+        "/onFrameRender/LightCollection::update()/gpu_time": 0.001792504955487256,
+        "/onFrameRender/RenderGraphExe::execute()/gpu_time": 1.9220899054284633,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.3584767468934934,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.3583681877313046,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/gpu_time": 0.9545174596107453,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/gpu_time": 0.24678854500283387,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CachePaths/gpu_time": 0.2166461851411082,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CachePaths/raytraceScene/gpu_time": 0.21650631922706814,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CacheResolve/gpu_time": 0.028322588046186068,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/gpu_time": 0.4096868436717423,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/raytraceScene/gpu_time": 0.4095697003826352,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/gpu_time": 0.2977860661653372,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/raytraceScene/gpu_time": 0.2976638728815188,
+        "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24697133122816595,
+        "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.30762363726335634,
+        "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.05401650523763201,
+        "/renderUI/gpu_time": 0.014096157904530653
+      }
+    },
+    {
+      "name": "before-1-ddgi",
+      "gpu_ms": {
+        "/onFrameRender/gpu_time": 4.738067690907616,
+        "/onFrameRender/animate/gpu_time": 2.4236686329340792e-05,
+        "/onFrameRender/LightCollection::update()/gpu_time": 0.001800078920252195,
+        "/onFrameRender/RenderGraphExe::execute()/gpu_time": 4.569791861539762,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.3653705776090453,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.36523071119536077,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/gpu_time": 3.5970176277311126,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/gpu_time": 2.3050613638447115,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/OriginalTrace/gpu_time": 1.4953121560565112,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/OriginalTrace/raytraceScene/gpu_time": 1.494933458710093,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/ProbeUpdate/SDKUpdate/gpu_time": 0.8091761121853334,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/gpu_time": 0.41061894827810735,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/PrimaryShading/raytraceScene/gpu_time": 0.4105078626784112,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/gpu_time": 0.8805011442662226,
+        "/onFrameRender/RenderGraphExe::execute()/DDGI/HalfGather/raytraceScene/gpu_time": 0.8803733965819169,
+        "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24494352810364034,
+        "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.30761808256896056,
+        "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.054365412502951876,
+        "/renderUI/gpu_time": 0.014295605698295482
+      }
+    },
+    {
+      "name": "before-1-sharc",
+      "gpu_ms": {
+        "/onFrameRender/gpu_time": 2.3041282523078093,
+        "/onFrameRender/animate/gpu_time": 3.282051273764899e-05,
+        "/onFrameRender/LightCollection::update()/gpu_time": 0.0017940197482106278,
+        "/onFrameRender/RenderGraphExe::execute()/gpu_time": 2.153943103210931,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.3617163926539336,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.361596219168142,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/gpu_time": 1.185226475698708,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/gpu_time": 0.26055700139416277,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CachePaths/gpu_time": 0.17231930583656657,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CachePaths/raytraceScene/gpu_time": 0.1721930730448672,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/SHaRCUpdate/CacheResolve/gpu_time": 0.0864184308775078,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/gpu_time": 0.40123733543079987,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/raytraceScene/gpu_time": 0.4011085786998154,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/gpu_time": 0.5231751298763343,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/raytraceScene/gpu_time": 0.5230483922967779,
+        "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.2446703591936909,
+        "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.30808261560030004,
+        "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.053791306031173505,
+        "/renderUI/gpu_time": 0.014207242751086252
+      }
+    },
+    {
+      "name": "before-1-worldcache",
+      "gpu_ms": {
+        "/onFrameRender/gpu_time": 2.058190015175874,
+        "/onFrameRender/animate/gpu_time": 3.130571984206519e-05,
+        "/onFrameRender/LightCollection::update()/gpu_time": 0.0017970493338869873,
+        "/onFrameRender/RenderGraphExe::execute()/gpu_time": 1.9311120157411112,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.362265247447486,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.3621263929020018,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/gpu_time": 0.9625736328036593,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/gpu_time": 0.2486562844681787,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CachePaths/gpu_time": 0.21840284021178175,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CachePaths/raytraceScene/gpu_time": 0.2182715578662338,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/WorldCacheUpdate/CacheResolve/gpu_time": 0.028443266573330826,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/gpu_time": 0.41238873573920193,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/PrimaryShading/raytraceScene/gpu_time": 0.4122741171241512,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/gpu_time": 0.3012615060782762,
+        "/onFrameRender/RenderGraphExe::execute()/WorldCache/HalfGather/raytraceScene/gpu_time": 0.30113426338756344,
+        "/onFrameRender/RenderGraphExe::execute()/Reconstruct/gpu_time": 0.24592157666382233,
+        "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.3074782171545649,
+        "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.052437080808821514,
+        "/renderUI/gpu_time": 0.01428197255942243
+      }
+    },
+    {
+      "name": "pt-current-pt",
+      "gpu_ms": {
+        "/onFrameRender/gpu_time": 173.367568597561,
+        "/onFrameRender/animate/gpu_time": 3.538211373180696e-05,
+        "/onFrameRender/LightCollection::update()/gpu_time": 0.0018044878289527524,
+        "/onFrameRender/RenderGraphExe::execute()/gpu_time": 173.0265746077871,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/gpu_time": 0.35641651618771436,
+        "/onFrameRender/RenderGraphExe::execute()/Visibility/raytraceScene/gpu_time": 0.3562520931406719,
+        "/onFrameRender/RenderGraphExe::execute()/PT/gpu_time": 172.28488891105343,
+        "/onFrameRender/RenderGraphExe::execute()/PT/generatePaths/gpu_time": 0.04257508976066985,
+        "/onFrameRender/RenderGraphExe::execute()/PT/tracePass/gpu_time": 171.81554232961764,
+        "/onFrameRender/RenderGraphExe::execute()/PT/tracePass/raytraceScene/gpu_time": 171.81544048030202,
+        "/onFrameRender/RenderGraphExe::execute()/PT/resolvePass/gpu_time": 0.42651472804023,
+        "/onFrameRender/RenderGraphExe::execute()/Accumulate/gpu_time": 0.33152832442182834,
+        "/onFrameRender/RenderGraphExe::execute()/Display/gpu_time": 0.05337495953450358,
+        "/renderUI/gpu_time": 0.014015479747781424
+      }
+    }
+  ],
+  "reference_spp": 65536,
+  "dark_definition": "PT luminance < 0.05, valid GBuffer normal",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "quality": {
+    "before-worldcache": {
+      "name": "before-0-worldcache-8192",
+      "mse": 0.00010614346735693218,
+      "dark_bias_percent": 6.759060076605761,
+      "mean_bias_percent": 0.5593792774411632,
+      "hdr_flip": 0.142858624458313
+    },
+    "after-worldcache": {
+      "name": "after-0-worldcache-8192",
+      "mse": 0.0001051157958837685,
+      "dark_bias_percent": 3.453998016149029,
+      "mean_bias_percent": 0.04793417594715077,
+      "hdr_flip": 0.12026193737983704
+    },
+    "before-sharc": {
+      "name": "before-0-sharc-8192",
+      "mse": 7.57794274587776e-05,
+      "dark_bias_percent": 5.2799263790828554,
+      "mean_bias_percent": 0.3790470034515492,
+      "hdr_flip": 0.13128556311130524
+    },
+    "after-sharc": {
+      "name": "after-0-sharc-8192",
+      "mse": 7.456389840313837e-05,
+      "dark_bias_percent": 3.253256179053743,
+      "mean_bias_percent": 0.027535089501684595,
+      "hdr_flip": 0.1215343177318573
+    },
+    "before-ddgi": {
+      "name": "before-0-ddgi-8192",
+      "mse": 7.432496206004739e-05,
+      "dark_bias_percent": -1.6686935329366048,
+      "mean_bias_percent": -0.37802120408879647,
+      "hdr_flip": 0.17606453597545624
+    },
+    "after-ddgi": {
+      "name": "after-0-ddgi-8192",
+      "mse": 7.477541126697705e-05,
+      "dark_bias_percent": -2.449621031072602,
+      "mean_bias_percent": -0.4769968247479994,
+      "hdr_flip": 0.18332523107528687
+    }
+  },
+  "stability": {
+    "before-worldcache": {
+      "relative_rgb_rms_4096_to_8192": 0.0010627751985306595
+    },
+    "after-worldcache": {
+      "relative_rgb_rms_4096_to_8192": 0.0010478532372585328
+    },
+    "before-sharc": {
+      "relative_rgb_rms_4096_to_8192": 0.0011188452802131125
+    },
+    "after-sharc": {
+      "relative_rgb_rms_4096_to_8192": 0.0011061958105454243
+    },
+    "before-ddgi": {
+      "relative_rgb_rms_4096_to_8192": 0.0011677449135859212
+    },
+    "after-ddgi": {
+      "relative_rgb_rms_4096_to_8192": 0.0011673244841544645
+    }
+  },
+  "common_exposure_ev": -2.3269853780899363,
+  "flip_parameters": {
+    "ppd": 67.0,
+    "startExposure": -2.272261619567871,
+    "stopExposure": 7.581640720367432,
+    "numExposures": 10,
+    "tonemapper": "ACES"
+  },
+  "options_identical": true,
+  "provenance": {
+    "baseline": "311c0e88",
+    "plan": [
+      {
+        "tag": "before-0",
+        "before": true,
+        "quality": true
+      },
+      {
+        "tag": "after-0",
+        "quality": true
+      },
+      {
+        "tag": "after-1",
+        "modes": [
+          "ddgi",
+          "sharc",
+          "worldcache"
+        ]
+      },
+      {
+        "tag": "before-1",
+        "before": true,
+        "modes": [
+          "ddgi",
+          "sharc",
+          "worldcache"
+        ]
+      },
+      {
+        "tag": "pt-current",
+        "modes": [
+          "pt"
+        ],
+        "warmup": 64,
+        "timingFrames": 128
+      }
+    ],
+    "fixed_source_sha256": {
+      "RTXGIDDGI.rt.slang": "00472245054e8056b22c6e4da740a83f4bd2d5f6f65602fff565e032c60977f4",
+      "LumenWorldCacheTrace.slang": "589b65ecbc1f660878f56a88c780a02179253b462d0ff949711dc6432ee891f6",
+      "SharcTrace.slang": "98e7bd1ed94df5b58fbf7654654d76b188a2bc454ec57ee8363a13cad0d0f07c"
+    },
+    "resolution": [
+      1920,
+      1080
+    ],
+    "PT_reference": "build/sponza-sun50-20261120/pt-8192.Accumulate.output.0.exr",
+    "PT_spp": 65536
+  }
+}
